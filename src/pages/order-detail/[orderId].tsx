@@ -158,7 +158,6 @@ const OrderDetail: NextPage = () => {
                             {statusBar.map((status, index: number, array) => {
                                 return (
                                     <div
-                                        key={status.state}
                                         className={
                                             "rounded-[2.5px] h-[5px] w-full " +
                                             (index <= statusIndex

@@ -67,7 +67,6 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                         {emojis.map((emoji) => {
                             return (
                                 <div
-                                    key={emoji}
                                     onClick={() => {
                                         setSelectedEmoji(emoji);
                                         setHeight("100%");
@@ -92,7 +91,6 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                             {improvements.map((item) => {
                                 return (
                                     <div
-                                        key={item}
                                         onClick={() => {
                                             if (
                                                 !selectedImprovements.includes(
@@ -139,7 +137,6 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                                     images.map((image) => {
                                         return (
                                             <img
-                                                key={image}
                                                 className="w-[60px] h-[60px] rounded-md"
                                                 src={image}
                                                 alt={image}

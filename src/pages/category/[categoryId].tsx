@@ -5,11 +5,7 @@ import ProductTab from "components/category/product-tab";
 import CategoryTab from "components/category/tab";
 import { Oops } from "components/icons";
 import { useAppState } from "lib/context/app";
-import {
-    categoryDummyData,
-    dummyProducts,
-    productFilters,
-} from "lib/types/dummy-data";
+import { dummyProducts, productFilters } from "lib/types/dummy-data";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -18,17 +14,17 @@ import { Accordion } from "react-accessible-accordion";
 export default function Category() {
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
-    const categoryName = router.query.categoryId;
-    const [activeTab, setActiveTab] = useState<string>(categoryName as string);
+    const { categoryId } = router.query;
+    const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [productTab, setProductTab] = useState<string>(productFilters[0]);
-    const { merchants, products } = state;
+    const { merchants, products, categories } = state;
 
     return (
         <>
             <div className="my-col-10 w-full h-[calc(100vh-50px)] overflow-hidden">
                 <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">
                     <CategoryTab
-                        tabs={categoryDummyData}
+                        tabs={categories}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />

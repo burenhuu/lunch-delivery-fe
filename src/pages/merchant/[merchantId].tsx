@@ -28,7 +28,7 @@ export default function MerchantProductPage() {
     );
     useEffect(() => {
         const merchant = merchants?.find(
-            (merchant: Merchant) => merchant._id === merchantId
+            (merchant: Merchant) => merchant.id === merchantId
         );
         setMerchant(merchant);
     }, []);

@@ -18,11 +18,18 @@ export interface Recommended {
     price: number;
 }
 
+// export interface Category {
+//     _id: string;
+//     name: string;
+//     logo: string;
+//     cart_items_count: number;
+// }
+
 export interface Category {
-    _id: string;
-    name: string;
-    logo: string;
-    cart_items_count: number;
+    id:        string;
+    name:      string;
+    icon:      string;
+    children?: Category[];
 }
 
 export interface Option {

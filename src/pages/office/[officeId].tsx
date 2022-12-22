@@ -10,16 +10,15 @@ import {
 } from "components/icons";
 import CategoryCard from "components/product-category/card";
 import { useAppState } from "lib/context/app";
-import {
-    categoryDummyData,
-    dummyProducts,
-    recommendedDummyData,
-} from "lib/types/dummy-data";
+import { recommendedDummyData } from "lib/types/dummy-data";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDebounce } from "lib/hooks/useDebounce";
 import { toast } from "react-toastify";
+import { Category } from "lib/types/merchant-menu-category.type";
+import TokiAPI from "lib/api/toki";
+import { Product } from "lib/types/merchant-product.type";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
@@ -27,8 +26,9 @@ export default function Office() {
     const officeId = router.query.officeId;
     const [loading, setLoading] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [searchProducts, setSearchProducts] = useState<any[]>([]);
+    const [searchProducts, setSearchProducts] = useState<Product[]>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const { merchants, categories, products } = state;
     const debouncedValue = useDebounce(searchValue);
 
     const filterNames = [
@@ -40,10 +40,45 @@ export default function Office() {
     ];
     const [activeFilter, setActiveFilter] = useState<string>(filterNames[0]);
 
-    const getMerchants = async () => {};
-    const { merchants } = state;
+    const getMerchants = async () => {
+        try {
+            setLoading(true);
+            const { data } = await TokiAPI.getMerchantsByOffice(
+                officeId?.toString()!
+            );
+            if (data) {
+                dispatch({ type: "merchants", merchants: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const getCategories = async () => {};
+    const getCategories = async () => {
+        try {
+            setLoading(true);
+            const { data } = await TokiAPI.getCategories();
+            if (data) {
+                dispatch({ type: "categories", categories: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getProducts = async () => {
+        try {
+            setLoading(true);
+            const { data } = await TokiAPI.getProductsByOffice(
+                officeId?.toString()!
+            );
+            if (data) {
+                dispatch({ type: "products", products: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         toast("Таны хаяг зөв эсэхийг шалгаарай", {
@@ -55,19 +90,26 @@ export default function Office() {
 
     useEffect(() => {
         if (officeId) {
+            getMerchants();
+            getCategories();
+            getProducts();
         }
     }, [officeId]);
 
     useEffect(() => {
-        setSearchProducts(
-            dummyProducts?.filter((product) => {
-                if (searchValue) {
-                    return product.title
-                        .toLowerCase()
-                        .includes(searchValue.toLowerCase());
-                } else return null;
-            })
-        );
+        const onSearch = async () => {
+            if (officeId) {
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId?.toString(),
+                    "keyword",
+                    debouncedValue
+                );
+                setSearchProducts(data);
+            }
+        };
+        if (searchValue !== "") {
+            onSearch();
+        }
     }, [searchValue]);
 
     return loading ? (
@@ -101,10 +143,10 @@ export default function Office() {
                             {searchProducts?.slice(0, 3).map((product) => {
                                 return (
                                     <div
-                                        key={product.title}
+                                        key={product.name}
                                         className="flex items-center justify-between pb-3.75 border-b border-main border-dashed last:border-none "
                                     >
-                                        <div>{product?.title}</div>
+                                        <div>{product?.name}</div>
                                         <NavigateArrow />
                                     </div>
                                 );
@@ -122,16 +164,18 @@ export default function Office() {
                     )
                 ) : (
                     <>
-                        <div className="grid grid-cols-4 items-center gap-y-3.75">
-                            {categoryDummyData?.map((category) => {
-                                return (
-                                    <CategoryCard
-                                        category={category}
-                                        key={category.title}
-                                    />
-                                );
-                            })}
-                        </div>
+                        {categories?.length > 0 ? (
+                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75">
+                                {categories?.map((category: Category) => {
+                                    return (
+                                        <CategoryCard
+                                            category={category}
+                                            key={category.name}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        ) : null}
                         <div>
                             <div className="flex justify-between pb-[15px] items-center">
                                 <div className="font-medium">Бүгд</div>
@@ -153,7 +197,6 @@ export default function Office() {
                                                 ?.map((filter) => {
                                                     return (
                                                         <div
-                                                            key={filter}
                                                             onClick={() =>
                                                                 setActiveFilter(
                                                                     filter
@@ -169,38 +212,42 @@ export default function Office() {
                                     )}
                                 </div>
                             </div>
-                            <div className="my-col-10">
-                                {merchants
-                                    ?.slice(0, 2)
-                                    .map((merchant: Merchant) => {
-                                        return (
-                                            <GradientMerchantCard
-                                                key={merchant._id}
-                                                merchant={merchant}
-                                            />
-                                        );
-                                    })}
-                                <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
-                                    {recommendedDummyData?.map((data) => {
-                                        return (
-                                            <Recommended
-                                                key={data.name}
-                                                data={data}
-                                            />
-                                        );
-                                    })}
+                            {merchants?.length > 0 ? (
+                                <div className="my-col-10">
+                                    {merchants
+                                        ?.slice(0, 2)
+                                        .map((merchant: Merchant) => {
+                                            return (
+                                                <GradientMerchantCard
+                                                    key={merchant.id}
+                                                    merchant={merchant}
+                                                />
+                                            );
+                                        })}
+                                    <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
+                                        {recommendedDummyData?.map(
+                                            (product: any) => {
+                                                return (
+                                                    <Recommended
+                                                        key={product.name}
+                                                        data={product}
+                                                    />
+                                                );
+                                            }
+                                        )}
+                                    </div>
+                                    {merchants
+                                        ?.slice(3)
+                                        .map((merchant: Merchant) => {
+                                            return (
+                                                <GradientMerchantCard
+                                                    key={merchant.id}
+                                                    merchant={merchant}
+                                                />
+                                            );
+                                        })}
                                 </div>
-                                {merchants
-                                    ?.slice(3)
-                                    .map((merchant: Merchant) => {
-                                        return (
-                                            <GradientMerchantCard
-                                                key={merchant._id}
-                                                merchant={merchant}
-                                            />
-                                        );
-                                    })}
-                            </div>
+                            ) : null}
                         </div>
                     </>
                 )}

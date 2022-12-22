@@ -19,19 +19,19 @@ export default function GreadientMerchantCard({
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    useEffect(() => {
-        merchant.timetable.map((timetable: Timetable, index: number) =>
-            new Date().getDay() === timetable.day
-                ? (setStartDate(timetable.start_hour),
-                  setEndDate(timetable.end_hour))
-                : null
-        );
-    }, [merchant]);
+    // useEffect(() => {
+    //     merchant.timetable.map((timetable: Timetable, index: number) =>
+    //         new Date().getDay() === timetable.day
+    //             ? (setStartDate(timetable.start_hour),
+    //               setEndDate(timetable.end_hour))
+    //             : null
+    //     );
+    // }, [merchant]);
 
     const onContinueClick = () => {
         dispatch({
             type: "merchantId",
-            merchantId: merchant._id,
+            merchantId: merchant.id,
         });
         dispatch({
             type: "merchantName",
@@ -39,38 +39,18 @@ export default function GreadientMerchantCard({
         });
 
         dispatch({
-            type: "header",
-            header: merchant.header,
-        });
-
-        dispatch({
-            type: "isDelivery",
-            isDelivery: merchant.is_delivery,
-        });
-
-        dispatch({
-            type: "cancelDeliveryTimetable",
-            cancelDeliveryTimetable: merchant.cancel_delivery_timetable,
-        });
-
-        dispatch({
-            type: "temporaryClosed",
-            temporaryClosed: merchant.temporary_closed,
-        });
-
-        dispatch({
             type: "banner",
             banner: false,
         });
         if (!page) {
-            router.push(`/merchant/${merchant._id}`);
+            router.push(`/merchant/${merchant.id}`);
         } else {
-            router.push(`/merchant/details/${merchant._id}`);
+            router.push(`/merchant/details/${merchant.id}`);
         }
     };
 
     const onMerchantClick = () => {
-        if (!merchant.is_open || !merchant.is_active) {
+        if (!merchant.open) {
             setShow(true);
             setContent(
                 <PermissionBox
@@ -90,24 +70,26 @@ export default function GreadientMerchantCard({
                     }
                 />
             );
-        } else if (merchant.temporary_closed) {
-            setShow(true);
-            setContent(
-                <PermissionBox
-                    text={
-                        <>
-                            <div className="my-col-20">
-                                <div>
-                                    Зоогийн газар дотоод ажилтай байгаа тул
-                                    захиалга авахгүй
-                                </div>
-                                <div>Нээх цаг: 10/21, 12:00</div>
-                            </div>
-                        </>
-                    }
-                />
-            );
-        } else {
+        }
+        // else if (merchant.temporary_closed) {
+        //     setShow(true);
+        //     setContent(
+        //         <PermissionBox
+        //             text={
+        //                 <>
+        //                     <div className="my-col-20">
+        //                         <div>
+        //                             Зоогийн газар дотоод ажилтай байгаа тул
+        //                             захиалга авахгүй
+        //                         </div>
+        //                         <div>Нээх цаг: 10/21, 12:00</div>
+        //                     </div>
+        //                 </>
+        //             }
+        //         />
+        //     );
+        // }
+        else {
             onContinueClick();
         }
     };
@@ -123,16 +105,16 @@ export default function GreadientMerchantCard({
                     alt={merchant.name}
                 />
                 <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                    <div className="text-sm">{`${merchant.name} (${merchant.temporary_closed}) 👍 ${merchant.avg_review}`}</div>
+                    <div className="text-sm">{`${merchant.name} (${merchant.latitude}) 👍 ${merchant.rating}`}</div>
                     <div className="text-xs font-light flex justify-start gap-x-1.25 items-center">
                         <ClockIcon />
-                        {merchant.toki_merchant_id}
+                        {merchant.description}
                     </div>
                 </div>
                 <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
                 <div className="absolute text-white z-20 text-smaller top-5 right-0 bg-main/50 backdrop-blur-sm py-1.25 px-2.5 rounded-l-md">
-                    {merchant?.temporary_closed && "Дотоод ажилтай"}
-                    {(!merchant?.is_open || !merchant?.is_active) && "Хаалттай"}
+                    {/* {merchant?.temporary_closed && "Дотоод ажилтай"} */}
+                    {!merchant?.open && "Хаалттай"}
                 </div>
                 {page && (
                     <div className="absolute right-3.75 bottom-3.75 flex gap-x-2.5 justify-end items-center">

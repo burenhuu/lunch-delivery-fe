@@ -124,59 +124,58 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                 radius={parseFloat(
                     localStorage.getItem("locationRange")
                         ? localStorage.getItem("locationRange")?.toString()!
-                        : "0"
+                        : "500"
                 )}
                 options={options}
             />
-            {offices &&
-                offices.map((office: Office, index: number) => (
-                    <Marker
-                        key={index}
-                        position={{
-                            lat: Number(office.lat),
-                            lng: Number(office.lon),
-                        }}
-                        icon={{
-                            // url: office.pin_icon,
-                            url: "/images/Pin.svg",
-                            scaledSize: new google.maps.Size(24, 34),
-                            anchor: new google.maps.Point(24, 34),
-                        }}
-                        onClick={() => (
-                            setCenter({
-                                lat: Number(office.lat),
-                                lng: Number(office.lon),
-                            }),
-                            onSearchByMap(
-                                Number(office.lat),
-                                Number(office.lon)
-                            ),
-                            map.panTo(
-                                new window.google.maps.LatLng(
-                                    Number(office.lat),
-                                    Number(office.lon)
-                                )
-                            ),
-                            dispatch({
-                                type: "merchants",
-                                merchants: office.merchants,
-                            }),
-                            dispatch({
-                                type: "officeId",
-                                officeId: office._id,
-                            }),
-                            dispatch({
-                                type: "officeName",
-                                officeName: office.name,
-                            }),
-                            dispatch({
-                                type: "numberOfStorey",
-                                numberOfStorey: office.number_of_storey,
-                            }),
-                            router.push(`/office/${office._id}`)
-                        )}
-                    />
-                ))}
+            {offices?.map((office: Office, index: number) => (
+                <Marker
+                    key={index}
+                    position={{
+                        lat: Number(office.latitude),
+                        lng: Number(office.longitude),
+                    }}
+                    icon={{
+                        // url: office.pin_icon,
+                        url: "/images/Pin.svg",
+                        scaledSize: new google.maps.Size(24, 34),
+                        anchor: new google.maps.Point(24, 34),
+                    }}
+                    onClick={() => (
+                        setCenter({
+                            lat: Number(office.latitude),
+                            lng: Number(office.longitude),
+                        }),
+                        onSearchByMap(
+                            Number(office.latitude),
+                            Number(office.longitude)
+                        ),
+                        map.panTo(
+                            new window.google.maps.LatLng(
+                                Number(office.latitude),
+                                Number(office.longitude)
+                            )
+                        ),
+                        dispatch({
+                            type: "merchants",
+                            merchants: office.merchants,
+                        }),
+                        dispatch({
+                            type: "officeId",
+                            officeId: office.id,
+                        }),
+                        dispatch({
+                            type: "officeName",
+                            officeName: office.name,
+                        }),
+                        dispatch({
+                            type: "numberOfStorey",
+                            numberOfStorey: office.floor,
+                        }),
+                        router.push(`/office/${office.id}`)
+                    )}
+                />
+            ))}
         </GoogleMap>
     ) : (
         <></>

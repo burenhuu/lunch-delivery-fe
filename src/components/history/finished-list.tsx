@@ -2,8 +2,9 @@ import useSWR from "swr";
 
 import FinishedCard from "components/history/finished-card";
 import CenteredSpin from "components/common/centered-spin";
-import { OrderItem } from "lib/types/order.type";
+// import { OrderItem } from "lib/types/order.type";
 import { useAppState } from "lib/context/app";
+import { Item } from "lib/types/order.type";
 
 export default function FinishedList({ scrollRef }: any) {
     const [state]: any = useAppState();
@@ -19,25 +20,20 @@ export default function FinishedList({ scrollRef }: any) {
     if (!error && !data) return <CenteredSpin />;
 
     return (
-        data &&
-        data?.data?.data &&
-        data.data.data.items.length > 0 && (
+        data?.data?.data?.items?.length > 0 && (
             <>
-                {data?.data?.data?.items &&
-                    data?.data?.data?.items.map(
-                        (item: OrderItem, index: number) => (
-                            <FinishedCard
-                                key={"completed-" + item._id}
-                                id={"completed-" + item._id}
-                                scrollRef={
-                                    state.navId == "completed-" + item._id
-                                        ? scrollRef
-                                        : null
-                                }
-                                item={item}
-                            />
-                        )
-                    )}
+                {data?.data?.data?.items?.map((item: Item, index: number) => (
+                    <FinishedCard
+                        key={"completed-" + item.id}
+                        id={"completed-" + item.id}
+                        scrollRef={
+                            state.navId == "completed-" + item.id
+                                ? scrollRef
+                                : null
+                        }
+                        item={item}
+                    />
+                ))}
             </>
         )
     );

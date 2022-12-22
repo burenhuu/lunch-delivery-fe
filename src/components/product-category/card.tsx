@@ -1,4 +1,5 @@
 import FoodBorder from "components/common/food-border";
+import { Category } from "lib/types/merchant-menu-category.type";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,17 +9,18 @@ export default function CategoryCard({
     small = false,
     active = false,
 }: {
-    category: { title: string; img: string };
+    category: Category;
     small?: boolean;
     active?: boolean;
 }) {
-    const { title, img } = category;
+    const { id, name, icon } = category;
     const router = useRouter();
     const onCategoryCardClick = async () => {
         if (!small) {
-            router.push(`/category/${title}`);
+            router.push(`/category/${id}`);
         }
     };
+
     return (
         // <Link href={`/office/${router.query.officeId}/category/${title}`}>
         <div
@@ -32,8 +34,8 @@ export default function CategoryCard({
                 }
             >
                 <Image
-                    src={`/images/${img}`}
-                    alt={img}
+                    src={`/images/${icon}`}
+                    alt={icon}
                     width={small ? 55 : 72.5}
                     height={small ? 55 : 72.5}
                     className="rounded-md object-cover "
@@ -42,11 +44,10 @@ export default function CategoryCard({
             </div>
             <div
                 className={
-                    "text-center text-xs " +
-                    (small && active ? "text-main" : "text-gray")
+                    "text-xs " + (small && active ? "text-main" : "text-gray")
                 }
             >
-                {title}
+                {name}
             </div>
         </div>
         // </Link>

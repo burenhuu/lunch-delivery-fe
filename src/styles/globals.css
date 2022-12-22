@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "nprogress/nprogress.css";
+@import "react-modern-drawer/dist/index.css";
+@import "react-toastify/dist/ReactToastify.min.css";
+@import "./icons.css";
+
+#__next {
+    min-height: 100vh;
+    @apply text-main text-base;
+}
+
+#nprogress .bar {
+    background: #ffc800;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+    box-shadow: 0 0 10px #ffc800, 0 0 5px #ffc800;
+}
+
+#nprogress .spinner-icon {
+    border-top-color: #ffc800;
+    border-left-color: #ffc800;
+}
+
+:root {
+    --toastify-color-info: #ffc800;
+}
+
+.ReactCollapse--collapse {
+    transition: height 500ms;
+}
+
+/* .Toastify__toast-theme--dark {
+    background: rgb(30, 35, 53, 0.5);
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.Toastify__close-button {
+    display: none;
+} */
+
+/* .Toastify__toast-container--bottom-center,
+.Toastify__toast-container--bottom-left,
+.Toastify__toast-container--bottom-right {
+    max-width: 80%;
+    width: fit-content;
+} */
+
+/* @media only screen and (max-width: 480px) {
+    .Toastify__toast-container--bottom-center,
+    .Toastify__toast-container--bottom-left,
+    .Toastify__toast-container--bottom-right {
+        bottom: 35px;
+        transform: translateX(30%);
+    }
+}
+@media only screen and (max-width: 440px) {
+    .Toastify__toast-container--bottom-center,
+    .Toastify__toast-container--bottom-left,
+    .Toastify__toast-container--bottom-right {
+        bottom: 35px;
+        transform: translateX(20%);
+    }
+}
+
+@media only screen and (max-width: 380px) {
+    .Toastify__toast-container--bottom-center,
+    .Toastify__toast-container--bottom-left,
+    .Toastify__toast-container--bottom-right {
+        bottom: 35px;
+        transform: translateX(15%);
+    }
+} */
+
+/* .Toastify__toast-body {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: fit-content;
+}
+
+.Toastify__toast {
+    height: fit-content;
+    min-height: 38px;
+} */
+
+.drag-indicator {
+    height: 5px;
+    width: 40px;
+    background-color: white;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -35px;
+    margin-bottom: 35px;
+}
+
+img {
+    object-fit: cover !important;
+}
+
+/* React swiper styles */
+.swiper-pagination {
+    @apply relative flex gap-x-1.25 items-center justify-center !important;
+}
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+    @apply bottom-0 !important;
+}
+.swiper-pagination-bullet {
+    @apply w-1.5 h-1.5 m-0 rounded-[3px] bg-gray !important;
+}
+.swiper-pagination-bullet-active {
+    @apply rounded-[2.5px] bg-[#FFD500] w-[15px] h-[5px] !important;
+}
+
+.gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: linear-gradient(to right, #ffbe78, #ff7a1f) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.rounded-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: linear-gradient(to right, #ffbe78, #ff7a1f) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 2px rgba(30, 35, 53, 0.5);
+}
+
+#cart {
+    background: linear-gradient(135deg, #ffbe78 0%, #ff7a1f 100%);
+}
+
+.Toastify__toast {
+    @apply min-h-[35px] !important;
+}
+
+.Toastify__toast-body {
+    @apply p-0 m-0 !important;
+}
+
+.Toastify__toast {
+    @apply bg-main/75 text-white rounded-md w-[295px] bottom-[35px] block text-center text-xs px-2.5 py-3 mx-auto !important;
+}
+.location-toast {
+    @apply top-[60px] flex justify-between items-center left-5 m-0 w-[235px] py-2.5 !important;
+}
+
+/* Radio button styles */
+
+input[type="radio"] {
+    @apply appearance-none absolute;
+}
+.checkmark {
+    @apply w-[18px] h-[18px] rounded-full border-[1.5px] border-[#B3BFC6];
+}
+
+.checkmark::after {
+    content: "";
+    @apply hidden m-auto mt-[1.75px] rounded-full bg-gradient-end w-3 h-3 !important;
+}
+
+input[type="radio"]:checked ~ .checkmark::after {
+    @apply block !important;
+}
+input[type="radio"]:checked ~ .checkmark {
+    @apply border-gradient-end;
+}
+
+.center-modal {
+    @apply fixed z-max top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2;
+}
+.my-col-5 {
+    @apply flex flex-col gap-y-1.25;
+}
+.my-col-10 {
+    @apply flex flex-col gap-y-2.5;
+}
+.my-col-15 {
+    @apply flex flex-col gap-y-3.75;
+}
+
+.my-col-20 {
+    @apply flex flex-col gap-y-5;
+}
+
+input {
+    @apply focus:outline-none caret-gradient-end;
+}

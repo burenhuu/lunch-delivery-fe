@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Collapse } from "react-collapse";
 import { mutate } from "swr";
 
-import SmallButton from "components/common/small-button";
 import { ApplicableOption, Product } from "lib/types/merchant-product.type";
 import TokiAPI from "lib/api/toki";
 import { formatPrice } from "lib/utils/helpers";
@@ -279,14 +278,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                     )
                                 )}
 
-                            <div className="grid w-full mt-3 justify-items-center">
+                            {/* <div className="grid w-full mt-3 justify-items-center">
                                 <SmallButton
                                     onClick={(e: any) => (addToCartEvent = e)}
                                     text="Сагсанд нэмэх"
                                     type="submit"
                                     loading={loading}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </Collapse>

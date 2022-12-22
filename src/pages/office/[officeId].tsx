@@ -153,6 +153,7 @@ export default function Office() {
                                                 ?.map((filter) => {
                                                     return (
                                                         <div
+                                                            key={filter}
                                                             onClick={() =>
                                                                 setActiveFilter(
                                                                     filter

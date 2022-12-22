@@ -9,6 +9,7 @@ export function ImageModal({ images }: { images: string[] }) {
                 {images.map((image) => {
                     return (
                         <img
+                            key={image}
                             className="rounded-2.5xl mx-auto w-[275px] h-[275px]"
                             src={`/images/${image}`}
                             alt={image}

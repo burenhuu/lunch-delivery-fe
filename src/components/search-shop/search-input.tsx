@@ -1,5 +1,4 @@
 import CenteredSpin from "components/common/centered-spin";
-import Overlay from "components/common/overlay";
 import Spin from "components/common/spin";
 import { useAppState } from "lib/context/app";
 import Office from "lib/types/office.type";

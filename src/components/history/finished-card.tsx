@@ -5,8 +5,6 @@ import Link from "next/link";
 // import { ModalContext } from "lib/context/modal";
 import { OrderItem, Status } from "lib/types/order.type";
 import { renderStars, formatPrice } from "lib/utils/helpers";
-import SmallButton from "components/common/small-button";
-import LargeWhiteButton from "components/common/large-white-button";
 import SubmitReview from "components/history/submit-review";
 import { calcTimeDiff } from "lib/utils/helpers";
 import { useAppState } from "lib/context/app";

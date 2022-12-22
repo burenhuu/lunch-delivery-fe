@@ -30,6 +30,7 @@ export default function MerchantIntroduction({
                 {images?.map((image) => {
                     return (
                         <img
+                            key={image}
                             src={`${merchant.logo}`}
                             alt={merchant.name}
                             className="w-[83px] h-[83px] rounded-md"

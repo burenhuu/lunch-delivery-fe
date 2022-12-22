@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import OrderStatus from "components/order/order-status";
 import { OrderItem, Status } from "lib/types/order.type";
-import SmallButton from "components/common/small-button";
 import ButtonComponent from "components/common/button";
 import { CallIcon } from "components/icons";
 

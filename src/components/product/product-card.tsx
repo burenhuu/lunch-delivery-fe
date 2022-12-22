@@ -56,7 +56,10 @@ export default function ProductCard({
         <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
             <AccordionItemHeading>
                 <AccordionItemState>
-                    {({ expanded }) => setOpen(expanded!)}
+                    {({ expanded }) => {
+                        setOpen(expanded!);
+                        return null;
+                    }}
                 </AccordionItemState>
                 <AccordionItemButton className="flex justify-start gap-x-3.75 ">
                     <div className="relative min-w-[120px] min-h-[120px]">

@@ -27,6 +27,7 @@ export function DeliveryTime({
                         {times?.map((time) => {
                             return (
                                 <div
+                                    key={time}
                                     onClick={() => {
                                         setSelectedTime(time);
                                         onClose();

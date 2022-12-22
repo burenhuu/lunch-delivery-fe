@@ -3,7 +3,8 @@ import { useAppState } from "lib/context/app";
 import { useModal } from "lib/context/modal";
 import { forwardRef } from "react";
 
-export const DeliveryAddress = forwardRef(
+// eslint-disable-next-line react/display-name
+const DeliveryAddress = forwardRef(
     (
         {
             selectedFloor,
@@ -31,6 +32,7 @@ export const DeliveryAddress = forwardRef(
                             (floor, index: number) => {
                                 return (
                                     <div
+                                        key={floor}
                                         onClick={() => {
                                             setSelectedFloor(index + 1);
                                             document
@@ -74,3 +76,5 @@ export const DeliveryAddress = forwardRef(
         );
     }
 );
+
+export default DeliveryAddress;

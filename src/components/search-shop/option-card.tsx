@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import CoffeeShopCard from "components/coffee-shop/card";
-import LargeWhiteButton from "components/common/large-white-button";
 import Office, { Merchant } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";

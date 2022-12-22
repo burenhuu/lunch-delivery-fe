@@ -15,7 +15,7 @@ import { CancelDeliveryTimetable } from "lib/types/office.type";
 import { toast } from "react-toastify";
 import { CartItems } from "components/order/cart-items";
 import DeliveryType from "components/order/delivery-type";
-import { DeliveryAddress } from "components/order/delivery-address";
+import DeliveryAddress from "components/order/delivery-address";
 import { DeliveryTime } from "components/order/delivery-time";
 import { Vat } from "components/order/vat";
 import { useModal } from "lib/context/modal";

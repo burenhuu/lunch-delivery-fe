@@ -320,14 +320,14 @@ export function ArrowDown() {
             <path
                 d="M7.5 7.5L0.5 0.5"
                 stroke="#1E2335"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M14.5 0.5L7.5 7.5"
                 stroke="#1E2335"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -345,20 +345,20 @@ export function EditIcon() {
             <path
                 d="M9.70401 1.50126C10.4446 0.623345 11.7473 0.497929 12.6396 1.21459L14.2724 2.48668C15.2271 3.05105 15.5484 4.29626 14.9862 5.2548C14.9862 5.2548 14.9684 5.29063 14.9595 5.30855C14.9238 5.3623 5.98326 16.605 5.98326 16.605C5.67989 16.9813 5.22483 17.2052 4.74301 17.2052L1.31671 17.25L0.540435 13.9623C0.433363 13.4965 0.540435 13.0127 0.843806 12.6365L9.70401 1.50126Z"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M8.2395 3.35437L13.3842 7.29653"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M10.7896 17.25H17.5001"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -376,14 +376,14 @@ export function LongArrow() {
             <path
                 d="M14.25 7.5H0.75"
                 stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M9.75 3L14.25 7.5L9.75 12"
                 stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -401,14 +401,14 @@ export function SearchXIcon() {
             <path
                 d="M19.5 22L10.5 13"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M19.5 13L10.5 22"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -426,16 +426,16 @@ export function NavigateArrow() {
             <path
                 d="M14.2501 14.25L1.00024 1"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M9.00006 0.75L0.750244 0.75L0.750244 8.99999"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -453,14 +453,14 @@ export function CloseButton() {
             <path
                 d="M9.5 10L0.5 1"
                 stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M9.5 1L0.5 10"
                 stroke="white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -478,9 +478,9 @@ export function HomeIcon() {
             <path
                 d="M6.33089 15.2929V12.9139C6.33089 12.3123 6.8109 11.8201 7.41771 11.811H9.61852C10.2253 11.811 10.7144 12.3032 10.7144 12.9139V15.2929C10.7144 15.8034 11.122 16.2318 11.6291 16.2409H13.0963C14.5545 16.2409 15.7409 15.0559 15.75 13.5793V6.82513C15.75 6.25088 15.4692 5.70398 15.0164 5.35762L9.98985 1.28323C9.11134 0.572258 7.86149 0.572258 6.98298 1.28323L1.9836 5.35762C1.53076 5.7131 1.25906 6.25088 1.25 6.83424V13.5884C1.25 15.0559 2.43645 16.25 3.8946 16.25H5.36181C5.8871 16.25 6.30372 15.8216 6.31277 15.302"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -502,8 +502,8 @@ export function Remove() {
                 x2="4.25"
                 y2="7.5"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
             />
         </svg>
     );
@@ -525,8 +525,8 @@ export function Add() {
                 x2="4.25"
                 y2="7.5"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
             />
             <line
                 x1="7.5"
@@ -534,8 +534,8 @@ export function Add() {
                 x2="7.5"
                 y2="4.25"
                 stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
             />
         </svg>
     );
@@ -554,23 +554,23 @@ export function CallIcon() {
             <path
                 d="M19.5323 20.4777C23.5231 24.4685 24.4232 19.8476 26.9638 22.3881C29.4142 24.8386 30.8245 25.3287 27.7139 28.4293C27.3238 28.7394 24.8533 32.5001 16.1816 23.8284C7.50985 15.1467 11.2606 12.6762 11.5707 12.2861C14.6813 9.17548 15.1614 10.5858 17.6119 13.0362C20.1524 15.5768 15.5415 16.4869 19.5323 20.4677V20.4777Z"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M22.5 14C24.27 14.34 25.66 15.73 26 17.5"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M22.5 10.5C26.179 10.9083 29.0824 13.8158 29.5 17.5"
                 stroke="#1E2335"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );
@@ -592,36 +592,36 @@ export function AddPhotos() {
                 height="60"
                 rx="10"
                 stroke="#647382"
-                stroke-linecap="round"
-                stroke-dasharray="5 5"
+                strokeLinecap="round"
+                strokeDasharray="5 5"
             />
             <path
                 d="M33 43.5H17.3043C15.4787 43.5 14 42.0083 14 40.1667V21.8333C14 19.9917 15.4787 18.5 17.3043 18.5H21.0465"
                 stroke="#647382"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
             <path
                 d="M32 18.5L44.6316 18.5C46.4926 18.5 48 19.9917 48 21.8333V31"
                 stroke="#647382"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
             <path
                 d="M22.5 15H30.5"
                 stroke="#647382"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
             <path
                 d="M31 37.25C34.4518 37.25 37.25 34.4518 37.25 31C37.25 27.5482 34.4518 24.75 31 24.75C27.5482 24.75 24.75 27.5482 24.75 31C24.75 34.4518 27.5482 37.25 31 37.25Z"
                 stroke="#647382"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
             <path
                 d="M42 26.5C43.1046 26.5 44 25.6046 44 24.5C44 23.3954 43.1046 22.5 42 22.5C40.8954 22.5 40 23.3954 40 24.5C40 25.6046 40.8954 26.5 42 26.5Z"
@@ -630,16 +630,16 @@ export function AddPhotos() {
             <path
                 d="M44 35.5V43.5"
                 stroke="#F45844"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
             <path
                 d="M48 39.5H40"
                 stroke="#F45844"
-                stroke-width="2"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
         </svg>
     );
@@ -657,13 +657,13 @@ export function UpointGreen() {
             <path
                 d="M9.5 0.5H1.5C0.947715 0.5 0.5 0.947715 0.5 1.5V9.5C0.5 10.0523 0.947715 10.5 1.5 10.5H9.5C10.0523 10.5 10.5 10.0523 10.5 9.5V1.5C10.5 0.947715 10.0523 0.5 9.5 0.5Z"
                 stroke="#78C81E"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
             />
             <path
                 d="M2.5 6C2.5 6 3.2 8 5.5 8C7.8 8 8.5 6 8.5 6"
                 stroke="#78C81E"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
         </svg>
     );
@@ -681,13 +681,13 @@ export function Upoint() {
             <path
                 d="M9.5 0.5H1.5C0.947715 0.5 0.5 0.947715 0.5 1.5V9.5C0.5 10.0523 0.947715 10.5 1.5 10.5H9.5C10.0523 10.5 10.5 10.0523 10.5 9.5V1.5C10.5 0.947715 10.0523 0.5 9.5 0.5Z"
                 stroke="#1E2335"
-                stroke-miterlimit="10"
+                strokeMiterlimit="10"
             />
             <path
                 d="M2.5 6C2.5 6 3.2 8 5.5 8C7.8 8 8.5 6 8.5 6"
                 stroke="#1E2335"
-                stroke-miterlimit="10"
-                stroke-linecap="round"
+                strokeMiterlimit="10"
+                strokeLinecap="round"
             />
         </svg>
     );

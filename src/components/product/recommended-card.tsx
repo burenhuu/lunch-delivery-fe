@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import SmallButton from "components/common/small-button";
 import { Option, Recommended } from "lib/types/merchant-menu-category.type";
-import { toast, formatPrice } from "lib/utils/helpers";
+import { formatPrice } from "lib/utils/helpers";
 import { useAppState } from "lib/context/app";
 import TokiAPI from "lib/api/toki";
-
+import { toast } from "react-toastify";
 interface RecommendedCardProps {
     merchantId: string;
     recommended: Recommended;
@@ -112,7 +111,7 @@ const RecommendedCard: React.FC<RecommendedCardProps> = ({
                     </div>
                 </div>
 
-                <SmallButton
+                {/* <SmallButton
                     isFull={true}
                     loading={loading}
                     text={`${
@@ -120,7 +119,7 @@ const RecommendedCard: React.FC<RecommendedCardProps> = ({
                             ? "Захиалах"
                             : "Сагслах"
                     }`}
-                />
+                /> */}
             </div>
         </a>
     );

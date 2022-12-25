@@ -32,12 +32,6 @@ const TokiAPI = {
         } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
     },
 
-    getProductsByCategory: (categoryId: string) =>
-        axios.get(`${urlPrefix}/products?category=${categoryId}`),
-
-    getProductsByMerchant: (merchantId: string) =>
-        axios.get(`${urlPrefix}/products?merchant=${merchantId}`),
-
     getBanner: (merchantId: string) =>
         axios.get(`${urlPrefix}/merchant/${merchantId}/banner`),
 

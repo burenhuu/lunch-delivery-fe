@@ -49,9 +49,9 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                     <p className="text-base font-medium text-[#1E2335]">
                         {office.name}
                     </p>
-                    <p className="text-xs font-light break-normal text-[#647382]">
+                    {/* <p className="text-xs font-light break-normal text-[#647382]">
                         {office.merchants.length} зоогийн газар
-                    </p>
+                    </p> */}
                 </div>
             </div>
         </div>

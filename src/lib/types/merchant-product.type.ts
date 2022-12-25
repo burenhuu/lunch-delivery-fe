@@ -28,6 +28,12 @@ export interface MerchantMenu {
     name:       string;
     categories: Category[];
 }
+
+export interface RecommendedType extends Variant {
+    image:string
+    place:string  
+    rating: number
+}
 // export default interface MerchantProducts {
 //     products: Product[];
 //     categories: Category[];

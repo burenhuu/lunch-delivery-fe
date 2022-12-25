@@ -38,7 +38,7 @@ export default function SearchInput({
                         }
                     }}
                     type="input"
-                    className={`w-full py-2 pl-10 pr-10  text-sm
+                    className={`w-full py-2 px-10 text-sm
                      text-[#647382] font-normal placeholder:font-light bg-white border-none rounded-[10px] disabled  ${
                          type === 1 && "cursor-pointer"
                      }`}
@@ -53,13 +53,13 @@ export default function SearchInput({
                 />
                 {loading && (
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 mr-1">
-                        {/* <Spin /> */}
+                        <Spin />
                     </span>
                 )}
             </div>
 
             {bySearchBar && searchValue && offices && offices.length > 0 && (
-                <div className="relative grid grid-cols-1  mx-5 mt-3 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] max-h-[50vw] overflow-auto scrollbar-hide px-[15px] divide-[#B3BFC6]">
+                <div className="relative grid grid-cols-1  mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] max-h-[50vw] overflow-auto scrollbar-hide px-[15px] divide-[#B3BFC6]">
                     {loading && (
                         <>
                             {/* <Overlay isOfficeList={false} />

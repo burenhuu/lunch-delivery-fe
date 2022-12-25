@@ -30,7 +30,6 @@ const SearchShop: React.FC<SearchShopProps> = ({
             () => setSearchValue(debouncedSearchValue),
             600
         );
-
         return () => clearTimeout(timer);
     }, [debouncedSearchValue]);
 

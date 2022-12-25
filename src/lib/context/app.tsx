@@ -52,6 +52,13 @@ const reducer = (state: any, action: any) => {
             return newState;
         }
 
+        case "categoryId": {
+            const newState = { ...state, categoryId: action.categoryId };
+            saveToLocal(newState);
+
+            return newState;
+        }
+
         case "products": {
             const newState = { ...state, products: action.products };
             saveToLocal(newState);

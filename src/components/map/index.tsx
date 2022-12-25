@@ -137,7 +137,7 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                     }}
                     icon={{
                         // url: office.pin_icon,
-                        url: "/images/Pin.svg",
+                        url: "/images/pin.svg",
                         scaledSize: new google.maps.Size(24, 34),
                         anchor: new google.maps.Point(24, 34),
                     }}
@@ -146,20 +146,20 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                             lat: Number(office.latitude),
                             lng: Number(office.longitude),
                         }),
-                        onSearchByMap(
-                            Number(office.latitude),
-                            Number(office.longitude)
-                        ),
+                        // onSearchByMap(
+                        //     Number(office.latitude),
+                        //     Number(office.longitude)
+                        // ),
                         map.panTo(
                             new window.google.maps.LatLng(
                                 Number(office.latitude),
                                 Number(office.longitude)
                             )
                         ),
-                        dispatch({
-                            type: "merchants",
-                            merchants: office.merchants,
-                        }),
+                        // dispatch({
+                        //     type: "merchants",
+                        //     merchants: office.merchants,
+                        // }),
                         dispatch({
                             type: "officeId",
                             officeId: office.id,

@@ -8,18 +8,51 @@ import { useAppState } from "lib/context/app";
 import { dummyProducts, productFilters } from "lib/types/dummy-data";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Accordion } from "react-accessible-accordion";
+import { Product } from "lib/types/merchant-product.type";
+import CenteredSpin from "components/common/centered-spin";
+import TokiAPI from "lib/api/toki";
 
 export default function Category() {
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
-    const { categoryId } = router.query;
+    const { merchants, products, categories, categoryId, officeId } = state;
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [productTab, setProductTab] = useState<string>(productFilters[0]);
-    const { merchants, products, categories } = state;
+    const [loading, setLoading] = useState<boolean>(false);
+    const [selectedProducts, setSelectedProducts] =
+        useState<Product[]>(products);
 
-    return (
+    useEffect(() => {
+        const filterByCategories = async () => {
+            setLoading(true);
+            try {
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId,
+                    "category",
+                    activeTab
+                );
+                if (data) {
+                    const productArray: Product[] = [];
+                    await data.map((product: Product) => {
+                        if (!productArray.includes(product)) {
+                            productArray.push(product);
+                        }
+                    });
+                    setSelectedProducts(productArray);
+                    dispatch({ type: "products", products: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        filterByCategories();
+    }, [activeTab]);
+
+    return loading ? (
+        <CenteredSpin />
+    ) : (
         <>
             <div className="my-col-10 w-full h-[calc(100vh-50px)] overflow-hidden">
                 <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">
@@ -29,23 +62,23 @@ export default function Category() {
                         setActiveTab={setActiveTab}
                     />
 
-                    <CategoryProduct />
+                    <CategoryProduct products={selectedProducts} />
                 </div>
                 <ProductTab
                     activeTab={productTab}
                     setActiveTab={setProductTab}
                 />
                 <div className="relative w-full h-full overflow-y-scroll scrollbar-hide py-5 -mt-2.5">
-                    {dummyProducts ? (
+                    {products.length > 0 ? (
                         <Accordion
                             // allowMultipleExpanded
                             allowZeroExpanded
                             className="my-col-10 px-5"
                         >
-                            {dummyProducts?.map((product) => {
+                            {products?.map((product: Product) => {
                                 return (
                                     <ProductCard
-                                        key={product.title}
+                                        key={product.name}
                                         product={product}
                                     />
                                 );

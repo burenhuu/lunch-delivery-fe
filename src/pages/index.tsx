@@ -9,8 +9,6 @@ import OfficeNotFound from "components/office/not-found";
 import OfficeList from "components/office/office-list";
 import Office from "lib/types/office.type";
 import TokiAPI from "lib/api/toki";
-import { toast } from "react-toastify";
-import { dummyOffices } from "lib/types/dummy-data";
 
 let isMyOffice = false;
 
@@ -52,6 +50,8 @@ const Index: NextPage = () => {
 
     const clearResults = () => setOffices([]);
 
+    if (error) return null;
+
     return (
         <>
             <div className="flex flex-1 h-full">
@@ -66,13 +66,13 @@ const Index: NextPage = () => {
 
                 <Map
                     onSearchByMap={onSearchByMap}
-                    offices={data ? data?.data?.data : offices}
+                    offices={data ? data?.data : offices}
                     // offices={offices}
                 />
 
                 {bySearchbar ? (
                     noResults && (
-                        <div className="absolute z-30 mt-20 text-sm text-gray-600 w-100">
+                        <div className="absolute z-30 mt-16 text-sm text-gray-600 w-100">
                             <div className=" mx-5 bg-white divide-y-[0.5px] rounded-[10px]  px-[15px] py-[15px]">
                                 <p className="text-sm text-normal">
                                     Уг байршилд хоол хүргэх үйлчилгээ хараахан
@@ -98,9 +98,9 @@ const Index: NextPage = () => {
                         {noResults ? (
                             <OfficeList
                                 title="Хоол хүргүүлэх боломжтой оффисууд"
-                                // offices={data ? data?.data?.data : offices}
+                                offices={data ? data?.data : offices}
                                 // offices={offices}
-                                offices={dummyOffices}
+                                // offices={dummyOffices}
                                 loading={loading}
                                 height={height}
                                 setHeight={setHeight}
@@ -109,8 +109,8 @@ const Index: NextPage = () => {
                         ) : (
                             <OfficeList
                                 title="Хоол хүргүүлэх оффисоо сонгоно уу"
-                                // offices={offices}
-                                offices={dummyOffices}
+                                offices={offices}
+                                // offices={dummyOffices}
                                 loading={loading}
                                 height={height}
                                 setHeight={setHeight}

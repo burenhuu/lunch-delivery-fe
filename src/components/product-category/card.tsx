@@ -1,4 +1,5 @@
 import FoodBorder from "components/common/food-border";
+import { useAppState } from "lib/context/app";
 import { Category } from "lib/types/merchant-menu-category.type";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,14 +10,17 @@ export default function CategoryCard({
     small = false,
     active = false,
 }: {
-    category: Category;
+    category: any;
     small?: boolean;
     active?: boolean;
 }) {
     const { id, name, icon } = category;
     const router = useRouter();
+    const [state, dispatch]: any = useAppState();
+
     const onCategoryCardClick = async () => {
         if (!small) {
+            await dispatch({ type: "categoryId", categoryId: id });
             router.push(`/category/${id}`);
         }
     };
@@ -33,8 +37,8 @@ export default function CategoryCard({
                     (small ? "w-[55px] h-[55px]" : "w-[72.5px] h-[72.5px]")
                 }
             >
-                <Image
-                    src={`/images/${icon}`}
+                <img
+                    src={icon}
                     alt={icon}
                     width={small ? 55 : 72.5}
                     height={small ? 55 : 72.5}

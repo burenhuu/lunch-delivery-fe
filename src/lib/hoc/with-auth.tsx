@@ -61,6 +61,8 @@ const WithAuth = ({ children }: any) => {
                     // } else {
                     //     toast(data.message);
                     // }
+                } catch (err) {
+                    toast("Алдаа гарлаа");
                 } finally {
                     setLoading(false);
                 }
@@ -70,9 +72,9 @@ const WithAuth = ({ children }: any) => {
         }
     }, [router.isReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (loading) return <CenteredSpin />;
+    // if (loading) return <CenteredSpin />;
 
-    return children;
+    return loading ? <CenteredSpin /> : children;
 };
 
 export default WithAuth;

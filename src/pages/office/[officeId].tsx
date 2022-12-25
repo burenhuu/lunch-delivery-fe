@@ -14,11 +14,10 @@ import { recommendedDummyData } from "lib/types/dummy-data";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDebounce } from "lib/hooks/useDebounce";
 import { toast } from "react-toastify";
 import { Category } from "lib/types/merchant-menu-category.type";
 import TokiAPI from "lib/api/toki";
-import { Product } from "lib/types/merchant-product.type";
+import { Product, RecommendedType } from "lib/types/merchant-product.type";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
@@ -26,10 +25,11 @@ export default function Office() {
     const officeId = router.query.officeId;
     const [loading, setLoading] = useState<boolean>(false);
     const [searchValue, setSearchValue] = useState<string>("");
+    const [debouncedValue, setDebouncedValue] = useState<string>(searchValue);
     const [searchProducts, setSearchProducts] = useState<Product[]>([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
-    const debouncedValue = useDebounce(searchValue);
 
     const filterNames = [
         "Үнэлгээгээр",
@@ -39,6 +39,12 @@ export default function Office() {
         "Шинэ",
     ];
     const [activeFilter, setActiveFilter] = useState<string>(filterNames[0]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedValue(searchValue), 1000);
+
+        return () => clearTimeout(timer);
+    }, [searchValue]);
 
     const getMerchants = async () => {
         try {
@@ -67,15 +73,28 @@ export default function Office() {
     };
 
     const getProducts = async () => {
-        try {
-            setLoading(true);
-            const { data } = await TokiAPI.getProductsByOffice(
-                officeId?.toString()!
-            );
-            if (data) {
-                dispatch({ type: "products", products: data });
-            }
-        } finally {
+        setLoading(true);
+        const { data } = await TokiAPI.getProductsByOffice(
+            officeId?.toString()!
+        );
+        if (data) {
+            const products: RecommendedType[] = [];
+            await data.map(async (item: any) => {
+                await item?.products?.map(async (product: Product) => {
+                    product?.variants?.map((variant) => {
+                        if (variant.price !== variant.salePrice) {
+                            products?.push({
+                                place: item.name,
+                                image: product.image,
+                                rating: item.rating,
+                                ...variant,
+                            });
+                        }
+                    });
+                });
+            });
+            setRecommended(products);
+            await dispatch({ type: "products", products: data });
             setLoading(false);
         }
     };
@@ -107,10 +126,10 @@ export default function Office() {
                 setSearchProducts(data);
             }
         };
-        if (searchValue !== "") {
+        if (debouncedValue !== "") {
             onSearch();
         }
-    }, [searchValue]);
+    }, [debouncedValue]);
 
     return loading ? (
         <CenteredSpin />
@@ -170,7 +189,7 @@ export default function Office() {
                                     return (
                                         <CategoryCard
                                             category={category}
-                                            key={category.name}
+                                            key={category.id}
                                         />
                                     );
                                 })}
@@ -224,20 +243,22 @@ export default function Office() {
                                                 />
                                             );
                                         })}
-                                    <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
-                                        {recommendedDummyData?.map(
-                                            (product: any) => {
-                                                return (
-                                                    <Recommended
-                                                        key={product.name}
-                                                        data={product}
-                                                    />
-                                                );
-                                            }
-                                        )}
-                                    </div>
+                                    {recommended?.length > 0 && (
+                                        <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
+                                            {recommended?.map(
+                                                (product: RecommendedType) => {
+                                                    return (
+                                                        <Recommended
+                                                            key={product.id}
+                                                            data={product}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    )}
                                     {merchants
-                                        ?.slice(3)
+                                        ?.slice(2)
                                         .map((merchant: Merchant) => {
                                             return (
                                                 <GradientMerchantCard

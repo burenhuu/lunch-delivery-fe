@@ -14,7 +14,7 @@ export default function CategoryCard({
     small?: boolean;
     active?: boolean;
 }) {
-    const { id, name, icon } = category;
+    const { id, name, icon, logo } = category;
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
 
@@ -37,14 +37,28 @@ export default function CategoryCard({
                     (small ? "w-[55px] h-[55px]" : "w-[72.5px] h-[72.5px]")
                 }
             >
-                <img
-                    src={icon}
-                    alt={icon}
-                    width={small ? 55 : 72.5}
-                    height={small ? 55 : 72.5}
-                    className="rounded-md object-cover "
-                />
-                {small && active && <FoodBorder />}
+                {small ? (
+                    <>
+                        <img
+                            src={logo}
+                            alt={logo}
+                            width={55}
+                            height={55}
+                            className="rounded-md"
+                        />
+                        {active && <FoodBorder />}
+                    </>
+                ) : (
+                    <>
+                        <img
+                            src={icon}
+                            alt={icon}
+                            width={72.5}
+                            height={72.5}
+                            className="rounded-md"
+                        />
+                    </>
+                )}
             </div>
             <div
                 className={

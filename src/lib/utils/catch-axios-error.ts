@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
 
 const catchAxiosError = (error: any) => {
-      if (typeof window !== "undefined" && error) {
+      if (typeof window !== "undefined") {
         toast("Алдаа гарлаа");
     } else {
-        console.log("Алдаа гарлаа");
+        toast("Алдаа гарлаа");
     }
     // let message;
     // const response = error.response;

@@ -2,6 +2,13 @@ import ButtonComponent from "components/common/button";
 import { ImageModal } from "components/common/image-modal";
 import { ArrowDown, EditIcon } from "components/icons";
 import { useModal } from "lib/context/modal";
+import {
+    CardDataType,
+    Option,
+    Product,
+    Variant,
+} from "lib/types/merchant-product.type";
+import { Merchant } from "lib/types/office.type";
 import { formatPrice } from "lib/utils/helpers";
 import { useContext, useRef, useState } from "react";
 import {
@@ -14,187 +21,181 @@ import {
 import { collapseToast } from "react-toastify";
 
 export default function ProductCard({
-    product,
+    data,
     page = false,
 }: {
-    product: any;
+    data: CardDataType;
     page?: boolean;
 }) {
-    const [open, setOpen] = useState<boolean>(false);
+    const [isOpen, setOpen] = useState<boolean>(false);
+    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
     const {
-        img,
-        title,
+        name,
+        rating,
+        id,
+        image,
+        options,
         place,
-        recipe,
-        portions,
-        spices,
-        oldPrice,
         price,
-        avgReview,
-        outOfStock,
-    } = product;
-    const [selectedPortion, setSelectedPortion] = useState<string>(
-        portions ? portions[0] : ""
-    );
-    const [selectedSpice, setSelectedSpice] = useState<string>(
-        spices ? spices[0] : ""
-    );
+        salePrice,
+        specification,
+    } = data;
 
     const [show, setShow, content, setContent] = useModal();
 
     const comment = useRef<HTMLInputElement>(null);
 
     const onAddClick = () => {
-        console.log(selectedPortion, selectedSpice, comment.current?.value);
+        console.log(comment.current?.value);
     };
 
     const onImageClick = () => {
         setShow(true);
-        setContent(<ImageModal images={[img]} />);
+        setContent(<ImageModal images={[image]} />);
     };
+
+    const onSelectOption = () => {};
+
     return (
-        <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
-            <AccordionItemHeading>
-                <AccordionItemState>
-                    {({ expanded }) => {
-                        setOpen(expanded!);
-                        return null;
-                    }}
-                </AccordionItemState>
-                <AccordionItemButton className="flex justify-start gap-x-3.75 ">
-                    <div className="relative min-w-[120px] min-h-[120px]">
-                        <img
-                            onClick={onImageClick}
-                            src={`/images/${img}`}
-                            className={
-                                "w-full h-full " +
-                                (open ? "rounded-bl-none" : "rounded-2xl")
-                            }
-                            alt={title}
-                        />
-                        <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
-                            👍 {avgReview}%
-                        </div>
-                        {outOfStock && (
+        data && (
+            <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
+                <AccordionItemHeading>
+                    <AccordionItemState>
+                        {({ expanded }) => {
+                            setOpen(expanded!);
+                            return null;
+                        }}
+                    </AccordionItemState>
+                    <AccordionItemButton className="flex justify-start gap-x-3.75 ">
+                        <div className="relative min-w-[120px] min-h-[120px]">
+                            <img
+                                onClick={onImageClick}
+                                src={image}
+                                className={
+                                    "w-full h-full " +
+                                    (isOpen ? "rounded-bl-none" : "rounded-2xl")
+                                }
+                                alt={place}
+                            />
+                            <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                👍 {rating}%
+                            </div>
+                            {/* {outOfStock && (
                             <div className="absolute text-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium text-base text-white">
                                 Дууссан
                             </div>
-                        )}
-                    </div>
-                    <div className="py-3.75 pr-5 flex justify-between w-full">
-                        <div
-                            className={
-                                "flex flex-col items-start " +
-                                (page
-                                    ? "justify-center gap-y-1.25"
-                                    : "justify-between")
-                            }
-                        >
-                            <div className="flex flex-col gap-y-1.5">
-                                {!page && (
-                                    <div className="font-medium">{place}</div>
-                                )}
-                                <div
-                                    className={
-                                        page
-                                            ? "font-medium text-sm"
-                                            : "text-xs "
-                                    }
-                                >
-                                    {title}
-                                </div>
-                            </div>
-                            <div className="flex gap-x-1 items-center">
-                                {oldPrice ? (
-                                    <>
-                                        <div className="font-light text-xs line-through text-gray">
-                                            {formatPrice(oldPrice)}₮
+                        )} */}
+                        </div>
+                        <div className="py-3.75 pr-5 flex justify-between w-full">
+                            <div
+                                className={
+                                    "flex flex-col items-start " +
+                                    (page
+                                        ? "justify-center gap-y-1.25"
+                                        : "justify-between")
+                                }
+                            >
+                                <div className="flex flex-col gap-y-1.5">
+                                    {!page && (
+                                        <div className="font-medium">
+                                            {place}
                                         </div>
+                                    )}
+                                    <div
+                                        className={
+                                            page
+                                                ? "font-medium text-sm"
+                                                : "text-xs "
+                                        }
+                                    >
+                                        {name}
+                                    </div>
+                                </div>
+                                <div className="flex gap-x-1 items-center">
+                                    {price !== salePrice ? (
+                                        <>
+                                            <div className="font-light text-xs line-through text-gray">
+                                                {formatPrice(price)}₮
+                                            </div>
+                                            <div className="text-sm">
+                                                {formatPrice(salePrice)}₮
+                                            </div>
+                                        </>
+                                    ) : (
                                         <div className="text-sm">
                                             {formatPrice(price)}₮
                                         </div>
-                                    </>
-                                ) : (
-                                    <div className="text-sm">
-                                        {formatPrice(price)}₮
-                                    </div>
-                                )}
+                                    )}
+                                </div>
+                            </div>
+                            <div
+                                className={
+                                    "self-center transition ease-in-out duration-300 " +
+                                    (isOpen && "rotate-180")
+                                }
+                            >
+                                <ArrowDown />
                             </div>
                         </div>
-                        <div
-                            className={
-                                "self-center transition ease-in-out duration-300 " +
-                                (open && "rotate-180")
-                            }
-                        >
-                            <ArrowDown />
+                    </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                    <div className="pt-2.5 px-5 pb-5 my-col-10 text-sm">
+                        <div className="my-col-5">
+                            <div>Орц:</div>
+                            <div className="text-gray font-light text-xs">
+                                {specification}
+                            </div>
                         </div>
-                    </div>
-                </AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel>
-                <div className="pt-2.5 px-5 pb-5 my-col-10 text-sm">
-                    <div className="my-col-5">
-                        <div>Орц:</div>
-                        <div className="text-gray font-light text-xs">
-                            {recipe}
-                        </div>
-                    </div>
-                    {!outOfStock && (
                         <>
-                            {portions && (
-                                <div className="my-col-5">
-                                    <div>Порц:</div>
-                                    <div className="flex gap-x-1.25">
-                                        {portions.map((portion: string) => {
-                                            return (
-                                                <div
-                                                    key={portion}
-                                                    onClick={() =>
-                                                        setSelectedPortion(
-                                                            portion
-                                                        )
-                                                    }
-                                                    className={
-                                                        "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                        (selectedPortion ===
-                                                        portion
-                                                            ? "gradient-border text-main"
-                                                            : "border border-gray text-gray")
-                                                    }
-                                                >
-                                                    {portion}
-                                                </div>
-                                            );
-                                        })}
+                            {options.map((option: Option) => {
+                                const { id, name, price, type, values } =
+                                    option;
+                                return (
+                                    <div key={option.id} className="my-col-5">
+                                        <div>{option.name}</div>
+                                        <div className="flex gap-x-1.25">
+                                            {values?.map((value: string) => {
+                                                return (
+                                                    <div
+                                                        key={value}
+                                                        onClick={() =>
+                                                            setSelectedOptions([
+                                                                ...selectedOptions,
+                                                                {
+                                                                    id,
+                                                                    name,
+                                                                    price,
+                                                                    type,
+                                                                    values: [
+                                                                        value,
+                                                                    ],
+                                                                },
+                                                            ])
+                                                        }
+                                                        className={
+                                                            "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                            (selectedOptions.find(
+                                                                (item) =>
+                                                                    item.name ===
+                                                                        option.name &&
+                                                                    item.values.includes(
+                                                                        value
+                                                                    )
+                                                            )
+                                                                ? "gradient-border text-main"
+                                                                : "border border-gray text-gray")
+                                                        }
+                                                    >
+                                                        {value}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                            {spices && (
-                                <div className="my-col-5">
-                                    <div>Халуун ногоо:</div>
-                                    <div className="flex gap-x-1.25">
-                                        {spices.map((spice: string) => {
-                                            return (
-                                                <div
-                                                    key={spice}
-                                                    onClick={() =>
-                                                        setSelectedSpice(spice)
-                                                    }
-                                                    className={
-                                                        "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                        (selectedSpice === spice
-                                                            ? "gradient-border text-main"
-                                                            : "border border-gray text-gray")
-                                                    }
-                                                >
-                                                    {spice}%
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            )}
+                                );
+                            })}
+
                             <div className="my-col-5">
                                 <div>Нэмэлт тайлбар:</div>
                                 <div className="relative">
@@ -213,9 +214,9 @@ export default function ProductCard({
                                 <ButtonComponent text="Сагсанд нэмэх" />
                             </div>
                         </>
-                    )}
-                </div>
-            </AccordionItemPanel>
-        </AccordionItem>
+                    </div>
+                </AccordionItemPanel>
+            </AccordionItem>
+        )
     );
 }

@@ -34,6 +34,14 @@ export interface RecommendedType extends Variant {
     place:string  
     rating: number
 }
+
+export interface CardDataType extends Variant  {
+    place:string
+    image:string
+    rating:number
+    specification: string
+
+}
 // export default interface MerchantProducts {
 //     products: Product[];
 //     categories: Category[];

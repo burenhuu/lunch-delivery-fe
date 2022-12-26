@@ -25,12 +25,16 @@ export default function CategoryProduct({ products }: { products: Product[] }) {
         >
             {[...Array(swiperLength)]?.map((n: any, index: number) => {
                 return (
-                    <SwiperSlide className="grid grid-cols-5 gap-y-2.5 px-5 gap-x-3.75">
+                    <SwiperSlide
+                        key={n}
+                        className="grid grid-cols-5 gap-y-2.5 px-5 gap-x-3.75"
+                    >
                         {products
                             ?.slice(index * 10, (index + 1) * 10)
                             .map((product) => {
                                 return (
                                     <div
+                                        key={product.name}
                                         onClick={() =>
                                             onProductClick(product.name)
                                         }

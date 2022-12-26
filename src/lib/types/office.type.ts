@@ -15,6 +15,8 @@
 //     pin_icon: string;
 // }
 
+import { Product } from "./merchant-product.type";
+
 export default interface Office {
     id:        string;
     name:      string;
@@ -45,6 +47,7 @@ export interface Merchant {
         open:        boolean;
         reason:      string;
         rating:      number;
+        products: Product[]
 }
     
 

@@ -10,7 +10,11 @@ import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Accordion } from "react-accessible-accordion";
-import { Product } from "lib/types/merchant-product.type";
+import {
+    CardDataType,
+    Product,
+    Variant,
+} from "lib/types/merchant-product.type";
 import CenteredSpin from "components/common/centered-spin";
 import TokiAPI from "lib/api/toki";
 
@@ -23,6 +27,7 @@ export default function Category() {
     const [loading, setLoading] = useState<boolean>(false);
     const [selectedProducts, setSelectedProducts] =
         useState<Product[]>(products);
+    const [cardData, setCardData] = useState<CardDataType[]>([]);
 
     useEffect(() => {
         const filterByCategories = async () => {
@@ -50,6 +55,29 @@ export default function Category() {
         filterByCategories();
     }, [activeTab]);
 
+    useEffect(() => {
+        const renderCard = async () => {
+            const temp: CardDataType[] = [];
+            setLoading(true);
+            await products?.map((merchant: Merchant) =>
+                merchant?.products?.map((product: Product) =>
+                    product?.variants?.map((variant: Variant) => {
+                        temp.push({
+                            image: product.image,
+                            place: merchant.name,
+                            rating: merchant.rating,
+                            specification: product.specification,
+                            ...variant,
+                        });
+                    })
+                )
+            );
+            setCardData(temp);
+            setLoading(false);
+        };
+        renderCard();
+    }, [products]);
+
     return loading ? (
         <CenteredSpin />
     ) : (
@@ -61,7 +89,6 @@ export default function Category() {
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />
-
                     <CategoryProduct products={selectedProducts} />
                 </div>
                 <ProductTab
@@ -75,21 +102,23 @@ export default function Category() {
                             allowZeroExpanded
                             className="my-col-10 px-5"
                         >
-                            {products?.map((product: Product) => {
+                            {cardData.map((item: CardDataType) => {
                                 return (
-                                    <ProductCard
-                                        key={product.name}
-                                        product={product}
-                                    />
+                                    <ProductCard key={item.id} data={item} />
                                 );
                             })}
                         </Accordion>
-                    ) : (
+                    ) : productTab === "Урамшуулал" ? (
                         <div className="absolute items-center text-center left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 my-col-20">
                             <Oops />
                             <div className="font-light">
                                 Урамшуулалтай газар байхгүй байна
                             </div>
+                        </div>
+                    ) : (
+                        <div className="absolute items-center text-center left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 my-col-20">
+                            <Oops />
+                            <div className="font-light">Хоосон байна</div>
                         </div>
                     )}
                 </div>

@@ -46,7 +46,7 @@ export default function MerchantProductPage() {
                             merchant={true}
                         />
                     </div>
-                    <div className="relative w-full h-full overflow-y-scroll scrollbar-hide  -my-5 py-5">
+                    {/* <div className="relative w-full h-full overflow-y-scroll scrollbar-hide  -my-5 py-5">
                         <Accordion allowZeroExpanded className="my-col-10">
                             {dummyProducts?.map((product) => {
                                 return (
@@ -58,7 +58,7 @@ export default function MerchantProductPage() {
                                 );
                             })}
                         </Accordion>
-                    </div>
+                    </div> */}
                 </div>
             )}
             <FloatButton />

@@ -15,7 +15,7 @@ export default function MerchantDetailPage() {
     const [merchant, setMerchant] = useState<Merchant>();
     useEffect(() => {
         const merchant = merchants?.find(
-            (merchant: Merchant) => merchant._id === merchantId
+            (merchant: Merchant) => merchant.id === merchantId
         );
         setMerchant(merchant);
     }, []);
@@ -25,7 +25,7 @@ export default function MerchantDetailPage() {
             {merchant && (
                 <div className="p-5 my-col-20">
                     <MerchantIntroduction merchant={merchant} />
-                    <MerchantTimetable timetable={merchant.timetable} />
+                    {/* <MerchantTimetable timetable={merchant.timetable} /> */}
                     <MerchantReview />
                 </div>
             )}

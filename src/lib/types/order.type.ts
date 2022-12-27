@@ -1,41 +1,41 @@
 import { Product, Variant, Option } from "./merchant-product.type";
 
 export interface Order {
-    id:             string;
-    date:           string;
-    number:         string;
-    state:          string;
-    address:        string;
-    contact:        string;
-    comment:        string;
-    deliveryDate:   string;
-    totalAmount:    number;
+    id: string;
+    date: string;
+    number: string;
+    state: string;
+    address: string;
+    contact: string;
+    comment: string;
+    deliveryDate: string;
+    totalAmount: number;
     discountAmount: number;
-    taxAmount:      number;
-    grandTotal:     number;
-    createdAt:      string;
-    updatedAt:      string;
-    reviewed:       boolean;
-    items:          Item[];
-    charges:        Charge[];
-    discounts:      Charge[];
+    taxAmount: number;
+    grandTotal: number;
+    createdAt: string;
+    updatedAt: string;
+    reviewed: boolean;
+    items: Item[];
+    charges: Charge[];
+    discounts: Charge[];
 }
 
 export interface Charge {
-    id:     string;
-    name:   string;
+    id: string;
+    name: string;
     amount: number;
 }
 
 export interface Item {
-    id:       string;
-    name:     string;
-    image:    string;
-    state:    string;
-    price:    number;
+    id: string;
+    name: string;
+    image: string;
+    state: string;
+    price: number;
     quantity: number;
-    comment:  string;
-    options:  Option[];
+    comment: string;
+    options: Option[];
 }
 
 // export interface Order {
@@ -92,13 +92,13 @@ export interface Item {
 //     contact_number: string;
 // }
 
-// export enum Status {
-//     CART = "cart",
-//     PAID = "paid",
-//     PREPARING = "preparing",
-//     PREPARED = "prepared",
-//     DELIVERING = "delivering",
-//     COMPLETED = "completed",
-//     PAYMENT_PENDING = "payment_pending",
-//     CANCELLED = "cancelled",
-// }
+export enum Status {
+    CART = "cart",
+    PAID = "paid",
+    PREPARING = "preparing",
+    PREPARED = "prepared",
+    DELIVERING = "delivering",
+    COMPLETED = "completed",
+    PAYMENT_PENDING = "payment_pending",
+    CANCELLED = "cancelled",
+}

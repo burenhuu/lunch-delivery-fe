@@ -4,8 +4,7 @@ import Countdown, { zeroPad } from "react-countdown";
 import { useState } from "react";
 
 import OrderStatus from "components/order/order-status";
-import { OrderItem, Status } from "lib/types/order.type";
-import SmallButton from "components/common/small-button";
+// import { OrderItem, Status } from "lib/types/order.type";
 import ButtonComponent from "components/common/button";
 import { CallIcon } from "components/icons";
 
@@ -35,7 +34,7 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
 };
 
 interface PendingCardProps {
-    item: OrderItem;
+    item: any;
     id: string;
     scrollRef: any;
 }
@@ -99,7 +98,7 @@ const PendingCard: React.FC<PendingCardProps> = ({ item, id, scrollRef }) => {
                         </div>
                     </div>
                 </div>
-                {item.state === Status.PAYMENT_PENDING ? (
+                {/* {item.state === Status.PAYMENT_PENDING ? (
                     <div
                         className="w-[150px] self-center z-30"
                         onClick={onPayClick}
@@ -118,7 +117,7 @@ const PendingCard: React.FC<PendingCardProps> = ({ item, id, scrollRef }) => {
                             <CallIcon />
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </>
     );

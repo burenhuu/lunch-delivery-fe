@@ -25,14 +25,14 @@ const CoffeeShopCard: React.FC<CoffeeShopCardProps> = ({ merchant }) => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
-    useEffect(() => {
-        merchant.timetable.map((timetable: Timetable, index: number) =>
-            new Date().getDay() === timetable.day
-                ? (setStartDate(timetable.start_hour),
-                  setEndDate(timetable.end_hour))
-                : null
-        );
-    }, [merchant]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     merchant.timetable.map((timetable: Timetable, index: number) =>
+    //         new Date().getDay() === timetable.day
+    //             ? (setStartDate(timetable.start_hour),
+    //               setEndDate(timetable.end_hour))
+    //             : null
+    //     );
+    // }, [merchant]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return <h1>sda</h1>;
     //     <div

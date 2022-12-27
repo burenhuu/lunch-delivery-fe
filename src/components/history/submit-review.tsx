@@ -56,7 +56,8 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                             alt={merchant.name}
                         />
                         <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                            <div className="text-sm">{`${merchant.name} (${merchant.temporary_closed})`}</div>
+                            <div className="text-sm">{`${merchant.name}`}</div>
+                            {/* (${merchant.}) */}
                         </div>
                         <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
                     </div>
@@ -67,6 +68,7 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                         {emojis.map((emoji) => {
                             return (
                                 <div
+                                    key={emoji}
                                     onClick={() => {
                                         setSelectedEmoji(emoji);
                                         setHeight("100%");
@@ -91,6 +93,7 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                             {improvements.map((item) => {
                                 return (
                                     <div
+                                        key={item}
                                         onClick={() => {
                                             if (
                                                 !selectedImprovements.includes(
@@ -137,6 +140,7 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                                     images.map((image) => {
                                         return (
                                             <img
+                                                key={image}
                                                 className="w-[60px] h-[60px] rounded-md"
                                                 src={image}
                                                 alt={image}

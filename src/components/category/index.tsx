@@ -39,11 +39,11 @@ const Category: React.FC<CategoryProps> = ({
                                 key={index}
                                 className={`relative w-full h-[40px]`}
                                 onClick={() => {
-                                    setCategoryId(category._id);
-                                    setCategoryTabId(category._id);
+                                    setCategoryId(category.id);
+                                    setCategoryTabId(category.id);
                                     dispatch({
                                         type: "categoryId",
-                                        categoryId: category._id,
+                                        categoryId: category.id,
                                     });
                                     index == categories.length - 1
                                         ? setLastCategory(true)
@@ -52,26 +52,26 @@ const Category: React.FC<CategoryProps> = ({
                             >
                                 <button
                                     className={` inline-block w-full text-base px-[20px]  h-[40px] truncate  p-2 ${
-                                        categoryId === category._id
+                                        categoryId === category.id
                                             ? `text-white rounded-[10px] font-medium active`
                                             : `bg-white text-[#647382] font-normal rounded-[10px]`
                                     }`}
                                     style={{
                                         backgroundColor:
-                                            categoryId === category._id
+                                            categoryId === category.id
                                                 ? state.themeColor
                                                 : "#ffffff",
                                     }}
                                 >
                                     {category.name}
                                 </button>
-                                {category.cart_items_count > 0 && (
+                                {/* {category.cart_items_count > 0 && (
                                     <CountBadge
                                         state={state}
                                         count={category.cart_items_count}
                                         isCategory={true}
                                     />
-                                )}
+                                )} */}
                             </li>
                         ))}
                 </ul>

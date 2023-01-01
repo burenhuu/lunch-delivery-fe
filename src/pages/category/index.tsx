@@ -3,20 +3,16 @@ import FloatButton from "components/cart/float-button";
 import { Oops } from "components/icons";
 import { useAppState } from "lib/context/app";
 import { productFilters } from "lib/types/dummy-data";
-import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Accordion } from "react-accessible-accordion";
-import {
-    CardDataType,
-    Product,
-    Variant,
-} from "lib/types/merchant-product.type";
+
 import CenteredSpin from "components/common/centered-spin";
 import TokiAPI from "lib/api/toki";
-import { CategoryType } from "../../lib/types/merchant-menu-category.type";
 import { CategoryComponent } from "components/category/category";
 import ProductTab from "components/category/product-tab";
+import { CardDataType, Product } from "lib/types/product.type";
+import { Merchant } from "lib/types/merchant.type";
 
 export default function Category() {
     const router = useRouter();

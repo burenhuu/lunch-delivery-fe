@@ -1,3 +1,4 @@
+import { CartData } from "lib/types/cart.type";
 import axios from "lib/utils/axios";
 
 // const urlPrefix = "/coffee/app";
@@ -38,100 +39,20 @@ const TokiAPI = {
     getMerchantDetail: (merchantId: string) =>
         axios.get(`${urlPrefix}/merchants/${merchantId}`),
 
-    addToCart: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/cart`,
-            values
-        );
+    getMerchantReviews: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}/review`),
 
-        return {
-            data,
-            status,
-        };
-    },
+    getCart: (officeId: string) =>
+        axios.get(`${urlPrefix}/offices/${officeId}/cart`),
 
-    orderCurrentIncrement: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current/increment`,
-            values
-        );
+    addCart: (officeId: string, cartItem: CartData) =>
+        axios.post(`${urlPrefix}/offices/${officeId}/cart`, { cartItem }),
 
-        return {
-            data,
-            status,
-        };
-    },
+    updateCard: (officeId: string, cartItem: CartData) =>
+        axios.put(`${urlPrefix}/offices/${officeId}/cart`, { cartItem }),
 
-    orderCurrentDecrement: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current/decrement`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    viewCart: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    placeOrder: async (values: any) => {
-        const { data, status } = await axios.post(`${urlPrefix}/order`, values);
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    getOrder: (
-        status: string = "ongoing",
-        pageSize: number = 10,
-        page: number = 1,
-        merchantId: string
-    ) =>
-        axios.get(
-            `${urlPrefix}/order/${merchantId}?status=${status}&page_size=${pageSize}&page=${page}`
-        ),
-
-    getOrderById: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}`),
-
-    submitReview: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/review`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    refreshEstimate: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}/estimate`),
-
-    getReviewTypes: () => axios.get(`${urlPrefix}/review/type`),
-
-    jump: () => axios.get(`${urlPrefix}/jump`),
-
-    jumpMerchant: (merchantId: string) =>
-        axios.get(`${urlPrefix}/jump/merchant/${merchantId}`),
-
-    getUpoint: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}/upoint`),
+    getTimes: (officeId: string) =>
+        axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),
 };
 
 export default TokiAPI;

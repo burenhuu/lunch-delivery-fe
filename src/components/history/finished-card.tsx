@@ -11,7 +11,7 @@ import { useAppState } from "lib/context/app";
 import { format } from "date-fns";
 import ButtonComponent from "components/common/button";
 import { useModal } from "lib/context/modal";
-import { Merchant } from "lib/types/office.type";
+import { Merchant } from "lib/types/merchant.type";
 
 // const calcIsCancelled = (item: OrderItem) => {
 //     let isCancelled = false;

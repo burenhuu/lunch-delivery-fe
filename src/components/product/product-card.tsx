@@ -2,16 +2,10 @@ import ButtonComponent from "components/common/button";
 import { ImageModal } from "components/common/image-modal";
 import { ArrowDown, EditIcon } from "components/icons";
 import { useModal } from "lib/context/modal";
+import { CardDataType, Option } from "lib/types/product.type";
 
-import {
-    CardDataType,
-    Option,
-    Product,
-    Variant,
-} from "lib/types/merchant-product.type";
-import { Merchant } from "lib/types/office.type";
 import { formatPrice } from "lib/utils/helpers";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
     AccordionItem,
     AccordionItemHeading,
@@ -57,9 +51,20 @@ export default function ProductCard({
     page?: boolean;
 }) {
     const [isOpen, setOpen] = useState<boolean>(false);
-    const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+    const [selectedOptions, setSelectedOptions] = useState<
+        { option_id: string; value: string }[]
+    >([]);
     const { rating, place, product } = data;
     const { description, specification, image, name, variants } = product;
+    const [applicableOptions, setApplicableOptions] = useState<Option[]>([]);
+    const [presalePrice, setPresalePrice] = useState(
+        product.variants && product.variants[0] ? product.variants[0].price : 0
+    );
+    const [price, setPrice] = useState(
+        product.variants && product.variants[0]
+            ? product.variants[0].salePrice
+            : 0
+    );
 
     const [show, setShow, content, setContent] = useModal();
 
@@ -74,9 +79,30 @@ export default function ProductCard({
         setContent(<ImageModal images={[image]} />);
     };
 
-    const onSelectOption = () => {};
+    useEffect(() => {
+        const tempOption: Option[] = [];
+        const tempSelectedOption: any[] = [];
+        variants?.map((variant) => {
+            variant.options?.map((option) => {
+                if (
+                    !tempOption.find(
+                        (item: Option) => item.name === option.name
+                    )
+                ) {
+                    tempSelectedOption.push({
+                        option_id: option.id,
+                        value: option.values[0],
+                    });
+                    tempOption.push(option);
+                }
+            });
+        });
 
-    console.log(variants);
+        setSelectedOptions(tempSelectedOption);
+        setApplicableOptions(tempOption);
+    }, []);
+
+    const onSelectOption = (option: Option, value: string) => {};
 
     return (
         data && (
@@ -99,9 +125,11 @@ export default function ProductCard({
                                 }
                                 alt={place}
                             />
-                            <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
-                                👍 {rating}%
-                            </div>
+                            {!page && (
+                                <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                    👍 {rating}%
+                                </div>
+                            )}
                             {/* {outOfStock && (
                             <div className="absolute text-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium text-base text-white">
                                 Дууссан
@@ -134,20 +162,20 @@ export default function ProductCard({
                                     </div>
                                 </div>
                                 <div className="flex gap-x-1 items-center">
-                                    {/* {price !== salePrice ? (
+                                    {price !== presalePrice ? (
                                         <>
                                             <div className="font-light text-xs line-through text-gray">
-                                                {formatPrice(price)}₮
+                                                {formatPrice(presalePrice)}₮
                                             </div>
                                             <div className="text-sm">
-                                                {formatPrice(salePrice)}₮
+                                                {formatPrice(price)}₮
                                             </div>
                                         </>
                                     ) : (
                                         <div className="text-sm">
                                             {formatPrice(price)}₮
                                         </div>
-                                    )} */}
+                                    )}
                                 </div>
                             </div>
                             <div
@@ -170,40 +198,31 @@ export default function ProductCard({
                             </div>
                         </div>
                         <>
-                            {/* {options.map((option: Option) => {
+                            {applicableOptions.map((option: Option) => {
                                 const { id, name, price, type, values } =
                                     option;
                                 return (
-                                    <div key={option.id} className="my-col-5">
-                                        <div>{option.name}</div>
+                                    <div key={id} className="my-col-5">
+                                        <div>{name}</div>
                                         <div className="flex gap-x-1.25">
                                             {values?.map((value: string) => {
                                                 return (
                                                     <div
-                                                        key={value}
                                                         onClick={() =>
-                                                            setSelectedOptions([
-                                                                ...selectedOptions,
-                                                                {
-                                                                    id,
-                                                                    name,
-                                                                    price,
-                                                                    type,
-                                                                    values: [
-                                                                        value,
-                                                                    ],
-                                                                },
-                                                            ])
+                                                            onSelectOption(
+                                                                option,
+                                                                value
+                                                            )
                                                         }
+                                                        key={value}
                                                         className={
                                                             "py-2.5 rounded-md w-[75px] text-center relative " +
                                                             (selectedOptions.find(
                                                                 (item) =>
-                                                                    item.name ===
-                                                                        option.name &&
-                                                                    item.values.includes(
+                                                                    item.option_id ===
+                                                                        option.id &&
+                                                                    item.value ===
                                                                         value
-                                                                    )
                                                             )
                                                                 ? "gradient-border text-main"
                                                                 : "border border-gray text-gray")
@@ -216,9 +235,9 @@ export default function ProductCard({
                                         </div>
                                     </div>
                                 );
-                            })} */}
+                            })}
 
-                            <div className="my-col-5">
+                            {/* <div className="my-col-5">
                                 <div>Нэмэлт тайлбар:</div>
                                 <div className="relative">
                                     <input
@@ -231,7 +250,7 @@ export default function ProductCard({
                                         <EditIcon />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div onClick={onAddClick} className="pt-2.5">
                                 <ButtonComponent text="Сагсанд нэмэх" />
                             </div>

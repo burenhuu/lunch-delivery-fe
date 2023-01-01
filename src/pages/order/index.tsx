@@ -11,7 +11,6 @@ import TokiAPI from "lib/api/toki";
 import { formatPrice, calcTimeDiff } from "lib/utils/helpers";
 // import Cart, { Item } from "lib/types/cart.type";
 import { useAppState } from "lib/context/app";
-import { CancelDeliveryTimetable } from "lib/types/office.type";
 import { toast } from "react-toastify";
 import { CartItems } from "components/order/cart-items";
 import DeliveryType from "components/order/delivery-type";

@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { Collapse } from "react-collapse";
 import { mutate } from "swr";
 
-import { Product } from "lib/types/merchant-product.type";
 import TokiAPI from "lib/api/toki";
 import { formatPrice } from "lib/utils/helpers";
 import { useAppState } from "lib/context/app";
 import { cartAnimation } from "lib/utils/cart-animation";
 import { toast } from "react-toastify";
+import { Product } from "lib/types/product.type";
 
 let addToCartEvent: any;
 

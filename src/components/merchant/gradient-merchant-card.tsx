@@ -53,14 +53,15 @@ export default function GreadientMerchantCard({
                     text={
                         <>
                             <div className="my-col-20">
-                                Зоогийн газар хаалттай байна. Та бусад зоогийн
+                                {merchant.reason}
+                                {/* Зоогийн газар хаалттай байна. Та бусад зоогийн
                                 газраас сонголтоо хийнэ үү
                                 <div>
                                     Ажиллах цагийн хуваарь:
                                     <p className="font-medium">
                                         {startDate}-{endDate}
                                     </p>
-                                </div>
+                                </div> */}
                             </div>
                         </>
                     }
@@ -110,7 +111,6 @@ export default function GreadientMerchantCard({
                 <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
                 {!merchant.open && (
                     <div className="absolute text-white z-20 text-smaller top-5 right-0 bg-main/50 backdrop-blur-sm py-1.25 px-2.5 rounded-l-md">
-                        {/* {merchant?.temporary_closed && "Дотоод ажилтай"} */}
                         {!merchant?.open && "Хаалттай"}
                     </div>
                 )}

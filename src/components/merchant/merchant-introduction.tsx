@@ -1,6 +1,6 @@
 import { ImageModal } from "components/common/image-modal";
 import { useModal } from "lib/context/modal";
-import { Merchant } from "lib/types/office.type";
+import { Merchant } from "lib/types/merchant.type";
 
 export default function MerchantIntroduction({
     merchant,
@@ -8,13 +8,8 @@ export default function MerchantIntroduction({
     merchant: Merchant;
 }) {
     const [show, setShow, content, setContent] = useModal();
-    const images = [
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-        "placeholder.png",
-    ];
+    const { images, description, instagram, website, facebook, email, phone } =
+        merchant;
 
     const onImageClick = () => {
         setShow(true);
@@ -31,7 +26,7 @@ export default function MerchantIntroduction({
                     return (
                         <img
                             key={image}
-                            src={`${merchant.logo}`}
+                            src={image}
                             alt={merchant.name}
                             className="w-[83px] h-[83px] rounded-md"
                         />
@@ -39,19 +34,13 @@ export default function MerchantIntroduction({
                 })}
             </div>
             <div className="my-col-20 font-light text-justify text-sm">
+                <div>{description}</div>
                 <div>
-                    Өдөр болгон шинэ махаар эрүүл цэвэрхэн орчинд бэлтгэсэн
-                    Монгол үндэсний хоолоор үйлчилж байна
-                </div>
-                <div>
-                    {/* {merchant.contact_number && (
-                        <div>Утас: {merchant.contact_number}</div>
-                    )} */}
-                    <div>Утас: 77001234</div>
-                    <div>Имэйл: info@domain.name</div>
-                    <div>Facebook: @facebook.id </div>
-                    <div>Instagram: @instagram.id</div>
-                    <div>Веб хуудас: www.domain.name</div>
+                    {phone && <div>Утас: {phone}</div>}
+                    {email && <div>Имэйл: {email}</div>}
+                    {facebook && <div>Facebook: {facebook}</div>}
+                    {instagram && <div>Instagram: {instagram}</div>}
+                    {website && <div>Веб хуудас: {website}</div>}
                 </div>
             </div>
         </div>

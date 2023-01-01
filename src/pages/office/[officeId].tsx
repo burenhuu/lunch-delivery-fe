@@ -10,14 +10,13 @@ import {
 } from "components/icons";
 import CategoryCard from "components/product-category/card";
 import { useAppState } from "lib/context/app";
-import { recommendedDummyData } from "lib/types/dummy-data";
-import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { CategoryType } from "lib/types/merchant-menu-category.type";
 import TokiAPI from "lib/api/toki";
-import { Product, RecommendedType } from "lib/types/merchant-product.type";
+import { Product, RecommendedType } from "lib/types/product.type";
+import { Merchant } from "lib/types/merchant.type";
+import { CategoryType } from "lib/types/category.type";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
@@ -72,13 +71,9 @@ export default function Office() {
         };
 
         const getCategories = async () => {
-            try {
-                const { data } = await TokiAPI.getCategories();
-                if (data) {
-                    await dispatch({ type: "categories", categories: data });
-                }
-            } finally {
-                setLoading(false);
+            const { data } = await TokiAPI.getCategories();
+            if (data) {
+                await dispatch({ type: "categories", categories: data });
             }
         };
 
@@ -191,7 +186,7 @@ export default function Office() {
                 </>
                 {searchValue !== "" ? (
                     searchProducts?.length > 0 ? (
-                        <div className="bg-white h-[calc(100vh-199px)] overflow-scroll scrollbar-hide rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
+                        <div className="bg-white max-h-[calc(100vh-199px)] overflow-scroll scrollbar-hide rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
                             {searchProducts?.map((product) => {
                                 return (
                                     <div

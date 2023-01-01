@@ -6,21 +6,31 @@ import { useAppState } from "lib/context/app";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import CenteredSpin from "components/common/centered-spin";
+import TokiAPI from "lib/api/toki";
 
 export default function MerchantDetailPage() {
-    const router = useRouter();
-    const merchantId = router.query.merchantId;
     const [state]: any = useAppState();
-    const { merchants } = state;
+    const { merchantId } = state;
     const [merchant, setMerchant] = useState<Merchant>();
+    const [loading, setLoading] = useState<boolean>(false);
     useEffect(() => {
-        const merchant = merchants?.find(
-            (merchant: Merchant) => merchant.id === merchantId
-        );
-        setMerchant(merchant);
+        const getMerchant = async () => {
+            setLoading(true);
+            const { data } = await TokiAPI.getMerchantDetail(merchantId);
+            if (data) {
+                console.log(data);
+            }
+            // setMerchant(merchant);
+        };
+        if (merchantId) {
+            getMerchant();
+        }
     }, []);
 
-    return (
+    return loading ? (
+        <CenteredSpin />
+    ) : (
         <>
             {merchant && (
                 <div className="p-5 my-col-20">

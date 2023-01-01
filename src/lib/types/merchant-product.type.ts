@@ -1,46 +1,43 @@
-import { Category } from "./merchant-menu-category.type";
-
+import { CategoryType } from "./merchant-menu-category.type";
 
 export interface Product {
-    name:          string;
-    description:   string;
+    name: string;
+    description: string;
     specification: string;
-    image:         string;
-    variants:      Variant[];
+    image: string;
+    variants: Variant[];
 }
 export interface Variant {
-    id:        string;
-    name:      string;
-    price:     number;
+    id: string;
+    name: string;
+    price: number;
     salePrice: number;
-    options:   Option[];
+    options: Option[];
 }
 
 export interface Option {
-    id:     string;
-    name:   string;
-    type:   string;
-    price:  number;
+    id: string;
+    name: string;
+    type: string;
+    price: number;
     values: string[];
 }
 
 export interface MerchantMenu {
-    name:       string;
-    categories: Category[];
+    name: string;
+    categories: CategoryType[];
 }
 
 export interface RecommendedType extends Variant {
-    image:string
-    place:string  
-    rating: number
+    image: string;
+    place: string;
+    rating: number;
 }
 
-export interface CardDataType extends Variant  {
-    place:string
-    image:string
-    rating:number
-    specification: string
-
+export interface CardDataType {
+    place: string;
+    rating: number;
+    product: Product;
 }
 // export default interface MerchantProducts {
 //     products: Product[];

@@ -32,11 +32,11 @@ const TokiAPI = {
         } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
     },
 
-    getBanner: (merchantId: string) =>
-        axios.get(`${urlPrefix}/merchant/${merchantId}/banner`),
+    getMerchantMenu: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}/menu`),
 
-    getMerchantProductsByCategory: (merchantId: string, categoryId: string) =>
-        axios.get(`${urlPrefix}/merchant/${merchantId}/product/${categoryId}`),
+    getMerchantDetail: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}`),
 
     addToCart: async (values: any) => {
         const { data, status } = await axios.post(

@@ -1,4 +1,4 @@
-import { Category } from "lib/types/merchant-menu-category.type";
+import { CategoryType } from "lib/types/merchant-menu-category.type";
 
 export default function CategoryTab({
     activeTab,
@@ -37,7 +37,7 @@ export default function CategoryTab({
                     )}
                 </div>
             )}
-            {tabs?.map((category: Category) => {
+            {tabs?.map((category: CategoryType) => {
                 const { name, id } = category;
                 return (
                     <div

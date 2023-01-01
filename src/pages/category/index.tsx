@@ -1,11 +1,8 @@
 import ProductCard from "components/product/product-card";
 import FloatButton from "components/cart/float-button";
-import CategoryProduct from "components/category/product-list";
-import ProductTab from "components/category/product-tab";
-import CategoryTab from "components/category/tab";
 import { Oops } from "components/icons";
 import { useAppState } from "lib/context/app";
-import { dummyProducts, productFilters } from "lib/types/dummy-data";
+import { productFilters } from "lib/types/dummy-data";
 import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -17,43 +14,17 @@ import {
 } from "lib/types/merchant-product.type";
 import CenteredSpin from "components/common/centered-spin";
 import TokiAPI from "lib/api/toki";
+import { CategoryType } from "../../lib/types/merchant-menu-category.type";
+import { CategoryComponent } from "components/category/category";
+import ProductTab from "components/category/product-tab";
 
 export default function Category() {
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
     const { merchants, products, categories, categoryId, officeId } = state;
-    const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [productTab, setProductTab] = useState<string>(productFilters[0]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [selectedProducts, setSelectedProducts] =
-        useState<Product[]>(products);
-    const [cardData, setCardData] = useState<CardDataType[]>([]);
-
-    useEffect(() => {
-        const filterByCategories = async () => {
-            setLoading(true);
-            try {
-                const { data } = await TokiAPI.getProductsByOffice(
-                    officeId,
-                    "category",
-                    activeTab
-                );
-                if (data) {
-                    const productArray: Product[] = [];
-                    await data.map((product: Product) => {
-                        if (!productArray.includes(product)) {
-                            productArray.push(product);
-                        }
-                    });
-                    setSelectedProducts(productArray);
-                    dispatch({ type: "products", products: data });
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        filterByCategories();
-    }, [activeTab]);
+    const [cardData, setCardData] = useState<CardDataType[]>();
 
     useEffect(() => {
         const renderCard = async () => {
@@ -61,14 +32,10 @@ export default function Category() {
             setLoading(true);
             await products?.map((merchant: Merchant) =>
                 merchant?.products?.map((product: Product) =>
-                    product?.variants?.map((variant: Variant) => {
-                        temp.push({
-                            image: product.image,
-                            place: merchant.name,
-                            rating: merchant.rating,
-                            specification: product.specification,
-                            ...variant,
-                        });
+                    temp.push({
+                        place: merchant.name,
+                        rating: merchant.rating,
+                        product: product,
                     })
                 )
             );
@@ -78,19 +45,12 @@ export default function Category() {
         renderCard();
     }, [products]);
 
-    return loading ? (
+    return !products ? (
         <CenteredSpin />
     ) : (
         <>
             <div className="my-col-10 w-full h-[calc(100vh-50px)] overflow-hidden">
-                <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">
-                    <CategoryTab
-                        tabs={categories}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                    />
-                    <CategoryProduct products={selectedProducts} />
-                </div>
+                <CategoryComponent setLoading={setLoading} />
                 <ProductTab
                     activeTab={productTab}
                     setActiveTab={setProductTab}
@@ -102,9 +62,9 @@ export default function Category() {
                             allowZeroExpanded
                             className="my-col-10 px-5"
                         >
-                            {cardData.map((item: CardDataType) => {
+                            {cardData?.map((item: CardDataType) => {
                                 return (
-                                    <ProductCard key={item.id} data={item} />
+                                    <ProductCard key={item.place} data={item} />
                                 );
                             })}
                         </Accordion>

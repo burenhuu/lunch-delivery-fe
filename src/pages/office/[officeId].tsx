@@ -15,7 +15,7 @@ import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Category } from "lib/types/merchant-menu-category.type";
+import { CategoryType } from "lib/types/merchant-menu-category.type";
 import TokiAPI from "lib/api/toki";
 import { Product, RecommendedType } from "lib/types/merchant-product.type";
 
@@ -23,10 +23,12 @@ export default function Office() {
     const [state, dispatch]: any = useAppState();
     const router = useRouter();
     const officeId = router.query.officeId;
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [searchValue, setSearchValue] = useState<string>("");
     const [debouncedValue, setDebouncedValue] = useState<string>(searchValue);
-    const [searchProducts, setSearchProducts] = useState<Product[]>([]);
+    const [searchProducts, setSearchProducts] = useState<
+        Product[] & { type: string }[]
+    >([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
@@ -46,59 +48,6 @@ export default function Office() {
         return () => clearTimeout(timer);
     }, [searchValue]);
 
-    const getMerchants = async () => {
-        try {
-            setLoading(true);
-            const { data } = await TokiAPI.getMerchantsByOffice(
-                officeId?.toString()!
-            );
-            if (data) {
-                dispatch({ type: "merchants", merchants: data });
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const getCategories = async () => {
-        try {
-            setLoading(true);
-            const { data } = await TokiAPI.getCategories();
-            if (data) {
-                dispatch({ type: "categories", categories: data });
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const getProducts = async () => {
-        setLoading(true);
-        const { data } = await TokiAPI.getProductsByOffice(
-            officeId?.toString()!
-        );
-        if (data) {
-            const products: RecommendedType[] = [];
-            await data.map(async (item: any) => {
-                await item?.products?.map(async (product: Product) => {
-                    product?.variants?.map((variant) => {
-                        if (variant.price !== variant.salePrice) {
-                            products?.push({
-                                place: item.name,
-                                image: product.image,
-                                rating: item.rating,
-                                ...variant,
-                            });
-                        }
-                    });
-                });
-            });
-            setRecommended(products);
-            await dispatch({ type: "products", products: data });
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
         toast("Таны хаяг зөв эсэхийг шалгаарай", {
             className: "location-toast",
@@ -108,6 +57,61 @@ export default function Office() {
     }, []);
 
     useEffect(() => {
+        const getMerchants = async () => {
+            setLoading(true);
+            try {
+                const { data } = await TokiAPI.getMerchantsByOffice(
+                    officeId?.toString()!
+                );
+                if (data) {
+                    await dispatch({ type: "merchants", merchants: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const getCategories = async () => {
+            try {
+                const { data } = await TokiAPI.getCategories();
+                if (data) {
+                    await dispatch({ type: "categories", categories: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const getProducts = async () => {
+            try {
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId?.toString()!
+                );
+                if (data) {
+                    const products: RecommendedType[] = [];
+                    await data.map(async (item: any) => {
+                        item?.products?.map((product: Product) => {
+                            const chosenVariant = product?.variants?.find(
+                                (variant) =>
+                                    +variant.salePrice !== +variant.price
+                            );
+                            if (chosenVariant) {
+                                products.push({
+                                    ...chosenVariant,
+                                    place: item.name,
+                                    image: product.image,
+                                    rating: item.rating,
+                                });
+                            }
+                        });
+                    });
+                    setRecommended(products);
+                    // await dispatch({ type: "products", products: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
         if (officeId) {
             getMerchants();
             getCategories();
@@ -118,18 +122,47 @@ export default function Office() {
     useEffect(() => {
         const onSearch = async () => {
             if (officeId) {
+                const temp: Merchant[] & Product[] & { type: string }[] = [];
                 const { data } = await TokiAPI.getProductsByOffice(
                     officeId?.toString(),
                     "keyword",
                     debouncedValue
                 );
-                setSearchProducts(data);
+                merchants?.map((merchant: Merchant) => {
+                    if (
+                        merchant.name
+                            .toLowerCase()
+                            .includes(debouncedValue.toLowerCase())
+                    ) {
+                        temp.push({ type: "merchant", ...merchant });
+                    }
+                });
+                if (data) {
+                    await data.map((merchant: Merchant) => {
+                        merchant?.products?.map((product: Product) => {
+                            if (
+                                !temp.find((item) => item.name === product.name)
+                            ) {
+                                temp.push({ type: "product", ...product });
+                            }
+                        });
+                    });
+                    setSearchProducts(temp);
+                }
             }
         };
         if (debouncedValue !== "") {
             onSearch();
         }
     }, [debouncedValue]);
+
+    const onSearchClick = (result: any) => {
+        if (result?.type === "merchant") {
+            router.push(`/merchant/${result.id}`);
+        } else {
+            router.push("/category");
+        }
+    };
 
     return loading ? (
         <CenteredSpin />
@@ -158,10 +191,11 @@ export default function Office() {
                 </>
                 {searchValue !== "" ? (
                     searchProducts?.length > 0 ? (
-                        <div className="bg-white rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
-                            {searchProducts?.slice(0, 3).map((product) => {
+                        <div className="bg-white h-[calc(100vh-199px)] overflow-scroll scrollbar-hide rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
+                            {searchProducts?.map((product) => {
                                 return (
                                     <div
+                                        onClick={() => onSearchClick(product)}
                                         key={product.name}
                                         className="flex items-center justify-between pb-3.75 border-b border-main border-dashed last:border-none "
                                     >
@@ -185,7 +219,7 @@ export default function Office() {
                     <>
                         {categories?.length > 0 ? (
                             <div className="grid grid-cols-4 items-stretch text-center gap-3.75">
-                                {categories?.map((category: Category) => {
+                                {categories?.map((category: CategoryType) => {
                                     return (
                                         <CategoryCard
                                             category={category}
@@ -216,6 +250,7 @@ export default function Office() {
                                                 ?.map((filter) => {
                                                     return (
                                                         <div
+                                                            key={filter}
                                                             onClick={() =>
                                                                 setActiveFilter(
                                                                     filter

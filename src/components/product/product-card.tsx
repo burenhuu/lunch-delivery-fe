@@ -2,6 +2,7 @@ import ButtonComponent from "components/common/button";
 import { ImageModal } from "components/common/image-modal";
 import { ArrowDown, EditIcon } from "components/icons";
 import { useModal } from "lib/context/modal";
+
 import {
     CardDataType,
     Option,
@@ -18,8 +19,36 @@ import {
     AccordionItemPanel,
     AccordionItemState,
 } from "react-accessible-accordion";
-import { collapseToast } from "react-toastify";
 
+function findVariant(options: any, product: any) {
+    let optionDict: any = {};
+
+    options.forEach((option: any) => {
+        optionDict[option.option_id.toString()] = option.value;
+    });
+
+    for (let variant of product.variants) {
+        if (variant.options.length === options.length) {
+            let variantMatch = true;
+
+            for (let option of variant.options) {
+                if (
+                    !(option.option.toString() in optionDict) ||
+                    optionDict[option.option.toString()] !== option.value
+                ) {
+                    variantMatch = false;
+                    break;
+                }
+            }
+
+            if (variantMatch) {
+                return variant;
+            }
+        }
+    }
+
+    return null;
+}
 export default function ProductCard({
     data,
     page = false,
@@ -29,17 +58,8 @@ export default function ProductCard({
 }) {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
-    const {
-        name,
-        rating,
-        id,
-        image,
-        options,
-        place,
-        price,
-        salePrice,
-        specification,
-    } = data;
+    const { rating, place, product } = data;
+    const { description, specification, image, name, variants } = product;
 
     const [show, setShow, content, setContent] = useModal();
 
@@ -56,6 +76,8 @@ export default function ProductCard({
 
     const onSelectOption = () => {};
 
+    console.log(variants);
+
     return (
         data && (
             <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
@@ -67,7 +89,7 @@ export default function ProductCard({
                         }}
                     </AccordionItemState>
                     <AccordionItemButton className="flex justify-start gap-x-3.75 ">
-                        <div className="relative min-w-[120px] min-h-[120px]">
+                        <div className="relative min-w-[120px] max-w-[120px] min-h-[120px]">
                             <img
                                 onClick={onImageClick}
                                 src={image}
@@ -112,7 +134,7 @@ export default function ProductCard({
                                     </div>
                                 </div>
                                 <div className="flex gap-x-1 items-center">
-                                    {price !== salePrice ? (
+                                    {/* {price !== salePrice ? (
                                         <>
                                             <div className="font-light text-xs line-through text-gray">
                                                 {formatPrice(price)}₮
@@ -125,7 +147,7 @@ export default function ProductCard({
                                         <div className="text-sm">
                                             {formatPrice(price)}₮
                                         </div>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
                             <div
@@ -148,7 +170,7 @@ export default function ProductCard({
                             </div>
                         </div>
                         <>
-                            {options.map((option: Option) => {
+                            {/* {options.map((option: Option) => {
                                 const { id, name, price, type, values } =
                                     option;
                                 return (
@@ -194,7 +216,7 @@ export default function ProductCard({
                                         </div>
                                     </div>
                                 );
-                            })}
+                            })} */}
 
                             <div className="my-col-5">
                                 <div>Нэмэлт тайлбар:</div>

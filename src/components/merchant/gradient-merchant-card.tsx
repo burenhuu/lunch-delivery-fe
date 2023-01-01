@@ -38,10 +38,6 @@ export default function GreadientMerchantCard({
             merchantName: merchant.name,
         });
 
-        dispatch({
-            type: "banner",
-            banner: false,
-        });
         if (!page) {
             router.push(`/merchant/${merchant.id}`);
         } else {

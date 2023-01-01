@@ -9,13 +9,15 @@ import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Accordion } from "react-accessible-accordion";
+import TokiAPI from "lib/api/toki";
 
 export default function MerchantProductPage() {
     const router = useRouter();
-    const merchantId = router.query.merchantId;
     const [state]: any = useAppState();
-    const { merchants } = state;
+    const merchantId = state.merchantId || router.query.merchantId;
     const [merchant, setMerchant] = useState<Merchant>();
+    const [loading, setLoading] = useState<boolean>(false);
+
     const merchantProductCategory = [
         { title: "Онцлох" },
         { title: "Хуурга" },
@@ -26,14 +28,25 @@ export default function MerchantProductPage() {
     const [activeCategory, setActiveCategory] = useState<string>(
         merchantProductCategory[0].title
     );
+
     useEffect(() => {
-        const merchant = merchants?.find(
-            (merchant: Merchant) => merchant.id === merchantId
-        );
+        const getMerchantMenu = async () => {
+            setLoading(true);
+            const { data } = await TokiAPI.getMerchantMenu(merchantId);
+            if (data) {
+                console.log(data);
+            }
+        };
+
         setMerchant(merchant);
+        if (merchantId) {
+            getMerchantMenu();
+        }
     }, []);
 
-    return (
+    return loading ? (
+        <CenteredSpin />
+    ) : (
         <>
             {merchant && (
                 <div className="h-[calc(100vh-50px)] w-full overflow-hidden p-5 my-col-20">

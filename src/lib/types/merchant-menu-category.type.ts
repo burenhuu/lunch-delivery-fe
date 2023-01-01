@@ -1,6 +1,6 @@
-export default interface MerchantMenuCategories {
-    recommended: Recommended[];
-    categories: Category[];
+export interface Menu {
+    name: string;
+    categories: CategoryType[];
 }
 
 export interface Recommended {
@@ -25,11 +25,11 @@ export interface Recommended {
 //     cart_items_count: number;
 // }
 
-export interface Category {
-    id:        string;
-    name:      string;
-    icon:      string;
-    children?: Category[];
+export interface CategoryType {
+    id: string;
+    name: string;
+    icon: string;
+    children?: CategoryType[];
 }
 
 export interface Option {

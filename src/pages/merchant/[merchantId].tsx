@@ -33,7 +33,11 @@ export default function MerchantProductPage() {
         merchantMenu?.categories?.map((category: CategoryType) => {
             if (category.id === activeCategory) {
                 category?.products?.map((product: Product) => {
-                    temp.push({ place: merchant?.name!, product: product });
+                    temp.push({
+                        place: merchant?.name!,
+                        merchantId,
+                        product: product,
+                    });
                 });
             } else {
                 category.children?.map((child: CategoryType) => {
@@ -42,6 +46,7 @@ export default function MerchantProductPage() {
                             temp.push({
                                 place: merchant?.name!,
                                 product: product,
+                                merchantId,
                             });
                         });
                     }

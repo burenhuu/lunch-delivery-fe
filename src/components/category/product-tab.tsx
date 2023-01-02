@@ -1,4 +1,3 @@
-import bg from "date-fns/esm/locale/bg/index.js";
 import { productFilters } from "lib/types/dummy-data";
 
 export default function ProductTab({

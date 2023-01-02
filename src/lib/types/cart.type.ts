@@ -5,9 +5,9 @@ export interface CartData {
 }
 
 export interface Item {
-    id:       string;
+    id?:       string;
     quantity: number;
-    comment:  string;
+    comment?:  string;
     options:  Option[];
 }
 

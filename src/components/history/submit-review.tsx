@@ -1,10 +1,10 @@
 import GreadientMerchantCard from "components/merchant/gradient-merchant-card";
 import ButtonComponent from "components/common/button";
 import { AddPhotos } from "components/icons";
-import { Merchant } from "lib/types/office.type";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import Drawer from "react-modern-drawer";
+import { Merchant } from "lib/types/merchant.type";
 
 export default function SubmitReview({ merchant }: { merchant: Merchant }) {
     const [height, setHeight] = useState<string>("380px");

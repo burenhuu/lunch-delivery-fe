@@ -1,9 +1,8 @@
 import { useContext } from "react";
 
-import CoffeeShopCard from "components/coffee-shop/card";
-import Office, { Merchant } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
+import { Office } from "lib/types/office.type";
 
 interface OptionCardProps {
     office: Office;
@@ -17,10 +16,10 @@ const OptionCard: React.FC<OptionCardProps> = ({ office }) => {
         <button
             className="flex flex-wrap px-[15px] py-[15px]"
             onClick={() => {
-                dispatch({
-                    type: "merchants",
-                    merchants: office.merchants,
-                });
+                // dispatch({
+                //     type: "merchants",
+                //     merchants: office.merchants,
+                // });
                 dispatch({ type: "officeId", officeId: office.id });
                 dispatch({
                     type: "officeName",

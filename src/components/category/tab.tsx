@@ -1,4 +1,4 @@
-import { CategoryType } from "lib/types/merchant-menu-category.type";
+import { CategoryType } from "lib/types/category.type";
 
 export default function CategoryTab({
     activeTab,

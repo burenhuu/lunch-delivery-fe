@@ -33,4 +33,5 @@ export interface CardDataType {
     place: string;
     rating?: number;
     product: Product;
+    merchantId: string;
 }

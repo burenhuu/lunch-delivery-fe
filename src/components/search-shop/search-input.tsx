@@ -1,7 +1,7 @@
 import CenteredSpin from "components/common/centered-spin";
 import Spin from "components/common/spin";
 import { useAppState } from "lib/context/app";
-import Office from "lib/types/office.type";
+import { Office } from "lib/types/office.type";
 import OptionCard from "./option-card";
 
 export default function SearchInput({

@@ -1,7 +1,10 @@
 import ButtonComponent from "components/common/button";
 import { ImageModal } from "components/common/image-modal";
 import { ArrowDown, EditIcon } from "components/icons";
+import TokiAPI from "lib/api/toki";
+import { useAppState } from "lib/context/app";
 import { useModal } from "lib/context/modal";
+import { CartData } from "lib/types/cart.type";
 import { CardDataType, Option } from "lib/types/product.type";
 
 import { formatPrice } from "lib/utils/helpers";
@@ -50,13 +53,22 @@ export default function ProductCard({
     data: CardDataType;
     page?: boolean;
 }) {
+    const [state, dispatch]: any = useAppState();
+    const { officeId, cartCount } = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const [selectedOptions, setSelectedOptions] = useState<
-        { option_id: string; value: string }[]
-    >([]);
-    const { rating, place, product } = data;
+    const { rating, place, product, merchantId } = data;
     const { description, specification, image, name, variants } = product;
-    const [applicableOptions, setApplicableOptions] = useState<Option[]>([]);
+    const [applicableOptions, setApplicableOptions] = useState<Option[]>(
+        variants[0].options
+    );
+    const [selectedOptions, setSelectedOptions] = useState<
+        { id: string; value: string }[]
+    >([
+        {
+            id: variants[0].options[0].id,
+            value: variants[0].options[0].values[0],
+        },
+    ]);
     const [presalePrice, setPresalePrice] = useState(
         product.variants && product.variants[0] ? product.variants[0].price : 0
     );
@@ -70,8 +82,30 @@ export default function ProductCard({
 
     const comment = useRef<HTMLInputElement>(null);
 
-    const onAddClick = () => {
-        console.log(comment.current?.value);
+    const onAddClick = async () => {
+        const productData: CartData = {
+            office: officeId,
+            merchant: merchantId,
+            items: [
+                {
+                    id: product.variants[0].id,
+                    quantity: 1,
+                    // comment: comment.current?.value
+                    comment: "Hello world",
+                    //     ? comment.current?.value
+                    //     : undefined,
+                    options: [...selectedOptions],
+                },
+            ],
+        };
+        try {
+            if (cartCount === 0) {
+                const { data } = await TokiAPI.addCart(officeId, productData);
+                console.log(data);
+            }
+        } catch (err) {
+        } finally {
+        }
     };
 
     const onImageClick = () => {
@@ -79,28 +113,28 @@ export default function ProductCard({
         setContent(<ImageModal images={[image]} />);
     };
 
-    useEffect(() => {
-        const tempOption: Option[] = [];
-        const tempSelectedOption: any[] = [];
-        variants?.map((variant) => {
-            variant.options?.map((option) => {
-                if (
-                    !tempOption.find(
-                        (item: Option) => item.name === option.name
-                    )
-                ) {
-                    tempSelectedOption.push({
-                        option_id: option.id,
-                        value: option.values[0],
-                    });
-                    tempOption.push(option);
-                }
-            });
-        });
+    // useEffect(() => {
+    //     const tempOption: Option[] = [];
+    //     const tempSelectedOption: any[] = [];
+    //     variants?.map((variant) => {
+    //         variant.options?.map((option) => {
+    //             if (
+    //                 !tempOption.find(
+    //                     (item: Option) => item.name === option.name
+    //                 )
+    //             ) {
+    //                 tempSelectedOption.push({
+    //                     id: option.id,
+    //                     value: option.values[0],
+    //                 });
+    //                 tempOption.push(option);
+    //             }
+    //         });
+    //     });
 
-        setSelectedOptions(tempSelectedOption);
-        setApplicableOptions(tempOption);
-    }, []);
+    //     setSelectedOptions(tempSelectedOption);
+    //     setApplicableOptions(tempOption);
+    // }, []);
 
     const onSelectOption = (option: Option, value: string) => {};
 
@@ -219,7 +253,7 @@ export default function ProductCard({
                                                             "py-2.5 rounded-md w-[75px] text-center relative " +
                                                             (selectedOptions.find(
                                                                 (item) =>
-                                                                    item.option_id ===
+                                                                    item.id ===
                                                                         option.id &&
                                                                     item.value ===
                                                                         value

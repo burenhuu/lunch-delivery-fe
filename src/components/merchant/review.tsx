@@ -1,5 +1,5 @@
 import { Review } from "lib/types/merchant.type";
-import { intervalToDuration } from "date-fns/esm";
+import { intervalToDuration } from "date-fns";
 import { useEffect } from "react";
 import { DeleteIcon } from "components/icons";
 
@@ -28,7 +28,7 @@ export default function MerchantReview({ data }: { data: Review }) {
                     <div className="col-span-3 my-col-10 items-end text-sm pr-5">
                         {types.map((type) => {
                             return (
-                                <div className="flex gap-x-2.5">
+                                <div key={type.type} className="flex gap-x-2.5">
                                     <div>{type.type}</div>
                                     <div> 👍{type.percentage} %</div>
                                 </div>

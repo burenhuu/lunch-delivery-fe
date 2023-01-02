@@ -1,14 +1,13 @@
 import { useAppState } from "lib/context/app";
 import CategoryTab from "./tab";
-import { Product } from "lib/types/merchant-product.type";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { useEffect, useState } from "react";
 import CategoryCard from "components/product-category/card";
-import { CategoryType } from "lib/types/merchant-menu-category.type";
 import TokiAPI from "lib/api/toki";
+import { CategoryType } from "lib/types/category.type";
 
 export function CategoryComponent({ setLoading }: { setLoading: any }) {
     const [state, dispatch]: any = useAppState();

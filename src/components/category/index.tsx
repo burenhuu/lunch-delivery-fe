@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 import { useAppState } from "lib/context/app";
-import { Category } from "lib/types/merchant-menu-category.type";
 import CountBadge from "components/common/count-badge";
+import { CategoryType } from "lib/types/category.type";
 
 interface CategoryProps {
-    categories: Category[];
+    categories: CategoryType[];
     defaultCategoryId: string;
     setCategoryTabId(categoryId: string): void;
 }
@@ -34,46 +34,48 @@ const Category: React.FC<CategoryProps> = ({
                     role="tablist"
                 >
                     {categories &&
-                        categories.map((category: Category, index: number) => (
-                            <li
-                                key={index}
-                                className={`relative w-full h-[40px]`}
-                                onClick={() => {
-                                    setCategoryId(category.id);
-                                    setCategoryTabId(category.id);
-                                    dispatch({
-                                        type: "categoryId",
-                                        categoryId: category.id,
-                                    });
-                                    index == categories.length - 1
-                                        ? setLastCategory(true)
-                                        : setLastCategory(false);
-                                }}
-                            >
-                                <button
-                                    className={` inline-block w-full text-base px-[20px]  h-[40px] truncate  p-2 ${
-                                        categoryId === category.id
-                                            ? `text-white rounded-[10px] font-medium active`
-                                            : `bg-white text-[#647382] font-normal rounded-[10px]`
-                                    }`}
-                                    style={{
-                                        backgroundColor:
-                                            categoryId === category.id
-                                                ? state.themeColor
-                                                : "#ffffff",
+                        categories.map(
+                            (category: CategoryType, index: number) => (
+                                <li
+                                    key={index}
+                                    className={`relative w-full h-[40px]`}
+                                    onClick={() => {
+                                        setCategoryId(category.id);
+                                        setCategoryTabId(category.id);
+                                        dispatch({
+                                            type: "categoryId",
+                                            categoryId: category.id,
+                                        });
+                                        index == categories.length - 1
+                                            ? setLastCategory(true)
+                                            : setLastCategory(false);
                                     }}
                                 >
-                                    {category.name}
-                                </button>
-                                {/* {category.cart_items_count > 0 && (
+                                    <button
+                                        className={` inline-block w-full text-base px-[20px]  h-[40px] truncate  p-2 ${
+                                            categoryId === category.id
+                                                ? `text-white rounded-[10px] font-medium active`
+                                                : `bg-white text-[#647382] font-normal rounded-[10px]`
+                                        }`}
+                                        style={{
+                                            backgroundColor:
+                                                categoryId === category.id
+                                                    ? state.themeColor
+                                                    : "#ffffff",
+                                        }}
+                                    >
+                                        {category.name}
+                                    </button>
+                                    {/* {category.cart_items_count > 0 && (
                                     <CountBadge
                                         state={state}
                                         count={category.cart_items_count}
                                         isCategory={true}
                                     />
                                 )} */}
-                            </li>
-                        ))}
+                                </li>
+                            )
+                        )}
                 </ul>
             </div>
             <div className="  absolute w-[calc(-40px+100vw)] bg-white rounded-[15px] h-[40px]"></div>

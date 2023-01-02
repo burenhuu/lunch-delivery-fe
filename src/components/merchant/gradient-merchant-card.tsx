@@ -2,7 +2,7 @@ import { PermissionBox } from "components/common/permission-box";
 import { ClockIcon, LongArrow } from "components/icons";
 import { useAppState } from "lib/context/app";
 import { useModal } from "lib/context/modal";
-import { Merchant, Timetable } from "lib/types/office.type";
+import { Merchant } from "lib/types/merchant.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

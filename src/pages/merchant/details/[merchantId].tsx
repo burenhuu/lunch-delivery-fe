@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import CenteredSpin from "components/common/centered-spin";
 import TokiAPI from "lib/api/toki";
 import { Merchant, Review } from "lib/types/merchant.type";
-import { intervalToDuration } from "date-fns/esm";
+import { intervalToDuration } from "date-fns";
 
 export default function MerchantDetailPage() {
     const [state]: any = useAppState();

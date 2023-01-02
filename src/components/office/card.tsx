@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import CoffeeShopCard from "components/coffee-shop/card";
-import Office, { Merchant } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
+import { Office } from "lib/types/office.type";
 
 interface OfficeCardProps {
     office: Office;
@@ -19,10 +18,10 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
         >
             <div
                 onClick={() => {
-                    dispatch({
-                        type: "merchants",
-                        merchants: office.merchants,
-                    });
+                    // dispatch({
+                    //     type: "merchants",
+                    //     merchants: office.merchants,
+                    // });
                     dispatch({ type: "officeId", officeId: office.id });
                     dispatch({ type: "officeName", officeName: office.name });
 

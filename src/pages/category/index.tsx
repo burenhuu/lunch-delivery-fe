@@ -30,6 +30,7 @@ export default function Category() {
                 merchant?.products?.map((product: Product) =>
                     temp.push({
                         place: merchant.name,
+                        merchantId: merchant.id,
                         rating: merchant.rating,
                         product: product,
                     })

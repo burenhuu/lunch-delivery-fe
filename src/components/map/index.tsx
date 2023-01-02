@@ -6,9 +6,9 @@ import {
     useLoadScript,
 } from "@react-google-maps/api";
 import { GeolocatedProps, geolocated } from "react-geolocated";
-import Office, { Merchant } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
+import { Office } from "lib/types/office.type";
 
 const containerStyle = {
     width: "100%",

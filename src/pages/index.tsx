@@ -7,8 +7,8 @@ import Map from "components/map";
 import SearchShop from "components/search-shop";
 import OfficeNotFound from "components/office/not-found";
 import OfficeList from "components/office/office-list";
-import Office from "lib/types/office.type";
 import TokiAPI from "lib/api/toki";
+import { Office } from "lib/types/office.type";
 
 let isMyOffice = false;
 

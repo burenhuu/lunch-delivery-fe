@@ -1,11 +1,7 @@
 export interface CartData {
-    office:   string;
     merchant: string;
-    items:    Item[];
-}
-
-export interface Item {
-    id?:       string;
+    type: string;
+    variantId: string;
     quantity: number;
     comment?:  string;
     options:  Option[];

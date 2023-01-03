@@ -4,6 +4,7 @@ export interface Product {
     specification: string;
     image: string;
     variants: Variant[];
+    active: boolean;
 }
 export interface Variant {
     id: string;

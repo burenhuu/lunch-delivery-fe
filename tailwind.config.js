@@ -44,6 +44,9 @@ module.exports = {
             zIndex: {
                 max: "99999",
             },
+            width: {
+                15: '3.75rem',
+            }
         },
     },
     plugins: [

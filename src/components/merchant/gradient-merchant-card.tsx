@@ -102,10 +102,10 @@ export default function GreadientMerchantCard({
                     alt={merchant.name}
                 />
                 <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                    <div className="text-sm">{`${merchant.name} (${merchant.latitude}) 👍 ${merchant.rating}`}</div>
+                    <div className="text-sm">{`${merchant.name} ( ${merchant.distance} км ) 👍 ${merchant.rating}%`}</div>
                     <div className="text-xs font-light flex justify-start gap-x-1.25 items-center">
                         <ClockIcon />
-                        {merchant.description}
+                        {merchant.delivery[0]}-{merchant.delivery[1]} минут
                     </div>
                 </div>
                 <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>

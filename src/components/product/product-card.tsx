@@ -5,7 +5,7 @@ import TokiAPI from "lib/api/toki";
 import { useAppState } from "lib/context/app";
 import { useModal } from "lib/context/modal";
 import { CartData } from "lib/types/cart.type";
-import { CardDataType, Option } from "lib/types/product.type";
+import {CardDataType, Option, Variant} from "lib/types/product.type";
 
 import { formatPrice } from "lib/utils/helpers";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -16,6 +16,7 @@ import {
     AccordionItemPanel,
     AccordionItemState,
 } from "react-accessible-accordion";
+import {FatalError} from "next/dist/lib/fatal-error";
 
 function findVariant(options: any, product: any) {
     let optionDict: any = {};
@@ -59,16 +60,10 @@ export default function ProductCard({
     const { rating, place, product, merchantId } = data;
     const { description, specification, image, name, variants } = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
-        variants[0].options
+        variants[0] ? variants[0].options : []
     );
-    const [selectedOptions, setSelectedOptions] = useState<
-        { id: string; value: string }[]
-    >([
-        {
-            id: variants[0].options[0].id,
-            value: variants[0].options[0].values[0],
-        },
-    ]);
+    const [selectedOptions, setSelectedOptions] = useState<{ id: string; value: string }[]>([]);
+    const [selectedVariant, setSelectedVariant] = useState<Variant>(variants[0]);
     const [presalePrice, setPresalePrice] = useState(
         product.variants && product.variants[0] ? product.variants[0].price : 0
     );
@@ -84,19 +79,12 @@ export default function ProductCard({
 
     const onAddClick = async () => {
         const productData: CartData = {
-            office: officeId,
+            type: "Delivery",
             merchant: merchantId,
-            items: [
-                {
-                    id: product.variants[0].id,
-                    quantity: 1,
-                    // comment: comment.current?.value
-                    comment: "Hello world",
-                    //     ? comment.current?.value
-                    //     : undefined,
-                    options: [...selectedOptions],
-                },
-            ],
+            variantId: selectedVariant.id,
+            quantity: 1,
+            comment: "",
+            options: [...selectedOptions],
         };
         try {
             if (cartCount === 0) {
@@ -136,7 +124,32 @@ export default function ProductCard({
     //     setApplicableOptions(tempOption);
     // }, []);
 
-    const onSelectOption = (option: Option, value: string) => {};
+    const onSelectOption = (option: Option, value: string) => {
+        let check = false
+        let options: any = selectedOptions.map((selectedOption) =>{
+            if (selectedOption.id === option.id) {
+                selectedOption.value = value
+                check = true
+                return{
+                    id: option.id,
+                    value: value
+                }
+            }
+        })
+        if (!check){
+            options.push({
+                id: option.id,
+                value: value
+            })
+        }
+        setSelectedOptions(options)
+    };
+
+    const onSelectVariant = (variant: Variant) => {
+        setSelectedVariant(variant)
+        setApplicableOptions(variant.options)
+        setSelectedOptions([])
+    };
 
     return (
         data && (
@@ -154,8 +167,7 @@ export default function ProductCard({
                                 onClick={onImageClick}
                                 src={image}
                                 className={
-                                    "w-full h-full " +
-                                    (isOpen ? "rounded-bl-none" : "rounded-2xl")
+                                    "w-full h-full rounded-2xl"
                                 }
                                 alt={place}
                             />
@@ -231,9 +243,36 @@ export default function ProductCard({
                                 {specification}
                             </div>
                         </div>
+                        <div className="my-col-5">
+                            <div>Порц</div>
+                            <div className="flex gap-x-1.25">
+                                {
+                                    variants.map((variant: Variant) =>{
+                                        return(
+                                            <div
+                                                onClick={() =>
+                                                    onSelectVariant(
+                                                        variant
+                                                    )
+                                                }
+                                                key={variant.id}
+                                                className={
+                                                    "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                    (
+                                                        selectedVariant === variant ? "gradient-border text-main" : "border border-gray text-gray"
+                                                    )
+                                                }
+                                            >
+                                                {variant.name}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </div>
                         <>
                             {applicableOptions.map((option: Option) => {
-                                const { id, name, price, type, values } =
+                                const { id, name, values } =
                                     option;
                                 return (
                                     <div key={id} className="my-col-5">
@@ -248,7 +287,7 @@ export default function ProductCard({
                                                                 value
                                                             )
                                                         }
-                                                        key={value}
+                                                        key={option.id}
                                                         className={
                                                             "py-2.5 rounded-md w-[75px] text-center relative " +
                                                             (selectedOptions.find(
@@ -256,7 +295,7 @@ export default function ProductCard({
                                                                     item.id ===
                                                                         option.id &&
                                                                     item.value ===
-                                                                        value
+                                                                    value
                                                             )
                                                                 ? "gradient-border text-main"
                                                                 : "border border-gray text-gray")
@@ -270,24 +309,30 @@ export default function ProductCard({
                                     </div>
                                 );
                             })}
+                            {
+                                product.active && (
+                                    <>
+                                        <div className="my-col-5">
+                                            <div>Нэмэлт тайлбар:</div>
+                                            <div className="relative">
+                                                <input
+                                                    ref={comment}
+                                                    type="text"
+                                                    placeholder="Нэмэлт тайлбар оруулах"
+                                                    className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
+                                                />
+                                                <div className="absolute left-2.5 top-1.5">
+                                                    <EditIcon />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div onClick={onAddClick} className="pt-2.5">
+                                            <ButtonComponent text="Сагсанд нэмэх" />
+                                        </div>
+                                    </>
 
-                            {/* <div className="my-col-5">
-                                <div>Нэмэлт тайлбар:</div>
-                                <div className="relative">
-                                    <input
-                                        ref={comment}
-                                        type="text"
-                                        placeholder="Нэмэлт тайлбар оруулах"
-                                        className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
-                                    />
-                                    <div className="absolute left-2.5 top-1.5">
-                                        <EditIcon />
-                                    </div>
-                                </div>
-                            </div> */}
-                            <div onClick={onAddClick} className="pt-2.5">
-                                <ButtonComponent text="Сагсанд нэмэх" />
-                            </div>
+                                )
+                            }
                         </>
                     </div>
                 </AccordionItemPanel>

@@ -2,7 +2,7 @@ import { CategoryType } from "./category.type";
 import { Product } from "./product.type";
 
 export interface Merchant {
-    
+
     id:          string;
     name:        string;
     description: string;
@@ -19,6 +19,8 @@ export interface Merchant {
     open:        boolean;
     reason:      string;
     rating:      number;
+    distance: number;
+    delivery: string[];
     products: Product[]
     timetable: Timetable[]
 }

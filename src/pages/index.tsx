@@ -17,7 +17,7 @@ const Index: NextPage = () => {
     const [noResults, setNoResults] = useState(false);
     const [loading, setLoading] = useState(false);
     const [bySearchbar, setBySearchbar] = useState(false);
-    const [height, setHeight] = useState("340px");
+    const [height, setHeight] = useState("339px");
     const [maxHeight, setMaxHeight] = useState("45vh");
     const { data, error } = useSWR("/v1/offices");
 

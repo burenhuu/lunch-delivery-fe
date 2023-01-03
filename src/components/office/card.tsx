@@ -13,7 +13,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
     return (
         <div
             id={office.id}
-            className="p-[15px] mb-3 bg-white  cursor-pointer rounded-3xl "
+            className="p-[10px] h-[80px] mb-3 bg-white  cursor-pointer rounded-3xl "
             style={{ boxShadow: "0 -5px 10px 0 rgba(30, 35, 53, 0.05)" }}
         >
             <div
@@ -37,20 +37,20 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                 }}
                 className="flex items-center gap-x-[15px]"
             >
-                <div className="w-12 shrink-0">
+                <div className="w-15 shrink-0">
                     <img
                         src={office.photo ? office.photo : "sda"}
                         alt={office.name}
-                        className="w-[50px] h-[50px] object-cover rounded-[15px]"
+                        className="w-[60px] h-[60px] object-cover rounded-[10px]"
                     />
                 </div>
                 <div className="flex-grow text-left">
-                    <p className="text-base font-medium text-[#1E2335]">
+                    <p className="text-base font-medium text-[#1E2335] mb-[7px]">
                         {office.name}
                     </p>
-                    {/* <p className="text-xs font-light break-normal text-[#647382]">
-                        {office.merchants.length} зоогийн газар
-                    </p> */}
+                    <p className="text-xs font-light break-normal text-[#647382]">
+                        1 зоогийн газар
+                    </p>
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ const OfficeList: React.FC<OfficeListProps> = ({
 }) => {
     const heightHandler = async () => {
         height == "340px"
-            ? (setHeight("100%"), setMaxHeight("90vh"))
+            ? (setHeight("80%"), setMaxHeight("90vh"))
             : (setHeight("340px"), setMaxHeight("40vh"));
     };
 

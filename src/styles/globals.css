@@ -180,7 +180,9 @@ input[type="radio"] {
 
 .checkmark::after {
     content: "";
-    @apply hidden m-auto mt-[1.75px] rounded-full bg-gradient-end w-3 h-3 !important;
+    @apply hidden mt-[1.75px] rounded-full bg-gradient-end w-3 h-3 !important;
+    margin-top: 2px !important;
+    margin-left: 2px !important;
 }
 
 input[type="radio"]:checked ~ .checkmark::after {

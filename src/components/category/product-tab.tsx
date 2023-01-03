@@ -1,4 +1,3 @@
-import bg from "date-fns/esm/locale/bg/index.js";
 import { productFilters } from "lib/types/dummy-data";
 
 export default function ProductTab({
@@ -9,14 +8,14 @@ export default function ProductTab({
     setActiveTab: any;
 }) {
     return (
-        <div className="flex items-center justify-between px-5">
+        <div className="flex items-center justify-between px-5 gap-x-1.25 ">
             {productFilters?.map((filter) => {
                 return (
                     <div
                         key={filter}
                         onClick={() => setActiveTab(filter)}
                         className={
-                            "bg-white relative min-w-[60px] text-center bg-clip-padding text-sm rounded-md z-10 shadow-delivery p-2.5 " +
+                            "bg-white relative w-full  text-center bg-clip-padding text-sm rounded-md z-10 shadow-delivery p-2.5 " +
                             (activeTab === filter
                                 ? "text-main gradient-border"
                                 : "text-gray")

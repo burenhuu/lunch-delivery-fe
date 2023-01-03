@@ -10,26 +10,27 @@ import {
 } from "components/icons";
 import CategoryCard from "components/product-category/card";
 import { useAppState } from "lib/context/app";
-import {
-    categoryDummyData,
-    dummyProducts,
-    recommendedDummyData,
-} from "lib/types/dummy-data";
-import { Merchant } from "lib/types/office.type";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDebounce } from "lib/hooks/useDebounce";
 import { toast } from "react-toastify";
+import TokiAPI from "lib/api/toki";
+import { Product, RecommendedType } from "lib/types/product.type";
+import { Merchant } from "lib/types/merchant.type";
+import { CategoryType } from "lib/types/category.type";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
     const router = useRouter();
     const officeId = router.query.officeId;
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [searchProducts, setSearchProducts] = useState<any[]>([]);
+    const [debouncedValue, setDebouncedValue] = useState<string>(searchValue);
+    const [searchProducts, setSearchProducts] = useState<
+        Product[] & { type: string }[]
+    >([]);
     const [showFilters, setShowFilters] = useState<boolean>(false);
-    const debouncedValue = useDebounce(searchValue);
+    const [recommended, setRecommended] = useState<RecommendedType[]>([]);
+    const { merchants, categories, products } = state;
 
     const filterNames = [
         "Үнэлгээгээр",
@@ -40,10 +41,11 @@ export default function Office() {
     ];
     const [activeFilter, setActiveFilter] = useState<string>(filterNames[0]);
 
-    const getMerchants = async () => {};
-    const { merchants } = state;
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedValue(searchValue), 1000);
 
-    const getCategories = async () => {};
+        return () => clearTimeout(timer);
+    }, [searchValue]);
 
     useEffect(() => {
         toast("Таны хаяг зөв эсэхийг шалгаарай", {
@@ -54,21 +56,108 @@ export default function Office() {
     }, []);
 
     useEffect(() => {
+        const getMerchants = async () => {
+            setLoading(true);
+            try {
+                const { data } = await TokiAPI.getMerchantsByOffice(
+                    officeId?.toString()!
+                );
+                if (data) {
+                    await dispatch({ type: "merchants", merchants: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const getCategories = async () => {
+            const { data } = await TokiAPI.getCategories();
+            if (data) {
+                await dispatch({ type: "categories", categories: data });
+            }
+        };
+
+        const getProducts = async () => {
+            try {
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId?.toString()!
+                );
+                if (data) {
+                    const products: RecommendedType[] = [];
+                    await data.map(async (item: any) => {
+                        item?.products?.map((product: Product) => {
+                            const chosenVariant = product?.variants?.find(
+                                (variant) =>
+                                    +variant.salePrice !== +variant.price
+                            );
+                            if (chosenVariant) {
+                                products.push({
+                                    ...chosenVariant,
+                                    place: item.name,
+                                    image: product.image,
+                                    rating: item.rating,
+                                });
+                            }
+                        });
+                    });
+                    setRecommended(products);
+                    // await dispatch({ type: "products", products: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
         if (officeId) {
+            getMerchants();
+            getCategories();
+            getProducts();
         }
     }, [officeId]);
 
     useEffect(() => {
-        setSearchProducts(
-            dummyProducts?.filter((product) => {
-                if (searchValue) {
-                    return product.title
-                        .toLowerCase()
-                        .includes(searchValue.toLowerCase());
-                } else return null;
-            })
-        );
-    }, [searchValue]);
+        const onSearch = async () => {
+            if (officeId) {
+                const temp: Merchant[] & Product[] & { type: string }[] = [];
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId?.toString(),
+                    "keyword",
+                    debouncedValue
+                );
+                merchants?.map((merchant: Merchant) => {
+                    if (
+                        merchant.name
+                            .toLowerCase()
+                            .includes(debouncedValue.toLowerCase())
+                    ) {
+                        temp.push({ type: "merchant", ...merchant });
+                    }
+                });
+                if (data) {
+                    await data.map((merchant: Merchant) => {
+                        merchant?.products?.map((product: Product) => {
+                            if (
+                                !temp.find((item) => item.name === product.name)
+                            ) {
+                                temp.push({ type: "product", ...product });
+                            }
+                        });
+                    });
+                    setSearchProducts(temp);
+                }
+            }
+        };
+        if (debouncedValue !== "") {
+            onSearch();
+        }
+    }, [debouncedValue]);
+
+    const onSearchClick = (result: any) => {
+        if (result?.type === "merchant") {
+            router.push(`/merchant/${result.id}`);
+        } else {
+            router.push("/category");
+        }
+    };
 
     return loading ? (
         <CenteredSpin />
@@ -97,14 +186,15 @@ export default function Office() {
                 </>
                 {searchValue !== "" ? (
                     searchProducts?.length > 0 ? (
-                        <div className="bg-white rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
-                            {searchProducts?.slice(0, 3).map((product) => {
+                        <div className="bg-white max-h-[calc(100vh-199px)] overflow-scroll scrollbar-hide rounded-md pt-3.75 px-5 text-sm font-light -mt-2.5 my-col-15">
+                            {searchProducts?.map((product) => {
                                 return (
                                     <div
-                                        key={product.title}
+                                        onClick={() => onSearchClick(product)}
+                                        key={product.name}
                                         className="flex items-center justify-between pb-3.75 border-b border-main border-dashed last:border-none "
                                     >
-                                        <div>{product?.title}</div>
+                                        <div>{product?.name}</div>
                                         <NavigateArrow />
                                     </div>
                                 );
@@ -122,16 +212,18 @@ export default function Office() {
                     )
                 ) : (
                     <>
-                        <div className="grid grid-cols-4 items-center gap-y-3.75">
-                            {categoryDummyData?.map((category) => {
-                                return (
-                                    <CategoryCard
-                                        category={category}
-                                        key={category.title}
-                                    />
-                                );
-                            })}
-                        </div>
+                        {categories?.length > 0 ? (
+                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75">
+                                {categories?.map((category: CategoryType) => {
+                                    return (
+                                        <CategoryCard
+                                            category={category}
+                                            key={category.id}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        ) : null}
                         <div>
                             <div className="flex justify-between pb-[15px] items-center">
                                 <div className="font-medium">Бүгд</div>
@@ -169,38 +261,44 @@ export default function Office() {
                                     )}
                                 </div>
                             </div>
-                            <div className="my-col-10">
-                                {merchants
-                                    ?.slice(0, 2)
-                                    .map((merchant: Merchant) => {
-                                        return (
-                                            <GradientMerchantCard
-                                                key={merchant._id}
-                                                merchant={merchant}
-                                            />
-                                        );
-                                    })}
-                                <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
-                                    {recommendedDummyData?.map((data) => {
-                                        return (
-                                            <Recommended
-                                                key={data.name}
-                                                data={data}
-                                            />
-                                        );
-                                    })}
+                            {merchants?.length > 0 ? (
+                                <div className="my-col-10">
+                                    {merchants
+                                        ?.slice(0, 2)
+                                        .map((merchant: Merchant) => {
+                                            return (
+                                                <GradientMerchantCard
+                                                    key={merchant.id}
+                                                    merchant={merchant}
+                                                />
+                                            );
+                                        })}
+                                    {recommended?.length > 0 && (
+                                        <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
+                                            {recommended?.map(
+                                                (product: RecommendedType) => {
+                                                    return (
+                                                        <Recommended
+                                                            key={product.id}
+                                                            data={product}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </div>
+                                    )}
+                                    {merchants
+                                        ?.slice(2)
+                                        .map((merchant: Merchant) => {
+                                            return (
+                                                <GradientMerchantCard
+                                                    key={merchant.id}
+                                                    merchant={merchant}
+                                                />
+                                            );
+                                        })}
                                 </div>
-                                {merchants
-                                    ?.slice(3)
-                                    .map((merchant: Merchant) => {
-                                        return (
-                                            <GradientMerchantCard
-                                                key={merchant._id}
-                                                merchant={merchant}
-                                            />
-                                        );
-                                    })}
-                            </div>
+                            ) : null}
                         </div>
                     </>
                 )}

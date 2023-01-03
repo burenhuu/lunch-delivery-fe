@@ -1,8 +1,7 @@
-import { Item } from "lib/types/order-detail";
 import { formatPrice } from "lib/utils/helpers";
 
 interface OrderCardProps {
-    item: Item;
+    item: any;
 }
 
 const OrderCard: React.FC<OrderCardProps> = ({ item }) => (

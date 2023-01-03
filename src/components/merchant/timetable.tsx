@@ -1,10 +1,33 @@
-import { Timetable } from "lib/types/office.type";
+import { Timetable } from "lib/types/merchant.type";
+import { useEffect, useState } from "react";
+import min from "date-fns/min";
 
 export default function MerchantTimetable({
     timetable,
 }: {
     timetable: Timetable[];
 }) {
+    const [weekday, setWeekday] = useState<string>("");
+    const [saturday, setSaturday] = useState<string>("Амарна");
+    const [sunday, setSunday] = useState<string>("Амарна");
+
+    useEffect(() => {
+        const weekdaysOpen: string[] = [];
+        const weekdaysClose: string[] = [];
+        timetable.map((day) => {
+            if (day.day > 0 && day.day < 6) {
+                //How to calculate average opening and closing time?
+            } else if (day.day === 6) {
+                if (!day.open && !day.close) {
+                    setSaturday("Амарна");
+                } else setSaturday(`${day.open} - ${day.close}`);
+            } else if (day.day === 0) {
+                if (!day.open && !day.close) {
+                    setSunday("Амарна");
+                } else setSunday(`${day.open} - ${day.close}`);
+            }
+        });
+    }, []);
     return (
         <div className="my-col-15">
             <div className="font-medium">Цагийн хуваарь</div>
@@ -23,15 +46,15 @@ export default function MerchantTimetable({
                 </div>
                 {/* Хүргэлт */}
                 <div className="p-2.5 border-r border-gray/10 my-col-10">
-                    <div>11:30 - 14:00</div>
-                    <div>Амарна</div>
-                    <div>Амарна</div>
+                    <div>{`${timetable[0].open} - ${timetable[0].close}`}</div>
+                    <div>{saturday}</div>
+                    <div>{sunday}</div>
                 </div>
                 {/* Очиж авах */}
                 <div className="p-2.5 my-col-10">
-                    <div>09:00 - 21:00</div>
-                    <div>10;00 - 20:00</div>
-                    <div>Амарна</div>
+                    <div>{`${timetable[0].open} - ${timetable[0].close}`}</div>
+                    <div>{saturday}</div>
+                    <div>{sunday}</div>
                 </div>
             </div>
         </div>

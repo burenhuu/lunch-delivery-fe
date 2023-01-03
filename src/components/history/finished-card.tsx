@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import Link from "next/link";
 // import { ModalContext } from "lib/context/modal";
-import { OrderItem, Status } from "lib/types/order.type";
+// import { OrderItem, Status } from "lib/types/order.type";
 import { renderStars, formatPrice } from "lib/utils/helpers";
 import SubmitReview from "components/history/submit-review";
 import { calcTimeDiff } from "lib/utils/helpers";
@@ -11,26 +11,26 @@ import { useAppState } from "lib/context/app";
 import { format } from "date-fns";
 import ButtonComponent from "components/common/button";
 import { useModal } from "lib/context/modal";
-import { Merchant } from "lib/types/office.type";
+import { Merchant } from "lib/types/merchant.type";
 
-const calcIsCancelled = (item: OrderItem) => {
-    let isCancelled = false;
-    let cancelledCount = 0;
+// const calcIsCancelled = (item: OrderItem) => {
+//     let isCancelled = false;
+//     let cancelledCount = 0;
 
-    item?.items &&
-        item?.items.map(
-            (itemEntity: any) =>
-                itemEntity.is_cancelled == true &&
-                (cancelledCount = cancelledCount + 1),
+//     item?.items &&
+//         item?.items.map(
+//             (itemEntity: any) =>
+//                 itemEntity.is_cancelled == true &&
+//                 (cancelledCount = cancelledCount + 1),
 
-            cancelledCount === item.items.length && (isCancelled = true)
-        );
+//             cancelledCount === item.items.length && (isCancelled = true)
+//         );
 
-    return isCancelled;
-};
+//     return isCancelled;
+// };
 
 interface FinishedCardProps {
-    item: OrderItem;
+    item: any;
     id: string;
     scrollRef: any;
 }
@@ -44,7 +44,7 @@ const FinishedCard: React.FC<FinishedCardProps> = ({ item, id, scrollRef }) => {
 
     const onGiveReview = () => {
         const merchant = merchants.find(
-            (merch: Merchant) => merch._id === item.merchant?._id
+            (merch: Merchant) => merch.id === item.merchant?._id
         );
         setShow(true);
         setContent(<SubmitReview merchant={merchant} />);
@@ -82,14 +82,14 @@ const FinishedCard: React.FC<FinishedCardProps> = ({ item, id, scrollRef }) => {
                         </div>
                         <div>Мандах</div>
                         <div>
-                            {calcIsCancelled(item) == true
+                            {/* {calcIsCancelled(item) == true
                                 ? item?.items?.map(
                                       (itemEntity: any) =>
                                           itemEntity?.cancel_reason
                                   )
                                 : item.delivered_at
                                 ? calcTimeDiff(item.paid_at, item.delivered_at)
-                                : "-"}
+                                : "-"} */}
                         </div>
                         {item.is_reviewed && (
                             <div>{renderStars(item.review_star)}</div>

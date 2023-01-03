@@ -2,7 +2,7 @@ import useSWR from "swr";
 
 import PendingCard from "components/history/pending-card";
 import CenteredSpin from "components/common/centered-spin";
-import { OrderItem } from "lib/types/order.type";
+// import { OrderItem } from "lib/types/order.type";
 import { useAppState } from "lib/context/app";
 
 export default function OngoingList({ scrollRef }: any) {
@@ -23,20 +23,18 @@ export default function OngoingList({ scrollRef }: any) {
         data?.data?.data &&
         data?.data?.data?.items.length > 0 && (
             <>
-                {data?.data?.data?.items.map(
-                    (item: OrderItem, index: number) => (
-                        <PendingCard
-                            key={"pending-" + item._id}
-                            id={"pending-" + item._id}
-                            scrollRef={
-                                state.navId == "pending-" + item._id
-                                    ? scrollRef
-                                    : null
-                            }
-                            item={item}
-                        />
-                    )
-                )}
+                {data?.data?.data?.items.map((item: any, index: number) => (
+                    <PendingCard
+                        key={"pending-" + item._id}
+                        id={"pending-" + item._id}
+                        scrollRef={
+                            state.navId == "pending-" + item._id
+                                ? scrollRef
+                                : null
+                        }
+                        item={item}
+                    />
+                ))}
             </>
         )
     );

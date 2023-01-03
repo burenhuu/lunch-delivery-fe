@@ -1,6 +1,6 @@
 import CenteredSpin from "components/common/centered-spin";
+import { Office } from "lib/types/office.type";
 import OfficeCard from "./card";
-import Office from "lib/types/office.type";
 
 interface OfficeListProps {
     title: string;

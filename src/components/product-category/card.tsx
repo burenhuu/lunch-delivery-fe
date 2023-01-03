@@ -1,4 +1,5 @@
 import FoodBorder from "components/common/food-border";
+import { useAppState } from "lib/context/app";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,17 +9,22 @@ export default function CategoryCard({
     small = false,
     active = false,
 }: {
-    category: { title: string; img: string };
+    category: any;
     small?: boolean;
     active?: boolean;
 }) {
-    const { title, img } = category;
+    const { id, name, icon, logo } = category;
     const router = useRouter();
+    const [state, dispatch]: any = useAppState();
+    const { officeId } = state;
+
     const onCategoryCardClick = async () => {
         if (!small) {
-            router.push(`/category/${title}`);
+            await dispatch({ type: "categoryId", categoryId: id });
+            router.push(`/category`);
         }
     };
+
     return (
         // <Link href={`/office/${router.query.officeId}/category/${title}`}>
         <div
@@ -31,22 +37,36 @@ export default function CategoryCard({
                     (small ? "w-[55px] h-[55px]" : "w-[72.5px] h-[72.5px]")
                 }
             >
-                <Image
-                    src={`/images/${img}`}
-                    alt={img}
-                    width={small ? 55 : 72.5}
-                    height={small ? 55 : 72.5}
-                    className="rounded-md object-cover "
-                />
-                {small && active && <FoodBorder />}
+                {small ? (
+                    <>
+                        <img
+                            src={logo}
+                            alt={logo}
+                            width={55}
+                            height={55}
+                            className="rounded-md"
+                        />
+                        {active && <FoodBorder />}
+                    </>
+                ) : (
+                    <>
+                        <img
+                            src={icon}
+                            alt={icon}
+                            width={72.5}
+                            height={72.5}
+                            className="rounded-md"
+                        />
+                    </>
+                )}
             </div>
             <div
                 className={
-                    "text-center text-xs " +
+                    "text-xs text-center " +
                     (small && active ? "text-main" : "text-gray")
                 }
             >
-                {title}
+                {name}
             </div>
         </div>
         // </Link>

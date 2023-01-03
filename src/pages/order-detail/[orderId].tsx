@@ -10,7 +10,6 @@ import OrderStatus from "components/order/order-status";
 import OrderCard from "components/order/order-card";
 import CenteredSpin from "components/common/centered-spin";
 import TokiAPI from "lib/api/toki";
-import { Item, OrderDetail } from "lib/types/order-detail";
 import { useAppState } from "lib/context/app";
 import { toast } from "react-toastify";
 import { Upoint, UpointGreen } from "components/icons";
@@ -52,7 +51,7 @@ const OrderDetail: NextPage = () => {
     const { navid } = router.query;
     const { activeTab } = router.query;
     const [state, dispatch]: any = useAppState();
-    const [data, setData] = useState<OrderDetail>();
+    const [data, setData] = useState<any>();
     const [loading, setLoading] = useState(false);
 
     const statusBar = [
@@ -97,23 +96,23 @@ const OrderDetail: NextPage = () => {
         if (orderId) {
             setLoading(true);
 
-            const fetchDatas = async () => {
-                try {
-                    const { data } = await TokiAPI.getOrderById(
-                        orderId.toString()
-                    );
+            // const fetchDatas = async () => {
+            //     try {
+            //         const { data } = await TokiAPI.getOrderById(
+            //             orderId.toString()
+            //         );
 
-                    if (data?.status_code === 0) {
-                        setData(data?.data);
-                    } else {
-                        toast(data?.message);
-                    }
-                } finally {
-                    setLoading(false);
-                }
-            };
+            //         if (data?.status_code === 0) {
+            //             setData(data?.data);
+            //         } else {
+            //             toast(data?.message);
+            //         }
+            //     } finally {
+            //         setLoading(false);
+            //     }
+            // };
 
-            fetchDatas();
+            // fetchDatas();
         }
     }, [orderId]);
 
@@ -178,7 +177,7 @@ const OrderDetail: NextPage = () => {
                 <div className="my-col-15">
                     <div className="font-medium">Захиалгын мэдээлэл</div>
                     <div className="my-col-10">
-                        {data.items.map((item, index) => {
+                        {data.items.map((item: any, index: number) => {
                             return <OrderCard key={index} item={item} />;
                         })}
                     </div>

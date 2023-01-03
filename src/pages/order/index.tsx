@@ -4,14 +4,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Countdown from "react-countdown";
 
-import CartCard from "components/product/cart-card";
-import SearchInput from "components/search-shop/search-input";
-import CenteredSpin from "components/common/centered-spin";
-import TokiAPI from "lib/api/toki";
 import { formatPrice, calcTimeDiff } from "lib/utils/helpers";
 // import Cart, { Item } from "lib/types/cart.type";
 import { useAppState } from "lib/context/app";
-import { CancelDeliveryTimetable } from "lib/types/office.type";
 import { toast } from "react-toastify";
 import { CartItems } from "components/order/cart-items";
 import DeliveryType from "components/order/delivery-type";
@@ -134,103 +129,6 @@ const Cart: NextPage = () => {
             />
         );
     };
-
-    // const [data, setData] = useState<Cart>();
-    // const [loading, setLoading] = useState(false);
-    // const [isDelivery, setIsDelivery] = useState(true);
-    // const [loadingEstimate, setLoadingEstimate] = useState(false);
-    // const [prepareEstimate, setPrepareEstimate] = useState("?");
-    // const [deliveryEstimate, setDeliveryEstimate] = useState("?");
-    // const [selectedButton, setSelectedButton] = useState("");
-
-    // const fetchEstimateData = async () => {
-    //     setLoadingEstimate(true);
-
-    //     try {
-    //         const { data } = await TokiAPI.refreshEstimate(orderId);
-
-    //         if (data.status_code === 0) {
-    //             setPrepareEstimate(
-    //                 calcTimeDiff("", data.data.prepare_estimate, false)
-    //             );
-    //             setDeliveryEstimate(
-    //                 calcTimeDiff("", data.data.delivery_estimate, false)
-    //             );
-    //         } else {
-    //             toast(data.message);
-    //         }
-    //     } finally {
-    //         setLoadingEstimate(false);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (merchantId && state.officeId) {
-    //         setLoading(true);
-
-    //         const fetchDatas = async () => {
-    //             try {
-    //                 const { data } = await TokiAPI.viewCart({
-    //                     merchant_id: merchantId,
-    //                     office_id: state.officeId,
-    //                 });
-
-    //                 if (data.status_code === 0) {
-    //                     orderId = data.data._id;
-    //                     setData(data.data);
-
-    //                     dispatch({
-    //                         type: "cartPrice",
-    //                         cartPrice: data.data.total,
-    //                     });
-    //                     setPrepareEstimate(
-    //                         calcTimeDiff("", data.data.prepare_estimate, false)
-    //                     );
-    //                     setDeliveryEstimate(
-    //                         calcTimeDiff("", data.data.delivery_estimate, false)
-    //                     );
-
-    //                     // if (data.data.is_busy) {
-    //                     //     handleModal(
-    //                     //         true,
-    //                     //         "",
-    //                     //         "Кофе шоп захиалга ихтэй байгаа тул хүргэлтийн хугацаа энгийн үеэс 10 минут орчим нэмэгдэнэ",
-    //                     //         true,
-    //                     //         <div className="flex">
-    //                     //             <LargeWhiteButton
-    //                     //                 text="Ок"
-    //                     //                 onClick={() => handleModal()}
-    //                     //             />
-    //                     //         </div>
-    //                     //     );
-    //                     // }
-    //                 } else {
-    //                     toast(data.message);
-    //                 }
-    //             } finally {
-    //                 setLoading(false);
-    //             }
-    //         };
-
-    //         {
-    //             state.cancelDeliveryTimetable.map(
-    //                 (cancelDelivery: CancelDeliveryTimetable, index: number) =>
-    //                     new Date().getDay() === cancelDelivery.day
-    //                         ? cancelDelivery.closed === false
-    //                             ? setIsDelivery(true)
-    //                             : toDate(cancelDelivery.start_hour, "h:m") <=
-    //                                   new Date() &&
-    //                               toDate(cancelDelivery.end_hour, "h:m") >
-    //                                   new Date()
-    //                             ? setIsDelivery(false)
-    //                             : setIsDelivery(true)
-    //                         : null
-    //             );
-    //         }
-
-    //         fetchDatas();
-    //     }
-    // }, [merchantId, state.officeId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="p-5 my-col-20">

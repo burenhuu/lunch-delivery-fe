@@ -1,6 +1,5 @@
+import { Office } from "lib/types/office.type";
 import { useState, useEffect } from "react";
-
-import Office from "lib/types/office.type";
 import SearchInput from "./search-input";
 
 interface SearchShopProps {
@@ -30,7 +29,6 @@ const SearchShop: React.FC<SearchShopProps> = ({
             () => setSearchValue(debouncedSearchValue),
             600
         );
-
         return () => clearTimeout(timer);
     }, [debouncedSearchValue]);
 

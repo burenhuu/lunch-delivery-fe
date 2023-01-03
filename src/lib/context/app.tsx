@@ -27,8 +27,47 @@ const initialState = {
 
 const reducer = (state: any, action: any) => {
     switch (action.type) {
-        case "header": {
-            const newState = { ...state, header: action.header };
+        case "officeId": {
+            const newState = { ...state, officeId: action.officeId };
+            saveToLocal(newState);
+
+            return newState;
+        }
+        case "officeName": {
+            const newState = { ...state, officeName: action.officeName };
+            saveToLocal(newState);
+
+            return newState;
+        }
+        case "merchants": {
+            const newState = { ...state, merchants: action.merchants };
+            saveToLocal(newState);
+
+            return newState;
+        }
+        case "categories": {
+            const newState = { ...state, categories: action.categories };
+            saveToLocal(newState);
+
+            return newState;
+        }
+
+        case "categoryId": {
+            const newState = { ...state, categoryId: action.categoryId };
+            saveToLocal(newState);
+
+            return newState;
+        }
+
+        case "products": {
+            const newState = { ...state, products: action.products };
+            saveToLocal(newState);
+
+            return newState;
+        }
+
+        case "product": {
+            const newState = { ...state, product: action.product };
             saveToLocal(newState);
 
             return newState;
@@ -40,19 +79,7 @@ const reducer = (state: any, action: any) => {
 
             return newState;
         }
-        case "navId": {
-            const newState = { ...state, navId: action.navId };
-            saveToLocal(newState);
 
-            return newState;
-        }
-
-        case "activeTab": {
-            const newState = { ...state, activeTab: action.activeTab };
-            saveToLocal(newState);
-
-            return newState;
-        }
         case "merchantName": {
             const newState = { ...state, merchantName: action.merchantName };
             saveToLocal(newState);
@@ -69,29 +96,12 @@ const reducer = (state: any, action: any) => {
 
             return newState;
         }
-        case "merchants": {
-            const newState = { ...state, merchants: action.merchants };
-            saveToLocal(newState);
 
-            return newState;
-        }
         case "cancelDeliveryTimetable": {
             const newState = {
                 ...state,
                 cancelDeliveryTimetable: action.cancelDeliveryTimetable,
             };
-            saveToLocal(newState);
-
-            return newState;
-        }
-        case "officeId": {
-            const newState = { ...state, officeId: action.officeId };
-            saveToLocal(newState);
-
-            return newState;
-        }
-        case "officeName": {
-            const newState = { ...state, officeName: action.officeName };
             saveToLocal(newState);
 
             return newState;

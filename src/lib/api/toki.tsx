@@ -1,121 +1,58 @@
+import { CartData } from "lib/types/cart.type";
 import axios from "lib/utils/axios";
 
-const urlPrefix = "/coffee/app";
+// const urlPrefix = "/coffee/app";
+const urlPrefix = "/v1";
 
 const TokiAPI = {
-    getUser: (token: string) => axios.get(`${urlPrefix}/user/${token}`),
-
-    getAllOffices: () => axios.get(`${urlPrefix}/office/all`),
-
-    getOfficesByNearby: (lat: number, lon: number) =>
-        axios.get(`${urlPrefix}/office?type=nearby&lat=${lat}&lon=${lon}`),
-
-    getOfficesByName: (name: string) =>
-        axios.get(`${urlPrefix}/office?type=by_name&name=${name}`),
-
-    getMerchantMenuCategories: (merchantId: string) =>
-        axios.get(`${urlPrefix}/merchant/${merchantId}`),
-
-    getBanner: (merchantId: string) =>
-        axios.get(`${urlPrefix}/merchant/${merchantId}/banner`),
-
-    getMerchantProductsByCategory: (merchantId: string, categoryId: string) =>
-        axios.get(`${urlPrefix}/merchant/${merchantId}/product/${categoryId}`),
-
-    addToCart: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/cart`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    orderCurrentIncrement: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current/increment`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    orderCurrentDecrement: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current/decrement`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    viewCart: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/order/current`,
-            values
-        );
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    placeOrder: async (values: any) => {
-        const { data, status } = await axios.post(`${urlPrefix}/order`, values);
-
-        return {
-            data,
-            status,
-        };
-    },
-
-    getOrder: (
-        status: string = "ongoing",
-        pageSize: number = 10,
-        page: number = 1,
-        merchantId: string
-    ) =>
-        axios.get(
-            `${urlPrefix}/order/${merchantId}?status=${status}&page_size=${pageSize}&page=${page}`
+    getUser: (token: string) =>
+        axios.post(
+            `${urlPrefix}/token?grant_type=client_credentials&client_id=toki&client_secret=toki&code=${token}`
         ),
 
-    getOrderById: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}`),
+    getAllOffices: () => axios.get(`${urlPrefix}/offices`),
 
-    submitReview: async (values: any) => {
-        const { data, status } = await axios.post(
-            `${urlPrefix}/review`,
-            values
-        );
+    getOfficesByNearby: (lat: number, lon: number) =>
+        axios.get(`${urlPrefix}/offices?lat=${lat}&lon=${lon}&from=0&size=20`),
 
-        return {
-            data,
-            status,
-        };
+    getOfficesByName: (name: string) =>
+        axios.get(`${urlPrefix}/offices?keyword=${name}&from=0&size=10`),
+
+    getCategories: () => axios.get(`${urlPrefix}/categories`),
+
+    getMerchantsByOffice: (officeId: string) =>
+        axios.get(`${urlPrefix}/offices/${officeId}/merchants`),
+
+    //Get products by office and additional params, such as search keyword, merchantid or category
+
+    getProductsByOffice: (officeId: string, type?: string, value?: string) => {
+        if (type && value) {
+            return axios.get(
+                `${urlPrefix}/offices/${officeId}/products?${type}=${value}`
+            );
+        } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
     },
 
-    refreshEstimate: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}/estimate`),
+    getMerchantMenu: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}/menu`),
 
-    getReviewTypes: () => axios.get(`${urlPrefix}/review/type`),
+    getMerchantDetail: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}`),
 
-    jump: () => axios.get(`${urlPrefix}/jump`),
+    getMerchantReviews: (merchantId: string) =>
+        axios.get(`${urlPrefix}/merchants/${merchantId}/review`),
 
-    jumpMerchant: (merchantId: string) =>
-        axios.get(`${urlPrefix}/jump/merchant/${merchantId}`),
+    getCart: (officeId: string) =>
+        axios.get(`${urlPrefix}/offices/${officeId}/cart`),
 
-    getUpoint: (orderId: string) =>
-        axios.get(`${urlPrefix}/order/${orderId}/upoint`),
+    addCart: (officeId: string, cartItem: CartData) =>
+        axios.post(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
+
+    updateCard: (officeId: string, cartItem: CartData) =>
+        axios.put(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
+
+    getTimes: (officeId: string) =>
+        axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),
 };
 
 export default TokiAPI;

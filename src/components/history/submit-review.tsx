@@ -1,10 +1,10 @@
 import GreadientMerchantCard from "components/merchant/gradient-merchant-card";
 import ButtonComponent from "components/common/button";
 import { AddPhotos } from "components/icons";
-import { Merchant } from "lib/types/office.type";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
 import Drawer from "react-modern-drawer";
+import { Merchant } from "lib/types/merchant.type";
 
 export default function SubmitReview({ merchant }: { merchant: Merchant }) {
     const [height, setHeight] = useState<string>("380px");
@@ -56,7 +56,8 @@ export default function SubmitReview({ merchant }: { merchant: Merchant }) {
                             alt={merchant.name}
                         />
                         <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                            <div className="text-sm">{`${merchant.name} (${merchant.temporary_closed})`}</div>
+                            <div className="text-sm">{`${merchant.name}`}</div>
+                            {/* (${merchant.}) */}
                         </div>
                         <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
                     </div>

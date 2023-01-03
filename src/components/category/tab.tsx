@@ -1,3 +1,5 @@
+import { CategoryType } from "lib/types/category.type";
+
 export default function CategoryTab({
     activeTab,
     setActiveTab,
@@ -35,24 +37,24 @@ export default function CategoryTab({
                     )}
                 </div>
             )}
-            {tabs?.map((category) => {
-                const { title } = category;
+            {tabs?.map((category: CategoryType) => {
+                const { name, id } = category;
                 return (
                     <div
-                        onClick={() => setActiveTab(title)}
-                        key={title}
+                        onClick={() => setActiveTab(id)}
+                        key={id}
                         className="flex flex-col gap-y-2 whitespace-nowrap"
                     >
                         <div
                             className={
-                                title === activeTab
+                                id === activeTab
                                     ? "text-main font-medium"
                                     : "text-gray"
                             }
                         >
-                            {title}
+                            {name}
                         </div>
-                        {title === activeTab && (
+                        {id === activeTab && (
                             <div className="h-0.5 bg-gradient-to-r from-gradient-start to-gradient-end rounded-sm"></div>
                         )}
                     </div>

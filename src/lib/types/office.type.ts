@@ -7,4 +7,5 @@ export interface Office {
     longitude: number;
     photo:     string;
     distance:  number;
+    count: number;
 }

@@ -64,14 +64,15 @@ export default function ProductCard({
     );
     const [selectedOptions, setSelectedOptions] = useState<{ id: string; value: string }[]>([]);
     const [selectedVariant, setSelectedVariant] = useState<Variant>(variants[0]);
-    const [presalePrice, setPresalePrice] = useState(
-        product.variants && product.variants[0] ? product.variants[0].price : 0
-    );
-    const [price, setPrice] = useState(
-        product.variants && product.variants[0]
-            ? product.variants[0].salePrice
-            : 0
-    );
+    const [presalePrice, setPresalePrice] = useState(0);
+    const [price, setPrice] = useState(0);
+
+    useEffect(()=>{
+        setPresalePrice(product.variants && product.variants[0] ? product.variants[0].price : 0)
+        setPrice(product.variants && product.variants[0]
+            ? product.variants[0].price
+            : 0)
+    }, [product])
 
     const [show, setShow, content, setContent] = useModal();
 
@@ -142,10 +143,14 @@ export default function ProductCard({
                 value: value
             })
         }
+        setPrice(option.price + price)
+        setPresalePrice(option.price + presalePrice)
         setSelectedOptions(options)
     };
 
     const onSelectVariant = (variant: Variant) => {
+        setPrice(variant.price)
+        setPresalePrice(variant.salePrice)
         setSelectedVariant(variant)
         setApplicableOptions(variant.options)
         setSelectedOptions([])
@@ -275,38 +280,45 @@ export default function ProductCard({
                                 const { id, name, values } =
                                     option;
                                 return (
-                                    <div key={id} className="my-col-5">
-                                        <div>{name}</div>
-                                        <div className="flex gap-x-1.25">
-                                            {values?.map((value: string) => {
-                                                return (
-                                                    <div
-                                                        onClick={() =>
-                                                            onSelectOption(
-                                                                option,
-                                                                value
-                                                            )
-                                                        }
-                                                        key={option.id}
-                                                        className={
-                                                            "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                            (selectedOptions.find(
-                                                                (item) =>
-                                                                    item.id ===
-                                                                        option.id &&
-                                                                    item.value ===
-                                                                    value
-                                                            )
-                                                                ? "gradient-border text-main"
-                                                                : "border border-gray text-gray")
-                                                        }
-                                                    >
-                                                        {value}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
+                                    <>
+                                        {
+                                            values?.length > 0 &&
+                                            <div key={id} className="my-col-5">
+                                                <div>{name}</div>
+                                                <div className="flex gap-x-1.25">
+                                                    {values?.map((value: string) => {
+                                                        return (
+                                                            <div
+                                                                onClick={() =>
+                                                                    onSelectOption(
+                                                                        option,
+                                                                        value
+                                                                    )
+                                                                }
+                                                                key={value}
+                                                                className={
+                                                                    "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                    (selectedOptions.find(
+                                                                        (item) =>
+                                                                            item.id ===
+                                                                            option.id &&
+                                                                            item.value ===
+                                                                            value
+                                                                    )
+                                                                        ? "gradient-border text-main"
+                                                                        : "border border-gray text-gray")
+                                                                }
+                                                            >
+                                                                {value}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </>
+
                                 );
                             })}
                             {

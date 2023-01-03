@@ -49,7 +49,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                         {office.name}
                     </p>
                     <p className="text-xs font-light break-normal text-[#647382]">
-                        1 зоогийн газар
+                        {office.count} зоогийн газар
                     </p>
                 </div>
             </div>

@@ -62,6 +62,9 @@ export default function ProductCard({
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
     );
+    const [applicableOptionsTypeV, setApplicableOptionsTypeV] = useState<Option[]>(
+        variants[0] ? variants[0].options : []
+    );
     const [selectedOptions, setSelectedOptions] = useState<{ id: string; value: string }[]>([]);
     const [selectedVariant, setSelectedVariant] = useState<Variant>(variants[0]);
     const [presalePrice, setPresalePrice] = useState(0);
@@ -72,7 +75,17 @@ export default function ProductCard({
         setPrice(product.variants && product.variants[0]
             ? product.variants[0].price
             : 0)
-        setApplicableOptions(variants[0] ? variants[0].options : [])
+        let optionTypeA: Option[] = []
+        let optionTypeV: Option[] = []
+        variants[0].options.map((option)=>{
+            if (option.type === 'A'){
+                optionTypeA.push(option)
+            } else {
+                optionTypeV.push(option)
+            }
+        })
+        setApplicableOptions(variants[0] ? optionTypeA : [])
+        setApplicableOptionsTypeV(variants[0] ? optionTypeV : [])
         setSelectedVariant(variants[0])
     }, [product])
 
@@ -81,6 +94,7 @@ export default function ProductCard({
     const comment = useRef<HTMLInputElement>(null);
 
     const onAddClick = async () => {
+        console.log("add to cart", cartCount)
         const productData: CartData = {
             type: "Delivery",
             merchant: merchantId,
@@ -90,14 +104,14 @@ export default function ProductCard({
             options: [...selectedOptions],
         };
         try {
-            if (cartCount === 0) {
-                const { data } = await TokiAPI.addCart(officeId, productData);
-                console.log(data);
-                dispatch({
-                    type: "cartCount",
-                    cartCount: data.data.total_qty,
-                });
-            }
+
+            const {data} = await TokiAPI.addCart(officeId, productData);
+            console.log(data);
+            dispatch({
+                type: "cartCount",
+                cartCount: data.data.total_qty,
+            });
+
         } catch (err) {
         } finally {
         }
@@ -147,6 +161,27 @@ export default function ProductCard({
             options.push({
                 id: option.id,
                 value: value
+            })
+        }
+        setPrice(Number(option.price) + Number(price))
+        setPresalePrice(Number(option.price) + Number(presalePrice))
+        setSelectedOptions(options)
+    };
+
+    const onSelectOptionTypeV = (option: Option) => {
+        let check = false
+        let options: any = []
+        selectedOptions.map((selectedOption) =>{
+            console.log('checker', selectedOption?.id, option.id, selectedOptions.length)
+            if (selectedOption?.id === option.id) {
+                check = true
+            }
+        })
+        console.log(options, 'options')
+        if (!check){
+            options.push({
+                id: option.id,
+                value: null
             })
         }
         setPrice(Number(option.price) + Number(price))
@@ -282,6 +317,41 @@ export default function ProductCard({
                             </div>
                         </div>
                         <>
+                            {
+                                applicableOptionsTypeV.length > 0 && (
+                                    <>
+                                        <div className="my-col-5">
+                                            <div>Хачир</div>
+                                            <div className="flex gap-x-1.25">
+                                                {applicableOptionsTypeV?.map((option: Option) => {
+                                                    return (
+                                                        <div
+                                                            onClick={() =>
+                                                                onSelectOptionTypeV(
+                                                                    option
+                                                                )
+                                                            }
+                                                            key={option.id}
+                                                            className={
+                                                                "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                (selectedOptions.find(
+                                                                    (item) =>
+                                                                        item?.id ===
+                                                                        option.id
+                                                                )
+                                                                    ? "gradient-border text-main"
+                                                                    : "border border-gray text-gray")
+                                                            }
+                                                        >
+                                                            {option.name}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            }
                             {applicableOptions.map((option: Option) => {
                                 const { id, name, values } =
                                     option;

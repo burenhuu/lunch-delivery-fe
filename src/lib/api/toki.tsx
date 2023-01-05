@@ -25,10 +25,14 @@ const TokiAPI = {
 
     //Get products by office and additional params, such as search keyword, merchantid or category
 
-    getProductsByOffice: (officeId: string, type?: string, value?: string) => {
+    getProductsByOffice: (officeId: string, type?: string, value?: string, productTab?: string) => {
+        let params: any = {}
+        if (productTab){
+            params['sort'] = productTab
+        }
         if (type && value) {
             return axios.get(
-                `${urlPrefix}/offices/${officeId}/products?${type}=${value}`
+                `${urlPrefix}/offices/${officeId}/products?${type}=${value}`, {params: params}
             );
         } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
     },

@@ -9,8 +9,9 @@ import CategoryCard from "components/product-category/card";
 import TokiAPI from "lib/api/toki";
 import { CategoryType } from "lib/types/category.type";
 
-export function CategoryComponent({ setLoading }: { setLoading: any }) {
+export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const [state, dispatch]: any = useAppState();
+    const { setLoading } = props;
     const { categories, categoryId, officeId } = state;
     const swiperLength = Math.ceil(categories?.length / 10);
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
@@ -32,7 +33,8 @@ export function CategoryComponent({ setLoading }: { setLoading: any }) {
                 const { data } = await TokiAPI.getProductsByOffice(
                     officeId,
                     "category",
-                    selectedChildren
+                    selectedChildren,
+                    props.productTab.sort
                 );
                 if (data) {
                     dispatch({ type: "products", products: data });
@@ -45,6 +47,28 @@ export function CategoryComponent({ setLoading }: { setLoading: any }) {
             filterByCategories();
         }
     }, [selectedChildren]);
+
+    useEffect(() => {
+        const filterByCategories = async () => {
+            setLoading(true);
+            try {
+                const { data } = await TokiAPI.getProductsByOffice(
+                    officeId,
+                    "category",
+                    selectedChildren,
+                    props.productTab.sort
+                );
+                if (data) {
+                    dispatch({ type: "products", products: data });
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        if (selectedChildren) {
+            filterByCategories();
+        }
+    }, [props.productTab]);
 
     useEffect(() => {
         if (activeTab === "Бүгд") {

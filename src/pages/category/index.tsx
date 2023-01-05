@@ -63,7 +63,7 @@ export default function Category() {
     ) : (
         <>
             <div className="my-col-10 w-full h-[calc(100vh-50px)] overflow-hidden">
-                <CategoryComponent setLoading={setLoading} />
+                <CategoryComponent setLoading={setLoading} productTab={productTab} />
                 <ProductTab
                     activeTab={productTab}
                     setActiveTab={setProductTab}

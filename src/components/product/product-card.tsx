@@ -169,16 +169,19 @@ export default function ProductCard({
     };
 
     const onSelectOptionTypeV = (option: Option) => {
+        let tempSelectedOptions: any = selectedOptions
         let check = false
-        let options: any = []
-        selectedOptions.map((selectedOption) =>{
-            console.log('checker', selectedOption?.id, option.id, selectedOptions.length)
-            if (selectedOption?.id === option.id) {
+        let check_index = 0
+        let options = tempSelectedOptions.map((tempSelectedOption: any, index: number) =>{
+            if (tempSelectedOption?.id === option.id){
                 check = true
+                check_index  = index
             }
+            return tempSelectedOption
         })
-        console.log(options, 'options')
-        if (!check){
+        if (check){
+            options.splice(check_index, 1);
+        } else{
             options.push({
                 id: option.id,
                 value: null

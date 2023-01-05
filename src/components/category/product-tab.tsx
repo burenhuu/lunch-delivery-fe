@@ -1,10 +1,11 @@
-import { productFilters } from "lib/types/dummy-data";
+import {productFilters} from "../../pages/category";
+
 
 export default function ProductTab({
     activeTab,
     setActiveTab,
 }: {
-    activeTab: string;
+    activeTab: any;
     setActiveTab: any;
 }) {
     return (
@@ -12,16 +13,16 @@ export default function ProductTab({
             {productFilters?.map((filter) => {
                 return (
                     <div
-                        key={filter}
+                        key={filter.sort}
                         onClick={() => setActiveTab(filter)}
                         className={
                             "bg-white relative w-full  text-center bg-clip-padding text-sm rounded-md z-10 shadow-delivery p-2.5 " +
-                            (activeTab === filter
+                            (activeTab.sort === filter.sort
                                 ? "text-main gradient-border"
                                 : "text-gray")
                         }
                     >
-                        {filter}
+                        {filter.name}
                     </div>
                 );
             })}

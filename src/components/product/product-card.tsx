@@ -17,6 +17,7 @@ import {
     AccordionItemState,
 } from "react-accessible-accordion";
 import {FatalError} from "next/dist/lib/fatal-error";
+import {useRouter} from "next/router";
 
 function findVariant(options: any, product: any) {
     let optionDict: any = {};
@@ -69,6 +70,8 @@ export default function ProductCard({
     const [selectedVariant, setSelectedVariant] = useState<Variant>(variants[0]);
     const [presalePrice, setPresalePrice] = useState(0);
     const [price, setPrice] = useState(0);
+    const [comment, setComment] = useState('');
+    const router = useRouter();
 
     useEffect(()=>{
         setPresalePrice(product.variants && product.variants[0] ? product.variants[0].price : 0)
@@ -91,16 +94,31 @@ export default function ProductCard({
 
     const [show, setShow, content, setContent] = useModal();
 
-    const comment = useRef<HTMLInputElement>(null);
+    const onContinueClick = () => {
+        dispatch({
+            type: "merchantId",
+            merchantId: merchantId,
+        });
+        dispatch({
+            type: "merchantName",
+            merchantName: place,
+        });
+
+        if (!page) {
+            router.push(`/merchant/${merchantId}`);
+        } else {
+            router.push(`/merchant/details/${merchantId}`);
+        }
+    };
+
 
     const onAddClick = async () => {
-        console.log("add to cart", cartCount)
         const productData: CartData = {
             type: "Delivery",
             merchant: merchantId,
             variantId: selectedVariant.id,
             quantity: 1,
-            comment: "",
+            comment: comment,
             options: [...selectedOptions],
         };
         try {
@@ -242,7 +260,7 @@ export default function ProductCard({
                             >
                                 <div className="flex flex-col gap-y-1.5">
                                     {!page && (
-                                        <div className="font-medium">
+                                        <div className="font-medium" onClick={onContinueClick}>
                                             {place}
                                         </div>
                                     )}
@@ -408,7 +426,9 @@ export default function ProductCard({
                                             <div>Нэмэлт тайлбар:</div>
                                             <div className="relative">
                                                 <input
-                                                    ref={comment}
+                                                    onChange={(e)=>{
+                                                        setComment(e.target.value)
+                                                    }}
                                                     type="text"
                                                     placeholder="Нэмэлт тайлбар оруулах"
                                                     className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"

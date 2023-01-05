@@ -3,7 +3,7 @@ export interface CartData {
     type: string;
     variantId: string;
     quantity: number;
-    comment?:  string;
+    comment?:  string | null;
     options:  Option[];
 }
 

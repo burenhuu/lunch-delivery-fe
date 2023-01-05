@@ -2,7 +2,7 @@ import ProductCard from "components/product/product-card";
 import FloatButton from "components/cart/float-button";
 import { Oops } from "components/icons";
 import { useAppState } from "lib/context/app";
-import { productFilters } from "lib/types/dummy-data";
+
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Accordion } from "react-accessible-accordion";
@@ -14,11 +14,27 @@ import ProductTab from "components/category/product-tab";
 import { CardDataType, Product } from "lib/types/product.type";
 import { Merchant } from "lib/types/merchant.type";
 
+export const productFilters = [
+    {
+        'sort': 'rating',
+        'name': "Үнэлгээ"
+    }, {
+        'sort': 'price',
+        'name': "Үнэ"
+    }, {
+        'sort': 'delivery',
+        'name': "Хүргэлт"
+    }, {
+        'sort': 'bonus',
+        'name': "Урамшуулал"
+    }
+];
+
 export default function Category() {
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
     const { merchants, products, categories, categoryId, officeId } = state;
-    const [productTab, setProductTab] = useState<string>(productFilters[0]);
+    const [productTab, setProductTab] = useState<any>(productFilters[0]);
     const [loading, setLoading] = useState<boolean>(false);
     const [cardData, setCardData] = useState<CardDataType[]>();
 

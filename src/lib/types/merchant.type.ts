@@ -17,6 +17,7 @@ export interface Merchant {
     latitude:    number;
     longitude:   number;
     open:        boolean;
+    bonus: string;
     reason:      string;
     rating:      number;
     distance: number;

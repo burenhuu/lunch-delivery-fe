@@ -96,6 +96,28 @@ export default function GreadientMerchantCard({
                 onClick={onMerchantClick}
                 className="rounded-2xl min-h-[160px] overflow-hidden shadow-delivery relative"
             >
+                {!merchant.open ?
+                    <div
+                        className="absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[12px] py-[5px] px-[10px] text-white">
+                        <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center">
+                            Хаалттай
+                        </div>
+                    </div>
+
+                    :
+                    <>
+                        {merchant.bonus === "" ?
+                            <></>
+                            :
+                            <div
+                                className="absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[12px] py-[5px] px-[10px] text-white">
+                                <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center">
+                                    {merchant.bonus}
+                                </div>
+                            </div>
+                        }
+                    </>
+                }
                 <img
                     src={merchant.logo}
                     className="h-40 min-w-full"
@@ -109,11 +131,7 @@ export default function GreadientMerchantCard({
                     </div>
                 </div>
                 <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
-                {!merchant.open && (
-                    <div className="absolute text-white z-20 text-smaller top-5 right-0 bg-main/50 backdrop-blur-sm py-1.25 px-2.5 rounded-l-md">
-                        {!merchant?.open && "Хаалттай"}
-                    </div>
-                )}
+
                 {page && (
                     <div className="absolute right-3.75 bottom-3.75 flex gap-x-2.5 justify-end items-center">
                         <div className="text-xs font-light text-white">

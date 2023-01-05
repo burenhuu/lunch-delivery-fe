@@ -2,6 +2,7 @@ export interface Product {
     name: string;
     description: string;
     specification: string;
+    category?: string;
     image: string;
     variants: Variant[];
     active: boolean;
@@ -28,6 +29,7 @@ export interface RecommendedType extends Variant {
     image: string;
     place: string;
     placeId: string;
+    categoryMain?: string;
     rating: number;
 }
 

@@ -50,10 +50,11 @@ function findVariant(options: any, product: any) {
 }
 export default function ProductCard({
     data,
-    page = false,
+    page = false, checkActiveProduct
 }: {
     data: CardDataType;
     page?: boolean;
+    checkActiveProduct?: any
 }) {
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
@@ -72,6 +73,15 @@ export default function ProductCard({
     const [price, setPrice] = useState(0);
     const [comment, setComment] = useState('');
     const router = useRouter();
+
+    useEffect(()=>{
+        console.log(checkActiveProduct, product.variants[0].id)
+        if(checkActiveProduct !== undefined){
+            if(checkActiveProduct === product.variants[0].id){
+                setOpen(true)
+            }
+        }
+    },[])
 
     useEffect(()=>{
         setPresalePrice(product.variants && product.variants[0] ? product.variants[0].price : 0)
@@ -217,10 +227,9 @@ export default function ProductCard({
         setApplicableOptions(variant.options)
         setSelectedOptions([])
     };
-    console.log('applicableOptions', applicableOptions)
     return (
         data && (
-            <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
+            <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery" uuid={product.variants[0].id}>
                 <AccordionItemHeading>
                     <AccordionItemState>
                         {({ expanded }) => {

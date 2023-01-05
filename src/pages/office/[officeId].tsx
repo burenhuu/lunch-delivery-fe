@@ -31,16 +31,32 @@ export default function Office() {
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
-    const [filterParameter, setFilterParameter] = useState<any>({});
+
 
     const filterNames = [
-        "Үнэлгээгээр",
-        "Үнээр",
-        "Хүргэлтээр",
-        "Урамшуулалтай",
-        "Шинэ",
+        // {
+        //     'sort': '',
+        //     'name': "Үнэлгээгээр",
+        // },
+        {
+            'sort': 'price',
+            'name': "Үнээр",
+        },
+        {
+            'sort': 'delivery',
+            'name': "Хүргэлтээр",
+        },
+        {
+            'sort': 'bonus',
+            'name': "Урамшуулалтай",
+        },
+        {
+            'sort': 'new',
+            'name': "Шинэ",
+        }
     ];
-    const [activeFilter, setActiveFilter] = useState<string>(filterNames[0]);
+    const [filterParameter, setFilterParameter] = useState<any>({sort: filterNames[0].sort});
+    const [activeFilter, setActiveFilter] = useState<any>(filterNames[0]);
 
     useEffect(() => {
         const timer = setTimeout(() => setDebouncedValue(searchValue), 1000);
@@ -56,21 +72,20 @@ export default function Office() {
         });
     }, []);
 
-    useEffect(() => {
-        const getMerchants = async () => {
-            setLoading(true);
-            try {
-                const { data } = await TokiAPI.getMerchantsByOffice(
-                    officeId?.toString()!, filterParameter
-                );
-                if (data) {
-                    await dispatch({ type: "merchants", merchants: data });
-                }
-            } finally {
-                setLoading(false);
+    const getMerchants = async () => {
+        try {
+            const { data } = await TokiAPI.getMerchantsByOffice(
+                officeId?.toString()!, filterParameter
+            );
+            if (data) {
+                await dispatch({ type: "merchants", merchants: data });
             }
-        };
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         const getCategories = async () => {
             const { data } = await TokiAPI.getCategories();
             if (data) {
@@ -89,7 +104,6 @@ export default function Office() {
                     await data.map(async (item: any) => {
                         item?.products?.map((product: Product) => {
                             const chosenVariant = product?.variants[0];
-                            console.log(product?.variants[0], 'chosenVariant')
                             if (chosenVariant) {
                                 products.push({
                                     ...chosenVariant,
@@ -97,6 +111,7 @@ export default function Office() {
                                     placeId: item.id,
                                     image: product.image,
                                     rating: item.rating,
+                                    categoryMain: product.category
                                 });
                             }
                         });
@@ -114,6 +129,12 @@ export default function Office() {
             getProducts();
         }
     }, [officeId]);
+
+    useEffect(()=>{
+        if (officeId) {
+            getMerchants();
+        }
+    },[activeFilter])
 
     useEffect(() => {
         const onSearch = async () => {
@@ -233,7 +254,7 @@ export default function Office() {
                                     className="flex gap-x-2.5 items-center relative"
                                 >
                                     <div className="text-xs font-light text-gray">
-                                        {activeFilter}
+                                        {activeFilter.name}
                                     </div>
                                     <FilterIcon />
                                     {showFilters && (
@@ -246,15 +267,15 @@ export default function Office() {
                                                 ?.map((filter) => {
                                                     return (
                                                         <div
-                                                            key={filter}
-                                                            onClick={() =>
-                                                                setActiveFilter(
-                                                                    filter
-                                                                )
+                                                            key={filter.name}
+                                                            onClick={() =>{
+                                                                setActiveFilter(filter)
+                                                                setFilterParameter({sort: filter.sort})
+                                                            }
                                                             }
                                                             className="border-b  border-dashed border-gray last:border-none pb-1"
                                                         >
-                                                            {filter}
+                                                            {filter.name}
                                                         </div>
                                                     );
                                                 })}

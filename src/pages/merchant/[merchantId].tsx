@@ -21,7 +21,8 @@ export default function MerchantProductPage() {
     const [merchantProductCategory, setMerchantProductCategory] = useState<
         CategoryType[]
     >([]);
-
+    const checkActiveCategory = state.categoryActive ? state.categoryActive : null
+    const checkActiveProduct = router.query.productId ? router.query.productId : ""
     const [activeCategory, setActiveCategory] = useState<string>("");
     const [merchantMenu, setMerchantMenu] = useState<MerchantMenu>();
     const [cardData, setCardData] = useState<CardDataType[]>([]);
@@ -114,13 +115,14 @@ export default function MerchantProductPage() {
                         />
                     </div>
                     <div className="relative w-full h-full py-5 -my-5 overflow-y-scroll scrollbar-hide">
-                        <Accordion allowZeroExpanded className="my-col-10" key={accordionKey}>
+                        <Accordion allowZeroExpanded className="my-col-10" key={accordionKey} preExpanded={[typeof checkActiveProduct === 'string' ? checkActiveProduct : '']}>
                             {cardData?.map((item: CardDataType) => {
                                 return (
                                     <ProductCard
                                         data={item}
                                         key={item.place}
                                         page={true}
+                                        checkActiveProduct={checkActiveProduct}
                                     />
                                 );
                             })}

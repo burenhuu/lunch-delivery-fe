@@ -46,7 +46,7 @@ export default function MerchantReview({ data }: { data: Review }) {
                             >
                                 <div className="flex justify-between items-center">
                                     <div className="font-medium">
-                                        {review.id}
+                                        {review.name}
                                     </div>
                                     {review.removeable && (
                                         <div
@@ -59,19 +59,30 @@ export default function MerchantReview({ data }: { data: Review }) {
                                     )}
                                 </div>
                                 <div className="flex items-center gap-x-5">
-                                    {review?.image && (
-                                        <img
-                                            src={`/images/${review.image}`}
-                                            alt={review.id}
-                                            className="w-[60px] h-[60px] rounded-md"
-                                        />
-                                    )}
-                                    <div className="font-light text-xs my-col-5">
-                                        <div>{review.comment}</div>
-                                        <div className="text-smaller text-gray">
-                                            {review.date}
-                                        </div>
-                                    </div>
+                                    {review?.picture ?
+                                        <>
+                                            <img
+                                                src={`/images/${review.picture}`}
+                                                alt={review.id}
+                                                className="w-[60px] h-[60px] rounded-md"
+                                            />
+                                            <div className="font-light text-xs my-col-5 h-[60px]">
+                                                <div>{review.comment}</div>
+                                                <div className="text-smaller text-gray">
+                                                    {review.date}
+                                                </div>
+                                            </div>
+                                        </>
+                                        :
+                                        <>
+                                            <div className="font-light text-xs my-col-5">
+                                                <div>{review.comment}</div>
+                                                <div className="text-smaller text-gray">
+                                                    {review.date}
+                                                </div>
+                                            </div>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         );

@@ -20,8 +20,8 @@ const TokiAPI = {
 
     getCategories: () => axios.get(`${urlPrefix}/categories`),
 
-    getMerchantsByOffice: (officeId: string) =>
-        axios.get(`${urlPrefix}/offices/${officeId}/merchants`),
+    getMerchantsByOffice: (officeId: string, params: any) =>
+        axios.get(`${urlPrefix}/offices/${officeId}/merchants`, {params: params}),
 
     //Get products by office and additional params, such as search keyword, merchantid or category
 
@@ -31,6 +31,10 @@ const TokiAPI = {
                 `${urlPrefix}/offices/${officeId}/products?${type}=${value}`
             );
         } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
+    },
+
+    getRecommendedProductsByOffice: (officeId: string) => {
+        return axios.get(`${urlPrefix}/offices/${officeId}/products/promotional`);
     },
 
     getMerchantMenu: (merchantId: string) =>

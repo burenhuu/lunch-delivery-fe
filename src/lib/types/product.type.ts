@@ -27,6 +27,7 @@ export interface Option {
 export interface RecommendedType extends Variant {
     image: string;
     place: string;
+    placeId: string;
     rating: number;
 }
 

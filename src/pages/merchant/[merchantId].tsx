@@ -26,6 +26,12 @@ export default function MerchantProductPage() {
     const [merchantMenu, setMerchantMenu] = useState<MerchantMenu>();
     const [cardData, setCardData] = useState<CardDataType[]>([]);
     const [merchant, setMerchant] = useState<Merchant>();
+    const [accordionKey, setAccordionKey] = useState<any>(123);
+
+    useEffect(()=>{
+        let number = Math.random()
+        setAccordionKey(number)
+    },[activeCategory])
 
     const renderCard = async () => {
         const temp: CardDataType[] = [];
@@ -108,7 +114,7 @@ export default function MerchantProductPage() {
                         />
                     </div>
                     <div className="relative w-full h-full py-5 -my-5 overflow-y-scroll scrollbar-hide">
-                        <Accordion allowZeroExpanded className="my-col-10">
+                        <Accordion allowZeroExpanded className="my-col-10" key={accordionKey}>
                             {cardData?.map((item: CardDataType) => {
                                 return (
                                     <ProductCard

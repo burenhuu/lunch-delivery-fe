@@ -53,8 +53,9 @@ export interface Reviews {
     comment:    string;
     createdAt:  string;
     removeable: boolean;
-    date?: string
-    image? :string
+    date?: string;
+    picture? :string;
+    name: string;
 }
 
 export interface ReviewType {

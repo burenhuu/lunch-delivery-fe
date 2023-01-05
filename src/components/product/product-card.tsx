@@ -72,6 +72,8 @@ export default function ProductCard({
         setPrice(product.variants && product.variants[0]
             ? product.variants[0].price
             : 0)
+        setApplicableOptions(variants[0] ? variants[0].options : [])
+        setSelectedVariant(variants[0])
     }, [product])
 
     const [show, setShow, content, setContent] = useModal();
@@ -91,6 +93,10 @@ export default function ProductCard({
             if (cartCount === 0) {
                 const { data } = await TokiAPI.addCart(officeId, productData);
                 console.log(data);
+                dispatch({
+                    type: "cartCount",
+                    cartCount: data.data.total_qty,
+                });
             }
         } catch (err) {
         } finally {
@@ -143,8 +149,8 @@ export default function ProductCard({
                 value: value
             })
         }
-        setPrice(option.price + price)
-        setPresalePrice(option.price + presalePrice)
+        setPrice(Number(option.price) + Number(price))
+        setPresalePrice(Number(option.price) + Number(presalePrice))
         setSelectedOptions(options)
     };
 
@@ -155,7 +161,7 @@ export default function ProductCard({
         setApplicableOptions(variant.options)
         setSelectedOptions([])
     };
-
+    console.log('applicableOptions', applicableOptions)
     return (
         data && (
             <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery">
@@ -279,6 +285,7 @@ export default function ProductCard({
                             {applicableOptions.map((option: Option) => {
                                 const { id, name, values } =
                                     option;
+
                                 return (
                                     <>
                                         {

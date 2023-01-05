@@ -31,6 +31,7 @@ export default function Office() {
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
+    const [filterParameter, setFilterParameter] = useState<any>({});
 
     const filterNames = [
         "Үнэлгээгээр",
@@ -60,7 +61,7 @@ export default function Office() {
             setLoading(true);
             try {
                 const { data } = await TokiAPI.getMerchantsByOffice(
-                    officeId?.toString()!
+                    officeId?.toString()!, filterParameter
                 );
                 if (data) {
                     await dispatch({ type: "merchants", merchants: data });
@@ -79,21 +80,21 @@ export default function Office() {
 
         const getProducts = async () => {
             try {
-                const { data } = await TokiAPI.getProductsByOffice(
+                const { data } = await TokiAPI.getRecommendedProductsByOffice(
                     officeId?.toString()!
                 );
                 if (data) {
+                    console.log('recommend', data)
                     const products: RecommendedType[] = [];
                     await data.map(async (item: any) => {
                         item?.products?.map((product: Product) => {
-                            const chosenVariant = product?.variants?.find(
-                                (variant) =>
-                                    +variant.salePrice !== +variant.price
-                            );
+                            const chosenVariant = product?.variants[0];
+                            console.log(product?.variants[0], 'chosenVariant')
                             if (chosenVariant) {
                                 products.push({
                                     ...chosenVariant,
                                     place: item.name,
+                                    placeId: item.id,
                                     image: product.image,
                                     rating: item.rating,
                                 });

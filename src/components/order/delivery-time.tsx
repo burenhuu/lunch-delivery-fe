@@ -21,9 +21,9 @@ export function DeliveryTime({
     const onSelectTime = () => {
         setShow(true);
         setContent(
-            <div className="fixed left-1/2 -translate-x-1/2 bottom-5 w-full z-30 px-5 text-center">
+            <div className="fixed z-50 w-full px-5 text-center -translate-x-1/2 left-1/2 bottom-5">
                 <div id="effect" data-aos="fade-up" className="my-col-10">
-                    <div className="bg-white p-5 shadow-delivery rounded-2xl my-col-10">
+                    <div className="p-5 bg-white shadow-delivery rounded-2xl my-col-10">
                         {times?.map((time) => {
                             return (
                                 <div

@@ -107,7 +107,7 @@ export default function MerchantProductPage() {
                             merchant={true}
                         />
                     </div>
-                    <div className="relative w-full h-full overflow-y-scroll scrollbar-hide  -my-5 py-5">
+                    <div className="relative w-full h-full py-5 -my-5 overflow-y-scroll scrollbar-hide">
                         <Accordion allowZeroExpanded className="my-col-10">
                             {cardData?.map((item: CardDataType) => {
                                 return (

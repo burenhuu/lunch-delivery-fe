@@ -22,37 +22,51 @@ const DeliveryAddress = forwardRef(
         const onSelectFloor = () => {
             setShow(true);
             setContent(
-                <div className="center-modal px-[50px]">
-                    <div
-                        id="effect"
-                        data-aos="fade-up"
-                        className="grid grid-cols-5 gap-1.25 "
-                    >
-                        {[...Array(numberOfStorey)].map(
-                            (floor, index: number) => {
-                                return (
-                                    <div
-                                        key={floor}
-                                        onClick={() => {
-                                            setSelectedFloor(index + 1);
-                                            document
-                                                .getElementById("effect")
-                                                ?.classList.remove(
-                                                    "aos-animate"
-                                                );
-                                            setTimeout(() => {
-                                                setShow(false);
-                                            }, 400);
-                                        }}
-                                        className="bg-white rounded-md shadow-delivery w-[50px] py-[15.5px] text-center"
-                                    >
-                                        {index + 1}
-                                    </div>
-                                );
-                            }
-                        )}
+                <div className="fixed z-50 w-full px-5 text-center -translate-x-1/2 left-1/2 bottom-5">
+                    <div id="effect" data-aos="fade-up" className="my-col-10">
+                        <div className="p-5 bg-white shadow-delivery rounded-2xl my-col-10">
+                            test
+                        </div>
+                        <div
+                            // onClick={onClose}
+                            className="bg-white shadow-delivery px-5 py-[10.5px] rounded-2xl"
+                        >
+                            Хаах
+                        </div>
                     </div>
                 </div>
+                // <div>test</div>
+                // <div className="center-modal px-[50px]">
+                //     <div
+                //         id="effect"
+                //         data-aos="fade-up"
+                //         className="grid grid-cols-5 gap-1.25 "
+                //     >
+                //         {[...Array(numberOfStorey)].map(
+                //             (floor, index: number) => {
+                //                 return (
+                //                     <div
+                //                         key={floor}
+                //                         onClick={() => {
+                //                             setSelectedFloor(index + 1);
+                //                             document
+                //                                 .getElementById("effect")
+                //                                 ?.classList.remove(
+                //                                     "aos-animate"
+                //                                 );
+                //                             setTimeout(() => {
+                //                                 setShow(false);
+                //                             }, 400);
+                //                         }}
+                //                         className="bg-white rounded-md shadow-delivery w-[50px] py-[15.5px] text-center"
+                //                     >
+                //                         {index + 1}
+                //                     </div>
+                //                 );
+                //             }
+                //         )}
+                //     </div>
+                // </div>
             );
         };
         return (

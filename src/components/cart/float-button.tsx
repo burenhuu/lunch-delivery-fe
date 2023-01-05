@@ -1,23 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import TokiAPI from "lib/api/toki";
 import { useAppState } from "lib/context/app";
 import CountBadge from "components/common/count-badge";
-import { CartData } from "lib/types/cart.type";
 
-interface FloatButtonProps {
-    merchantId?: string;
-    categoryId?: string;
-}
-
-const FloatButton: React.FC<FloatButtonProps> = ({
-    merchantId,
-    categoryId,
-}) => {
-    // const [loading, setLoading] = useState(false);
-    const [data, setData] = useState<CartData>();
+const FloatButton: React.FC<any> = () => {
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
     const router = useRouter();
@@ -33,15 +21,11 @@ const FloatButton: React.FC<FloatButtonProps> = ({
             const fetchDatas = async () => {
                 try {
                     const { data } = await TokiAPI.getCart(officeId);
+                    console.log(data);
                     if (data) {
-                        setData(data.data);
                         dispatch({
                             type: "cartCount",
-                            cartCount: data?.data?.total_qty,
-                        });
-                        dispatch({
-                            type: "categoryId",
-                            categoryId: categoryId,
+                            cartCount: data?.totalItems ? data?.totalItems : 0,
                         });
                     }
                 } catch (err) {
@@ -53,7 +37,7 @@ const FloatButton: React.FC<FloatButtonProps> = ({
 
             fetchDatas();
         }
-    }, [merchantId, officeId, cartCount]);
+    }, [officeId, cartCount]);
 
     return cartCount > 0 && !loading ? (
         <div

@@ -137,7 +137,7 @@ export default function ProductCard({
             console.log(data);
             dispatch({
                 type: "cartCount",
-                cartCount: data.data.total_qty,
+                cartCount: data.totalItems,
             });
 
         } catch (err) {

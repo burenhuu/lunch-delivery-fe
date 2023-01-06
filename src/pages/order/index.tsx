@@ -369,7 +369,7 @@ const Cart: NextPage = () => {
                     )}
                 </div>
                 {/* <div onClick={onOrderClick}> */}
-                <ButtonComponent text="Захиалах" type="submit" />
+                <ButtonComponent text="Захиалах" />
                 {/* </div> */}
             </form>
         </div>

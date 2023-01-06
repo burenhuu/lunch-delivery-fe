@@ -59,8 +59,8 @@ export default function ProductCard({
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { rating, place, product, merchantId } = data;
-    const { description, specification, image, name, variants } = product;
+    const { rating, place, product, merchantId, placeOpen } = data;
+    const { description, image, name, variants } = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
     );
@@ -237,26 +237,47 @@ export default function ProductCard({
                             return null;
                         }}
                     </AccordionItemState>
+
                     <AccordionItemButton className="flex justify-start gap-x-3.75 ">
                         <div className="relative min-w-[120px] max-w-[120px] min-h-[120px]">
-                            <img
-                                onClick={onImageClick}
-                                src={image}
-                                className={
-                                    "w-full h-full rounded-2xl"
-                                }
-                                alt={place}
-                            />
-                            {!page && (
-                                <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
-                                    👍 {rating}%
-                                </div>
-                            )}
-                            {/* {outOfStock && (
-                            <div className="absolute text-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium text-base text-white">
-                                Дууссан
-                            </div>
-                        )} */}
+                            {
+                                product.active ?
+                                    <>
+                                        <img
+                                            onClick={onImageClick}
+                                            src={image}
+                                            className={
+                                                "w-full h-full rounded-2xl"
+                                            }
+                                            alt={place}
+                                        />
+                                        {!page && (
+                                            <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                                👍 {rating}%
+                                            </div>
+                                        )}
+                                    </>
+                                    :
+                                    <>
+                                        <img
+                                            onClick={onImageClick}
+                                            src={image}
+                                            className={
+                                                "w-full h-full rounded-2xl opacity-50"
+                                            }
+                                            alt={place}
+                                        />
+                                        {!page && (
+                                            <div className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                                👍 {rating}%
+                                            </div>
+                                        )}
+                                        <div className="absolute text-shadow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-medium text-base text-white">
+                                            Дууссан
+                                        </div>
+                                    </>
+                            }
+
                         </div>
                         <div className="py-3.75 pr-5 flex justify-between w-full">
                             <div
@@ -316,121 +337,121 @@ export default function ProductCard({
                         <div className="my-col-5">
                             <div>Орц:</div>
                             <div className="text-gray font-light text-xs">
-                                {specification}
-                            </div>
-                        </div>
-                        <div className="my-col-5">
-                            <div>Порц</div>
-                            <div className="flex gap-x-1.25">
-                                {
-                                    variants.map((variant: Variant) =>{
-                                        return(
-                                            <div
-                                                onClick={() =>
-                                                    onSelectVariant(
-                                                        variant
-                                                    )
-                                                }
-                                                key={variant.id}
-                                                className={
-                                                    "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                    (
-                                                        selectedVariant === variant ? "gradient-border text-main" : "border border-gray text-gray"
-                                                    )
-                                                }
-                                            >
-                                                {variant.name}
-                                            </div>
-                                        )
-                                    })
-                                }
+                                {description}
                             </div>
                         </div>
                         <>
                             {
-                                applicableOptionsTypeV.length > 0 && (
+                                product.active || placeOpen && (
                                     <>
                                         <div className="my-col-5">
-                                            <div>Хачир</div>
+                                            <div>Порц</div>
                                             <div className="flex gap-x-1.25">
-                                                {applicableOptionsTypeV?.map((option: Option) => {
-                                                    return (
-                                                        <div
-                                                            onClick={() =>
-                                                                onSelectOptionTypeV(
-                                                                    option
-                                                                )
-                                                            }
-                                                            key={option.id}
-                                                            className={
-                                                                "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                                (selectedOptions.find(
-                                                                    (item) =>
-                                                                        item?.id ===
-                                                                        option.id
-                                                                )
-                                                                    ? "gradient-border text-main"
-                                                                    : "border border-gray text-gray")
-                                                            }
-                                                        >
-                                                            {option.name}
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        </div>
-                                    </>
-                                )
-                            }
-                            {applicableOptions.map((option: Option) => {
-                                const { id, name, values } =
-                                    option;
-
-                                return (
-                                    <>
-                                        {
-                                            values?.length > 0 &&
-                                            <div key={id} className="my-col-5">
-                                                <div>{name}</div>
-                                                <div className="flex gap-x-1.25">
-                                                    {values?.map((value: string) => {
-                                                        return (
+                                                {
+                                                    variants.map((variant: Variant) =>{
+                                                        return(
                                                             <div
                                                                 onClick={() =>
-                                                                    onSelectOption(
-                                                                        option,
-                                                                        value
+                                                                    onSelectVariant(
+                                                                        variant
                                                                     )
                                                                 }
-                                                                key={value}
+                                                                key={variant.id}
                                                                 className={
                                                                     "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                                    (selectedOptions.find(
-                                                                        (item) =>
-                                                                            item.id ===
-                                                                            option.id &&
-                                                                            item.value ===
-                                                                            value
+                                                                    (
+                                                                        selectedVariant === variant ? "gradient-border text-main" : "border border-gray text-gray"
                                                                     )
-                                                                        ? "gradient-border text-main"
-                                                                        : "border border-gray text-gray")
                                                                 }
                                                             >
-                                                                {value}
+                                                                {variant.name}
                                                             </div>
-                                                        );
-                                                    })}
-                                                </div>
+                                                        )
+                                                    })
+                                                }
                                             </div>
+                                        </div>
+                                        {
+                                            applicableOptionsTypeV.length > 0 && (
+                                                <>
+                                                    <div className="my-col-5">
+                                                        <div>Хачир</div>
+                                                        <div className="flex gap-x-1.25">
+                                                            {applicableOptionsTypeV?.map((option: Option) => {
+                                                                return (
+                                                                    <div
+                                                                        onClick={() =>
+                                                                            onSelectOptionTypeV(
+                                                                                option
+                                                                            )
+                                                                        }
+                                                                        key={option.id}
+                                                                        className={
+                                                                            "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                            (selectedOptions.find(
+                                                                                (item) =>
+                                                                                    item?.id ===
+                                                                                    option.id
+                                                                            )
+                                                                                ? "gradient-border text-main"
+                                                                                : "border border-gray text-gray")
+                                                                        }
+                                                                    >
+                                                                        {option.name}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )
                                         }
+                                        {applicableOptions.map((option: Option) => {
+                                            const { id, name, values } =
+                                                option;
 
-                                    </>
+                                            return (
+                                                <>
+                                                    {
+                                                        values?.length > 0 &&
+                                                        <div key={id} className="my-col-5">
+                                                            <div>{name}</div>
+                                                            <div className="flex gap-x-1.25">
+                                                                {values?.map((value: string) => {
+                                                                    return (
+                                                                        <div
+                                                                            onClick={() =>
+                                                                                onSelectOption(
+                                                                                    option,
+                                                                                    value
+                                                                                )
+                                                                            }
+                                                                            key={value}
+                                                                            className={
+                                                                                "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                                (selectedOptions.find(
+                                                                                    (item) =>
+                                                                                        item.id ===
+                                                                                        option.id &&
+                                                                                        item.value ===
+                                                                                        value
+                                                                                )
+                                                                                    ? "gradient-border text-main"
+                                                                                    : "border border-gray text-gray")
+                                                                            }
+                                                                        >
+                                                                            {value}
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    }
 
-                                );
-                            })}
-                            {
-                                product.active && (
-                                    <>
+                                                </>
+
+                                            );
+                                        })}
                                         <div className="my-col-5">
                                             <div>Нэмэлт тайлбар:</div>
                                             <div className="relative">

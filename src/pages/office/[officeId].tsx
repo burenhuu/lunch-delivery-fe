@@ -99,7 +99,6 @@ export default function Office() {
                     officeId?.toString()!
                 );
                 if (data) {
-                    console.log('recommend', data)
                     const products: RecommendedType[] = [];
                     await data.map(async (item: any) => {
                         item?.products?.map((product: Product) => {

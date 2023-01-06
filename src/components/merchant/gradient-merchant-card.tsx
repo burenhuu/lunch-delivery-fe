@@ -46,28 +46,28 @@ export default function GreadientMerchantCard({
     };
 
     const onMerchantClick = () => {
-        if (!merchant.open) {
-            setShow(true);
-            setContent(
-                <PermissionBox
-                    text={
-                        <>
-                            <div className="my-col-20">
-                                {merchant.reason}
-                                {/* Зоогийн газар хаалттай байна. Та бусад зоогийн
-                                газраас сонголтоо хийнэ үү
-                                <div>
-                                    Ажиллах цагийн хуваарь:
-                                    <p className="font-medium">
-                                        {startDate}-{endDate}
-                                    </p>
-                                </div> */}
-                            </div>
-                        </>
-                    }
-                />
-            );
-        }
+        // if (!merchant.open) {
+        //     setShow(true);
+        //     setContent(
+        //         <PermissionBox
+        //             text={
+        //                 <>
+        //                     <div className="my-col-20">
+        //                         {merchant.reason}
+        //                         {/* Зоогийн газар хаалттай байна. Та бусад зоогийн
+        //                         газраас сонголтоо хийнэ үү
+        //                         <div>
+        //                             Ажиллах цагийн хуваарь:
+        //                             <p className="font-medium">
+        //                                 {startDate}-{endDate}
+        //                             </p>
+        //                         </div> */}
+        //                     </div>
+        //                 </>
+        //             }
+        //         />
+        //     );
+        // }
         // else if (merchant.temporary_closed) {
         //     setShow(true);
         //     setContent(
@@ -86,9 +86,10 @@ export default function GreadientMerchantCard({
         //         />
         //     );
         // }
-        else {
-            onContinueClick();
-        }
+        // else {
+        //     onContinueClick();
+        // }
+        onContinueClick();
     };
     return (
         merchant && (

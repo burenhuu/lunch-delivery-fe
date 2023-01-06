@@ -44,6 +44,7 @@ export default function MerchantProductPage() {
                         place: merchant?.name!,
                         merchantId,
                         product: product,
+                        placeOpen: merchant?.open
                     });
                 });
             } else {
@@ -54,6 +55,7 @@ export default function MerchantProductPage() {
                                 place: merchant?.name!,
                                 product: product,
                                 merchantId,
+                                placeOpen: merchant?.open
                             });
                         });
                     }

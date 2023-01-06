@@ -1,8 +1,10 @@
-export function Vat({ setVat }: { setVat: any }) {
+export function Vat({ setVat, setValue }: { setVat: any; setValue: any }) {
     return (
         <div
-            onChange={(event: any) => setVat(event.target.value)}
-            className="flex justify-start gap-x-5 items-center text-sm"
+            onChange={(event: any) => (
+                setVat(event.target.value), setValue("vat", event.target.value)
+            )}
+            className="flex items-center justify-start text-sm gap-x-5"
         >
             <label
                 className="flex items-center gap-x-2.5 relative"
@@ -13,7 +15,7 @@ export function Vat({ setVat }: { setVat: any }) {
                     type="radio"
                     name="vatType"
                     id="individual"
-                    value="individual"
+                    value={1}
                 />
                 <div className="checkmark"></div>
                 <div>Хувь хүн</div>
@@ -26,7 +28,7 @@ export function Vat({ setVat }: { setVat: any }) {
                     type="radio"
                     name="vatType"
                     id="organization"
-                    value="organization"
+                    value={3}
                 />
                 <div className="checkmark"></div>
                 <div>Байгууллага</div>

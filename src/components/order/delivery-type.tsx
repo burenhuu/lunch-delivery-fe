@@ -1,36 +1,41 @@
 export default function DeliveryType({
     setDeliveryType,
+    setValue,
 }: {
     setDeliveryType: any;
+    setValue: any;
 }) {
     return (
         <div
-            onChange={(event: any) => setDeliveryType(event.target.value)}
-            className="flex justify-start gap-x-5 items-center text-sm"
+            onChange={(event: any) => (
+                setDeliveryType(event.target.value),
+                setValue("type", event.target.value)
+            )}
+            className="flex items-center justify-start text-sm gap-x-5"
         >
             <label
                 className="flex items-center gap-x-2.5 relative"
-                htmlFor="deliver"
+                htmlFor="Delivery"
             >
                 <input
                     defaultChecked
                     type="radio"
                     name="typeofdelivery"
-                    id="deliver"
-                    value="deliver"
+                    id="Delivery"
+                    value="Delivery"
                 />
                 <div className="checkmark"></div>
                 <div>Хүргүүлэх</div>
             </label>
             <label
                 className="flex items-center gap-x-2.5 relative"
-                htmlFor="takeout"
+                htmlFor="TakeAway"
             >
                 <input
                     type="radio"
                     name="typeofdelivery"
-                    id="takeout"
-                    value="takeout"
+                    id="TakeAway"
+                    value="TakeAway"
                 />
                 <div className="checkmark"></div>
                 <div>Очиж авах</div>

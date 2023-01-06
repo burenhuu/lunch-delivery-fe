@@ -1,7 +1,16 @@
-export default function ButtonComponent({ text }: { text: string }) {
+export default function ButtonComponent({
+    text,
+    type,
+}: {
+    text: string;
+    type: any;
+}) {
     return (
-        <div className="bg-gradient-to-r from-gradient-start  to-gradient-end text-white text-center rounded-md shadow-delivery px-5 text-base py-2.5">
+        <button
+            className="bg-gradient-to-r from-gradient-start  to-gradient-end text-white text-center rounded-md shadow-delivery px-5 text-base py-2.5"
+            type={type}
+        >
             {text}
-        </div>
+        </button>
     );
 }

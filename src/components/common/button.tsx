@@ -1,6 +1,6 @@
 export default function ButtonComponent({
     text,
-    type,
+    type = null,
 }: {
     text: string;
     type: any;

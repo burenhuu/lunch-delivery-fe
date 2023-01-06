@@ -78,7 +78,10 @@ export function CartItems({
                                             {product.options.map(
                                                 (option: any) => {
                                                     return (
-                                                        <div className="font-light text-gray line-clamp-1">
+                                                        <div
+                                                            className="font-light text-gray line-clamp-1"
+                                                            key={option.name}
+                                                        >
                                                             {option.name}
                                                         </div>
                                                     );

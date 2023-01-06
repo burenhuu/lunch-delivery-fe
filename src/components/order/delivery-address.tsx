@@ -37,7 +37,10 @@ const DeliveryAddress = forwardRef(
                                 {[...Array(numberOfStorey)].map(
                                     (floor, index: number) => {
                                         return (
-                                            <div className="p-[5px]">
+                                            <div
+                                                className="p-[5px]"
+                                                key={index}
+                                            >
                                                 <div
                                                     key={floor}
                                                     onClick={() => {

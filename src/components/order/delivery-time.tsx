@@ -1,16 +1,25 @@
+import useSWR from "swr";
+
 import { ArrowDown } from "components/icons";
 import { useModal } from "lib/context/modal";
+import { useAppState } from "lib/context/app";
 
 export function DeliveryTime({
     times,
     selectedTime,
     setSelectedTime,
+    setValue,
 }: {
     times: string[];
     selectedTime: string;
     setSelectedTime: any;
+    setValue: any;
 }) {
+    const [state]: any = useAppState();
+
     const [show, setShow, content, setContent] = useModal();
+    const apiUrl = `/v1/offices/${state.officeId}/cart/times`;
+    const { data, error } = useSWR(`${apiUrl}`);
 
     const onClose = () => {
         document.getElementById("effect")?.classList.remove("aos-animate");
@@ -24,20 +33,22 @@ export function DeliveryTime({
             <div className="fixed z-50 w-full px-5 text-center -translate-x-1/2 left-1/2 bottom-5">
                 <div id="effect" data-aos="fade-up" className="my-col-10">
                     <div className="p-5 bg-white shadow-delivery rounded-2xl my-col-10">
-                        {times?.map((time) => {
-                            return (
-                                <div
-                                    key={time}
-                                    onClick={() => {
-                                        setSelectedTime(time);
-                                        onClose();
-                                    }}
-                                    className="pb-2.5 border-b border-gray last:border-none last:pb-0"
-                                >
-                                    {time}
-                                </div>
-                            );
-                        })}
+                        {data.data &&
+                            data.data.times?.map((time: any) => {
+                                return (
+                                    <div
+                                        key={time}
+                                        onClick={() => {
+                                            setSelectedTime(time);
+                                            setValue("time", time);
+                                            onClose();
+                                        }}
+                                        className="pb-2.5 border-b border-gray last:border-none last:pb-0"
+                                    >
+                                        {time}
+                                    </div>
+                                );
+                            })}
                     </div>
                     <div
                         onClick={onClose}

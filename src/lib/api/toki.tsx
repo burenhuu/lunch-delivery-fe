@@ -21,7 +21,9 @@ const TokiAPI = {
     getCategories: () => axios.get(`${urlPrefix}/categories`),
 
     getMerchantsByOffice: (officeId: string, params: any) =>
-        axios.get(`${urlPrefix}/offices/${officeId}/merchants`, {params: params}),
+        axios.get(`${urlPrefix}/offices/${officeId}/merchants`, {
+            params: params,
+        }),
 
     //Get products by office and additional params, such as search keyword, merchantid or category
 
@@ -38,7 +40,9 @@ const TokiAPI = {
     },
 
     getRecommendedProductsByOffice: (officeId: string) => {
-        return axios.get(`${urlPrefix}/offices/${officeId}/products/promotional`);
+        return axios.get(
+            `${urlPrefix}/offices/${officeId}/products/promotional`
+        );
     },
 
     getMerchantMenu: (merchantId: string) =>
@@ -56,11 +60,17 @@ const TokiAPI = {
     addCart: (officeId: string, cartItem: CartData) =>
         axios.post(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
 
-    updateCard: (officeId: string, cartItem: CartData) =>
+    updateCard: (officeId: string, cartItem: any) =>
         axios.put(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
 
     getTimes: (officeId: string) =>
         axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),
+
+    checkout: (officeId: string, data: any) =>
+        axios.post(`${urlPrefix}/offices/${officeId}/cart/checkout`, data),
+
+    paid: (officeId: string, data: any) =>
+        axios.post(`${urlPrefix}/offices/${officeId}/cart/paid`, data),
 };
 
 export default TokiAPI;

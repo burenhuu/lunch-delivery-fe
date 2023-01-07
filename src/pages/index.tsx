@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Drawer from "react-modern-drawer";
 import useSWR from "swr";
 
@@ -20,6 +20,13 @@ const Index: NextPage = () => {
     const [height, setHeight] = useState("340px");
     const [maxHeight, setMaxHeight] = useState("45vh");
     const { data, error } = useSWR("/v1/offices");
+    const [allOffices, setAllOffices] = useState<Office[]>([])
+
+    useEffect(() => {
+        TokiAPI.getAllOffices().then((res) => {
+            setAllOffices(res.data)
+        })
+    }, [])
 
     const onSearchSubmit = async (searchValue: string = "") => {
         setLoading(true);
@@ -66,7 +73,7 @@ const Index: NextPage = () => {
 
                 <Map
                     onSearchByMap={onSearchByMap}
-                    offices={data ? data?.data : offices}
+                    offices={allOffices}
                 // offices={offices}
                 />
 

@@ -128,54 +128,56 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                 )}
                 options={options}
             />
-            {offices?.map((office: Office, index: number) => (
-                <Marker
-                    key={index}
-                    position={{
-                        lat: Number(office.latitude),
-                        lng: Number(office.longitude),
-                    }}
-                    icon={{
-                        // url: office.pin_icon,
-                        url: "/images/pin.svg",
-                        scaledSize: new google.maps.Size(24, 34),
-                        anchor: new google.maps.Point(24, 34),
-                    }}
-                    onClick={() => (
-                        setCenter({
+            {offices?.map((office: Office, index: number) => {
+                return (
+                    <Marker
+                        key={"office" + index}
+                        position={{
                             lat: Number(office.latitude),
                             lng: Number(office.longitude),
-                        }),
-                        // onSearchByMap(
-                        //     Number(office.latitude),
-                        //     Number(office.longitude)
-                        // ),
-                        map.panTo(
-                            new window.google.maps.LatLng(
-                                Number(office.latitude),
-                                Number(office.longitude)
-                            )
-                        ),
-                        // dispatch({
-                        //     type: "merchants",
-                        //     merchants: office.merchants,
-                        // }),
-                        dispatch({
-                            type: "officeId",
-                            officeId: office.id,
-                        }),
-                        dispatch({
-                            type: "officeName",
-                            officeName: office.name,
-                        }),
-                        dispatch({
-                            type: "numberOfStorey",
-                            numberOfStorey: office.floor,
-                        }),
-                        router.push(`/office/${office.id}`)
-                    )}
-                />
-            ))}
+                        }}
+                        icon={{
+                            // url: office.pin_icon,
+                            url: "/images/pin.svg",
+                            scaledSize: new google.maps.Size(24, 34),
+                            anchor: new google.maps.Point(24, 34),
+                        }}
+                        onClick={() => (
+                            setCenter({
+                                lat: Number(office.latitude),
+                                lng: Number(office.longitude),
+                            }),
+                            // onSearchByMap(
+                            //     Number(office.latitude),
+                            //     Number(office.longitude)
+                            // ),
+                            map.panTo(
+                                new window.google.maps.LatLng(
+                                    Number(office.latitude),
+                                    Number(office.longitude)
+                                )
+                            ),
+                            // dispatch({
+                            //     type: "merchants",
+                            //     merchants: office.merchants,
+                            // }),
+                            dispatch({
+                                type: "officeId",
+                                officeId: office.id,
+                            }),
+                            dispatch({
+                                type: "officeName",
+                                officeName: office.name,
+                            }),
+                            dispatch({
+                                type: "numberOfStorey",
+                                numberOfStorey: office.floor,
+                            }),
+                            router.push(`/office/${office.id}`)
+                        )}
+                    />
+                )
+            })}
         </GoogleMap>
     ) : (
         <></>

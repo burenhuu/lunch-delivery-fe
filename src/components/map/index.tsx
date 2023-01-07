@@ -72,13 +72,14 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
         if (coords && map) {
             const lat = coords.latitude;
             const lng = coords.longitude;
+            console.log(lat, lng)
             dispatch({
                 type: "userLat",
-                merchantId: lat,
+                userLat: lat,
             });
             dispatch({
                 type: "userLng",
-                merchantId: lng,
+                userLng: lng,
             });
             map.panTo(new window.google.maps.LatLng(lat, lng));
             setCenter({ lat, lng });

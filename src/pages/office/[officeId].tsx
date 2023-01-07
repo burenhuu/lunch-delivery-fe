@@ -17,6 +17,9 @@ import TokiAPI from "lib/api/toki";
 import { Product, RecommendedType } from "lib/types/product.type";
 import { Merchant } from "lib/types/merchant.type";
 import { CategoryType } from "lib/types/category.type";
+import { utilsReduce } from "lib/utils/utils";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
@@ -31,6 +34,13 @@ export default function Office() {
     const [showFilters, setShowFilters] = useState<boolean>(false);
     const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
+    const [viewCategories, setViewCategories] = useState([])
+
+    useEffect(() => {
+        if (categories?.length > 0) {
+            setViewCategories(utilsReduce(categories))
+        }
+    }, [categories])
 
 
     const filterNames = [
@@ -66,11 +76,16 @@ export default function Office() {
 
     useEffect(() => {
         console.log(state)
+
+
         toast("Таны хаяг зөв эсэхийг шалгаарай", {
             className: "location-toast",
             position: "top-left",
             closeButton: <CloseButton />,
+            autoClose: false
         });
+
+
     }, []);
 
     const getMerchants = async () => {
@@ -234,18 +249,27 @@ export default function Office() {
                     )
                 ) : (
                     <>
-                        {categories?.length > 0 ? (
-                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75">
-                                {categories?.map((category: CategoryType) => {
-                                    return (
-                                        <CategoryCard
-                                            category={category}
-                                            key={category.id}
-                                        />
-                                    );
-                                })}
+                        {categories?.length > 0 && (
+                            <div className="h-[346px]">
+                                <Carousel showArrows={false} showStatus={false} showIndicators={false}>
+                                    {
+                                        viewCategories.map((viewCategory: any, index: any) => (
+                                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75 w-[360px]" key={index}>
+                                                {viewCategory?.map((category: CategoryType) => {
+                                                    return (
+                                                        <CategoryCard
+                                                            category={category}
+                                                            key={category.id}
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                        ))
+                                    }
+                                </Carousel>
                             </div>
-                        ) : null}
+
+                        )}
                         <div>
                             <div className="flex justify-between pb-[15px] items-center">
                                 <div className="font-medium">Бүгд</div>

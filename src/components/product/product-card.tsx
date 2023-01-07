@@ -76,7 +76,7 @@ export default function ProductCard({
 
     useEffect(() => {
         if (checkActiveProduct !== undefined) {
-            if (checkActiveProduct === product.variants[0].id) {
+            if (checkActiveProduct === product.variants[0]?.id) {
                 setOpen(true)
             }
         }
@@ -89,7 +89,7 @@ export default function ProductCard({
             : 0)
         let optionTypeA: Option[] = []
         let optionTypeV: Option[] = []
-        variants[0].options.map((option) => {
+        variants[0]?.options.map((option) => {
             if (option.type === 'A') {
                 optionTypeA.push(option)
             } else {
@@ -230,7 +230,7 @@ export default function ProductCard({
     };
     return (
         data && (
-            <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery" uuid={product.variants[0].id}>
+            <AccordionItem className="bg-white rounded-2xl overflow-hidden shadow-delivery" uuid={product.variants[0]?.id}>
                 <AccordionItemHeading>
                     <AccordionItemState>
                         {({ expanded }) => {

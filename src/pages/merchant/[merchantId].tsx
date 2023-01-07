@@ -21,7 +21,7 @@ export default function MerchantProductPage() {
     const [merchantProductCategory, setMerchantProductCategory] = useState<
         CategoryType[]
     >([]);
-    const checkActiveCategory = state.categoryActive ? state.categoryActive : null
+    const checkActiveCategory = router.query.categoryId ? router.query.categoryId : ""
     const checkActiveProduct = router.query.productId ? router.query.productId : ""
     const [activeCategory, setActiveCategory] = useState<string>("");
     const [merchantMenu, setMerchantMenu] = useState<MerchantMenu>();
@@ -86,7 +86,20 @@ export default function MerchantProductPage() {
                         tempCat.push(children);
                     });
                 });
-                setActiveCategory(tempCat[0].id);
+                console.log(checkActiveCategory)
+                if (checkActiveCategory !== "") {
+                    let categories = state.categories
+                    categories.map((category: any) => {
+                        category.children.map((sub_category: any) => {
+                            if (checkActiveCategory === sub_category.id) {
+                                console.log("TRUE EXISTS", category.id)
+                                setActiveCategory(category.id)
+                            }
+                        })
+                    })
+                } else {
+                    setActiveCategory(tempCat[0].id);
+                }
                 setMerchantProductCategory(tempCat);
                 setLoading(false);
             }

@@ -11,6 +11,7 @@ export default function CategoryTab({
     tabs: any[];
     merchant?: boolean;
 }) {
+    console.log(activeTab, tabs)
     return (
         <div
             className={

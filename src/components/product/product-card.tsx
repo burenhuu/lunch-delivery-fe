@@ -75,7 +75,6 @@ export default function ProductCard({
     const router = useRouter();
 
     useEffect(() => {
-        console.log(checkActiveProduct, product.variants[0].id)
         if (checkActiveProduct !== undefined) {
             if (checkActiveProduct === product.variants[0].id) {
                 setOpen(true)
@@ -103,6 +102,8 @@ export default function ProductCard({
     }, [product])
 
     const [show, setShow, content, setContent] = useModal();
+
+    console.log(placeState)
 
     const onContinueClick = () => {
         dispatch({
@@ -342,7 +343,7 @@ export default function ProductCard({
                         </div>
                         <>
                             {
-                                product.active || placeState === "OPEN" && (
+                                ((product.active) || (placeState === "OPEN")) && (
                                     <>
                                         <div className="my-col-5">
                                             <div>Порц</div>

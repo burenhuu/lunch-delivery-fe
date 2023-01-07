@@ -1,0 +1,14 @@
+.bar_content {
+
+
+    transform: translateX(100%);
+
+    animation: move 10s linear infinite;
+}
+
+/* Create the animation */
+@keyframes move {
+    to {
+        transform: translateX(-200%);
+    }
+}

@@ -255,7 +255,7 @@ export default function Office() {
                                 <Carousel showArrows={false} showStatus={false} showIndicators={false}>
                                     {
                                         viewCategories.map((viewCategory: any, index: any) => (
-                                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75 w-[360px]" key={index}>
+                                            <div className="grid grid-cols-4 items-stretch text-center gap-3.75 w-auto" key={index}>
                                                 {viewCategory?.map((category: CategoryType) => {
                                                     return (
                                                         <CategoryCard

@@ -14,6 +14,7 @@ import fetcher from "lib/utils/axios";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import 'styles/scrollText.css'
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());

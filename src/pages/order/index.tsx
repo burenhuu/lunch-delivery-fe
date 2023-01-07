@@ -166,11 +166,12 @@ const Cart: NextPage = () => {
                             state.officeId,
                             values
                         );
-                        if (placeOrderResponse?.status === 200) {
+                        console.log(placeOrderResponse);
+                        if (placeOrderResponse?.status == 200) {
                             Toki.buy(
                                 state.officeId,
-                                data.data.grandTotal,
-                                data.data.orderId,
+                                placeOrderResponse.data.grandTotal,
+                                placeOrderResponse.data.orderId,
                                 `Lunch_zahialah | ${localStorage.getItem(
                                     "phoneNumber"
                                 )}`,

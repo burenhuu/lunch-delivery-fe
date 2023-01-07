@@ -5,20 +5,17 @@ import { forwardRef } from "react";
 
 // eslint-disable-next-line react/display-name
 const DeliveryAddress = forwardRef(
-    (
-        {
-            selectedFloor,
-            setSelectedFloor,
-            errors,
-            setValue,
-        }: {
-            selectedFloor: string;
-            setSelectedFloor: any;
-            errors: any;
-            setValue: any;
-        },
-        ref: any
-    ) => {
+    ({
+        selectedFloor,
+        setSelectedFloor,
+        errors,
+        setValue,
+    }: {
+        selectedFloor: string;
+        setSelectedFloor: any;
+        errors: any;
+        setValue: any;
+    }) => {
         const [show, setShow, content, setContent] = useModal();
         const [state]: any = useAppState();
         const { numberOfStorey } = state;
@@ -77,35 +74,19 @@ const DeliveryAddress = forwardRef(
             );
         };
         return (
-            <div className="grid grid-cols-3 gap-x-2.5 text-sm">
-                <div className="col-span-1">
-                    <div
-                        onClick={onSelectFloor}
-                        className="flex justify-center items-center gap-x-2.5 bg-white rounded-md px-5 py-[9px]"
-                    >
-                        <div className="font-light text-gray">
-                            {selectedFloor}
-                        </div>
-                        <div>
-                            <ArrowDown />
-                        </div>
+            <div className="col-span-1">
+                <div
+                    onClick={onSelectFloor}
+                    className="flex justify-center items-center gap-x-2.5 bg-white rounded-md px-5 py-[9px]"
+                >
+                    <div className="font-light text-gray">{selectedFloor}</div>
+                    <div>
+                        <ArrowDown />
                     </div>
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.floor?.message}
-                    </p>
                 </div>
-
-                <div className="col-span-2">
-                    <input
-                        type="text"
-                        ref={ref}
-                        className=" w-full rounded-md bg-white px-5 py-[9px] font-light"
-                        placeholder="Тоот / Байгууллагын нэр"
-                    />
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.address?.message}
-                    </p>
-                </div>
+                <p className="mt-1 text-xs italic text-left text-red-500 ">
+                    {errors.floor?.message}
+                </p>
             </div>
         );
     }

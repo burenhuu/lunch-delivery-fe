@@ -58,13 +58,13 @@ export function CartItems({
                 {items?.map((place: any) => {
                     return (
                         <div
-                            key={place.address}
+                            key={place.merchant}
                             className="pb-5 border-b border-dashed my-col-10 border-gray last:border-solid"
                         >
                             <div className="flex items-center gap-x-2.5">
                                 <HomeIcon />
                                 <div className="font-medium">
-                                    {place.address}
+                                    {place.merchant}
                                 </div>
                             </div>
                             {place.items.map((product: any) => {

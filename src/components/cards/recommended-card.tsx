@@ -1,7 +1,7 @@
 import { LocationIcon } from "components/icons";
 import { formatPrice } from "lib/utils/helpers";
-import {useRouter} from "next/router";
-import {useAppState} from "../../lib/context/app";
+import { useRouter } from "next/router";
+import { useAppState } from "../../lib/context/app";
 
 export default function Recommended({ data }: { data: any }) {
     const { image, name, rating, price, salePrice, place } = data;
@@ -22,7 +22,7 @@ export default function Recommended({ data }: { data: any }) {
         //     categoryActive: null,
         // });
 
-        router.push(`/merchant/${data.placeId}?productId=${data.id}`);
+        router.push(`/merchant/${data.placeId}?productId=${data.id}&categoryId=${data.categoryMain}`);
     };
 
     return (
@@ -30,7 +30,7 @@ export default function Recommended({ data }: { data: any }) {
             <img src={image} alt={name} className="w-[150px] h-[100px]" />
             <div className="p-2.5 my-col-10">
                 <div className="my-col-5">
-                    <div className="text-xs">{name}</div>
+                    <div className="text-xs truncate">{name}</div>
                     {
                         formatPrice(price) === formatPrice(salePrice) ?
                             <div className="font-light flex justify-start gap-x-0.5 items-center">

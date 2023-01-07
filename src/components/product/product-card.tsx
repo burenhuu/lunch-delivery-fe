@@ -5,7 +5,7 @@ import TokiAPI from "lib/api/toki";
 import { useAppState } from "lib/context/app";
 import { useModal } from "lib/context/modal";
 import { CartData } from "lib/types/cart.type";
-import {CardDataType, Option, Variant} from "lib/types/product.type";
+import { CardDataType, Option, Variant } from "lib/types/product.type";
 
 import { formatPrice } from "lib/utils/helpers";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -16,8 +16,8 @@ import {
     AccordionItemPanel,
     AccordionItemState,
 } from "react-accessible-accordion";
-import {FatalError} from "next/dist/lib/fatal-error";
-import {useRouter} from "next/router";
+import { FatalError } from "next/dist/lib/fatal-error";
+import { useRouter } from "next/router";
 
 function findVariant(options: any, product: any) {
     let optionDict: any = {};
@@ -59,7 +59,7 @@ export default function ProductCard({
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { rating, place, product, merchantId, placeOpen } = data;
+    const { rating, place, product, merchantId, placeState } = data;
     const { description, image, name, variants } = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
@@ -74,24 +74,24 @@ export default function ProductCard({
     const [comment, setComment] = useState('');
     const router = useRouter();
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(checkActiveProduct, product.variants[0].id)
-        if(checkActiveProduct !== undefined){
-            if(checkActiveProduct === product.variants[0].id){
+        if (checkActiveProduct !== undefined) {
+            if (checkActiveProduct === product.variants[0].id) {
                 setOpen(true)
             }
         }
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setPresalePrice(product.variants && product.variants[0] ? product.variants[0].price : 0)
         setPrice(product.variants && product.variants[0]
             ? product.variants[0].price
             : 0)
         let optionTypeA: Option[] = []
         let optionTypeV: Option[] = []
-        variants[0].options.map((option)=>{
-            if (option.type === 'A'){
+        variants[0].options.map((option) => {
+            if (option.type === 'A') {
                 optionTypeA.push(option)
             } else {
                 optionTypeV.push(option)
@@ -133,7 +133,7 @@ export default function ProductCard({
         };
         try {
 
-            const {data} = await TokiAPI.addCart(officeId, productData);
+            const { data } = await TokiAPI.addCart(officeId, productData);
             console.log(data);
             dispatch({
                 type: "cartCount",
@@ -175,17 +175,17 @@ export default function ProductCard({
 
     const onSelectOption = (option: Option, value: string) => {
         let check = false
-        let options: any = selectedOptions.map((selectedOption) =>{
+        let options: any = selectedOptions.map((selectedOption) => {
             if (selectedOption.id === option.id) {
                 selectedOption.value = value
                 check = true
-                return{
+                return {
                     id: option.id,
                     value: value
                 }
             }
         })
-        if (!check){
+        if (!check) {
             options.push({
                 id: option.id,
                 value: value
@@ -200,16 +200,16 @@ export default function ProductCard({
         let tempSelectedOptions: any = selectedOptions
         let check = false
         let check_index = 0
-        let options = tempSelectedOptions.map((tempSelectedOption: any, index: number) =>{
-            if (tempSelectedOption?.id === option.id){
+        let options = tempSelectedOptions.map((tempSelectedOption: any, index: number) => {
+            if (tempSelectedOption?.id === option.id) {
                 check = true
-                check_index  = index
+                check_index = index
             }
             return tempSelectedOption
         })
-        if (check){
+        if (check) {
             options.splice(check_index, 1);
-        } else{
+        } else {
             options.push({
                 id: option.id,
                 value: null
@@ -342,14 +342,14 @@ export default function ProductCard({
                         </div>
                         <>
                             {
-                                product.active || placeOpen && (
+                                product.active || placeState === "OPEN" && (
                                     <>
                                         <div className="my-col-5">
                                             <div>Порц</div>
                                             <div className="flex gap-x-1.25">
                                                 {
-                                                    variants.map((variant: Variant) =>{
-                                                        return(
+                                                    variants.map((variant: Variant) => {
+                                                        return (
                                                             <div
                                                                 onClick={() =>
                                                                     onSelectVariant(
@@ -456,7 +456,7 @@ export default function ProductCard({
                                             <div>Нэмэлт тайлбар:</div>
                                             <div className="relative">
                                                 <input
-                                                    onChange={(e)=>{
+                                                    onChange={(e) => {
                                                         setComment(e.target.value)
                                                     }}
                                                     type="text"

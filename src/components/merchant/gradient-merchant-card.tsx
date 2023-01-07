@@ -97,11 +97,17 @@ export default function GreadientMerchantCard({
                 onClick={onMerchantClick}
                 className="rounded-2xl min-h-[160px] overflow-hidden shadow-delivery relative"
             >
-                {!merchant.open ?
+                {merchant.state === "CLOSED" || merchant.state === "TEMPORARY_CLOSED" ?
                     <div
                         className="absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[12px] py-[5px] px-[10px] text-white">
                         <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center">
-                            Хаалттай
+                            {
+                                merchant.state === "CLOSED" ?
+                                    <>Хаалттай</>
+                                    :
+                                    <>{merchant.reason}</>
+                            }
+
                         </div>
                     </div>
 

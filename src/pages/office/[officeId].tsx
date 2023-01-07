@@ -55,7 +55,7 @@ export default function Office() {
             'name': "Шинэ",
         }
     ];
-    const [filterParameter, setFilterParameter] = useState<any>({sort: filterNames[0].sort});
+    const [filterParameter, setFilterParameter] = useState<any>({ sort: filterNames[0].sort });
     const [activeFilter, setActiveFilter] = useState<any>(filterNames[0]);
 
     useEffect(() => {
@@ -101,19 +101,19 @@ export default function Office() {
                 if (data) {
                     const products: RecommendedType[] = [];
                     await data.map(async (item: any) => {
-                        item?.products?.map((product: Product) => {
-                            const chosenVariant = product?.variants[0];
-                            if (chosenVariant) {
-                                products.push({
-                                    ...chosenVariant,
-                                    place: item.name,
-                                    placeId: item.id,
-                                    image: product.image,
-                                    rating: item.rating,
-                                    categoryMain: product.category
-                                });
-                            }
-                        });
+
+                        const chosenVariant = item.product?.variants[0];
+                        if (chosenVariant) {
+                            products.push({
+                                ...chosenVariant,
+                                place: item.name,
+                                placeId: item.id,
+                                image: item.product.image,
+                                rating: item.rating,
+                                categoryMain: item.product.category
+                            });
+                        }
+
                     });
                     setRecommended(products);
                     // await dispatch({ type: "products", products: data });
@@ -129,11 +129,11 @@ export default function Office() {
         }
     }, [officeId]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (officeId) {
             getMerchants();
         }
-    },[activeFilter])
+    }, [activeFilter])
 
     useEffect(() => {
         const onSearch = async () => {
@@ -267,9 +267,9 @@ export default function Office() {
                                                     return (
                                                         <div
                                                             key={filter.name}
-                                                            onClick={() =>{
+                                                            onClick={() => {
                                                                 setActiveFilter(filter)
-                                                                setFilterParameter({sort: filter.sort})
+                                                                setFilterParameter({ sort: filter.sort })
                                                             }
                                                             }
                                                             className="border-b  border-dashed border-gray last:border-none pb-1"

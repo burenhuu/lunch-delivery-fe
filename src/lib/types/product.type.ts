@@ -35,7 +35,7 @@ export interface RecommendedType extends Variant {
 
 export interface CardDataType {
     place: string;
-    placeOpen?: boolean;
+    placeState?: string;
     rating?: number;
     product: Product;
     merchantId: string;

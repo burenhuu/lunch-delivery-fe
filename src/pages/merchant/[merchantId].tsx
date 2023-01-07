@@ -29,10 +29,10 @@ export default function MerchantProductPage() {
     const [merchant, setMerchant] = useState<Merchant>();
     const [accordionKey, setAccordionKey] = useState<any>(123);
 
-    useEffect(()=>{
+    useEffect(() => {
         let number = Math.random()
         setAccordionKey(number)
-    },[activeCategory])
+    }, [activeCategory])
 
     const renderCard = async () => {
         const temp: CardDataType[] = [];
@@ -44,7 +44,7 @@ export default function MerchantProductPage() {
                         place: merchant?.name!,
                         merchantId,
                         product: product,
-                        placeOpen: merchant?.open
+                        placeState: merchant?.state
                     });
                 });
             } else {
@@ -55,7 +55,7 @@ export default function MerchantProductPage() {
                                 place: merchant?.name!,
                                 product: product,
                                 merchantId,
-                                placeOpen: merchant?.open
+                                placeState: merchant?.state
                             });
                         });
                     }

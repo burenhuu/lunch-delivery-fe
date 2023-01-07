@@ -22,7 +22,7 @@ const OfficeList: React.FC<OfficeListProps> = ({
     const heightHandler = async () => {
         height == "340px"
             ? (setHeight("80%"), setMaxHeight("90vh"))
-            : (setHeight("340px"), setMaxHeight("40vh"));
+            : (setHeight("340px"), setMaxHeight("50vh"));
     };
 
     return (
@@ -35,7 +35,7 @@ const OfficeList: React.FC<OfficeListProps> = ({
                 {title}
             </div>
             <div
-                className={`scrollbar-hide h-[75vh] pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${!loading && height != "340px" && "overflow-y-auto"
+                className={`scrollbar-hide pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${!loading && height != "340px" && "overflow-y-auto h-[70vh]"
                     }`}
             >
                 {offices &&

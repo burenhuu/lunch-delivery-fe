@@ -5,12 +5,10 @@ import { useModal } from "lib/context/modal";
 import { useAppState } from "lib/context/app";
 
 export function DeliveryTime({
-    times,
     selectedTime,
     setSelectedTime,
     setValue,
 }: {
-    times: string[];
     selectedTime: string;
     setSelectedTime: any;
     setValue: any;
@@ -63,10 +61,10 @@ export function DeliveryTime({
     return (
         <div
             onClick={onSelectTime}
-            className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm"
+            className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm h-[35px]"
         >
             <div className="font-light">
-                {selectedTime === times[0]
+                {data && selectedTime === data.data.times[0]
                     ? `${selectedTime} (Аль болох эрт)`
                     : selectedTime}
             </div>

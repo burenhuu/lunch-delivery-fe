@@ -39,7 +39,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
             >
                 <div className="w-15 shrink-0">
                     <img
-                        src={office.photo ? office.photo : "sda"}
+                        src={office.photo ? office.photo : "pic"}
                         alt={office.name}
                         className="w-[60px] h-[60px] object-cover rounded-[10px]"
                     />

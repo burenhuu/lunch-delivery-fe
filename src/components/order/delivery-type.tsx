@@ -9,7 +9,9 @@ export default function DeliveryType({
         <div
             onChange={(event: any) => (
                 setDeliveryType(event.target.value),
-                setValue("type", event.target.value)
+                setValue("type", event.target.value),
+                event.target.value == "TakeAway" &&
+                    (setValue("floor", 0), setValue("address", ""))
             )}
             className="flex items-center justify-start text-sm gap-x-5"
         >

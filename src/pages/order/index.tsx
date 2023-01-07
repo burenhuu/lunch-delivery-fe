@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
 
 import { useAppState } from "lib/context/app";
 import { toast } from "react-toastify";
@@ -18,15 +19,13 @@ import TokiAPI from "lib/api/toki";
 import Toki from "lib/utils/toki-payment";
 
 const Cart: NextPage = () => {
+    const router = useRouter();
     const [state]: any = useAppState();
     const { officeName } = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
-    const addressRef = useRef<HTMLInputElement>(null);
-    const commentRef = useRef<HTMLInputElement>(null);
-    const registerRef = useRef<HTMLInputElement>(null);
+
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
-    const dummyTimes = ["12:20 - 12:30", "12:50 - 13:00", "13:20 - 13:30"];
     const [selectedTime, setSelectedTime] = useState<string>("");
     const [show, setShow, content, setContent] = useModal();
     const [loading, setLoading] = useState(false);
@@ -74,7 +73,7 @@ const Cart: NextPage = () => {
         }),
         comment: yup.string().nullable(),
         vat: yup.number().required("eBarimt сонгоно уу"),
-        register: yup.string().when("type", {
+        register: yup.string().when("vat", {
             is: (vat: number) => vat === 3,
             then: yup.string().required("Байгууллагын РД оруулна уу"),
         }),
@@ -88,13 +87,14 @@ const Cart: NextPage = () => {
         formState: { errors },
         reset,
         setValue,
+        getValues,
     } = useForm({
         defaultValues:
             deliveryType === "Delivery"
                 ? {
                       type: "Delivery",
                       address: "",
-                      floor: null,
+                      floor: 0,
                       comment: "",
                       vat: 1,
                       register: "",
@@ -125,10 +125,10 @@ const Cart: NextPage = () => {
             <>
                 Та <span className="font-medium">{officeName}</span>
                 -н{" "}
-                {addressRef.current?.value ? (
+                {getValues("address") ? (
                     <>
                         <span className="font-medium">
-                            {`${selectedFloor} давхар, ${addressRef.current.value}`}
+                            {`${selectedFloor} давхар, ${getValues("address")}`}
                         </span>
                         -д
                     </>
@@ -195,64 +195,31 @@ const Cart: NextPage = () => {
                                         );
                                     }
 
-                                    const paidResponse = await TokiAPI.paid(
-                                        state.officeId,
-                                        {
-                                            orderID: data.data.orderId,
-                                            transactionID: transactionID,
-                                            status: status,
-                                            statusCode: statusCode,
-                                            transRequestId: transRequestId,
-                                            token: state.token,
-                                            amount: data.data.grandTotal,
-                                        }
-                                    );
+                                    // const paidResponse = await TokiAPI.paid(
+                                    //     state.officeId,
+                                    //     {
+                                    //         orderID: orderID,
+                                    //         transactionID: transactionID,
+                                    //         status: status,
+                                    //         statusCode: statusCode,
+                                    //         transRequestId: transRequestId,
+                                    //         token: state.token,
+                                    //         amount: data.data.grandTotal,
+                                    //     }
+                                    // );
 
-                                    // const upointResponse =
-                                    //     await TokiAPI.getUpoint(
-                                    //         data._id
-                                    //     );
-
-                                    // if (
-                                    //     upointResponse?.data
-                                    //         ?.status_code ===
-                                    //         0 &&
-                                    //     upointResponse?.data
-                                    //         ?.data
-                                    //         ?.upoint_collect_amount
-                                    // ) {
-                                    //     router.push(
-                                    //         `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=${statusCode}&upoint=${upointResponse?.data?.data?.upoint_collect_amount}`
-                                    //     );
-                                    // } else {
-                                    //     router.push(
-                                    //         `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=${statusCode}`
-                                    //     );
-                                    // }
+                                    router.push(`/order-history`);
                                 },
-                                `${process.env.NEXT_PUBLIC_ENTRYPOINT}/coffee/thirdparty/paid`
+                                `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/offices/${state.officeId}/cart/paid`
                             );
+                        } else {
+                            toast("Уучлаарай, Таны захиалга амжилтгүй боллоо");
                         }
-
-                        // } else {
-                        //     toast(placeOrderResponse?.data?.message);
-                        // }
                     } finally {
                         setLoading(false);
                         reset();
                     }
                 }}
-            />
-        );
-    };
-
-    const onOrderClick = () => {
-        setShow(true);
-        setContent(
-            <PermissionBox
-                text={modalText}
-                button2="Төлөх"
-                // onClick={onSubmit}
             />
         );
     };
@@ -276,26 +243,7 @@ const Cart: NextPage = () => {
                 />
             </div>
 
-            <form
-                onSubmit={
-                    (setValue("address", addressRef.current?.value),
-                    setValue(
-                        "comment",
-                        commentRef.current?.value === undefined
-                            ? ""
-                            : commentRef.current?.value
-                    ),
-                    setValue(
-                        "register",
-                        registerRef.current?.value === undefined
-                            ? ""
-                            : registerRef.current?.value
-                    ),
-                    setValue("orders", data ? data.orders : null),
-                    handleSubmit(onSubmitHandler))
-                }
-                className="w-full"
-            >
+            <form onSubmit={handleSubmit(onSubmitHandler)} className="w-full">
                 <div className="mb-3 my-col-15">
                     <div className="font-medium">Захиалгын хэлбэр</div>
                     <DeliveryType
@@ -310,37 +258,49 @@ const Cart: NextPage = () => {
                 {deliveryType === "Delivery" && (
                     <div className="mb-3 my-col-15">
                         <div className="font-medium">Хүргэлтийн хаяг</div>
-                        <DeliveryAddress
-                            ref={addressRef}
-                            selectedFloor={selectedFloor}
-                            setSelectedFloor={setSelectedFloor}
-                            errors={errors}
-                            setValue={setValue}
-                        />
+                        <div className="grid grid-cols-3 gap-x-2.5 text-sm">
+                            <DeliveryAddress
+                                selectedFloor={selectedFloor}
+                                setSelectedFloor={setSelectedFloor}
+                                errors={errors}
+                                setValue={setValue}
+                            />
+
+                            <div className="col-span-2">
+                                <input
+                                    type="text"
+                                    className=" w-full rounded-md bg-white px-5 py-[9px] font-light"
+                                    placeholder="Тоот / Байгууллагын нэр"
+                                    {...register("address")}
+                                />
+                                <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                    {errors.address?.message}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 )}
 
                 <div className="mb-3 my-col-15">
                     <div className="font-medium">Захиалга авах хугацаа</div>
                     <DeliveryTime
-                        times={dummyTimes}
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
                         setValue={setValue}
                     />
 
                     <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.type?.message}
+                        {errors.time?.message}
                     </p>
                 </div>
 
                 <div className="mb-3 my-col-15">
                     <div className="font-medium">Нэмэлт мэдээлэл</div>
                     <input
-                        ref={commentRef}
                         type="text"
                         placeholder="Нэмэлт тайлбар оруулах"
                         className="bg-white text-sm font-light rounded-md px-5 py-[9px]"
+                        {...register("comment")}
                     />
 
                     <p className="mt-1 text-xs italic text-left text-red-500 ">
@@ -357,10 +317,10 @@ const Cart: NextPage = () => {
                     {vat == 3 && (
                         <div className="w-full mb-3">
                             <input
-                                ref={registerRef}
                                 type="text"
                                 className="-mt-[5px] rounded-md w-full bg-white font-light text-sm px-5 py-[9px] text-gray"
                                 placeholder="Байгууллагын РД"
+                                {...register("register")}
                             />
                             <p className="mt-1 text-xs italic text-left text-red-500 ">
                                 {errors.register?.message}
@@ -368,9 +328,7 @@ const Cart: NextPage = () => {
                         </div>
                     )}
                 </div>
-                {/* <div onClick={onOrderClick}> */}
                 <ButtonComponent text="Захиалах" />
-                {/* </div> */}
             </form>
         </div>
     );

@@ -26,7 +26,7 @@ export default function Recommended({ data }: { data: any }) {
     };
 
     return (
-        <div className="rounded-2xl overflow-hidden  h-full min-w-[150px] bg-white" onClick={onContinueClick}>
+        <div className="rounded-2xl overflow-hidden h-full min-w-[150px] max-w-[150px] bg-white" onClick={onContinueClick}>
             <img src={image} alt={name} className="w-[150px] h-[100px]" />
             <div className="p-2.5 my-col-10">
                 <div className="my-col-5">
@@ -48,7 +48,7 @@ export default function Recommended({ data }: { data: any }) {
                 </div>
                 <div className="border-b border-gray"></div>
                 <div className="my-col-5 text-xs font-light">
-                    <div className="flex justify-start items-center gap-x-1.25">
+                    <div className="flex justify-start items-center gap-x-1.25 truncate">
                         <LocationIcon />
                         <div>{place}</div>
                     </div>

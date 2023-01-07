@@ -72,6 +72,14 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
         if (coords && map) {
             const lat = coords.latitude;
             const lng = coords.longitude;
+            dispatch({
+                type: "userLat",
+                merchantId: lat,
+            });
+            dispatch({
+                type: "userLng",
+                merchantId: lng,
+            });
             map.panTo(new window.google.maps.LatLng(lat, lng));
             setCenter({ lat, lng });
             onSearchByMap(map.getCenter().lat(), map.getCenter().lng());

@@ -65,6 +65,7 @@ export default function Office() {
     }, [searchValue]);
 
     useEffect(() => {
+        console.log(state)
         toast("Таны хаяг зөв эсэхийг шалгаарай", {
             className: "location-toast",
             position: "top-left",

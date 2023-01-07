@@ -26,6 +26,8 @@ const Index: NextPage = () => {
         TokiAPI.getAllOffices().then((res) => {
             setAllOffices(res.data)
         })
+        
+
     }, [])
 
     const onSearchSubmit = async (searchValue: string = "") => {

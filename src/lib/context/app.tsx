@@ -172,6 +172,16 @@ const reducer = (state: any, action: any) => {
             saveToLocal(newState);
             return newState;
         }
+        case "userLat": {
+            const newState = { ...state, userLat: action.userLat };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "userLng": {
+            const newState = { ...state, userLng: action.userLng };
+            saveToLocal(newState);
+            return newState;
+        }
         default:
             return state;
     }

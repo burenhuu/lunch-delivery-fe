@@ -169,7 +169,7 @@ const Cart: NextPage = () => {
                         console.log(placeOrderResponse);
                         if (placeOrderResponse?.status == 200) {
                             Toki.buy(
-                                state.officeId,
+                                "63b9142a94bc82df38700f31",
                                 placeOrderResponse.data.grandTotal,
                                 placeOrderResponse.data.orderId,
                                 `Lunch_zahialah | ${localStorage.getItem(
@@ -221,6 +221,7 @@ const Cart: NextPage = () => {
                         reset();
                     }
                 }}
+                loading={loading}
             />
         );
     };
@@ -329,7 +330,7 @@ const Cart: NextPage = () => {
                         </div>
                     )}
                 </div>
-                <ButtonComponent text="Захиалах" />
+                <ButtonComponent text="Захиалах" loading={loading} />
             </form>
         </div>
     );

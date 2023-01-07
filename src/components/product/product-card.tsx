@@ -341,7 +341,7 @@ export default function ProductCard({
                         </div>
                         <>
                             {
-                                ((product.active) || (placeState === "OPEN")) && (
+                                ((product.active) && (placeState === "OPEN")) && (
                                     <>
                                         <div className="my-col-5">
                                             <div>Порц</div>

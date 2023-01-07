@@ -11,7 +11,7 @@ export default function DeliveryType({
                 setDeliveryType(event.target.value),
                 setValue("type", event.target.value),
                 event.target.value == "TakeAway" &&
-                    (setValue("floor", 0), setValue("address", ""))
+                    (setValue("floor", 1), setValue("address", ""))
             )}
             className="flex items-center justify-start text-sm gap-x-5"
         >

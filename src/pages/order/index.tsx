@@ -142,8 +142,8 @@ const Cart: NextPage = () => {
         );
 
     const onSubmitHandler = async (values: any) => {
-        console.log(values);
         setShow(true);
+
         setContent(
             <PermissionBox
                 text={modalText}
@@ -184,8 +184,9 @@ const Cart: NextPage = () => {
                                             JSON.stringify(values)
                                         );
                                     }
-
-                                    router.push(`/order-history`);
+                                    router.push(
+                                        `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=200`
+                                    );
                                 },
                                 `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/offices/${state.officeId}/cart/paid`
                             );
@@ -194,10 +195,7 @@ const Cart: NextPage = () => {
                         }
                     } finally {
                         setLoading(false);
-                        reset();
                         setShow(false);
-                        setSelectedFloor("Давхар");
-                        setSelectedTime("");
                     }
                 }}
                 loading={loading}
@@ -220,6 +218,8 @@ const Cart: NextPage = () => {
                     setGrandTotal={setGrandTotal}
                     setDiscountAmount={setDiscountAmount}
                     setData={setData}
+                    loading={loading}
+                    setLoading={setLoading}
                 />
             </div>
 
@@ -328,7 +328,12 @@ const Cart: NextPage = () => {
                 <div className="flex justify-center w-full">
                     <ButtonComponent
                         text="Захиалах"
-                        loading={loading}
+                        loading={
+                            loading ||
+                            (data && Object.keys(data.orders).length == 0)
+                                ? true
+                                : false
+                        }
                         additionalClass="max-w-[270px]  w-full"
                     />
                 </div>

@@ -16,9 +16,11 @@ export function CartItems({
     setGrandTotal,
     setDiscountAmount,
     setData,
+    loading,
+    setLoading,
 }: any) {
     const [state, dispatch]: any = useAppState();
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const itemIncDecHandler = async (
         orderId: any,
@@ -54,7 +56,7 @@ export function CartItems({
 
     return (
         <div className="p-5 text-sm bg-white rounded-2xl shadow-delivery my-col-20">
-            {items ? (
+            {items && Object.keys(items).length > 0 ? (
                 <>
                     <div className="my-col-20">
                         {items?.map((place: any) => {
@@ -69,6 +71,7 @@ export function CartItems({
                                             {place.merchant}
                                         </div>
                                     </div>
+
                                     {place.items.map((product: any) => {
                                         return (
                                             <div
@@ -77,36 +80,54 @@ export function CartItems({
                                             >
                                                 <div className="my-col-5">
                                                     <div>{product.name}</div>
-                                                    {product.options.map(
-                                                        (option: any) => {
-                                                            return (
-                                                                <div
-                                                                    className="font-light truncate text-ellipsis text-gray line-clamp-1"
-                                                                    key={
-                                                                        option.name
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        option.name
-                                                                    }
-                                                                </div>
-                                                            );
-                                                        }
-                                                    )}
-                                                    <div className="font-light text-gray line-clamp-1">
-                                                        {product.comment
-                                                            ? `${product.portion} (${product.comment})`
-                                                            : product.portion}
-                                                    </div>
+
+                                                    {product.options &&
+                                                    Object.keys(product.options)
+                                                        .length > 0 ? (
+                                                        product.options.map(
+                                                            (
+                                                                option: any,
+                                                                index: number
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className="w-full font-light truncate text-gray "
+                                                                        key={
+                                                                            option.name
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            option.name
+                                                                        }
+                                                                        {index +
+                                                                            1 ==
+                                                                            Object.keys(
+                                                                                product.options
+                                                                            )
+                                                                                .length &&
+                                                                        product.comment
+                                                                            ? ` (${product.comment})`
+                                                                            : null}
+                                                                    </div>
+                                                                );
+                                                            }
+                                                        )
+                                                    ) : product.comment ? (
+                                                        <div className="font-light truncate text-gray line-clamp-1">
+                                                            {`(${product.comment})`}
+                                                        </div>
+                                                    ) : null}
                                                 </div>
+
                                                 <div className="flex flex-col items-end gap-y-1.25">
                                                     <div>
                                                         {formatPrice(
                                                             product.quantity *
-                                                            product.price
+                                                                product.price
                                                         )}{" "}
                                                         ₮
                                                     </div>
+
                                                     <div className="flex bg-[#F5F5FA] rounded-md px-0.5 py-[1px] text-sm font-light gap-x-2.5">
                                                         <button
                                                             className="cursor-pointer"
@@ -156,12 +177,14 @@ export function CartItems({
                             );
                         })}
                     </div>
+
                     <div className="flex items-center justify-between">
                         <div className="my-col-10">
                             <div>Захиалгын дүн:</div>
                             <div>Хүргэлтийн төлбөр:</div>
                             <div className="font-medium">Нийт төлөх:</div>
                         </div>
+
                         <div className="flex flex-col items-end gap-y-2.5">
                             <div>{formatPrice(totalAmount)} ₮</div>
                             <div>{formatPrice(taxAmount)} ₮</div>

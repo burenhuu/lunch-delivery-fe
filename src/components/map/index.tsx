@@ -147,7 +147,7 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                         }}
                         icon={{
                             // url: office.pin_icon,
-                            url: "/images/pin.svg",
+                            url: "/images/Pin.svg",
                             scaledSize: new google.maps.Size(24, 34),
                             anchor: new google.maps.Point(24, 34),
                         }}

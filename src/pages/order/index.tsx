@@ -196,6 +196,8 @@ const Cart: NextPage = () => {
                         setLoading(false);
                         reset();
                         setShow(false);
+                        setSelectedFloor("Давхар");
+                        setSelectedTime("");
                     }
                 }}
                 loading={loading}

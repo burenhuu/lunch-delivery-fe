@@ -1,3 +1,4 @@
+import { BooleanLocale } from "yup/lib/locale";
 import { CategoryType } from "./category.type";
 import { Product } from "./product.type";
 
@@ -30,6 +31,7 @@ export interface Merchant {
 
 export interface Timetable {
     day:   number;
+    active: boolean;
     open:  string;
     close: string;
 }

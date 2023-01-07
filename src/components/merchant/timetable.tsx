@@ -10,23 +10,69 @@ export default function MerchantTimetable({
     const [weekday, setWeekday] = useState<string>("");
     const [saturday, setSaturday] = useState<string>("Амарна");
     const [sunday, setSunday] = useState<string>("Амарна");
+    const [week, setWeek] = useState<[]>([]);
+
+    console.log(timetable)
 
     useEffect(() => {
-        const weekdaysOpen: string[] = [];
-        const weekdaysClose: string[] = [];
+        let week: any = []
         timetable.map((day) => {
-            if (day.day > 0 && day.day < 6) {
-                //How to calculate average opening and closing time?
-            } else if (day.day === 6) {
-                if (!day.open && !day.close) {
-                    setSaturday("Амарна");
-                } else setSaturday(`${day.open} - ${day.close}`);
-            } else if (day.day === 0) {
-                if (!day.open && !day.close) {
-                    setSunday("Амарна");
-                } else setSunday(`${day.open} - ${day.close}`);
+            if (day.day === 0) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Даваа',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            } else if (day.day === 1) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Мягмар',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            } else if (day.day === 2) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Лхагва',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 3) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Пүрэв',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 4) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Баасан',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 5) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Бямба',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 6) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Ням',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
             }
         });
+        setWeek(week)
     }, []);
     return (
         <div className="my-col-15">
@@ -40,21 +86,34 @@ export default function MerchantTimetable({
                 </div>
                 <div className="p-2.5 border-b border-gray/10">Очиж авах</div>
                 <div className="p-2.5 border-r border-gray/10 my-col-10">
-                    <div className="-mx-1">Даваа-Баасан</div>
-                    <div>Бямба</div>
-                    <div>Ням</div>
+                    {
+                        week.map((val: any) => {
+                            return (
+                                <div key={val.day}>{val.name}</div>
+                            )
+                        })
+                    }
                 </div>
                 {/* Хүргэлт */}
                 <div className="p-2.5 border-r border-gray/10 my-col-10">
-                    <div>{`${timetable[0].open} - ${timetable[0].close}`}</div>
-                    <div>{saturday}</div>
-                    <div>{sunday}</div>
+                    {
+                        week.map((val: any) => {
+                            return (
+                                <div key={val.day}>{val.time}</div>
+                            )
+                        })
+                    }
+
                 </div>
                 {/* Очиж авах */}
                 <div className="p-2.5 my-col-10">
-                    <div>{`${timetable[0].open} - ${timetable[0].close}`}</div>
-                    <div>{saturday}</div>
-                    <div>{sunday}</div>
+                    {
+                        week.map((val: any) => {
+                            return (
+                                <div key={val.day}>{val.time}</div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>

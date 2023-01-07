@@ -35,9 +35,8 @@ const OfficeList: React.FC<OfficeListProps> = ({
                 {title}
             </div>
             <div
-                className={`scrollbar-hide h-full pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${
-                    !loading && height != "340px" && "overflow-auto"
-                }`}
+                className={`scrollbar-hide h-[75vh] pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${!loading && height != "340px" && "overflow-y-auto"
+                    }`}
             >
                 {offices &&
                     offices.map((office: Office, index: number) => (

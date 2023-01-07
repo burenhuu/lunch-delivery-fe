@@ -67,7 +67,7 @@ const Index: NextPage = () => {
                 <Map
                     onSearchByMap={onSearchByMap}
                     offices={data ? data?.data : offices}
-                    // offices={offices}
+                // offices={offices}
                 />
 
                 {bySearchbar ? (

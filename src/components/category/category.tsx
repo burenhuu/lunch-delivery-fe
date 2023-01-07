@@ -13,6 +13,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const [state, dispatch]: any = useAppState();
     const { setLoading } = props;
     const { categories, categoryId, officeId } = state;
+    console.log(state)
     const swiperLength = Math.ceil(categories?.length / 10);
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [childrenCategories, setChildrenCategories] = useState<
@@ -132,7 +133,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                                                 small={true}
                                                 active={
                                                     category.id ===
-                                                    selectedChildren
+                                                        selectedChildren
                                                         ? true
                                                         : false
                                                 }

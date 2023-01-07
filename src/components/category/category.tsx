@@ -14,7 +14,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const { setLoading } = props;
     const { categories, categoryId, officeId } = state;
     console.log(state)
-    const swiperLength = Math.ceil(categories?.length / 10);
+    const [swiperLength, setSwiperLength] = useState(Math.ceil(categories?.length / 10));
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [childrenCategories, setChildrenCategories] = useState<
         CategoryType[]
@@ -83,10 +83,12 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 }
             });
             setChildrenCategories(temp);
+            setSwiperLength(Math.ceil(temp?.length / 10))
         } else {
             const found = categories.find(
                 (category: CategoryType) => category.id === activeTab
             );
+            setSwiperLength(Math.ceil(found?.children?.length / 10))
             setChildrenCategories(found?.children);
         }
     }, [activeTab]);
@@ -96,6 +98,8 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
             setSelectedChildren(childrenCategories[0]?.id);
         }
     }, [childrenCategories]);
+
+    console.log(swiperLength)
 
     return (
         <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">

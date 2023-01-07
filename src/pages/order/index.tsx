@@ -156,7 +156,6 @@ const Cart: NextPage = () => {
                             state.officeId,
                             values
                         );
-                        console.log(placeOrderResponse);
                         if (placeOrderResponse?.status == 200) {
                             Toki.buy(
                                 "63b9142a94bc82df38700f31",
@@ -186,19 +185,6 @@ const Cart: NextPage = () => {
                                         );
                                     }
 
-                                    // const paidResponse = await TokiAPI.paid(
-                                    //     state.officeId,
-                                    //     {
-                                    //         orderID: orderID,
-                                    //         transactionID: transactionID,
-                                    //         status: status,
-                                    //         statusCode: statusCode,
-                                    //         transRequestId: transRequestId,
-                                    //         token: state.token,
-                                    //         amount: data.data.grandTotal,
-                                    //     }
-                                    // );
-
                                     router.push(`/order-history`);
                                 },
                                 `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/offices/${state.officeId}/cart/paid`
@@ -209,6 +195,7 @@ const Cart: NextPage = () => {
                     } finally {
                         setLoading(false);
                         reset();
+                        setShow(false);
                     }
                 }}
                 loading={loading}
@@ -220,6 +207,7 @@ const Cart: NextPage = () => {
         <div className="p-5 my-col-20">
             <div className="my-col-15">
                 <div className="font-medium">Захиалга</div>
+
                 <CartItems
                     items={data ? data.orders : null}
                     totalAmount={totalAmount}
@@ -230,26 +218,28 @@ const Cart: NextPage = () => {
                     setGrandTotal={setGrandTotal}
                     setDiscountAmount={setDiscountAmount}
                     setData={setData}
-                    loading={loading}
-                    setLoading={setLoading}
                 />
             </div>
 
             <form onSubmit={handleSubmit(onSubmitHandler)} className="w-full">
-                <div className="mb-3 my-col-15">
+                <div className="mb-5 my-col-15">
                     <div className="font-medium">Захиалгын хэлбэр</div>
+
                     <DeliveryType
                         setDeliveryType={setDeliveryType}
                         setValue={setValue}
                     />
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.type?.message}
-                    </p>
+                    {errors.type && (
+                        <p className="mt-1 text-xs italic text-left text-red-500 ">
+                            {errors.type?.message}
+                        </p>
+                    )}
                 </div>
 
                 {deliveryType === "Delivery" && (
-                    <div className="mb-3 my-col-15">
+                    <div className="mb-5 my-col-15">
                         <div className="font-medium">Хүргэлтийн хаяг</div>
+
                         <div className="grid grid-cols-3 gap-x-2.5 text-sm">
                             <DeliveryAddress
                                 selectedFloor={selectedFloor}
@@ -265,62 +255,81 @@ const Cart: NextPage = () => {
                                     placeholder="Тоот / Байгууллагын нэр"
                                     {...register("address")}
                                 />
-                                <p className="mt-1 text-xs italic text-left text-red-500 ">
-                                    {errors.address?.message}
-                                </p>
+                                {errors.address && (
+                                    <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                        {errors.address?.message}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </div>
                 )}
 
-                <div className="mb-3 my-col-15">
+                <div className="mb-5 my-col-15">
                     <div className="font-medium">Захиалга авах хугацаа</div>
+
                     <DeliveryTime
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
                         setValue={setValue}
                     />
-
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.time?.message}
-                    </p>
+                    {errors.time && (
+                        <p className="mt-1 text-xs italic text-left text-red-500 ">
+                            {errors.time?.message}
+                        </p>
+                    )}
                 </div>
 
-                <div className="mb-3 my-col-15">
+                <div className="mb-5 my-col-15">
                     <div className="font-medium">Нэмэлт мэдээлэл</div>
+
                     <input
                         type="text"
                         placeholder="Нэмэлт тайлбар оруулах"
                         className="bg-white text-sm font-light rounded-md px-5 py-[9px]"
                         {...register("comment")}
                     />
-
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.comment?.message}
-                    </p>
+                    {errors.comment && (
+                        <p className="mt-1 text-xs italic text-left text-red-500 ">
+                            {errors.comment?.message}
+                        </p>
+                    )}
                 </div>
-                <div className="my-col-15">
+
+                <div className="mb-5 my-col-15">
                     <div className="font-medium">eBarimt</div>
+
                     <Vat setVat={setVat} setValue={setValue} />
-                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                        {errors.vat?.message}
-                    </p>
+                    {errors.vat && (
+                        <p className="mt-1 text-xs italic text-left text-red-500 ">
+                            {errors.vat?.message}
+                        </p>
+                    )}
 
                     {vat == 3 && (
-                        <div className="w-full mb-3">
+                        <div>
                             <input
                                 type="text"
                                 className="-mt-[5px] rounded-md w-full bg-white font-light text-sm px-5 py-[9px] text-gray"
                                 placeholder="Байгууллагын РД"
                                 {...register("register")}
                             />
-                            <p className="mt-1 text-xs italic text-left text-red-500 ">
-                                {errors.register?.message}
-                            </p>
+                            {errors.register && (
+                                <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                    {errors.register?.message}
+                                </p>
+                            )}
                         </div>
                     )}
                 </div>
-                <ButtonComponent text="Захиалах" loading={loading} />
+
+                <div className="flex justify-center w-full">
+                    <ButtonComponent
+                        text="Захиалах"
+                        loading={loading}
+                        additionalClass="max-w-[270px]  w-full"
+                    />
+                </div>
             </form>
         </div>
     );

@@ -12,7 +12,7 @@ const FloatButton: React.FC<any> = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const onCartClick = () => {
-        router.push(`/order`);
+        cartCount && router.push(`/order`);
     };
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const FloatButton: React.FC<any> = () => {
         }
     }, [officeId, cartCount]);
 
-    return cartCount > 0 && !loading ? (
+    return (
         <div
             onClick={onCartClick}
             id="cart"
@@ -50,10 +50,10 @@ const FloatButton: React.FC<any> = () => {
                     className="text-[20px]  my-cart icon-Shop---Bold-icon-1"
                     style={{ color: "white" }}
                 ></span>
-                {<CountBadge count={cartCount} />}
+                {<CountBadge count={cartCount ? cartCount : 0} />}
             </div>
         </div>
-    ) : null;
+    );
 };
 
 export default FloatButton;

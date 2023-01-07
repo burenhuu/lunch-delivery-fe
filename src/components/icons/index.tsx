@@ -486,7 +486,7 @@ export function HomeIcon() {
     );
 }
 
-export function Remove() {
+export function Remove({ disabled }: any) {
     return (
         <svg
             width="15"
@@ -495,7 +495,12 @@ export function Remove() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <circle cx="7.5" cy="7.5" r="7.5" fill="#FFBE78" />
+            <circle
+                cx="7.5"
+                cy="7.5"
+                r="7.5"
+                fill={disabled ? "#B3BFC6" : `#FFBE78`}
+            />
             <line
                 x1="10.75"
                 y1="7.5"
@@ -509,7 +514,7 @@ export function Remove() {
     );
 }
 
-export function Add() {
+export function Add({ disabled }: any) {
     return (
         <svg
             width="15"
@@ -518,7 +523,12 @@ export function Add() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <circle cx="7.5" cy="7.5" r="7.5" fill="#FF7A1F" />
+            <circle
+                cx="7.5"
+                cy="7.5"
+                r="7.5"
+                fill={disabled ? "#B3BFC6" : `#FFBE78`}
+            />
             <line
                 x1="10.75"
                 y1="7.5"

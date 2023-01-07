@@ -1,11 +1,15 @@
-export default function ButtonComponent({ text, loading = false }: any) {
+export default function ButtonComponent({
+    text,
+    loading = false,
+    additionalClass,
+}: any) {
     return (
         <button
             className={`bg-gradient-to-r ${
                 loading
                     ? ""
                     : "bg-gradient-to-r from-gradient-start  to-gradient-end "
-            } text-white text-center rounded-md shadow-delivery px-5 text-base py-2.5`}
+            } text-white text-center rounded-[10px] shadow-delivery px-5 text-base py-2.5 h-[40px] ${additionalClass}`}
             style={{
                 backgroundColor: loading && "#B3BFC6",
             }}

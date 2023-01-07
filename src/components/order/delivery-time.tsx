@@ -1,8 +1,10 @@
 import useSWR from "swr";
+import { useEffect } from "react";
 
 import { ArrowDown } from "components/icons";
 import { useModal } from "lib/context/modal";
 import { useAppState } from "lib/context/app";
+import Spin from "components/common/spin";
 
 export function DeliveryTime({
     selectedTime,
@@ -19,6 +21,13 @@ export function DeliveryTime({
     const apiUrl = `/v1/offices/${state.officeId}/cart/times`;
     const { data, error } = useSWR(`${apiUrl}`);
 
+    useEffect(() => {
+        if (data && data.data) {
+            setSelectedTime(data.data.times[0]);
+            setValue("time", data.data.times[0]);
+        }
+    }, [data]);
+
     const onClose = () => {
         document.getElementById("effect")?.classList.remove("aos-animate");
         setTimeout(() => {
@@ -31,7 +40,8 @@ export function DeliveryTime({
             <div className="fixed z-50 w-full px-5 text-center -translate-x-1/2 left-1/2 bottom-5">
                 <div id="effect" data-aos="fade-up" className="my-col-10">
                     <div className="p-5 bg-white shadow-delivery rounded-2xl my-col-10">
-                        {data.data &&
+                        {data &&
+                            data.data &&
                             data.data.times?.map((time: any) => {
                                 return (
                                     <div
@@ -64,7 +74,8 @@ export function DeliveryTime({
             className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm h-[35px]"
         >
             <div className="font-light">
-                {data && selectedTime === data.data.times[0]
+                {!data && !error && <Spin />}
+                {data && data.data && selectedTime === data.data.times[0]
                     ? `${selectedTime} (Аль болох эрт)`
                     : selectedTime}
             </div>

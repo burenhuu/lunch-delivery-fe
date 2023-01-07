@@ -23,11 +23,8 @@ export function PermissionBox({
                     {text}
                 </div>
                 {button2 ? (
-                    <button
-                        className="bg-white shadow-delivery py-1.25 px-5 rounded-2xl grid grid-cols-2 items-center"
-                        disabled={loading}
-                    >
-                        <div
+                    <div className="bg-white shadow-delivery py-1.25 px-5 rounded-2xl grid grid-cols-2 items-center">
+                        <button
                             onClick={() => {
                                 document
                                     .getElementById("effect")
@@ -37,11 +34,14 @@ export function PermissionBox({
                                 }, 400);
                             }}
                             className="border-r border-gray py-[5.5px]"
+                            disabled={loading}
                         >
                             Буцах
-                        </div>
-                        <div onClick={onClick}>{button2}</div>
-                    </button>
+                        </button>
+                        <button disabled={loading} onClick={onClick}>
+                            {button2}
+                        </button>
+                    </div>
                 ) : (
                     <button
                         onClick={() => {

@@ -24,6 +24,9 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                     // });
                     dispatch({ type: "officeId", officeId: office.id });
                     dispatch({ type: "officeName", officeName: office.name });
+                    dispatch({ type: "officeLat", officeLat: office.latitude });
+                    dispatch({ type: "officeLng", officeLng: office.longitude });
+                    dispatch({ type: "toastCheck", toastCheck: false });
 
                     dispatch({
                         type: "numberOfStorey",

@@ -17,7 +17,7 @@ import TokiAPI from "lib/api/toki";
 import { Product, RecommendedType } from "lib/types/product.type";
 import { Merchant } from "lib/types/merchant.type";
 import { CategoryType } from "lib/types/category.type";
-import { utilsReduce } from "lib/utils/utils";
+import { utilsCalcCrow, utilsReduce } from "lib/utils/utils";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -75,17 +75,18 @@ export default function Office() {
     }, [searchValue]);
 
     useEffect(() => {
-        console.log(state)
-
-
-        toast("Таны хаяг зөв эсэхийг шалгаарай", {
-            className: "location-toast",
-            position: "top-left",
-            closeButton: <CloseButton />,
-            autoClose: false
-        });
-
-
+        console.log(state.userLat, state.userLng)
+        console.log(state.officeLat, state.officeLng)
+        console.log(state.officeLat, state.officeLng)
+        if (utilsCalcCrow(state.userLat, state.userLng, state.officeLat, state.officeLng) > 0.1 && state.toastCheck !== true) {
+            toast("Таны хаяг зөв эсэхийг шалгаарай", {
+                className: "location-toast",
+                position: "top-left",
+                closeButton: <CloseButton />,
+                autoClose: false
+            });
+            dispatch({ type: "toastCheck", toastCheck: true });
+        }
     }, []);
 
     const getMerchants = async () => {

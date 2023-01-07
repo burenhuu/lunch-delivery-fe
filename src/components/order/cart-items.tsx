@@ -65,7 +65,7 @@ export function CartItems({
                                 >
                                     <div className="flex items-center gap-x-2.5">
                                         <HomeIcon />
-                                        <div className="font-medium truncate">
+                                        <div className="font-medium truncate text-ellipsis">
                                             {place.merchant}
                                         </div>
                                     </div>
@@ -81,7 +81,7 @@ export function CartItems({
                                                         (option: any) => {
                                                             return (
                                                                 <div
-                                                                    className="font-light truncate text-gray line-clamp-1"
+                                                                    className="font-light truncate text-ellipsis text-gray line-clamp-1"
                                                                     key={
                                                                         option.name
                                                                     }
@@ -103,7 +103,7 @@ export function CartItems({
                                                     <div>
                                                         {formatPrice(
                                                             product.quantity *
-                                                                product.price
+                                                            product.price
                                                         )}{" "}
                                                         ₮
                                                     </div>

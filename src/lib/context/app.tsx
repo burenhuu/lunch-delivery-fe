@@ -182,6 +182,21 @@ const reducer = (state: any, action: any) => {
             saveToLocal(newState);
             return newState;
         }
+        case "officeLat": {
+            const newState = { ...state, officeLat: action.officeLat };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "officeLng": {
+            const newState = { ...state, officeLng: action.officeLng };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "toastCheck": {
+            const newState = { ...state, toastCheck: action.toastCheck };
+            saveToLocal(newState);
+            return newState;
+        }
         default:
             return state;
     }

@@ -114,7 +114,7 @@ const Header = ({ routerPathName }: any) => {
                                 </button>
                                 <button
                                     type="button"
-                                    className={`flex w-[100px] overflow-auto items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
+                                    className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
                                     onClick={() => {
                                         router.push(`/`);
                                         NoBackButtonRoutes.filter(

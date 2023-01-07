@@ -86,7 +86,6 @@ export default function MerchantProductPage() {
                         tempCat.push(children);
                     });
                 });
-                console.log(checkActiveCategory)
                 if (checkActiveCategory !== "") {
                     let categories = state.categories
                     categories.map((category: any) => {
@@ -135,7 +134,7 @@ export default function MerchantProductPage() {
                                 return (
                                     <ProductCard
                                         data={item}
-                                        key={item.place}
+                                        key={item.product.name}
                                         page={true}
                                         checkActiveProduct={checkActiveProduct}
                                     />

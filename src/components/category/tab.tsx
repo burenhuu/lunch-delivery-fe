@@ -11,11 +11,10 @@ export default function CategoryTab({
     tabs: any[];
     merchant?: boolean;
 }) {
-    console.log(activeTab, tabs)
     return (
         <div
             className={
-                "flex overflow-x-scroll w-full scrollbar-hide gap-x-5 items-stretch " +
+                "flex overflow-x-auto w-full scrollbar-hide gap-x-5 items-stretch " +
                 (merchant ? "px-5" : "px-[30px]")
             }
         >

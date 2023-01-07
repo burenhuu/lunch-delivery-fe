@@ -52,11 +52,10 @@ const Category: React.FC<CategoryProps> = ({
                                     }}
                                 >
                                     <button
-                                        className={` inline-block w-full text-base px-[20px]  h-[40px] truncate  p-2 ${
-                                            categoryId === category.id
+                                        className={` inline-block w-full text-base px-[20px]  h-[40px] truncate text-ellipsis p-2 ${categoryId === category.id
                                                 ? `text-white rounded-[10px] font-medium active`
                                                 : `bg-white text-[#647382] font-normal rounded-[10px]`
-                                        }`}
+                                            }`}
                                         style={{
                                             backgroundColor:
                                                 categoryId === category.id

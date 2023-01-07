@@ -103,8 +103,6 @@ export default function ProductCard({
 
     const [show, setShow, content, setContent] = useModal();
 
-    console.log(placeState)
-
     const onContinueClick = () => {
         dispatch({
             type: "merchantId",

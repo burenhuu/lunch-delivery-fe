@@ -20,7 +20,7 @@ export default function MerchantProductPage() {
     const [loading, setLoading] = useState<boolean>(false);
     const [merchantProductCategory, setMerchantProductCategory] = useState<
         CategoryType[]
-    >([]);
+        >([]);
     const checkActiveCategory = router.query.categoryId ? router.query.categoryId : ""
     const checkActiveProduct = router.query.productId ? router.query.productId : ""
     const [activeCategory, setActiveCategory] = useState<string>("");

@@ -75,9 +75,9 @@ export default function Office() {
     }, [searchValue]);
 
     useEffect(() => {
-        console.log(state.userLat, state.userLng)
-        console.log(state.officeLat, state.officeLng)
-        console.log(state.officeLat, state.officeLng)
+        // console.log(state.userLat, state.userLng)
+        // console.log(state.officeLat, state.officeLng)
+        // console.log(state.officeLat, state.officeLng)
         if (utilsCalcCrow(state.userLat, state.userLng, state.officeLat, state.officeLng) > 0.1 && state.toastCheck !== true) {
             toast("Таны хаяг зөв эсэхийг шалгаарай", {
                 className: "location-toast",
@@ -193,7 +193,7 @@ export default function Office() {
         if (result?.type === "merchant") {
             router.push(`/merchant/${result.id}`);
         } else {
-            router.push("/category");
+            router.push(`/category?productCategory=${result?.category}`);
         }
     };
 

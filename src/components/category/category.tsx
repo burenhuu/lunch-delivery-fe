@@ -8,13 +8,16 @@ import { useEffect, useState } from "react";
 import CategoryCard from "components/product-category/card";
 import TokiAPI from "lib/api/toki";
 import { CategoryType } from "lib/types/category.type";
+import {useRouter} from "next/router";
 
 export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const [state, dispatch]: any = useAppState();
+    const router = useRouter();
     const { setLoading } = props;
     const { categories, categoryId, officeId } = state;
-    console.log(state)
-    const [swiperLength, setSwiperLength] = useState(Math.ceil(categories?.length / 10));
+    const [swiperLength, setSwiperLength] = useState(1);
+    const [onFirstLoad, setOnFirstLoad] = useState(true)
+    const checkActiveCategory = router.query.productCategory ? router.query.productCategory : ""
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [childrenCategories, setChildrenCategories] = useState<
         CategoryType[]
@@ -26,6 +29,18 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const onProductClick = (id: string) => {
         setSelectedChildren(id);
     };
+
+    useEffect(()=>{
+        if (checkActiveCategory){
+            categories.map((category: any)=>{
+                category.children.map((sub_category:any)=>{
+                    if(sub_category.id === checkActiveCategory){
+                        setActiveTab(category.id)
+                    }
+                })
+            })
+        }
+    },[])
 
     useEffect(() => {
         const filterByCategories = async () => {
@@ -75,7 +90,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
         if (activeTab === "Бүгд") {
             const temp: CategoryType[] = [];
             categories?.map(async (category: CategoryType) => {
-                const { children } = category;
+                const {children} = category;
                 if (children) {
                     children?.map((child) => {
                         temp.push(child);
@@ -83,23 +98,27 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 }
             });
             setChildrenCategories(temp);
-            setSwiperLength(Math.ceil(temp?.length / 10))
         } else {
             const found = categories.find(
                 (category: CategoryType) => category.id === activeTab
             );
-            setSwiperLength(Math.ceil(found?.children?.length / 10))
             setChildrenCategories(found?.children);
         }
     }, [activeTab]);
 
     useEffect(() => {
-        if (childrenCategories[0]) {
+        if (childrenCategories && checkActiveCategory && onFirstLoad) {
+            console.log("123---------------")
+            setSwiperLength(Math.ceil(childrenCategories?.length / 10));
+            setSelectedChildren(typeof checkActiveCategory === 'string' ? checkActiveCategory : "")
+        } else{
+            console.log("123---------------456")
+            setSwiperLength(Math.ceil(childrenCategories?.length / 10));
             setSelectedChildren(childrenCategories[0]?.id);
         }
     }, [childrenCategories]);
 
-    console.log(swiperLength)
+    console.log(activeTab, selectedChildren)
 
     return (
         <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">
@@ -115,7 +134,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 className={"w-full " + (swiperLength > 1 ? "my-col-15" : "")}
                 autoplay={false}
             >
-                {[...Array(swiperLength)]?.map((n: any, index: number) => {
+                {[...Array(swiperLength ? swiperLength : 1)]?.map((n: any, index: number) => {
                     return (
                         <SwiperSlide
                             key={n}

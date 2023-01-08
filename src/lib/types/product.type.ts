@@ -39,4 +39,5 @@ export interface CardDataType {
     rating?: number;
     product: Product;
     merchantId: string;
+    categoryId?: string;
 }

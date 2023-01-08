@@ -5,11 +5,13 @@ export default function CategoryTab({
     setActiveTab,
     tabs,
     merchant = false,
+    setOnFirstLoad
 }: {
     activeTab: string;
     setActiveTab: any;
     tabs: any[];
     merchant?: boolean;
+    setOnFirstLoad: any
 }) {
     return (
         <div
@@ -41,7 +43,10 @@ export default function CategoryTab({
                 const { name, id } = category;
                 return (
                     <div
-                        onClick={() => setActiveTab(id)}
+                        onClick={() => {
+                            setActiveTab(id)
+                            setOnFirstLoad(false)
+                        }}
                         key={id}
                         className="flex flex-col gap-y-2 whitespace-nowrap"
                     >

@@ -17,6 +17,7 @@ import { PermissionBox } from "components/common/permission-box";
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
 import Toki from "lib/utils/toki-payment";
+import CenteredSpin from "components/common/centered-spin";
 
 const Cart: NextPage = () => {
     const router = useRouter();
@@ -113,6 +114,7 @@ const Cart: NextPage = () => {
     const modalText =
         deliveryType === "Delivery" ? (
             <>
+                {loading && <CenteredSpin />}
                 Та <span className="font-medium">{officeName}</span>
                 -н{" "}
                 {getValues("address") ? (
@@ -130,14 +132,15 @@ const Cart: NextPage = () => {
                 )}{" "}
                 <span className="font-medium">{selectedTime}</span> цагт
                 захиалгаа хүргүүлэх гэж байна. Төлбөр төлсний дараа захиалгыг
-                цуцлах болон өөрчлөх боломжгүй
+                цуцлах болон өөрчлөх боломжгүйг анхаарна уу.
             </>
         ) : (
             <>
+                {loading && <CenteredSpin />}
                 Та <span className="font-medium">Мандах</span>
                 -с <span className="font-medium">{selectedTime}</span> цагт очиж
                 авахаар захиалга өгөх гэж байна. Төлбөр төлсний дараа захиалгыг
-                цуцлах болон өөрчлөх боломжгүй
+                цуцлах болон өөрчлөх боломжгүйг анхаарна уу.
             </>
         );
 

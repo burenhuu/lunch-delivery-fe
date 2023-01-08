@@ -51,7 +51,7 @@ export function DeliveryTime({
                                             setValue("time", time);
                                             onClose();
                                         }}
-                                        className="pb-2.5 border-b border-gray last:border-none last:pb-0"
+                                        className="pb-2.5 border-b border-[#647382] last:border-none last:pb-0"
                                     >
                                         {time}
                                     </div>

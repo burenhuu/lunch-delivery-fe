@@ -14,7 +14,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ office }) => {
 
     return (
         <button
-            className="flex flex-wrap px-[15px] py-[15px]"
+            className="flex flex-wrap px-[15px] py-[15px] h-[46px]"
             onClick={() => {
                 // dispatch({
                 //     type: "merchants",

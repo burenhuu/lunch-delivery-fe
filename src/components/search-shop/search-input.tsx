@@ -59,7 +59,7 @@ export default function SearchInput({
             </div>
 
             {bySearchBar && searchValue && offices && offices.length > 0 && (
-                <div className="relative grid grid-cols-1  mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] max-h-[50vw] overflow-auto scrollbar-hide px-[15px] divide-[#B3BFC6]">
+                <div className="relative grid grid-cols-1 mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] px-[15px] divide-[#B3BFC6]">
                     {loading && (
                         <>
                             {/* <Overlay isOfficeList={false} />

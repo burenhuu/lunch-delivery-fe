@@ -66,9 +66,13 @@ export default function SearchInput({
                             <CenteredSpin size={8} /> */}
                         </>
                     )}
-                    {offices.map((office: Office, index: number) => (
-                        <OptionCard key={index} office={office} />
-                    ))}
+                    {offices.map((office: Office, index: number) => {
+                        if (index < 4){
+                            return(
+                                <OptionCard key={index} office={office}/>
+                            )
+                        }
+                        })}
                 </div>
             )}
         </div>

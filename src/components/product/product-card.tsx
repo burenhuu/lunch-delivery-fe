@@ -174,14 +174,23 @@ export default function ProductCard({
 
     const onSelectOption = (option: Option, value: string) => {
         let check = false
-        let options: any = selectedOptions.map((selectedOption) => {
-            if (selectedOption.id === option.id) {
+        let options: any = []
+        selectedOptions.map((selectedOption) => {
+            console.log(selectedOption)
+            if (selectedOption?.id === option.id) {
                 selectedOption.value = value
                 check = true
-                return {
+                options.push({
                     id: option.id,
                     value: value
-                }
+                })
+            } else if (selectedOption?.value === null){
+                options.push({
+                    id: selectedOption.id,
+                    value: null
+                })
+            } else if (selectedOption?.id !== option.id){
+                options.push(selectedOption)
             }
         })
         if (!check) {
@@ -430,9 +439,9 @@ export default function ProductCard({
                                                                                 "py-2.5 rounded-md w-[75px] text-center relative " +
                                                                                 (selectedOptions.find(
                                                                                     (item) =>
-                                                                                        item.id ===
+                                                                                        item?.id ===
                                                                                         option.id &&
-                                                                                        item.value ===
+                                                                                        item?.value ===
                                                                                         value
                                                                                 )
                                                                                     ? "gradient-border text-main"

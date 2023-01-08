@@ -126,6 +126,7 @@ export default function MerchantProductPage() {
                             setActiveTab={setActiveCategory}
                             tabs={merchantProductCategory}
                             merchant={true}
+                            setOnFirstLoad={undefined}
                         />
                     </div>
                     <div className="relative w-full h-full py-5 -my-5 overflow-y-scroll scrollbar-hide">

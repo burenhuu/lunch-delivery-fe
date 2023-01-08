@@ -45,7 +45,9 @@ export default function CategoryTab({
                     <div
                         onClick={() => {
                             setActiveTab(id)
-                            setOnFirstLoad(false)
+                            if(setOnFirstLoad){
+                                setOnFirstLoad(false)
+                            }
                         }}
                         key={id}
                         className="flex flex-col gap-y-2 whitespace-nowrap"

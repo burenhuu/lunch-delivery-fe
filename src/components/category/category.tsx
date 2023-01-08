@@ -126,6 +126,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 tabs={categories}
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
+                setOnFirstLoad={setOnFirstLoad}
             />
             <Swiper
                 modules={[Pagination]}

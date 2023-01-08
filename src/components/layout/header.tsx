@@ -129,7 +129,7 @@ const Header = ({ routerPathName }: any) => {
                                                     {officeName}
                                                 </div>
                                                 :
-                                                <div className="font-light text-sm whitespace-nowrap">
+                                                <div className="flex font-light text-sm whitespace-nowrap">
                                                     {officeName}
                                                 </div>
                                         }

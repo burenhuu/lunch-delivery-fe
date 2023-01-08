@@ -33,7 +33,7 @@ const OptionCard: React.FC<OptionCardProps> = ({ office }) => {
                 router.push(`/office/${office.id}`);
             }}
         >
-            <p className="mr-1 text-sm text-normal">{office.name}</p>
+            <p className="mr-1 text-sm text-normal truncate">{office.name}</p>
             {/* <p className="text-sm font-light">
                 ( {office.merchants.length} зоогийн газар )
             </p> */}

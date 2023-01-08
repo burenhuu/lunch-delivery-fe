@@ -14,32 +14,31 @@ import ProductTab from "components/category/product-tab";
 import { CardDataType, Product } from "lib/types/product.type";
 import { Merchant } from "lib/types/merchant.type";
 
-export const productFilters = [
-    {
-        'sort': 'rating',
-        'name': "Үнэлгээ"
-    }, {
-        'sort': 'price',
-        'name': "Үнэ"
-    }, {
-        'sort': 'delivery',
-        'name': "Хүргэлт"
-    }, {
-        'sort': 'bonus',
-        'name': "Урамшуулал"
-    }
-];
 
 export default function Category() {
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
+    const [productFilters, setProductFilters] = useState([
+        {
+            'sort': 'rating',
+            'name': "Үнэлгээ"
+        }, {
+            'sort': 'price',
+            'name': "Үнэ"
+        }, {
+            'sort': 'delivery',
+            'name': "Хүргэлт"
+        }, {
+            'sort': 'bonus',
+            'name': "Урамшуулал"
+        }
+    ])
     const { merchants, products, categories, categoryId, officeId } = state;
     const [productTab, setProductTab] = useState<any>(productFilters[0]);
     const [loading, setLoading] = useState<boolean>(false);
     const [cardData, setCardData] = useState<CardDataType[]>();
 
     useEffect(() => {
-        console.log(products)
         const renderCard = async () => {
             const temp: CardDataType[] = [];
             setLoading(true);
@@ -68,6 +67,7 @@ export default function Category() {
                 <ProductTab
                     activeTab={productTab}
                     setActiveTab={setProductTab}
+                    productFilters={productFilters}
                 />
                 <div className="relative w-full h-full overflow-y-scroll scrollbar-hide py-5 -mt-2.5">
                     {products.length > 0 ? (

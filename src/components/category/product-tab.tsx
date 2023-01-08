@@ -1,16 +1,15 @@
-import {productFilters} from "../../pages/category";
-
-
 export default function ProductTab({
     activeTab,
     setActiveTab,
+    productFilters
 }: {
     activeTab: any;
     setActiveTab: any;
+    productFilters: any
 }) {
     return (
         <div className="flex items-center justify-between px-5 gap-x-1.25 ">
-            {productFilters?.map((filter) => {
+            {productFilters?.map((filter: any) => {
                 return (
                     <div
                         key={filter.sort}

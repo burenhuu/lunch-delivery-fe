@@ -39,6 +39,7 @@ export default function Category() {
     const [cardData, setCardData] = useState<CardDataType[]>();
 
     useEffect(() => {
+        console.log(products)
         const renderCard = async () => {
             const temp: CardDataType[] = [];
             setLoading(true);
@@ -77,7 +78,7 @@ export default function Category() {
                         >
                             {cardData?.map((item: CardDataType) => {
                                 return (
-                                    <ProductCard key={item.place} data={item} />
+                                    <ProductCard key={item.product.variants[0].id} data={item} />
                                 );
                             })}
                         </Accordion>

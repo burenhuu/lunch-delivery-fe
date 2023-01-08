@@ -19,10 +19,8 @@ export default function CategoryCard({
     const { officeId } = state;
 
     const onCategoryCardClick = async () => {
-        if (!small) {
-            await dispatch({ type: "categoryId", categoryId: id });
-            router.push(`/category`);
-        }
+        await dispatch({type: "categoryId", categoryId: id});
+        router.push(`/category`);
     };
 
     return (

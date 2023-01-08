@@ -246,7 +246,7 @@ export default function ProductCard({
                                             onClick={onImageClick}
                                             src={image}
                                             className={
-                                                "w-full h-full rounded-2xl"
+                                                "w-full h-[120px] rounded-2xl"
                                             }
                                             alt={place}
                                         />

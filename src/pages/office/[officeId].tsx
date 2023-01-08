@@ -91,11 +91,11 @@ export default function Office() {
 
     const getMerchants = async () => {
         try {
-            const { data } = await TokiAPI.getMerchantsByOffice(
+            const res = await TokiAPI.getMerchantsByOffice(
                 officeId?.toString()!, filterParameter
             );
-            if (data) {
-                await dispatch({ type: "merchants", merchants: data });
+            if (res?.data) {
+                await dispatch({ type: "merchants", merchants: res?.data });
             }
         } finally {
             setLoading(false);

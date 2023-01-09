@@ -50,6 +50,13 @@ const Cart: NextPage = () => {
                     data.grandTotal && setGrandTotal(data.grandTotal);
                     data.discountAmount &&
                         setDiscountAmount(data.discountAmount);
+                    data.address && setValue("address", data.address);
+                    data.floor &&
+                        (setValue("floor", data.floor),
+                        setSelectedFloor(data.floor));
+                    data.comment && setValue("comment", data.comment);
+                    data.vat && (setValue("vat", data.vat), setVat(data.vat));
+                    data.register && setValue("register", data.register);
                 } finally {
                     setLoading(false);
                 }

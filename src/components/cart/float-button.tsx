@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 import TokiAPI from "lib/api/toki";
 import { useAppState } from "lib/context/app";
@@ -12,7 +13,9 @@ const FloatButton: React.FC<any> = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const onCartClick = () => {
-        cartCount && router.push(`/order`);
+        cartCount
+            ? router.push(`/order`)
+            : toast("Та захиалах бүтээгдэхүүнээ сонгоно уу");
     };
 
     useEffect(() => {

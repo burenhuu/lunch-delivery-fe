@@ -117,8 +117,8 @@ export default function GreadientMerchantCard({
                             <></>
                             :
                             <div
-                                className="absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[12px] py-[5px] px-[10px] text-white">
-                                <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center">
+                                className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[11px]  text-white opacity-50">
+                                <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center opacity-100 py-[5px] px-[10px] leading-[11.85px]">
                                     {merchant.bonus}
                                 </div>
                             </div>

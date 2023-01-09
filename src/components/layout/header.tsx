@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useAppState } from "lib/context/app";
+import {useRouter} from "next/router";
+import {useAppState} from "lib/context/app";
 
 const NoBackButtonRoutes = [
     "/office/[officeId]",
@@ -7,11 +7,11 @@ const NoBackButtonRoutes = [
     "/order-history",
 ];
 
-const Header = ({ routerPathName }: any) => {
+const Header = ({routerPathName}: any) => {
     const router = useRouter();
     const [state]: any = useAppState();
     const isBackButton = !NoBackButtonRoutes.includes(routerPathName);
-    const { officeId, officeName } = state;
+    const {officeId, officeName} = state;
 
     const onBackButtonClick = () => {
         router.back();
@@ -112,30 +112,43 @@ const Header = ({ routerPathName }: any) => {
                                         />
                                     </svg>
                                 </button>
-                                <button
-                                    type="button"
-                                    className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
-                                    onClick={() => {
-                                        router.push(`/`);
-                                        NoBackButtonRoutes.filter(
-                                            (route) => route !== "/"
-                                        );
-                                    }}
-                                >
-                                    <div className="w-[100px]">
-                                        {
-                                            getTextWidth(officeName) > 140 ?
+                                {
+                                    getTextWidth(officeName) > 140 ?
+                                        <button
+                                            type="button"
+                                            className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
+                                            onClick={() => {
+                                                router.push(`/`);
+                                                NoBackButtonRoutes.filter(
+                                                    (route) => route !== "/"
+                                                );
+                                            }}
+                                        >
+                                            <div className="w-[100px]">
                                                 <div className="bar_content font-light text-sm whitespace-nowrap">
                                                     {officeName}
                                                 </div>
-                                                :
+                                            </div>
+                                        </button>
+                                        :
+                                        <button
+                                            type="button"
+                                            className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start pr-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
+                                            onClick={() => {
+                                                router.push(`/`);
+                                                NoBackButtonRoutes.filter(
+                                                    (route) => route !== "/"
+                                                );
+                                            }}
+                                        >
+                                            <div className="w-[100px]">
                                                 <div className="flex font-light text-sm whitespace-nowrap">
                                                     {officeName}
                                                 </div>
-                                        }
+                                            </div>
+                                        </button>
+                                }
 
-                                    </div>
-                                </button>
                             </div>
                         )}
                     </>

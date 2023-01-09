@@ -42,10 +42,14 @@ const WithAuth = ({ children }: any) => {
                     //         delete deliveryOptions.delivery_instruction;
                     //     }
 
-                    //     localStorage.setItem(
-                    //         "phoneNumber",
-                    //         data.data.user?.phone_no || ""
-                    //     );
+                    localStorage.setItem(
+                        "phoneNumber",
+                        (data.claims &&
+                            data.claims[1] &&
+                            data.claims[1][1] &&
+                            data.claims[1][1]) ||
+                            ""
+                    );
                     //     localStorage.setItem(
                     //         "locationRange",
                     //         data.data.location_range || "1000"

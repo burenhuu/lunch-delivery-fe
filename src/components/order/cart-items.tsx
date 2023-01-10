@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useAppState } from "lib/context/app";
 import { Add, HomeIcon, Remove } from "components/icons";
 import { formatPrice } from "lib/utils/helpers";

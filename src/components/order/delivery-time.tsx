@@ -10,10 +10,12 @@ export function DeliveryTime({
     selectedTime,
     setSelectedTime,
     setValue,
+    setisDeliveryClosed,
 }: {
     selectedTime: string;
     setSelectedTime: any;
     setValue: any;
+    setisDeliveryClosed: any;
 }) {
     const [state]: any = useAppState();
 
@@ -22,9 +24,13 @@ export function DeliveryTime({
     const { data, error } = useSWR(`${apiUrl}`);
 
     useEffect(() => {
-        if (data && data.data) {
-            setSelectedTime(data.data.times[0]);
-            setValue("time", data.data.times[0]);
+        if (data && data.data && data.data.times) {
+            data.data.times.length > 0
+                ? (data.data.times[0] && setSelectedTime(data.data.times[0]),
+                  data.data.times[0] && setValue("time", data.data.times[0]))
+                : setisDeliveryClosed(true);
+        } else {
+            setisDeliveryClosed(true);
         }
     }, [data]);
 

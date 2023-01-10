@@ -2,11 +2,13 @@ import { useModal } from "lib/context/modal";
 
 export function PermissionBox({
     text,
+    button1 = "Буцах",
     button2,
     onClick,
     loading,
 }: {
     text: any;
+    button1?: any;
     button2?: any;
     onClick?: any;
     loading?: any;
@@ -36,7 +38,7 @@ export function PermissionBox({
                             className="border-r border-gray py-[5.5px]"
                             disabled={loading}
                         >
-                            Буцах
+                            {button1}
                         </button>
                         <button disabled={loading} onClick={onClick}>
                             {button2}

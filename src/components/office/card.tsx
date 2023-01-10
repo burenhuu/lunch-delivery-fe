@@ -1,7 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
 import { Office } from "lib/types/office.type";
+import TokiAPI from "lib/api/toki";
+import { useModal } from "lib/context/modal";
+import { PermissionBox } from "components/common/permission-box";
 
 interface OfficeCardProps {
     office: Office;
@@ -10,6 +14,9 @@ interface OfficeCardProps {
 const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
     const [state, dispatch]: any = useAppState();
     const router = useRouter();
+    const [show, setShow, content, setContent] = useModal();
+    const [loading, setLoading] = useState(false);
+
     return (
         <div
             id={office.id}
@@ -18,25 +25,169 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
         >
             <div
                 onClick={() => {
-                    // dispatch({
-                    //     type: "merchants",
-                    //     merchants: office.merchants,
-                    // });
-                    dispatch({ type: "officeId", officeId: office.id });
-                    dispatch({ type: "officeName", officeName: office.name });
-                    dispatch({ type: "officeLat", officeLat: office.latitude });
-                    dispatch({ type: "officeLng", officeLng: office.longitude });
-                    dispatch({ type: "toastCheck", toastCheck: false });
+                    if (
+                        state.officeId &&
+                        state.cartCount > 0 &&
+                        state.officeId != office.id
+                    ) {
+                        TokiAPI.changeOffice({
+                            office: office.id,
+                            force: false,
+                        }).then((res: any) => {
+                            if (res?.data.changed == false) {
+                                setShow(true);
 
-                    dispatch({
-                        type: "numberOfStorey",
-                        numberOfStorey: office.floor,
-                    });
-                    dispatch({
-                        type: "notThroughLink",
-                        notThroughLink: true,
-                    });
-                    router.push(`/office/${office.id}`);
+                                setContent(
+                                    <PermissionBox
+                                        text={
+                                            <>
+                                                Таны сагсалсан дараах хоолнууд{" "}
+                                                <span className="font-medium">
+                                                    "{office.name}"
+                                                </span>
+                                                -т хүргэгдэх боломжгүй хасагдах
+                                                тул та хаягаа солихдоо итгэлтэй
+                                                байна уу ?
+                                                <div className="w-full mt-3 ml-5 text-left">
+                                                    <ul
+                                                        style={{
+                                                            listStyle:
+                                                                "initial",
+                                                        }}
+                                                    >
+                                                        {res.data.orders.map(
+                                                            (order: any) => {
+                                                                return order.items.map(
+                                                                    (
+                                                                        item: any
+                                                                    ) => {
+                                                                        return (
+                                                                            <li className="font-medium">
+                                                                                {order.branch &&
+                                                                                    order
+                                                                                        .branch
+                                                                                        .name +
+                                                                                        " - "}{" "}
+                                                                                {
+                                                                                    item.name
+                                                                                }
+                                                                            </li>
+                                                                        );
+                                                                    }
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                </div>
+                                            </>
+                                        }
+                                        button2="Тийм"
+                                        button1="Үгүй"
+                                        onClick={async () => {
+                                            setLoading(true);
+                                            TokiAPI.changeOffice({
+                                                office: office.id,
+                                                force: true,
+                                            }).then((res: any) => {
+                                                dispatch({
+                                                    type: "officeId",
+                                                    officeId: office.id,
+                                                });
+                                                dispatch({
+                                                    type: "officeName",
+                                                    officeName: office.name,
+                                                });
+                                                dispatch({
+                                                    type: "officeLat",
+                                                    officeLat: office.latitude,
+                                                });
+                                                dispatch({
+                                                    type: "officeLng",
+                                                    officeLng: office.longitude,
+                                                });
+                                                dispatch({
+                                                    type: "toastCheck",
+                                                    toastCheck: false,
+                                                });
+
+                                                dispatch({
+                                                    type: "numberOfStorey",
+                                                    numberOfStorey:
+                                                        office.floor,
+                                                });
+                                                dispatch({
+                                                    type: "notThroughLink",
+                                                    notThroughLink: true,
+                                                });
+                                                router.push(
+                                                    `/office/${office.id}`
+                                                );
+                                            });
+                                            setShow(false);
+                                            setLoading(false);
+                                        }}
+                                        loading={loading}
+                                    />
+                                );
+                            } else {
+                                dispatch({
+                                    type: "officeId",
+                                    officeId: office.id,
+                                });
+                                dispatch({
+                                    type: "officeName",
+                                    officeName: office.name,
+                                });
+                                dispatch({
+                                    type: "officeLat",
+                                    officeLat: office.latitude,
+                                });
+                                dispatch({
+                                    type: "officeLng",
+                                    officeLng: office.longitude,
+                                });
+                                dispatch({
+                                    type: "toastCheck",
+                                    toastCheck: false,
+                                });
+
+                                dispatch({
+                                    type: "numberOfStorey",
+                                    numberOfStorey: office.floor,
+                                });
+                                dispatch({
+                                    type: "notThroughLink",
+                                    notThroughLink: true,
+                                });
+                                router.push(`/office/${office.id}`);
+                            }
+                        });
+                    } else {
+                        dispatch({ type: "officeId", officeId: office.id });
+                        dispatch({
+                            type: "officeName",
+                            officeName: office.name,
+                        });
+                        dispatch({
+                            type: "officeLat",
+                            officeLat: office.latitude,
+                        });
+                        dispatch({
+                            type: "officeLng",
+                            officeLng: office.longitude,
+                        });
+                        dispatch({ type: "toastCheck", toastCheck: false });
+
+                        dispatch({
+                            type: "numberOfStorey",
+                            numberOfStorey: office.floor,
+                        });
+                        dispatch({
+                            type: "notThroughLink",
+                            notThroughLink: true,
+                        });
+                        router.push(`/office/${office.id}`);
+                    }
                 }}
                 className="flex items-center gap-x-[15px]"
             >

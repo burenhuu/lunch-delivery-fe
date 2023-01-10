@@ -25,7 +25,6 @@ const Cart: NextPage = () => {
     const { officeName } = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
-
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
     const [selectedTime, setSelectedTime] = useState<string>("");
     const [show, setShow, content, setContent] = useModal();
@@ -35,6 +34,7 @@ const Cart: NextPage = () => {
     const [grandTotal, setGrandTotal] = useState<any>(0);
     const [discountAmount, setDiscountAmount] = useState<any>(0);
     const [data, setData] = useState<any>(null);
+    const [isDeliveryClosed, setisDeliveryClosed] = useState(true);
 
     useEffect(() => {
         if (state.officeId) {
@@ -65,6 +65,14 @@ const Cart: NextPage = () => {
             fetchDatas();
         }
     }, [state.officeId]);
+
+    useEffect(() => {
+        console.log(isDeliveryClosed);
+        if (isDeliveryClosed) {
+            setDeliveryType("TakeAway");
+            setValue("type", "TakeAway");
+        }
+    }, [isDeliveryClosed]);
 
     const validationSchema = yup.object().shape({
         type: yup.string().required("Захиалгын хэлбэр сонгоно уу"),
@@ -102,7 +110,7 @@ const Cart: NextPage = () => {
                 ? {
                       type: "Delivery",
                       address: "",
-                      floor: 0,
+                      floor: 1,
                       comment: "",
                       vat: 1,
                       register: "",
@@ -240,6 +248,7 @@ const Cart: NextPage = () => {
                     <DeliveryType
                         setDeliveryType={setDeliveryType}
                         setValue={setValue}
+                        isDeliveryClosed={isDeliveryClosed}
                     />
                     {errors.type && (
                         <p className="mt-1 text-xs italic text-left text-red-500 ">
@@ -284,6 +293,7 @@ const Cart: NextPage = () => {
                         selectedTime={selectedTime}
                         setSelectedTime={setSelectedTime}
                         setValue={setValue}
+                        setisDeliveryClosed={setisDeliveryClosed}
                     />
                     {errors.time && (
                         <p className="mt-1 text-xs italic text-left text-red-500 ">

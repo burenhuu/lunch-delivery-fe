@@ -62,7 +62,12 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                                         item: any
                                                                     ) => {
                                                                         return (
-                                                                            <li className="font-medium">
+                                                                            <li
+                                                                                className="font-medium"
+                                                                                key={
+                                                                                    item.id
+                                                                                }
+                                                                            >
                                                                                 {order.branch &&
                                                                                     order
                                                                                         .branch

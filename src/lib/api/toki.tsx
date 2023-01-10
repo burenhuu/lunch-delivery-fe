@@ -27,14 +27,20 @@ const TokiAPI = {
 
     //Get products by office and additional params, such as search keyword, merchantid or category
 
-    getProductsByOffice: (officeId: string, type?: string, value?: string, productTab?: string) => {
-        let params: any = {}
-        if (productTab){
-            params['sort'] = productTab
+    getProductsByOffice: (
+        officeId: string,
+        type?: string,
+        value?: string,
+        productTab?: string
+    ) => {
+        let params: any = {};
+        if (productTab) {
+            params["sort"] = productTab;
         }
         if (type && value) {
             return axios.get(
-                `${urlPrefix}/offices/${officeId}/products?${type}=${value}`, {params: params}
+                `${urlPrefix}/offices/${officeId}/products?${type}=${value}`,
+                { params: params }
             );
         } else return axios.get(`${urlPrefix}/offices/${officeId}/products`);
     },
@@ -54,20 +60,16 @@ const TokiAPI = {
     getMerchantReviews: (merchantId: string) =>
         axios.get(`${urlPrefix}/merchants/${merchantId}/review`),
 
-    getCart: (officeId: string) =>
-        axios.get(`${urlPrefix}/cart`),
+    getCart: () => axios.get(`${urlPrefix}/cart`),
 
-    addCart: (cartItem: CartData) =>
-        axios.post(`${urlPrefix}/cart`, cartItem),
+    addCart: (cartItem: CartData) => axios.post(`${urlPrefix}/cart`, cartItem),
 
-    updateCard: (officeId: string, cartItem: any) =>
-        axios.put(`${urlPrefix}/cart`, cartItem),
+    updateCard: (cartItem: any) => axios.put(`${urlPrefix}/cart`, cartItem),
 
     getTimes: (officeId: string) =>
         axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),
 
-    checkout: (officeId: string, data: any) =>
-        axios.post(`${urlPrefix}/offices/${officeId}/cart/checkout`, data),
+    checkout: (data: any) => axios.post(`${urlPrefix}/cart/checkout`, data),
 
     paid: (officeId: string, data: any) =>
         axios.post(`${urlPrefix}/offices/${officeId}/cart/paid`, data),

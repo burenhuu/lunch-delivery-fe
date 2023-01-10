@@ -18,7 +18,7 @@ export function DeliveryTime({
     const [state]: any = useAppState();
 
     const [show, setShow, content, setContent] = useModal();
-    const apiUrl = `/v1/offices/${state.officeId}/cart/times`;
+    const apiUrl = `/v1/cart/times`;
     const { data, error } = useSWR(`${apiUrl}`);
 
     useEffect(() => {

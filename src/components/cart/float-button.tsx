@@ -23,7 +23,7 @@ const FloatButton: React.FC<any> = () => {
             setLoading(true);
             const fetchDatas = async () => {
                 try {
-                    const { data } = await TokiAPI.getCart(officeId);
+                    const { data } = await TokiAPI.getCart();
 
                     if (data) {
                         dispatch({

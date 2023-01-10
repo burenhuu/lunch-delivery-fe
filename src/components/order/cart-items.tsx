@@ -4,7 +4,6 @@ import { useAppState } from "lib/context/app";
 import { Add, HomeIcon, Remove } from "components/icons";
 import { formatPrice } from "lib/utils/helpers";
 import TokiAPI from "lib/api/toki";
-import CenteredSpin from "components/common/centered-spin";
 
 export function CartItems({
     items,
@@ -20,7 +19,6 @@ export function CartItems({
     setLoading,
 }: any) {
     const [state, dispatch]: any = useAppState();
-    // const [loading, setLoading] = useState(false);
 
     const itemIncDecHandler = async (
         orderId: any,
@@ -37,10 +35,7 @@ export function CartItems({
         setLoading(true);
 
         try {
-            const { data } = await TokiAPI.updateCard(
-                state.officeId,
-                productData
-            );
+            const { data } = await TokiAPI.updateCard(productData);
 
             setData(data);
             data.totalAmount && setTotalAmount(data.totalAmount);
@@ -56,26 +51,26 @@ export function CartItems({
 
     return (
         <div className="p-5 text-sm bg-white rounded-2xl shadow-delivery my-col-20">
-            {items && Object.keys(items).length > 0 ? (
+            {items && items.length > 0 ? (
                 <>
                     <div className="my-col-20">
-                        {items?.map((place: any) => {
+                        {items.map((place: any) => {
                             return (
                                 <div
-                                    key={place.merchant}
+                                    key={place.merchant.id}
                                     className="pb-5 border-b border-dashed my-col-10 border-gray last:border-solid"
                                 >
                                     <div className="flex items-center gap-x-2.5">
                                         <HomeIcon />
                                         <div className="font-medium truncate text-ellipsis">
-                                            {place.merchant}
+                                            {place.merchant.name}
                                         </div>
                                     </div>
 
                                     {place.items.map((product: any) => {
                                         return (
                                             <div
-                                                key={product.name}
+                                                key={product.id}
                                                 className="flex items-start justify-between"
                                             >
                                                 <div className="my-col-5">
@@ -93,7 +88,7 @@ export function CartItems({
                                                                     <div
                                                                         className="w-full font-light truncate text-gray "
                                                                         key={
-                                                                            option.name
+                                                                            option.id
                                                                         }
                                                                     >
                                                                         {

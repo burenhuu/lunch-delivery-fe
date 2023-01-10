@@ -42,7 +42,7 @@ const Cart: NextPage = () => {
 
             const fetchDatas = async () => {
                 try {
-                    const { data } = await TokiAPI.getCart(state.officeId);
+                    const { data } = await TokiAPI.getCart();
 
                     setData(data);
                     data.totalAmount && setTotalAmount(data.totalAmount);
@@ -160,10 +160,10 @@ const Cart: NextPage = () => {
                 button2="Төлөх"
                 onClick={async () => {
                     setLoading(true);
+                    values["office"] = state.officeId;
 
                     try {
                         const placeOrderResponse = await TokiAPI.checkout(
-                            state.officeId,
                             values
                         );
                         if (placeOrderResponse?.status == 200) {
@@ -198,7 +198,7 @@ const Cart: NextPage = () => {
                                         `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=200`
                                     );
                                 },
-                                `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/offices/${state.officeId}/cart/paid`
+                                `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/cart/paid`
                             );
                         } else {
                             toast("Уучлаарай, Таны захиалга амжилтгүй боллоо");

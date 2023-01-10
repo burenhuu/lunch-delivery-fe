@@ -22,7 +22,6 @@ export default function CategoryCard({
         await dispatch({type: "categoryId", categoryId: id});
         router.push(`/category`);
     };
-
     return (
         // <Link href={`/office/${router.query.officeId}/category/${title}`}>
         <div
@@ -59,13 +58,26 @@ export default function CategoryCard({
                 )}
             </div>
             <div
-                className={
-                    "text-xs text-center line-clamp-2 " +
-                    (small && active ? "w-[55px] h-[28px] text-main" : "w-[72.5px] h-[28px] text-gray")
-                }
+                className={(small && active ? "w-[55px] h-[28px] text-main" : "w-[72.5px] h-[28px] text-gray")}
             >
-                {name}
+                {
+                    name.split(" ").map((text:string, index: number)=> {
+                        if(index < 2){
+                            return(
+                                <div
+                                    key={text}
+                                    className={
+                                        "text-xs text-center line-clamp-2 "
+                                    }
+                                >
+                                    {text}
+                                </div>
+                            )
+                        }
+                        })
+                }
             </div>
+
         </div>
         // </Link>
     );

@@ -26,7 +26,7 @@ const Index: NextPage = () => {
         TokiAPI.getAllOffices().then((res) => {
             setAllOffices(res.data)
         })
-        
+
 
     }, [])
 
@@ -91,7 +91,6 @@ const Index: NextPage = () => {
                         </div>
                     )
                 ) : (
-                    // </Drawer>
                     <Drawer
                         open={(offices && offices.length > 0) || noResults}
                         direction="bottom"

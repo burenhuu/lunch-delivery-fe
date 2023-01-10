@@ -35,18 +35,36 @@ export default function MerchantProductPage() {
     }, [activeCategory])
 
     const renderCard = async () => {
-        const temp: CardDataType[] = [];
+        let temp: CardDataType[] = [];
         setLoading(true);
         merchantMenu?.categories?.map((category: CategoryType) => {
             if (category.id === activeCategory) {
                 category?.products?.map((product: Product) => {
-                    temp.push({
-                        place: merchant?.name!,
-                        merchantId,
-                        product: product,
-                        placeState: merchant?.state
-                    });
+                    let check = false
+                    product.variants.map((variant)=>{
+                        if(variant.id === checkActiveProduct){
+                            check = true;
+                        }
+                    })
+                    console.log(check)
+                    if (check){
+                        temp = [{
+                            place: merchant?.name!,
+                            merchantId,
+                            product: product,
+                            placeState: merchant?.state
+                        }, ... temp]
+                    } else{
+                        temp.push({
+                            place: merchant?.name!,
+                            merchantId,
+                            product: product,
+                            placeState: merchant?.state
+                        });
+                    }
                 });
+                console.log(temp)
+
             } else {
                 category.children?.map((child: CategoryType) => {
                     if (child.id === activeCategory) {
@@ -97,7 +115,7 @@ export default function MerchantProductPage() {
                         })
                     })
                 } else {
-                    setActiveCategory(tempCat[0].id);
+                    setActiveCategory(tempCat[0]?.id);
                 }
                 setMerchantProductCategory(tempCat);
                 setLoading(false);

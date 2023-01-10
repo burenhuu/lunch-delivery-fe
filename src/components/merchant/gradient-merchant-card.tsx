@@ -46,50 +46,57 @@ export default function GreadientMerchantCard({
     };
 
     const onMerchantClick = () => {
-        // if (!merchant.open) {
-        //     setShow(true);
-        //     setContent(
-        //         <PermissionBox
-        //             text={
-        //                 <>
-        //                     <div className="my-col-20">
-        //                         {merchant.reason}
-        //                         {/* Зоогийн газар хаалттай байна. Та бусад зоогийн
-        //                         газраас сонголтоо хийнэ үү
-        //                         <div>
-        //                             Ажиллах цагийн хуваарь:
-        //                             <p className="font-medium">
-        //                                 {startDate}-{endDate}
-        //                             </p>
-        //                         </div> */}
-        //                     </div>
-        //                 </>
-        //             }
-        //         />
-        //     );
-        // }
-        // else if (merchant.temporary_closed) {
-        //     setShow(true);
-        //     setContent(
-        //         <PermissionBox
-        //             text={
-        //                 <>
-        //                     <div className="my-col-20">
-        //                         <div>
-        //                             Зоогийн газар дотоод ажилтай байгаа тул
-        //                             захиалга авахгүй
-        //                         </div>
-        //                         <div>Нээх цаг: 10/21, 12:00</div>
-        //                     </div>
-        //                 </>
-        //             }
-        //         />
-        //     );
-        // }
-        // else {
-        //     onContinueClick();
-        // }
-        onContinueClick();
+        if (merchant.state === "CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={
+                        <>
+                            <div className="my-col-20">
+                                Зоогийн газар хаалттай байна. Та бусад зоогийн
+                                газраас сонголтоо хийнэ үү
+                                <div>
+                                    Ажиллах цагийн хуваарь:
+                                    <p className="font-medium">
+                                        {startDate}-{endDate}
+                                    </p>
+                                </div>
+                            </div>
+                        </>
+                    }
+                    button2={
+                        <>
+                            Үргэлжлүүлэх
+                        </>
+                    }
+                    onClick={()=>{
+                        setShow(false)
+                        onContinueClick()
+                    }}
+                />
+            );
+        }
+        else if (merchant.state === "TEMPORARY_CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={
+                        <>
+                            <div className="my-col-20">
+                                <div>
+                                    Зоогийн газар дотоод ажилтай байгаа тул
+                                    захиалга авахгүй
+                                </div>
+                                <div>Нээх цаг: 10/21, 12:00</div>
+                            </div>
+                        </>
+                    }
+                />
+            );
+        }
+        else {
+            onContinueClick();
+        }
     };
     return (
         merchant && (
@@ -99,8 +106,8 @@ export default function GreadientMerchantCard({
             >
                 {merchant.state === "CLOSED" || merchant.state === "TEMPORARY_CLOSED" ?
                     <div
-                        className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[11px]  text-white opacity-50">
-                        <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center opacity-100 py-[5px] px-[10px] leading-[11.85px]">
+                        className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
+                        <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center py-[5px] px-[10px] leading-[11.85px]">
                             {
                                 merchant.state === "CLOSED" ?
                                     <>Хаалттай</>
@@ -117,8 +124,8 @@ export default function GreadientMerchantCard({
                             <></>
                             :
                             <div
-                                className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray rounded-l-[11px]  text-white opacity-50">
-                                <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center opacity-100 py-[5px] px-[10px] leading-[11.85px]">
+                                className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
+                                <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center py-[5px] px-[10px] leading-[11.85px]">
                                     {merchant.bonus}
                                 </div>
                             </div>

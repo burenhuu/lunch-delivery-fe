@@ -1,4 +1,5 @@
 export interface CartData {
+    office: string;
     merchant: string;
     type: string;
     variantId: string;

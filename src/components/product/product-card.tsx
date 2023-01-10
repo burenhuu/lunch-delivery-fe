@@ -125,14 +125,14 @@ export default function ProductCard({
         const productData: CartData = {
             type: "Delivery",
             merchant: merchantId,
+            office: officeId,
             variantId: selectedVariant.id,
             quantity: 1,
             comment: comment,
             options: [...selectedOptions],
         };
         try {
-
-            const { data } = await TokiAPI.addCart(officeId, productData);
+            const { data } = await TokiAPI.addCart(productData);
             console.log(data);
             dispatch({
                 type: "cartCount",
@@ -460,22 +460,26 @@ export default function ProductCard({
 
                                             );
                                         })}
-                                        <div className="my-col-5">
-                                            <div>Нэмэлт тайлбар:</div>
-                                            <div className="relative">
-                                                <input
-                                                    onChange={(e) => {
-                                                        setComment(e.target.value)
-                                                    }}
-                                                    type="text"
-                                                    placeholder="Нэмэлт тайлбар оруулах"
-                                                    className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
-                                                />
-                                                <div className="absolute left-2.5 top-1.5">
-                                                    <EditIcon />
+                                        {
+                                            product.withNote && (
+                                                <div className="my-col-5">
+                                                    <div>Нэмэлт тайлбар:</div>
+                                                    <div className="relative">
+                                                        <input
+                                                            onChange={(e) => {
+                                                                setComment(e.target.value)
+                                                            }}
+                                                            type="text"
+                                                            placeholder="Нэмэлт тайлбар оруулах"
+                                                            className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
+                                                        />
+                                                        <div className="absolute left-2.5 top-1.5">
+                                                            <EditIcon />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            )
+                                        }
                                         <div onClick={onAddClick} className="pt-2.5">
                                             <ButtonComponent text="Сагсанд нэмэх" />
                                         </div>

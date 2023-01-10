@@ -55,13 +55,13 @@ const TokiAPI = {
         axios.get(`${urlPrefix}/merchants/${merchantId}/review`),
 
     getCart: (officeId: string) =>
-        axios.get(`${urlPrefix}/offices/${officeId}/cart`),
+        axios.get(`${urlPrefix}/cart`),
 
-    addCart: (officeId: string, cartItem: CartData) =>
-        axios.post(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
+    addCart: (cartItem: CartData) =>
+        axios.post(`${urlPrefix}/cart`, cartItem),
 
     updateCard: (officeId: string, cartItem: any) =>
-        axios.put(`${urlPrefix}/offices/${officeId}/cart`, cartItem),
+        axios.put(`${urlPrefix}/cart`, cartItem),
 
     getTimes: (officeId: string) =>
         axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),

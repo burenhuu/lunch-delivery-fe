@@ -6,6 +6,7 @@ export interface Product {
     image: string;
     variants: Variant[];
     active: boolean;
+    withNote: boolean;
 }
 export interface Variant {
     id: string;

@@ -83,7 +83,7 @@ export default function MerchantProductPage() {
                 categories?.map((category: CategoryType) => {
                     tempCat.push(category);
                     category?.children?.map((children: CategoryType) => {
-                        tempCat.push(children);
+                        category.products?.concat(children.products ? children.products : []);
                     });
                 });
                 if (checkActiveCategory !== "") {

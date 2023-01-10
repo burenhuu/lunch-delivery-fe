@@ -62,7 +62,7 @@ export default function MerchantReview({ data }: { data: Review }) {
                                     {review?.picture ?
                                         <>
                                             <img
-                                                src={`/images/${review.picture}`}
+                                                src={`${review.picture}`}
                                                 alt={review.id}
                                                 className="w-[60px] h-[60px] rounded-md"
                                             />

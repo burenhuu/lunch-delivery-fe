@@ -72,8 +72,7 @@ const TokiAPI = {
 
     updateCard: (cartItem: any) => axios.put(`${urlPrefix}/cart`, cartItem),
 
-    getTimes: (officeId: string) =>
-        axios.get(`${urlPrefix}/offices/$${officeId}/cart/times`),
+    getTimes: () => axios.get(`${urlPrefix}/cart/times`),
 
     getTime: () => axios.get(`${urlPrefix}/time`),
 
@@ -81,6 +80,27 @@ const TokiAPI = {
 
     paid: (officeId: string, data: any) =>
         axios.post(`${urlPrefix}/offices/${officeId}/cart/paid`, data),
+
+    orderReview: (orderId: string, data: any) =>
+        axios.post(`${urlPrefix}/orders/${orderId}/review`, data),
+
+    lastCancelledOrder: () =>
+        axios.get(`${urlPrefix}/orders?state=CANCELLED&from=0&size=1`),
+
+    lastLateOrder: () =>
+        axios.get(`${urlPrefix}/orders?state=DELAYED&from=0&size=1`),
+
+    lastCompletedOrder: () =>
+        axios.get(`${urlPrefix}/orders?state=COMPLETED&from=0&size=1`),
+
+    cancel: (orderId: string) =>
+        axios.post(`${urlPrefix}/orders/${orderId}/cancel`),
+
+    delivered: (orderId: string) =>
+        axios.post(`${urlPrefix}/orders/${orderId}/delivered`),
+
+    delay: (orderId: string, data: any) =>
+        axios.post(`${urlPrefix}/orders/${orderId}/delay`, data),
 };
 
 export default TokiAPI;

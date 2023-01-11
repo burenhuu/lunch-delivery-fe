@@ -14,7 +14,7 @@ import fetcher from "lib/utils/axios";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import 'styles/scrollText.css'
+import "styles/scrollText.css";
 import rive from "@rive-app/canvas";
 
 Router.events.on("routeChangeStart", () => NProgress.start());

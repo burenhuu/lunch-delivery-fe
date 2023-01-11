@@ -53,14 +53,14 @@ export default function MerchantReview(props: { merchantId: string }) {
             <div className="font-medium">Үнэлгээ</div>
             <div className="bg-white rounded-2xl pb-2.5">
                 {/* Average reviews */}
-                <div className="grid grid-cols-5 items-center">
-                    <div className="col-span-2 flex flex-col gap-y-2 items-center border-r py-5 border-gray/10">
+                <div className="grid items-center grid-cols-5">
+                    <div className="flex flex-col items-center col-span-2 py-5 border-r gap-y-2 border-gray/10">
                         <div className="font-medium">
                             👍 {merchantReview?.percentage.toString().slice(0, 4)} %
                         </div>
                         <div className="text-sm">(Нийт {merchantReview?.total})</div>
                     </div>
-                    <div className="col-span-3 my-col-10 items-end text-sm pr-5">
+                    <div className="items-end col-span-3 pr-5 text-sm my-col-10">
                         {merchantReview?.types.map((type) => {
                             return (
                                 <div key={type.type} className="flex gap-x-2.5">
@@ -79,7 +79,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                                 key={review.id}
                                 className="py-2.5 border-t my-col-10 border-gray/10 px-5 h-[110px]"
                             >
-                                <div className="flex justify-between items-center">
+                                <div className="flex items-center justify-between">
                                     <div className="font-medium">
                                         {review.name}
                                     </div>
@@ -94,7 +94,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                                     )}
                                 </div>
                                 <div className="flex items-center gap-x-5">
-                                    {review?.picture ?
+                                    {review?.picture ? (
                                         <>
                                             <img
                                                 src={`${review.picture}`}
@@ -108,16 +108,16 @@ export default function MerchantReview(props: { merchantId: string }) {
                                                 </div>
                                             </div>
                                         </>
-                                        :
+                                    ) : (
                                         <>
-                                            <div className="font-light text-xs my-col-5">
+                                            <div className="text-xs font-light my-col-5">
                                                 <div>{review.comment}</div>
                                                 <div className="text-smaller text-gray">
                                                     {review.date}
                                                 </div>
                                             </div>
                                         </>
-                                    }
+                                    )}
                                 </div>
                             </div>
                         );

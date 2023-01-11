@@ -18,8 +18,8 @@ const Header = ({routerPathName}: any) => {
     };
 
     function getTextWidth(text: string) {
-        const canvas = document.createElement('canvas');
-        const context: any = canvas.getContext('2d');
+        const canvas = document.createElement("canvas");
+        const context: any = canvas.getContext("2d");
 
         context.font = getComputedStyle(document.body).font;
 

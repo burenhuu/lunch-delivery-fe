@@ -107,7 +107,7 @@ export function calcTimeDiff(
     } ${
         duration.months && duration.months > 0 ? duration.months + " сар " : ""
     } ${duration.days && duration.days > 0 ? duration.days + " өдөр " : ""} ${
-        duration.hours && duration.hours > 0 ? duration.hours + "цаг " : ""
+        duration.hours && duration.hours > 0 ? duration.hours + " цаг " : ""
     }${duration && duration.minutes}${
         seconds && duration.seconds && duration.seconds > 0
             ? `:${duration.seconds}`

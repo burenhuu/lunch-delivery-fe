@@ -2,13 +2,16 @@ import { Status } from "lib/types/order.type";
 
 interface OrderStatusProps {
     status: string;
+    alignRight?: boolean;
 }
 
-const OrderStatus: React.FC<OrderStatusProps> = ({ status }) => (
-    <div className="text-gray font-light text-sm">
-        {status === Status.PAYMENT_PENDING
+const OrderStatus: React.FC<OrderStatusProps> = ({ status, alignRight }) => (
+    <div
+        className={`text-sm font-light text-gray${alignRight && " text-right"}`}
+    >
+        {status === Status.NEW
             ? "Төлбөр хүлээгдэж буй"
-            : status === Status.PAID
+            : status === Status.ACCEPTED
             ? "Захиалагдсан"
             : status === Status.PREPARING
             ? "Бэлтгэж байна"
@@ -16,10 +19,12 @@ const OrderStatus: React.FC<OrderStatusProps> = ({ status }) => (
             ? "Бэлэн болсон"
             : status === Status.DELIVERING
             ? "Хүргэлтэнд гарсан"
-            : status === Status.COMPLETED
-            ? "Биелсэн"
+            : status === Status.DELIVERED
+            ? "Хүргэгдсэн"
             : status === Status.CANCELLED
             ? "Цуцлагдсан"
+            : status === Status.COMPLETED
+            ? "Дууссан"
             : ""}
     </div>
 );

@@ -30,13 +30,14 @@ const OfficeList: React.FC<OfficeListProps> = ({
             <div className="absolute bg-white w-[100px] mx-auto h-[5px] rounded-[2.5px] -top-3 left-1/2 -translate-x-1/2"></div>
             <div
                 onTouchEnd={() => heightHandler()}
-                className="text-center font-medium mb-5"
+                className="mb-5 font-medium text-center"
             >
                 {title}
             </div>
             <div
-                className={`scrollbar-hide pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${!loading && height != "340px" && "overflow-y-auto h-[70vh]"
-                    }`}
+                className={`scrollbar-hide pb-6 px-5 mx-[-20px] pt-5 mt-[-20px] ${
+                    !loading && height != "340px" && "overflow-y-auto h-[70vh]"
+                }`}
             >
                 {offices &&
                     offices.map((office: Office, index: number) => (

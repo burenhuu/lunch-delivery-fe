@@ -2,6 +2,7 @@ export default function ButtonComponent({
     text,
     loading = false,
     additionalClass,
+    onClick,
 }: any) {
     return (
         <button
@@ -15,6 +16,7 @@ export default function ButtonComponent({
             }}
             type="submit"
             disabled={loading}
+            onClick={onClick}
         >
             {text}
         </button>

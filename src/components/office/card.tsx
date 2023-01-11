@@ -3,11 +3,11 @@ import { useContext, useState } from "react";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
 import { Office } from "lib/types/office.type";
-import {useModal} from "../../lib/context/modal";
-import {PermissionBox} from "../common/permission-box";
+import { useModal } from "../../lib/context/modal";
+import { PermissionBox } from "../common/permission-box";
 import TokiAPI from "../../lib/api/toki";
 import Toki from "../../lib/utils/toki-payment";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 interface OfficeCardProps {
     office: Office;
@@ -27,16 +27,18 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
         >
             <div
                 onClick={() => {
-                    if(office.count === 0){
+                    if (office.count === 0) {
                         setShow(true);
 
                         setContent(
                             <PermissionBox
-                                text={"Таны хайсан байршилд хоол захиалах үйлчилгээ хараахан нэвтрээгүй байна."}
+                                text={
+                                    "Таны хайсан байршилд хоол захиалах үйлчилгээ хараахан нэвтрээгүй байна."
+                                }
                                 loading={false}
                             />
                         );
-                    } else{
+                    } else {
                         if (
                             state.officeId &&
                             state.cartCount > 0 &&
@@ -53,13 +55,14 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                         <PermissionBox
                                             text={
                                                 <>
-                                                    Таны сагсалсан дараах хоолнууд{" "}
+                                                    Таны сагсалсан дараах
+                                                    хоолнууд{" "}
                                                     <span className="font-medium">
-                                                    "{office.name}"
-                                                </span>
-                                                    -т хүргэгдэх боломжгүй хасагдах
-                                                    тул та хаягаа солихдоо итгэлтэй
-                                                    байна уу ?
+                                                        "{office.name}"
+                                                    </span>
+                                                    -т хүргэгдэх боломжгүй
+                                                    хасагдах тул та хаягаа
+                                                    солихдоо итгэлтэй байна уу ?
                                                     <div className="w-full mt-3 ml-5 text-left">
                                                         <ul
                                                             style={{
@@ -68,7 +71,9 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                             }}
                                                         >
                                                             {res.data.orders.map(
-                                                                (order: any) => {
+                                                                (
+                                                                    order: any
+                                                                ) => {
                                                                     return order.items.map(
                                                                         (
                                                                             item: any
@@ -84,7 +89,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                                                         order
                                                                                             .branch
                                                                                             .name +
-                                                                                        " - "}{" "}
+                                                                                            " - "}{" "}
                                                                                     {
                                                                                         item.name
                                                                                     }
@@ -116,11 +121,13 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                     });
                                                     dispatch({
                                                         type: "officeLat",
-                                                        officeLat: office.latitude,
+                                                        officeLat:
+                                                            office.latitude,
                                                     });
                                                     dispatch({
                                                         type: "officeLng",
-                                                        officeLng: office.longitude,
+                                                        officeLng:
+                                                            office.longitude,
                                                     });
                                                     dispatch({
                                                         type: "toastCheck",
@@ -130,15 +137,18 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                     dispatch({
                                                         type: "numberOfStorey",
                                                         numberOfStorey:
-                                                        office.floor,
+                                                            office.floor,
                                                     });
                                                     dispatch({
                                                         type: "notThroughLink",
                                                         notThroughLink: true,
                                                     });
-                                                    router.push(
-                                                        `/office/${office.id}`
-                                                    );
+                                                    res?.data.quantity &&
+                                                    res?.data.quantity > 0
+                                                        ? router.push(`/order`)
+                                                        : router.push(
+                                                              `/office/${office.id}`
+                                                          );
                                                 });
                                                 setShow(false);
                                                 setLoading(false);
@@ -176,7 +186,9 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                         type: "notThroughLink",
                                         notThroughLink: true,
                                     });
-                                    router.push(`/office/${office.id}`);
+                                    res?.data.quantity && res?.data.quantity > 0
+                                        ? router.push(`/order`)
+                                        : router.push(`/office/${office.id}`);
                                 }
                             });
                         } else {
@@ -206,7 +218,6 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                             router.push(`/office/${office.id}`);
                         }
                     }
-
                 }}
                 className="flex items-center gap-x-[15px]"
             >

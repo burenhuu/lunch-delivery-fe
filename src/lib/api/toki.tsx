@@ -60,6 +60,9 @@ const TokiAPI = {
     getMerchantReviews: (merchantId: string) =>
         axios.get(`${urlPrefix}/merchants/${merchantId}/review`),
 
+    deleteReview: (reviewId: string) =>
+        axios.delete(`${urlPrefix}/reviews/${reviewId}`),
+
     getCart: () => axios.get(`${urlPrefix}/cart`),
 
     addCart: (cartItem: CartData) => axios.post(`${urlPrefix}/cart`, cartItem),

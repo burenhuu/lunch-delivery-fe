@@ -79,7 +79,7 @@ export default function MerchantDetailPage() {
                     {merchant?.timetable && (
                         <MerchantTimetable timetable={merchant.timetable} />
                     )}
-                    {merchantReview && <MerchantReview data={merchantReview} />}
+                    {merchantReview && <MerchantReview merchantId={merchantId} />}
                 </div>
             )}
         </>

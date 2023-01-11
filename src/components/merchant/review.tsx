@@ -1,16 +1,51 @@
 import { Review } from "lib/types/merchant.type";
 import { intervalToDuration } from "date-fns";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import { DeleteIcon } from "components/icons";
+import TokiAPI from "../../lib/api/toki";
 
-export default function MerchantReview({ data }: { data: Review }) {
-    const { liked, percentage, reviews, total, types } = data;
+export default function MerchantReview(props: { merchantId: string }) {
+    const [merchantReview, setMerchantReview] = useState<Review>();
+
+    const getReviews = async () => {
+        const { data } = await TokiAPI.getMerchantReviews(props.merchantId);
+        if (data) {
+            setMerchantReview(data);
+        }
+    };
+
+    useEffect(()=>{
+        getReviews();
+    },[])
+
+    useEffect(() => {
+        // Formatting comment created date
+
+        merchantReview?.reviews?.map(async (review) => {
+            const duration = intervalToDuration({
+                start: new Date(review?.createdAt),
+                end: new Date(),
+            });
+            if (duration.years) {
+                review.date = `${duration.years} жилийн өмнө`;
+            } else if (duration.months) {
+                review.date = `${duration.years} сарын өмнө`;
+            } else if (duration.days) {
+                review.date = `${duration.days} өдрийн өмнө`;
+            } else if (duration.hours) {
+                review.date = `${duration.hours} цагийн өмнө`;
+            } else if (duration.minutes) {
+                review.date = `${duration.minutes} минутын өмнө`;
+            } else if (duration.seconds) {
+                review.date = `${duration.seconds} секундын өмнө`;
+            }
+        });
+    }, [merchantReview]);
 
     const deleteReview = async (id: string) => {
-        console.log(id);
-        // Gargaj ugsun api-in logikoor bol body ywuulah ystoi bolj baina,
-        // gehdee anhnaasaa removable irj baival review ni hereglegchiinh gedgiig tanisan baih ystoi,
-        // so zugeer review id ywuulahad hereglegch uuruu ustgah gj bnu shalgahad l bolno, no need for request body
+        TokiAPI.deleteReview(id).then((r)=>{
+            getReviews()
+        })
     };
 
     return (
@@ -21,12 +56,12 @@ export default function MerchantReview({ data }: { data: Review }) {
                 <div className="grid grid-cols-5 items-center">
                     <div className="col-span-2 flex flex-col gap-y-2 items-center border-r py-5 border-gray/10">
                         <div className="font-medium">
-                            👍 {percentage.toString().slice(0, 4)} %
+                            👍 {merchantReview?.percentage.toString().slice(0, 4)} %
                         </div>
-                        <div className="text-sm">(Нийт {total})</div>
+                        <div className="text-sm">(Нийт {merchantReview?.total})</div>
                     </div>
                     <div className="col-span-3 my-col-10 items-end text-sm pr-5">
-                        {types.map((type) => {
+                        {merchantReview?.types.map((type) => {
                             return (
                                 <div key={type.type} className="flex gap-x-2.5">
                                     <div>{type.type}</div>
@@ -38,7 +73,7 @@ export default function MerchantReview({ data }: { data: Review }) {
                 </div>
                 {/* All reviews */}
                 <div className="flex flex-col gap-y-[1px]">
-                    {reviews?.map((review) => {
+                    {merchantReview?.reviews?.map((review) => {
                         return (
                             <div
                                 key={review.id}

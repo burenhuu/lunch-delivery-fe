@@ -11,25 +11,31 @@ export function DeliveryTime({
     setSelectedTime,
     setValue,
     setisDeliveryClosed,
+    setDeliveryType,
 }: {
     selectedTime: string;
     setSelectedTime: any;
     setValue: any;
     setisDeliveryClosed: any;
+    setDeliveryType: any;
 }) {
     const [state]: any = useAppState();
 
     const [show, setShow, content, setContent] = useModal();
     const apiUrl = `/v1/cart/times`;
     const { data, error } = useSWR(`${apiUrl}`);
+
     useEffect(() => {
         if (data && data.data && data.data.times) {
             data.data.times.length > 0
                 ? (data.data.times[0] && setSelectedTime(data.data.times[0]),
-                  data.data.times[0] && setValue("time", data.data.times[0]))
-                : setisDeliveryClosed(true);
+                  data.data.times[0] && setValue("time", data.data.times[0]),
+                  data.data.times[0] && setValue("type", "Delivery"),
+                  data.data.times[0] && setisDeliveryClosed(false),
+                  setDeliveryType("Delivery"))
+                : (setisDeliveryClosed(true), setDeliveryType("TakeAway"));
         } else {
-            setisDeliveryClosed(true);
+            setisDeliveryClosed(true), setDeliveryType("TakeAway");
         }
     }, [data]);
 

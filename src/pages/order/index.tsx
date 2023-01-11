@@ -257,7 +257,7 @@ const Cart: NextPage = () => {
                     )}
                 </div>
 
-                {deliveryType === "Delivery" && (
+                {deliveryType === "Delivery" && isDeliveryClosed == false && (
                     <div className="mb-5 my-col-15">
                         <div className="font-medium">Хүргэлтийн хаяг</div>
 
@@ -294,6 +294,7 @@ const Cart: NextPage = () => {
                         setSelectedTime={setSelectedTime}
                         setValue={setValue}
                         setisDeliveryClosed={setisDeliveryClosed}
+                        setDeliveryType={setDeliveryType}
                     />
                     {errors.time && (
                         <p className="mt-1 text-xs italic text-left text-red-500 ">

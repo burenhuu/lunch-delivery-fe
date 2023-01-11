@@ -249,7 +249,7 @@ export default function ProductCard({
         setApplicableOptions(variant.options);
         setSelectedOptions([]);
     };
-
+    console.log(product.variants[0]?.id)
     return (
         data && (
             <AccordionItem

@@ -118,8 +118,6 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
         }
     }, [childrenCategories]);
 
-    console.log(activeTab, selectedChildren)
-
     return (
         <div className="bg-white rounded-2.5xl shadow-delivery my-col-20 py-5">
             <CategoryTab

@@ -21,8 +21,8 @@ export default function MerchantProductPage() {
     const [merchantProductCategory, setMerchantProductCategory] = useState<
         CategoryType[]
         >([]);
-    const checkActiveCategory = router.query.categoryId ? router.query.categoryId : ""
-    const checkActiveProduct = router.query.productId ? router.query.productId : ""
+    const checkActiveCategory = router.query.categoryId ? router.query.categoryId : null
+    const checkActiveProduct = router.query.productId ? router.query.productId : null
     const [activeCategory, setActiveCategory] = useState<string>("");
     const [merchantMenu, setMerchantMenu] = useState<MerchantMenu>();
     const [cardData, setCardData] = useState<CardDataType[]>([]);
@@ -46,7 +46,6 @@ export default function MerchantProductPage() {
                             check = true;
                         }
                     })
-                    console.log(check)
                     if (check){
                         temp = [{
                             place: merchant?.name!,
@@ -104,7 +103,7 @@ export default function MerchantProductPage() {
                         category.products?.concat(children.products ? children.products : []);
                     });
                 });
-                if (checkActiveCategory !== "") {
+                if (checkActiveCategory !== null) {
                     let categories = state.categories
                     categories.map((category: any) => {
                         category.children.map((sub_category: any) => {
@@ -148,7 +147,7 @@ export default function MerchantProductPage() {
                         />
                     </div>
                     <div className="relative w-full h-full py-5 -my-5 overflow-y-scroll scrollbar-hide">
-                        <Accordion allowZeroExpanded className="my-col-10" key={accordionKey} preExpanded={[typeof checkActiveProduct === 'string' ? checkActiveProduct : '']}>
+                        <Accordion allowZeroExpanded className="my-col-10" key={accordionKey} preExpanded={[typeof checkActiveProduct === 'string' ? checkActiveProduct : cardData[0]?.product?.variants[0]?.id]}>
                             {cardData?.map((item: CardDataType) => {
                                 return (
                                     <ProductCard

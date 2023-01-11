@@ -36,7 +36,13 @@ export default function Category() {
     const { merchants, products, categories, categoryId, officeId } = state;
     const [productTab, setProductTab] = useState<any>(productFilters[0]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [cardData, setCardData] = useState<CardDataType[]>();
+    const [cardData, setCardData] = useState<CardDataType[]>([]);
+    const [accordionKey, setAccordionKey] = useState<any>(123);
+
+    useEffect(() => {
+        let number = Math.random()
+        setAccordionKey(number)
+    }, [cardData])
 
     useEffect(() => {
         const renderCard = async () => {
@@ -49,6 +55,7 @@ export default function Category() {
                         merchantId: merchant.id,
                         rating: merchant.rating,
                         product: product,
+                        placeState: merchant.state
                     })
                 )
             );
@@ -58,7 +65,9 @@ export default function Category() {
         renderCard();
     }, [products]);
 
-    return !products ? (
+    console.log(cardData[0]?.product?.variants[0]?.id)
+
+    return !products && loading ? (
         <CenteredSpin />
     ) : (
         <>
@@ -73,8 +82,10 @@ export default function Category() {
                     {products.length > 0 ? (
                         <Accordion
                             // allowMultipleExpanded
+                            key={accordionKey}
                             allowZeroExpanded
                             className="my-col-10 px-5"
+                            preExpanded={[cardData[0]?.product.variants[0].id]}
                         >
                             {cardData?.map((item: CardDataType) => {
                                 return (

@@ -33,7 +33,7 @@ const Header = ({routerPathName}: any) => {
             <div className="w-full h-[50px] px-5 py-2.5 flex justify-start items-center gap-x-2.5">
                 {
                     <>
-                        {isBackButton && officeId && officeName && (
+                        {isBackButton && officeId && officeName ? (
                             <svg
                                 onClick={onBackButtonClick}
                                 width="30"
@@ -78,7 +78,7 @@ const Header = ({routerPathName}: any) => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                        )}
+                        ) : (<></>)}
                         {routerPathName != "/" && officeId && officeName && (
                             <div className="flex">
                                 <button

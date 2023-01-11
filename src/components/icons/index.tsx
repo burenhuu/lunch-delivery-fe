@@ -499,7 +499,7 @@ export function Remove({ disabled }: any) {
                 cx="7.5"
                 cy="7.5"
                 r="7.5"
-                fill={disabled ? "#B3BFC6" : `#FFBE78`}
+                fill={disabled ? "#FFBE78" : `#FF7A1F`}
             />
             <line
                 x1="10.75"
@@ -527,7 +527,7 @@ export function Add({ disabled }: any) {
                 cx="7.5"
                 cy="7.5"
                 r="7.5"
-                fill={disabled ? "#B3BFC6" : `#FFBE78`}
+                fill={disabled ? "#FFBE78" : `#FF7A1F`}
             />
             <line
                 x1="10.75"

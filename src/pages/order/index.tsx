@@ -234,6 +234,7 @@ const Cart: NextPage = () => {
                     setTaxAmount={setTaxAmount}
                     grandTotal={grandTotal}
                     setGrandTotal={setGrandTotal}
+                    discountAmount={discountAmount}
                     setDiscountAmount={setDiscountAmount}
                     setData={setData}
                     loading={loading}

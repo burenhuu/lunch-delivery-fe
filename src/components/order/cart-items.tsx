@@ -11,6 +11,7 @@ export function CartItems({
     setTaxAmount,
     grandTotal,
     setGrandTotal,
+    discountAmount,
     setDiscountAmount,
     setData,
     loading,
@@ -92,6 +93,9 @@ export function CartItems({
                                                                         {
                                                                             option.name
                                                                         }
+                                                                        {option.value &&
+                                                                            " " +
+                                                                                option.value}
                                                                         {index +
                                                                             1 ==
                                                                             Object.keys(
@@ -175,12 +179,14 @@ export function CartItems({
                         <div className="my-col-10">
                             <div>Захиалгын дүн:</div>
                             <div>Хүргэлтийн төлбөр:</div>
+                            <div>Урамшуулал:</div>
                             <div className="font-medium">Нийт төлөх:</div>
                         </div>
 
                         <div className="flex flex-col items-end gap-y-2.5">
                             <div>{formatPrice(totalAmount)} ₮</div>
                             <div>{formatPrice(taxAmount)} ₮</div>
+                            <div>-{formatPrice(discountAmount)} ₮</div>
                             <div className="font-medium">
                                 {formatPrice(grandTotal)} ₮
                             </div>

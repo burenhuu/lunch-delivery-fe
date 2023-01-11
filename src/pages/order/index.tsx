@@ -129,11 +129,11 @@ const Cart: NextPage = () => {
         deliveryType === "Delivery" ? (
             <>
                 {loading && <CenteredSpin />}
-                Та <span className="font-medium">{officeName}</span>
+                Та <span className="font-medium break-words">{officeName}</span>
                 -н{" "}
                 {getValues("address") ? (
                     <>
-                        <span className="font-medium">
+                        <span className="font-medium break-words">
                             {`${selectedFloor} давхар, ${getValues("address")}`}
                         </span>
                         -д
@@ -151,7 +151,7 @@ const Cart: NextPage = () => {
         ) : (
             <>
                 {loading && <CenteredSpin />}
-                Та <span className="font-medium">Мандах</span>
+                Та <span className="font-medium break-words">{officeName}</span>
                 -с <span className="font-medium">{selectedTime}</span> цагт очиж
                 авахаар захиалга өгөх гэж байна. Төлбөр төлсний дараа захиалгыг
                 цуцлах болон өөрчлөх боломжгүйг анхаарна уу.

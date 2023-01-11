@@ -93,6 +93,11 @@ const TokiAPI = {
     lastCompletedOrder: () =>
         axios.get(`${urlPrefix}/orders?state=COMPLETED&from=0&size=1`),
 
+    lastCompletedOrderWithOffice: (officeId: any) =>
+        axios.get(
+            `${urlPrefix}/orders?office=${officeId}&state=COMPLETED&from=0&size=1`
+        ),
+
     cancel: (orderId: string) =>
         axios.post(`${urlPrefix}/orders/${orderId}/cancel`),
 

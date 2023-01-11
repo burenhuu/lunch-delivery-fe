@@ -50,19 +50,37 @@ const Cart: NextPage = () => {
                     data.grandTotal && setGrandTotal(data.grandTotal);
                     data.discountAmount &&
                         setDiscountAmount(data.discountAmount);
-                    data.address && setValue("address", data.address);
-                    data.floor &&
-                        (setValue("floor", data.floor),
-                        setSelectedFloor(data.floor));
-                    data.comment && setValue("comment", data.comment);
-                    data.vat && (setValue("vat", data.vat), setVat(data.vat));
-                    data.register && setValue("register", data.register);
                 } finally {
                     setLoading(false);
                 }
             };
 
+            const fetchLastOrder = async () => {
+                try {
+                    const { data } = await TokiAPI.lastCompletedOrderWithOffice(
+                        state.officeId
+                    );
+
+                    if (data && data[0]) {
+                        data[0].type &&
+                            (setDeliveryType(data[0].type),
+                            setValue("type", data[0].type));
+                        data[0].floor &&
+                            (setValue("floor", data[0].floor),
+                            setSelectedFloor(data[0].floor));
+                        data[0].address && setValue("address", data[0].address);
+                        data[0].comment && setValue("comment", data[0].comment);
+                        data[0].vat &&
+                            (setValue("vat", data[0].vat), setVat(data[0].vat));
+                        data[0].register &&
+                            setValue("register", data[0].register);
+                    }
+                } finally {
+                }
+            };
+
             fetchDatas();
+            fetchLastOrder();
         }
     }, [state.officeId]);
 

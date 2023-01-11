@@ -16,6 +16,7 @@ export function CartItems({
     setData,
     loading,
     setLoading,
+    deliveryType,
 }: any) {
     const [state, dispatch]: any = useAppState();
 
@@ -178,18 +179,28 @@ export function CartItems({
                     <div className="flex items-center justify-between">
                         <div className="my-col-10">
                             <div>Захиалгын дүн:</div>
-                            <div>Хүргэлтийн төлбөр:</div>
+                            {deliveryType == "Delivery" ? (
+                                <div>Хүргэлтийн төлбөр:</div>
+                            ) : null}
                             <div>Урамшуулал:</div>
                             <div className="font-medium">Нийт төлөх:</div>
                         </div>
 
                         <div className="flex flex-col items-end gap-y-2.5">
                             <div>{formatPrice(totalAmount)} ₮</div>
-                            <div>{formatPrice(taxAmount)} ₮</div>
+                            {deliveryType == "Delivery" ? (
+                                <div>{formatPrice(taxAmount)} ₮</div>
+                            ) : null}
                             <div>-{formatPrice(discountAmount)} ₮</div>
-                            <div className="font-medium">
-                                {formatPrice(grandTotal)} ₮
-                            </div>
+                            {deliveryType == "Delivery" ? (
+                                <div className="font-medium">
+                                    {formatPrice(grandTotal)} ₮
+                                </div>
+                            ) : (
+                                <div className="font-medium">
+                                    {formatPrice(grandTotal - taxAmount)} ₮
+                                </div>
+                            )}
                         </div>
                     </div>
                 </>

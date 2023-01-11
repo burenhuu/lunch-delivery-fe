@@ -239,6 +239,7 @@ const Cart: NextPage = () => {
                     setData={setData}
                     loading={loading}
                     setLoading={setLoading}
+                    deliveryType={deliveryType}
                 />
             </div>
 

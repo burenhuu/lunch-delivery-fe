@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export default function DeliveryType({
     setDeliveryType,
     setValue,
@@ -7,6 +9,14 @@ export default function DeliveryType({
     setValue: any;
     isDeliveryClosed: any;
 }) {
+    const [isDeliveryShow, setIsDeliveryShow] = useState(true);
+
+    useEffect(() => {
+        if (isDeliveryClosed) {
+            setIsDeliveryShow(isDeliveryClosed);
+        }
+    }, [isDeliveryClosed]);
+
     return (
         <div
             onChange={(event: any) => (
@@ -17,7 +27,7 @@ export default function DeliveryType({
             )}
             className="flex items-center justify-start text-sm gap-x-5"
         >
-            {isDeliveryClosed == false && (
+            {isDeliveryShow == true && (
                 <label
                     className="flex items-center gap-x-2.5 relative"
                     htmlFor="Delivery"

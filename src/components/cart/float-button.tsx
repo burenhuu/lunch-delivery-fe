@@ -14,8 +14,8 @@ const FloatButton: React.FC<any> = () => {
     const [data, setData] = useState<any>();
 
     const onCartClick = () => {
-        cartCount && data
-            ? router.push(`/order`)
+        cartCount
+            ? data && router.push(`/order`)
             : toast("Та захиалах бүтээгдэхүүнээ сонгоно уу");
     };
 

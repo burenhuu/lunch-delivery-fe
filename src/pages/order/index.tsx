@@ -234,6 +234,7 @@ const Cart: NextPage = () => {
                     }
                 }}
                 loading={loading}
+                textHtml={false}
             />
         );
     };

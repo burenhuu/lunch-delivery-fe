@@ -11,9 +11,10 @@ const FloatButton: React.FC<any> = () => {
     const { officeId, cartCount } = state;
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false);
+    const [data, setData] = useState<any>();
 
     const onCartClick = () => {
-        cartCount
+        cartCount && data
             ? router.push(`/order`)
             : toast("Та захиалах бүтээгдэхүүнээ сонгоно уу");
     };
@@ -24,6 +25,7 @@ const FloatButton: React.FC<any> = () => {
             const fetchDatas = async () => {
                 try {
                     const { data } = await TokiAPI.getCart();
+                    setData(data);
 
                     if (data) {
                         dispatch({

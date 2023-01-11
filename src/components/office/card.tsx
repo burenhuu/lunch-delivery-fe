@@ -58,7 +58,6 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                     Таны сагсалсан дараах
                                                     хоолнууд{" "}
                                                     <span className="font-medium">
-                                                        {/* eslint-disable-next-line react/no-unescaped-entities */}
                                                         "{office.name}"
                                                     </span>
                                                     -т хүргэгдэх боломжгүй
@@ -104,6 +103,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                     </div>
                                                 </>
                                             }
+                                            textHtml={false}
                                             button2="Тийм"
                                             button1="Үгүй"
                                             onClick={async () => {

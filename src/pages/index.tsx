@@ -9,7 +9,7 @@ import OfficeNotFound from "components/office/not-found";
 import OfficeList from "components/office/office-list";
 import TokiAPI from "lib/api/toki";
 import { Office } from "lib/types/office.type";
-
+import { useAppState } from "lib/context/app";
 let isMyOffice = false;
 
 const Index: NextPage = () => {
@@ -20,13 +20,38 @@ const Index: NextPage = () => {
     const [height, setHeight] = useState("340px");
     const [maxHeight, setMaxHeight] = useState("45vh");
     const { data, error } = useSWR("/v1/offices");
-    const [allOffices, setAllOffices] = useState<Office[]>([])
+    const [allOffices, setAllOffices] = useState<Office[]>([]);
+    const [state, dispatch]: any = useAppState();
 
     useEffect(() => {
         TokiAPI.getAllOffices().then((res) => {
-            setAllOffices(res.data)
-        })
-    }, [])
+            setAllOffices(res.data);
+        });
+
+        TokiAPI.getCart().then((res) => {
+            dispatch({
+                type: "cartCount",
+                cartCount:
+                    res && res.data && res.data.totalItems
+                        ? res.data.totalItems
+                        : 0,
+            });
+            dispatch({
+                type: "officeId",
+                officeId:
+                    res && res.data && res.data.orders[0]
+                        ? res.data.orders[0].office.id
+                        : 0,
+            });
+            dispatch({
+                type: "officeName",
+                officeName:
+                    res && res.data && res.data.orders[0]
+                        ? res.data.orders[0].office.name
+                        : 0,
+            });
+        });
+    }, []);
 
     const onSearchSubmit = async (searchValue: string = "") => {
         setLoading(true);
@@ -71,10 +96,7 @@ const Index: NextPage = () => {
                     setBySearchbar={setBySearchbar}
                 />
 
-                <Map
-                    onSearchByMap={onSearchByMap}
-                    offices={allOffices}
-                />
+                <Map onSearchByMap={onSearchByMap} offices={allOffices} />
 
                 {bySearchbar ? (
                     noResults && (

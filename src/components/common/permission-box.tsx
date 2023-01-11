@@ -8,6 +8,7 @@ export function PermissionBox({
     onClick,
     onClick2,
     loading,
+    textHtml = true,
 }: {
     text: any;
     button1?: any;
@@ -16,6 +17,7 @@ export function PermissionBox({
     onClick?: any;
     onClick2?: any;
     loading?: any;
+    textHtml?: any;
 }) {
     const [show, setShow] = useModal();
 
@@ -27,11 +29,15 @@ export function PermissionBox({
                 className="flex flex-col text-center gap-y-2.5"
             >
                 <div className="p-5 bg-white shadow-delivery rounded-2xl">
-                    <div
-                        dangerouslySetInnerHTML={{
-                            __html: text,
-                        }}
-                    />
+                    {textHtml == true ? (
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: text,
+                            }}
+                        />
+                    ) : (
+                        text
+                    )}
                 </div>
                 {button2 ? (
                     <div className="bg-white shadow-delivery py-1.25 px-5 rounded-2xl grid grid-cols-2 items-center">

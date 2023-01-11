@@ -47,6 +47,7 @@ export default function GreadientMerchantCard({
 
     const onMerchantClick = () => {
         if (merchant.state === "CLOSED") {
+            setShow(true);
             const d = new Date();
             let day = d.getDay();
             let startDate = ""
@@ -57,22 +58,14 @@ export default function GreadientMerchantCard({
                     endDate = schedule.close
                 }
             })
-            setShow(true);
             setContent(
                 <PermissionBox
-                    text={
-                        <>
-                            <div className="my-col-20">
-                                Зоогийн газар хаалттай байна. Та бусад зоогийн
-                                газраас сонголтоо хийнэ үү
-                                <div>
-                                    Ажиллах цагийн хуваарь:
-                                    <p className="font-medium">
-                                        {startDate}-{endDate}
-                                    </p>
-                                </div>
-                            </div>
-                        </>
+                    text={` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              ${startDate} - ${endDate}
+                            </b>`
                     }
                     button2={
                         <>

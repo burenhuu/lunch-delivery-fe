@@ -93,7 +93,7 @@ export default function Category() {
                                 );
                             })}
                         </Accordion>
-                    ) : productTab === "Урамшуулал" ? (
+                    ) : productTab.name === "Урамшуулал" ? (
                         <div className="absolute items-center text-center left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 my-col-20">
                             <Oops />
                             <div className="font-light">

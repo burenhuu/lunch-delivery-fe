@@ -4,7 +4,6 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import { Slide, ToastContainer } from "react-toastify";
 import { SWRConfig } from "swr";
-
 import "styles/globals.css";
 import Page from "components/layout/page";
 import WithAuth from "lib/hoc/with-auth";
@@ -15,7 +14,6 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "styles/scrollText.css";
-import rive from "@rive-app/canvas";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());

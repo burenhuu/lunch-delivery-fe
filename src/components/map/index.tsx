@@ -9,6 +9,7 @@ import { GeolocatedProps, geolocated } from "react-geolocated";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
 import { Office } from "lib/types/office.type";
+import {off} from "dom7";
 
 const containerStyle = {
     width: "100%",
@@ -107,6 +108,8 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
 
     const router = useRouter();
 
+    console.log(offices)
+
     return isLoaded ? (
         <GoogleMap
             mapContainerStyle={containerStyle}
@@ -137,56 +140,48 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                 )}
                 options={options}
             />
-            {offices?.map((office: Office, index: number) => {
-                return (
+            {offices?.map((office: Office) => (
+                <>
                     <Marker
-                        key={"office" + index}
+                        key={office.id}
                         position={{
                             lat: Number(office.latitude),
                             lng: Number(office.longitude),
                         }}
                         icon={{
-                            // url: office.pin_icon,
                             url: "/images/Pin.svg",
                             scaledSize: new google.maps.Size(24, 34),
                             anchor: new google.maps.Point(24, 34),
                         }}
-                        onClick={() => (
-                            setCenter({
-                                lat: Number(office.latitude),
-                                lng: Number(office.longitude),
-                            }),
-                            // onSearchByMap(
-                            //     Number(office.latitude),
-                            //     Number(office.longitude)
-                            // ),
-                            map.panTo(
-                                new window.google.maps.LatLng(
-                                    Number(office.latitude),
-                                    Number(office.longitude)
+                        onClick={() => {
+                                setCenter({
+                                    lat: Number(office.latitude),
+                                    lng: Number(office.longitude),
+                                })
+                                map.panTo(
+                                    new window.google.maps.LatLng(
+                                        Number(office.latitude),
+                                        Number(office.longitude)
+                                    )
                                 )
-                            ),
-                            // dispatch({
-                            //     type: "merchants",
-                            //     merchants: office.merchants,
-                            // }),
-                            dispatch({
-                                type: "officeId",
-                                officeId: office.id,
-                            }),
-                            dispatch({
-                                type: "officeName",
-                                officeName: office.name,
-                            }),
-                            dispatch({
-                                type: "numberOfStorey",
-                                numberOfStorey: office.floor,
-                            }),
-                            router.push(`/office/${office.id}`)
-                        )}
+                                dispatch({
+                                    type: "officeId",
+                                    officeId: office.id,
+                                })
+                                dispatch({
+                                    type: "officeName",
+                                    officeName: office.name,
+                                })
+                                dispatch({
+                                    type: "numberOfStorey",
+                                    numberOfStorey: office.floor,
+                                })
+                                router.push(`/office/${office.id}`)
+                        }}
                     />
+                </>
                 )
-            })}
+            )}
         </GoogleMap>
     ) : (
         <></>

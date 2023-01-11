@@ -1,9 +1,8 @@
 import type { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
-import Drawer from "react-modern-drawer";
 import useSWR from "swr";
-import { useAppState } from "lib/context/app";
 
+import Drawer from "react-modern-drawer";
 import Map from "components/map";
 import SearchShop from "components/search-shop";
 import OfficeNotFound from "components/office/not-found";
@@ -21,38 +20,13 @@ const Index: NextPage = () => {
     const [height, setHeight] = useState("340px");
     const [maxHeight, setMaxHeight] = useState("45vh");
     const { data, error } = useSWR("/v1/offices");
-    const [allOffices, setAllOffices] = useState<Office[]>([]);
-    const [state, dispatch]: any = useAppState();
+    const [allOffices, setAllOffices] = useState<Office[]>([])
 
     useEffect(() => {
         TokiAPI.getAllOffices().then((res) => {
-            setAllOffices(res.data);
-        });
-
-        TokiAPI.getCart().then((res) => {
-            dispatch({
-                type: "cartCount",
-                cartCount:
-                    res && res.data && res.data.totalItems
-                        ? res.data.totalItems
-                        : 0,
-            });
-            dispatch({
-                type: "officeId",
-                officeId:
-                    res && res.data && res.data.orders[0]
-                        ? res.data.orders[0].office.id
-                        : 0,
-            });
-            dispatch({
-                type: "officeName",
-                officeName:
-                    res && res.data && res.data.orders[0]
-                        ? res.data.orders[0].office.name
-                        : 0,
-            });
-        });
-    }, []);
+            setAllOffices(res.data)
+        })
+    }, [])
 
     const onSearchSubmit = async (searchValue: string = "") => {
         setLoading(true);
@@ -100,7 +74,6 @@ const Index: NextPage = () => {
                 <Map
                     onSearchByMap={onSearchByMap}
                     offices={allOffices}
-                // offices={offices}
                 />
 
                 {bySearchbar ? (
@@ -125,7 +98,6 @@ const Index: NextPage = () => {
                             height: height,
                             maxHeight: maxHeight,
                             background: "#F5F5FA",
-                            zIndex: "30",
                         }}
                         className={`p-5 rounded-t-[20px] relative`}
                     >

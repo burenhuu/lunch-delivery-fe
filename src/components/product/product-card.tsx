@@ -207,9 +207,9 @@ export default function ProductCard({
                 id: option.id,
                 value: value,
             });
+            setPrice(Number(option.price) + Number(price));
+            setPresalePrice(Number(option.price) + Number(presalePrice));
         }
-        setPrice(Number(option.price) + Number(price));
-        setPresalePrice(Number(option.price) + Number(presalePrice));
         setSelectedOptions(options);
     };
 
@@ -228,14 +228,17 @@ export default function ProductCard({
         );
         if (check) {
             options.splice(check_index, 1);
+            setPrice(Number(price) - Number(option.price));
+            setPresalePrice(Number(presalePrice) - Number(option.price));
         } else {
             options.push({
                 id: option.id,
                 value: null,
             });
+            setPrice(Number(option.price) + Number(price));
+            setPresalePrice(Number(option.price) + Number(presalePrice));
         }
-        setPrice(Number(option.price) + Number(price));
-        setPresalePrice(Number(option.price) + Number(presalePrice));
+
         setSelectedOptions(options);
     };
 
@@ -246,6 +249,7 @@ export default function ProductCard({
         setApplicableOptions(variant.options);
         setSelectedOptions([]);
     };
+
     return (
         data && (
             <AccordionItem
@@ -328,7 +332,7 @@ export default function ProductCard({
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-x-1">
-                                    {price !== presalePrice ? (
+                                    {formatPrice(price) !== formatPrice(presalePrice) ? (
                                         <>
                                             <div className="text-xs font-light line-through text-gray">
                                                 {formatPrice(presalePrice)}₮

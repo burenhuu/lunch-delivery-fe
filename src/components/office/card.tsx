@@ -58,7 +58,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                                                     Таны сагсалсан дараах
                                                     хоолнууд{" "}
                                                     <span className="font-medium">
-                                                        "{office.name}"
+                                                        {office.name}
                                                     </span>
                                                     -т хүргэгдэх боломжгүй
                                                     хасагдах тул та хаягаа

@@ -47,6 +47,16 @@ export default function GreadientMerchantCard({
 
     const onMerchantClick = () => {
         if (merchant.state === "CLOSED") {
+            const d = new Date();
+            let day = d.getDay();
+            let startDate = ""
+            let endDate = ""
+            merchant.timetable?.map((schedule)=>{
+                if (schedule.day === day){
+                    startDate = schedule.open
+                    endDate = schedule.close
+                }
+            })
             setShow(true);
             setContent(
                 <PermissionBox

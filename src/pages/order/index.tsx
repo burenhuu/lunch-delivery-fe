@@ -335,6 +335,7 @@ const Cart: NextPage = () => {
                                 type="text"
                                 className="-mt-[5px] rounded-md w-full bg-white font-light text-sm px-5 py-[9px] text-gray"
                                 placeholder="Байгууллагын РД"
+                                maxLength={7}
                                 {...register("register")}
                             />
                             {errors.register && (

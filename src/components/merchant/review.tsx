@@ -97,7 +97,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                                     {review?.picture ? (
                                         <>
                                             <img
-                                                src={`${review.picture}`}
+                                                src={`https://app.toki.mn/upload/profile/${review.picture}`}
                                                 alt={review.id}
                                                 className="w-[60px] h-[60px] rounded-md"
                                             />

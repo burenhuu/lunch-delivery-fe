@@ -73,8 +73,10 @@ export function CartItems({
                                                 key={product.id}
                                                 className="flex justify-between"
                                             >
-                                                <div className="grow-1 my-col-5">
-                                                    <div>{product.name}</div>
+                                                <div className="overflow-hidden grow-1 my-col-5">
+                                                    <div className="truncate ">
+                                                        {product.name}
+                                                    </div>
 
                                                     {product.options &&
                                                     Object.keys(product.options)

@@ -71,9 +71,9 @@ export function CartItems({
                                         return (
                                             <div
                                                 key={product.id}
-                                                className="flex items-start justify-between"
+                                                className="flex justify-between"
                                             >
-                                                <div className="my-col-5">
+                                                <div className="grow-1 my-col-5">
                                                     <div>{product.name}</div>
 
                                                     {product.options &&
@@ -117,7 +117,7 @@ export function CartItems({
                                                     ) : null}
                                                 </div>
 
-                                                <div className="flex flex-col items-end gap-y-1.25">
+                                                <div className="flex flex-col grow-0 items-end gap-y-1.25">
                                                     <div>
                                                         {formatPrice(
                                                             product.quantity *

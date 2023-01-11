@@ -34,7 +34,7 @@ const Cart: NextPage = () => {
     const [grandTotal, setGrandTotal] = useState<any>(0);
     const [discountAmount, setDiscountAmount] = useState<any>(0);
     const [data, setData] = useState<any>(null);
-    const [isDeliveryClosed, setisDeliveryClosed] = useState(true);
+    const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
 
     useEffect(() => {
         if (state.officeId) {
@@ -67,7 +67,6 @@ const Cart: NextPage = () => {
     }, [state.officeId]);
 
     useEffect(() => {
-        console.log(isDeliveryClosed);
         if (isDeliveryClosed) {
             setDeliveryType("TakeAway");
             setValue("type", "TakeAway");

@@ -22,7 +22,6 @@ export function DeliveryTime({
     const [show, setShow, content, setContent] = useModal();
     const apiUrl = `/v1/cart/times`;
     const { data, error } = useSWR(`${apiUrl}`);
-
     useEffect(() => {
         if (data && data.data && data.data.times) {
             data.data.times.length > 0

@@ -219,7 +219,6 @@ const Cart: NextPage = () => {
             />
         );
     };
-
     return (
         <div className="p-5 my-col-20">
             <div className="my-col-15">

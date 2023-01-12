@@ -10,9 +10,11 @@ const catchAxiosError = (error: any) => {
         // console.log("Data", response.data);
         // console.log("Status", response.status);
         // console.log("Headers", response.headers);
+
         message = response.data.detail
             ? response.data.detail
             : response.data.message;
+
         if (
             typeof window !== "undefined" &&
             response.status === 401 &&
@@ -34,7 +36,9 @@ const catchAxiosError = (error: any) => {
     // console.log("Axios config", error.config);
     // console.log("Message", message);
     if (typeof window !== "undefined") {
-        toast(message);
+        if (message != "Сагс хоосон байна") {
+            toast(message);
+        }
     } else {
         console.log(message);
     }

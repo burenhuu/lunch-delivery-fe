@@ -6,6 +6,7 @@
 @import "react-modern-drawer/dist/index.css";
 @import "react-toastify/dist/ReactToastify.min.css";
 @import "./icons.css";
+@import "react-html5-camera-photo/build/css/index.css";
 
 #__next {
     min-height: 100vh;

@@ -11,7 +11,7 @@ import { Status } from "lib/types/order.type";
 import OrderCard from "components/order/order-card";
 import CenteredSpin from "components/common/centered-spin";
 import { Upoint, UpointGreen } from "components/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
 
@@ -41,32 +41,92 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
 };
 
 const apiUrl = `/v1/orders`;
+let step: any;
+let bars: any;
 
 const OrderDetail: NextPage = () => {
     const router = useRouter();
     const { orderId }: any = router.query;
     const { data, error } = useSWR(orderId ? `${apiUrl}/${orderId}` : null, {
-        refreshInterval: 5000,
+        refreshInterval: 1000,
     });
     const [loading, setLoading] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
 
+    useEffect(() => {
+        if (data) {
+            bars =
+                data.data.type.toLowerCase() === "takeaway"
+                    ? statusBarTakeaway
+                    : statusBar;
+
+            step = bars.find((x: any) => {
+                return x.state === data.data.state;
+            })?.step;
+
+            data.data.state === Status.DELIVERED && setShowDrawer(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+
     const statusBar = [
         {
+            state: Status.NEW,
+            text: `Таны захиалга амжилттай хийгдлээ.`,
+            step: 1,
+        },
+        {
+            state: Status.ACCEPTED,
+            text: `${data?.data?.merchant.name} зоогийн газар таны захиалгыг хүлээн авсан байна.`,
+            step: 2,
+        },
+        {
             state: Status.PREPARING,
-            text: `${data?.data?.merchant} зоогийн газар таны захиалгыг бэлдэж байна`,
+            text: `${data?.data?.merchant.name} зоогийн газар таны захиалгыг бэлдэж байна.`,
+            step: 3,
         },
         {
             state: Status.PREPARED,
             text: "Таны захиалга хүргэлтэнд бэлэн болсон байна",
+            step: 4,
         },
         {
             state: Status.DELIVERING,
             text: "Таны захиалга хүргэлтэнд гарсан байна",
+            step: 5,
         },
         {
             state: Status.COMPLETED,
             text: "Захиалга дууссан",
+            step: 6,
+        },
+    ];
+
+    const statusBarTakeaway = [
+        {
+            state: Status.NEW,
+            text: `Таны захиалга амжилттай хийгдлээ.`,
+            step: 1,
+        },
+        {
+            state: Status.ACCEPTED,
+            text: `${data?.data?.merchant.name} зоогийн газар таны захиалгыг хүлээн авсан байна.`,
+            step: 2,
+        },
+        {
+            state: Status.PREPARING,
+            text: `${data?.data?.merchant.name} зоогийн газар таны захиалгыг бэлдэж байна.`,
+            step: 3,
+        },
+        {
+            state: Status.PREPARED,
+            text: "Таны захиалга хүргэлтэнд бэлэн болсон байна",
+            step: 4,
+        },
+        {
+            state: Status.COMPLETED,
+            text: "Захиалга дууссан",
+            step: 5,
         },
     ];
 
@@ -133,19 +193,26 @@ const OrderDetail: NextPage = () => {
                     </div>
                     {/* Status bar */}
                     <div className="text-sm my-col-20">
-                        <div className="grid grid-cols-4 gap-x-1.25">
-                            {statusBar.map((status) => {
-                                return (
-                                    <div
-                                        key={status.state}
-                                        className={`rounded-[2.5px] h-[5px] w-full ${
-                                            data.data.state === status.state
-                                                ? "bg-gradient-end"
-                                                : "bg-[#D9D9D9]"
-                                        }`}
-                                    ></div>
-                                );
-                            })}
+                        <div
+                            className={`grid grid-cols-${
+                                data.data.type.toLowerCase() === "takeaway"
+                                    ? 5
+                                    : 6
+                            } gap-x-1.25`}
+                        >
+                            {bars &&
+                                bars.map((status: any, index: any) => {
+                                    return (
+                                        <div
+                                            key={status.state}
+                                            className={`rounded-[2.5px] h-[5px] w-full ${
+                                                step > index
+                                                    ? "bg-gradient-end"
+                                                    : "bg-[#D9D9D9]"
+                                            }`}
+                                        ></div>
+                                    );
+                                })}
                         </div>
                         <div className="font-light text-gray">{statusText}</div>
                     </div>
@@ -209,13 +276,13 @@ const OrderDetail: NextPage = () => {
             </div>
 
             <Drawer
-                open={data?.data?.state === Status.DELIVERED || showDrawer}
+                open={showDrawer}
                 onClose={toggleDrawer}
                 direction="bottom"
                 enableOverlay={true}
                 style={{
                     background: "#FFFFFF",
-                    height: "468px",
+                    height: "428px",
                 }}
                 overlayOpacity={0.5}
                 overlayColor="#1e2335"
@@ -238,12 +305,12 @@ const OrderDetail: NextPage = () => {
                         size={195}
                     />
 
-                    <div className="mx-auto bg-[#F5F5FA] w-[195px] h-[40px] leading-[40px] rounded-[10px] my-[20px]">
-                        {data?.data?.id}
-                    </div>
+                    {/* <div className="mx-auto bg-[#F5F5FA] w-[195px] h-[40px] leading-[40px] rounded-[10px] my-[20px]"> */}
+                    {/* {data?.data?.id} */}
+                    {/* </div> */}
                 </div>
 
-                <div className="flex justify-center w-full pb-[50px]">
+                <div className="flex justify-center w-full pb-[50px] mt-[20px]">
                     <ButtonComponent
                         onClick={handleFinish}
                         text="Захиалгыг хүлээн авсан"

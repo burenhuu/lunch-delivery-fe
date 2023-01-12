@@ -9,10 +9,12 @@ import Render from "components/history/render";
 import ReviewComponent from "components/history/review";
 
 const Review: NextPage = () => {
-    const [item, setItem] = useState(null);
+    const [item, setItem] = useState<any>(null);
     const [state, dispatch]: any = useAppState();
     const [loading, setLoading] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
+    const [showDelivery, setShowDelivery] = useState(false);
+    const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
 
     const toggleDrawer = () => {
         setShowDrawer((prevState) => !prevState);
@@ -23,7 +25,7 @@ const Review: NextPage = () => {
             setLoading(true);
 
             try {
-                const response = await TokiAPI.lastCancelledOrder();
+                const response = await TokiAPI.lastCompletedOrder();
 
                 if (response.data.length > 0) {
                     const item = response.data[0];
@@ -77,6 +79,17 @@ const Review: NextPage = () => {
                     item={item}
                     showDrawer={showDrawer}
                     setShowDrawer={setShowDrawer}
+                    type={item.reviews.length === 0 ? "S" : "D"}
+                    setShowDelivery={setShowDelivery}
+                />
+            )}
+
+            {showDelivery && (
+                <ReviewComponent
+                    item={item}
+                    showDrawer={showDeliveryDrawer}
+                    setShowDrawer={setShowDeliveryDrawer}
+                    type="D"
                 />
             )}
         </>

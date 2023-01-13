@@ -196,8 +196,8 @@ const OrderDetail: NextPage = () => {
                         <div
                             className={`grid grid-cols-${
                                 data.data.type.toLowerCase() === "takeaway"
-                                    ? 5
-                                    : 6
+                                    ? "5"
+                                    : "6"
                             } gap-x-1.25`}
                         >
                             {bars &&
@@ -229,7 +229,12 @@ const OrderDetail: NextPage = () => {
                 <div className="items-stretch text-sm my-col-10">
                     <div className="flex items-center justify-between">
                         <div>Захиалгын дугаар:</div>
-                        <div>#{data.data.number}</div>
+                        <div>
+                            #
+                            {data.data.number.substring(
+                                data.data.number.length - 4
+                            )}
+                        </div>
                     </div>
                     <div className="flex items-center justify-between">
                         <div>Захиалсан:</div>

@@ -235,7 +235,7 @@ export default function Review({
                                 </div>
 
                                 <div
-                                    className={`absolute top-0 left-0 w-full z-max ${
+                                    className={`absolute transform translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 w-full z-max ${
                                         showCamera ? "block" : "hidden"
                                     }`}
                                 >
@@ -248,6 +248,23 @@ export default function Review({
                                         isFullscreen={false}
                                     />
                                 </div>
+
+                                {showCamera && (
+                                    <label
+                                        onClick={handleImage}
+                                        className="rounded-t-[20px]"
+                                        style={{
+                                            backgroundColor: "rgb(30, 35, 53)",
+                                            opacity: "0.5",
+                                            zIndex: "100",
+                                            height: "100vh",
+                                            left: 0,
+                                            position: "fixed",
+                                            top: 0,
+                                            width: "100%",
+                                        }}
+                                    ></label>
+                                )}
                             </div>
 
                             <div className="flex justify-center w-full">

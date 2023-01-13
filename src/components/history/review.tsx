@@ -233,7 +233,7 @@ export default function Review({
                                 }`}
                             >
                                 <Camera
-                                    isMaxResolution={true}
+                                    isMaxResolution={false}
                                     sizeFactor={0.5}
                                     onTakePhoto={(dataUri: any) => {
                                         handleTakePhoto(dataUri);

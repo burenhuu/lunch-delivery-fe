@@ -243,7 +243,7 @@ export default function Review({
                             {showCamera && (
                                 <label
                                     onClick={handleImage}
-                                    className="rounded-t-[20px] z-max"
+                                    className="rounded-t-[20px]"
                                     style={{
                                         backgroundColor: "rgb(30, 35, 53)",
                                         opacity: "0.5",

@@ -233,10 +233,13 @@ export default function Review({
                                 }`}
                             >
                                 <Camera
+                                    isMaxResolution={true}
+                                    sizeFactor={0.5}
                                     onTakePhoto={(dataUri: any) => {
                                         handleTakePhoto(dataUri);
                                     }}
-                                    idealFacingMode="FACING_MODES.ENVIRONMENT"
+                                    idealFacingMode={"FACING_MODES.ENVIRONMENT"}
+                                    isFullscreen={false}
                                 />
                             </div>
 

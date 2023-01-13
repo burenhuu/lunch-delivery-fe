@@ -246,6 +246,7 @@ export default function Review({
                                             handleTakePhoto(dataUri);
                                         }}
                                         isFullscreen={false}
+                                        idealFacingMode="FACING_MODES.ENVIRONMENT"
                                     />
                                 </div>
 

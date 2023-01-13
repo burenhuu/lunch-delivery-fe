@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Drawer from "react-modern-drawer";
 import { useEffect, useState } from "react";
-import Camera from "react-html5-camera-photo";
+import Camera, { FACING_MODES } from "react-html5-camera-photo";
 
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
@@ -233,12 +233,12 @@ export default function Review({
                                 }`}
                             >
                                 <Camera
-                                    isMaxResolution={false}
-                                    sizeFactor={0.5}
+                                    isMaxResolution={true}
+                                    sizeFactor={1}
                                     onTakePhoto={(dataUri: any) => {
                                         handleTakePhoto(dataUri);
                                     }}
-                                    idealFacingMode={"FACING_MODES.ENVIRONMENT"}
+                                    idealFacingMode={FACING_MODES.ENVIRONMENT}
                                     isFullscreen={false}
                                 />
                             </div>

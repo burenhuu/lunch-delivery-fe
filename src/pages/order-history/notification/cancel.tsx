@@ -58,7 +58,7 @@ const Cancel: NextPage = () => {
                             text={`Уучлаарай таны захиалсан хоол гарах боломжгүй болсон тул цуцлагдаж <b>${formatPrice(
                                 item.loyaltyAmount
                             )} U-Point</b> оноо олгож байна. <b>${formatPrice(
-                                item.penaltyAmount
+                                item.grandTotal
                             )}₮</b>-н төлбөр Toki хэтэвчинд буцаан олгогдлоо.`}
                             loading={loading}
                         />

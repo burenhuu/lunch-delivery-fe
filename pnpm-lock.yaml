@@ -21,12 +21,13 @@ specifiers:
   nprogress: ^0.2.0
   postcss: ^8.4.12
   react: 17.0.2
-  react-accessible-accordion: ^5.0.0
+  react-accessible-accordion: ^4.0.0
   react-collapse: ^5.1.1
   react-countdown: ^2.3.2
   react-dom: 17.0.2
   react-geolocated: ^3.2.0
   react-hook-form: ^7.30.0
+  react-html5-camera-photo: ^1.5.11
   react-modern-drawer: ^1.1.1
   react-qr-code: ^2.0.11
   react-responsive-carousel: ^3.2.23
@@ -54,12 +55,13 @@ dependencies:
   next: 12.1.5_sfoxds7t5ydpegc3knd667wn6m
   nprogress: 0.2.0
   react: 17.0.2
-  react-accessible-accordion: 5.0.0_sfoxds7t5ydpegc3knd667wn6m
+  react-accessible-accordion: 4.0.0_sfoxds7t5ydpegc3knd667wn6m
   react-collapse: 5.1.1_react@17.0.2
   react-countdown: 2.3.2_sfoxds7t5ydpegc3knd667wn6m
   react-dom: 17.0.2_react@17.0.2
   react-geolocated: 3.2.0_react@17.0.2
   react-hook-form: 7.30.0_react@17.0.2
+  react-html5-camera-photo: 1.5.11_sfoxds7t5ydpegc3knd667wn6m
   react-modern-drawer: 1.1.1_react@17.0.2
   react-qr-code: 2.0.11_react@17.0.2
   react-responsive-carousel: 3.2.23
@@ -303,7 +305,7 @@ packages:
   /@react-google-maps/marker-clusterer/2.9.0:
     resolution: {integrity: sha512-BJJH2OXdUreVNdfTCuuO2oHoqBmXSnXtIQvbRYj3LwZ27nnzfY87D/KEUPXnCXj/56kEeVlBbvAbcKKeMRmkSw==}
     dependencies:
-      '@typescript/lib-dom': /@types/web/0.0.86
+      '@typescript/lib-dom': /@types/web/0.0.87
     dev: false
 
   /@rive-app/canvas/1.0.97:
@@ -377,8 +379,8 @@ packages:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
 
-  /@types/web/0.0.86:
-    resolution: {integrity: sha512-d8mYKwcKvkMSlxlDovHyRD7GhNpe10ti4GaX4dR0lsQqk+2l9Y72PU2yPpYlRajQrpfuOWlgGqs8jpbSU9udpg==}
+  /@types/web/0.0.87:
+    resolution: {integrity: sha512-7axE59xEAZPvpYr1RMxQYNg7PkrM8AtxUybl1/GUzjb9VKnz1VjlXt3F1VnHFN1cRmQoGB7GtHCHZTn2TIMdPg==}
     dev: false
 
   /@typescript-eslint/parser/5.10.1_jzhokl4shvj5szf5bgr66kln2a:
@@ -1548,6 +1550,10 @@ packages:
       argparse: 2.0.1
     dev: true
 
+  /jslib-html5-camera-photo/3.3.4:
+    resolution: {integrity: sha512-qysjLnP4bud0+g0qs5uA/7i569x+6ID2ufgezf9XQ+BE3EvhYjz177vi9WXLEuq+V6C/WXEv73NUICvHm5VGmQ==}
+    dev: false
+
   /json-schema-traverse/0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
     dev: true
@@ -1999,11 +2005,11 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /react-accessible-accordion/5.0.0_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-MT2obYpTgLIIfPr9d7hEyvPB5rg8uJcHpgA83JSRlEUHvzH48+8HJPvzSs+nM+XprTugDgLfhozO5qyJpBvYRQ==}
+  /react-accessible-accordion/4.0.0_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-MovuWj2Uweo57LSgTIPpB83IYq8BNdZJ44j4NmDKYxaHC/H0JjYiqt8OfNMt+YK+XN8qRON13ERQnLfM73vmqw==}
     peerDependencies:
-      react: ^16.3.2 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.3.3 || ^17.0.0 || ^18.0.0
+      react: ^16.3.2 || ^17.0.0
+      react-dom: ^16.3.3 || ^17.0.0
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -2061,6 +2067,17 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /react-html5-camera-photo/1.5.11_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-5OpdW66UmwKwd0ZHvy/U9tEZj19GrcG6RDRXjs1bFBgJoWzLJoJ7YNd8rmdrizV/6go/z9GrwoWMovqCUyaJgQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      jslib-html5-camera-photo: 3.3.4
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
     dev: false
 
   /react-is/16.13.1:

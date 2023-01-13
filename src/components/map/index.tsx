@@ -9,7 +9,6 @@ import { GeolocatedProps, geolocated } from "react-geolocated";
 import { useAppState } from "lib/context/app";
 import { useRouter } from "next/router";
 import { Office } from "lib/types/office.type";
-import {off} from "dom7";
 
 const containerStyle = {
     width: "100%",
@@ -73,7 +72,7 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
         if (coords && map) {
             const lat = coords.latitude;
             const lng = coords.longitude;
-            console.log(lat, lng)
+
             dispatch({
                 type: "userLat",
                 userLat: lat,
@@ -107,8 +106,6 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
     };
 
     const router = useRouter();
-
-    console.log(offices)
 
     return isLoaded ? (
         <GoogleMap
@@ -154,34 +151,33 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                             anchor: new google.maps.Point(24, 34),
                         }}
                         onClick={() => {
-                                setCenter({
-                                    lat: Number(office.latitude),
-                                    lng: Number(office.longitude),
-                                })
-                                map.panTo(
-                                    new window.google.maps.LatLng(
-                                        Number(office.latitude),
-                                        Number(office.longitude)
-                                    )
+                            setCenter({
+                                lat: Number(office.latitude),
+                                lng: Number(office.longitude),
+                            });
+                            map.panTo(
+                                new window.google.maps.LatLng(
+                                    Number(office.latitude),
+                                    Number(office.longitude)
                                 )
-                                dispatch({
-                                    type: "officeId",
-                                    officeId: office.id,
-                                })
-                                dispatch({
-                                    type: "officeName",
-                                    officeName: office.name,
-                                })
-                                dispatch({
-                                    type: "numberOfStorey",
-                                    numberOfStorey: office.floor,
-                                })
-                                router.push(`/office/${office.id}`)
+                            );
+                            dispatch({
+                                type: "officeId",
+                                officeId: office.id,
+                            });
+                            dispatch({
+                                type: "officeName",
+                                officeName: office.name,
+                            });
+                            dispatch({
+                                type: "numberOfStorey",
+                                numberOfStorey: office.floor,
+                            });
+                            router.push(`/office/${office.id}`);
                         }}
                     />
                 </>
-                )
-            )}
+            ))}
         </GoogleMap>
     ) : (
         <></>

@@ -1,21 +1,32 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Drawer from "react-modern-drawer";
 import { useEffect, useState } from "react";
-import Camera from "react-html5-camera-photo";
+import Camera, { FACING_MODES } from "react-html5-camera-photo";
 
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
+import { Remove } from "components/icons";
 
-const commentChoices = ["Амт", "Чанар", "Хоолны порц"];
 const emojis = ["👎", "👍"];
 
-export default function Review({ item, showDrawer, setShowDrawer }: any) {
+export default function Review({
+    item,
+    showDrawer,
+    setShowDrawer,
+    type,
+    setShowDelivery,
+}: any) {
+    const commentChoices =
+        type === "S"
+            ? ["Амт", "Савлагаа", "Хоолны порц"]
+            : ["Хугацаа", "Чанар", "Харилцаа"];
     const [liked, setLiked] = useState<any>("");
     const [comment, setComment] = useState<any>([]);
     const [additional, setAdditional] = useState("");
     const [images, setImages] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [errorComment, setErrorComment] = useState(false);
+    const [showCamera, setShowCamera] = useState(false);
 
     async function handleReview() {
         if (comment.length > 0) {
@@ -23,15 +34,19 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
             setLoading(true);
 
             try {
-                await TokiAPI.orderReview(item.id, {
-                    type: item.reviews.length > 1 ? "S" : "D",
+                const response = await TokiAPI.orderReview(item.id, {
+                    type: type,
                     liked: liked,
                     comment: comment,
                     additional: additional,
-                    pictures: [],
+                    pictures: images,
                 });
 
                 toggleDrawer();
+
+                response.data.type === "S" &&
+                    setShowDelivery &&
+                    setShowDelivery(true);
             } finally {
                 setLoading(false);
             }
@@ -41,8 +56,10 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
     }
 
     function handleTakePhoto(dataUri: any) {
-        // Do stuff with the photo...
-        console.log("takePhoto", dataUri);
+        if (dataUri) {
+            setImages([...images, dataUri]);
+            setShowCamera(false);
+        }
     }
 
     useEffect(() => {
@@ -63,7 +80,9 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
         setShowDrawer((prevState: any) => !prevState);
     };
 
-    function handleImage() {}
+    function handleImage() {
+        setShowCamera((prevState) => !prevState);
+    }
 
     return (
         <Drawer
@@ -90,15 +109,16 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
                     <div className="text-sm">{`${item.merchant.name} ( ${item.merchant.distance} км )`}</div>
                 </div>
             </div>
-            {/* <Camera
-                onTakePhoto={(dataUri: any) => {
-                    handleTakePhoto(dataUri);
-                }}
-                isFullscreen={true}
-            /> */}
+
             <div className="font-medium text-center">
-                Танд хоолны амт,
-                <div>чанар таалагдсан уу?</div>
+                {type === "S" ? (
+                    <>
+                        Танд хоолны амт,
+                        <div>чанар таалагдсан уу?</div>
+                    </>
+                ) : (
+                    <>Хүргэлтийн үйлчилгээ таалагдсан уу?</>
+                )}
             </div>
             <div>
                 <div className="flex flex-row justify-center py-5 gap-x-[45px]">
@@ -114,7 +134,7 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
                             onClick={() => setLiked(index)}
                         >
                             <div className="rounded-full w-[53px] h-[53px] text-[25px] bg-[#F5F5FA] flex items-center justify-center">
-                                👎
+                                {emoji}
                             </div>
                         </div>
                     ))}
@@ -174,11 +194,67 @@ export default function Review({ item, showDrawer, setShowDrawer }: any) {
                         />
 
                         <div className="mt-[10px] mb-[20px]">
-                            <img
-                                onClick={handleImage}
-                                src="/images/add-photos.png"
-                                className="w-[60px] h-[60px]"
-                            />
+                            <div className="flex flex-wrap flex-row gap-[10px]">
+                                {images.map((image, index) => {
+                                    return (
+                                        <div key={index} className="relative">
+                                            <img
+                                                onClick={handleImage}
+                                                src={image}
+                                                className="w-[60px] h-[60px] rounded-[10px]"
+                                            />
+                                            <div
+                                                className="absolute top-[-5px] right-[-5px]"
+                                                onClick={() => {
+                                                    setImages(
+                                                        images.filter(
+                                                            (_, i) =>
+                                                                i !== index
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <Remove />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+
+                                <img
+                                    onClick={handleImage}
+                                    src="/images/add-photos.png"
+                                    className="w-[60px] h-[60px]"
+                                />
+                            </div>
+
+                            <div
+                                className={`absolute transform translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 w-full z-max ${
+                                    showCamera ? "block" : "hidden"
+                                }`}
+                            >
+                                <Camera
+                                    onTakePhoto={(dataUri: any) => {
+                                        handleTakePhoto(dataUri);
+                                    }}
+                                    idealFacingMode={FACING_MODES.ENVIRONMENT}
+                                />
+                            </div>
+
+                            {showCamera && (
+                                <label
+                                    onClick={handleImage}
+                                    className="rounded-t-[20px] z-max"
+                                    style={{
+                                        backgroundColor: "rgb(30, 35, 53)",
+                                        opacity: "0.5",
+                                        height: "100vh",
+                                        left: 0,
+                                        position: "fixed",
+                                        top: 0,
+                                        width: "100%",
+                                    }}
+                                ></label>
+                            )}
                         </div>
 
                         <div className="flex justify-center w-full">

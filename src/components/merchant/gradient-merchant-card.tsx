@@ -50,14 +50,14 @@ export default function GreadientMerchantCard({
             setShow(true);
             const d = new Date();
             let day = d.getDay();
-            let startDate = ""
-            let endDate = ""
-            merchant.timetable?.map((schedule)=>{
-                if (schedule.day === day){
-                    startDate = schedule.open
-                    endDate = schedule.close
+            let startDate = "";
+            let endDate = "";
+            merchant.timetable?.map((schedule) => {
+                if (schedule.day === day) {
+                    startDate = schedule.open;
+                    endDate = schedule.close;
                 }
-            })
+            });
             setContent(
                 <PermissionBox
                     text={` Зоогийн газар хаалттай байна. <br>
@@ -65,21 +65,15 @@ export default function GreadientMerchantCard({
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${startDate} - ${endDate}
-                            </b>`
-                    }
-                    button2={
-                        <>
-                            Үргэлжлүүлэх
-                        </>
-                    }
-                    onClick={()=>{
-                        setShow(false)
-                        onContinueClick()
+                            </b>`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
                     }}
                 />
             );
-        }
-        else if (merchant.state === "TEMPORARY_CLOSED") {
+        } else if (merchant.state === "TEMPORARY_CLOSED") {
             setShow(true);
             setContent(
                 <PermissionBox
@@ -96,8 +90,7 @@ export default function GreadientMerchantCard({
                     }
                 />
             );
-        }
-        else {
+        } else {
             onContinueClick();
         }
     };
@@ -107,34 +100,30 @@ export default function GreadientMerchantCard({
                 onClick={onMerchantClick}
                 className="rounded-2xl min-h-[160px] overflow-hidden shadow-delivery relative"
             >
-                {merchant.state === "CLOSED" || merchant.state === "TEMPORARY_CLOSED" ?
-                    <div
-                        className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
+                {merchant.state === "CLOSED" ||
+                merchant.state === "TEMPORARY_CLOSED" ? (
+                    <div className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
                         <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center py-[5px] px-[10px] leading-[11.85px]">
-                            {
-                                merchant.state === "CLOSED" ?
-                                    <>Хаалттай</>
-                                    :
-                                    <>{merchant.reason}</>
-                            }
-
+                            {merchant.state === "CLOSED" ? (
+                                <>Хаалттай</>
+                            ) : (
+                                <>{merchant.reason}</>
+                            )}
                         </div>
                     </div>
-
-                    :
+                ) : (
                     <>
-                        {merchant.bonus === "" ?
+                        {merchant.bonus === "" ? (
                             <></>
-                            :
-                            <div
-                                className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
+                        ) : (
+                            <div className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
                                 <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center py-[5px] px-[10px] leading-[11.85px]">
                                     {merchant.bonus}
                                 </div>
                             </div>
-                        }
+                        )}
                     </>
-                }
+                )}
                 <img
                     src={merchant.logo}
                     className="h-40 min-w-full"
@@ -147,7 +136,7 @@ export default function GreadientMerchantCard({
                         {merchant.delivery[0]}-{merchant.delivery[1]} минут
                     </div>
                 </div>
-                <div className="absolute h-1/2 w-full bg-gradient-to-b bottom-0 left-0 from-main/0 to-main "></div>
+                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-main/0 to-main "></div>
 
                 {page && (
                     <div className="absolute right-3.75 bottom-3.75 flex gap-x-2.5 justify-end items-center">

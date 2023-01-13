@@ -9,10 +9,12 @@ const OrderStatus: React.FC<OrderStatusProps> = ({ status, alignRight }) => (
     <div
         className={`text-sm font-light text-gray${alignRight && " text-right"}`}
     >
-        {status === Status.NEW
+        {status === Status.PENDING
             ? "Төлбөр хүлээгдэж буй"
+            : Status.NEW
+            ? "Захиалга хийгдсэн"
             : status === Status.ACCEPTED
-            ? "Захиалагдсан"
+            ? "Захиалга хүлээн авсан"
             : status === Status.PREPARING
             ? "Бэлтгэж байна"
             : status === Status.PREPARED
@@ -24,7 +26,7 @@ const OrderStatus: React.FC<OrderStatusProps> = ({ status, alignRight }) => (
             : status === Status.CANCELLED
             ? "Цуцлагдсан"
             : status === Status.COMPLETED
-            ? "Дууссан"
+            ? "Биелсэн"
             : ""}
     </div>
 );

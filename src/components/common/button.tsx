@@ -10,7 +10,7 @@ export default function ButtonComponent({
                 loading
                     ? ""
                     : "bg-gradient-to-r from-gradient-start  to-gradient-end "
-            } text-white text-center rounded-[10px] shadow-delivery px-5 text-base py-2.5 h-[40px] w-full ${additionalClass}`}
+            } text-white text-center rounded-[10px] shadow-delivery px-5 text-base py-2.5 h-[40px] w-full font-normal ${additionalClass}`}
             style={{
                 backgroundColor: loading && "#B3BFC6",
             }}

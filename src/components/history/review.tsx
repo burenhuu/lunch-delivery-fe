@@ -10,12 +10,12 @@ import { Remove } from "components/icons";
 const emojis = ["👎", "👍"];
 
 export default function Review({
-                                   item,
-                                   showDrawer,
-                                   setShowDrawer,
-                                   type,
-                                   setShowDelivery,
-                               }: any) {
+    item,
+    showDrawer,
+    setShowDrawer,
+    type,
+    setShowDelivery,
+}: any) {
     const commentChoices =
         type === "S"
             ? ["Амт", "Савлагаа", "Хоолны порц"]
@@ -45,8 +45,8 @@ export default function Review({
                 toggleDrawer();
 
                 response.data.type === "S" &&
-                setShowDelivery &&
-                setShowDelivery(true);
+                    setShowDelivery &&
+                    setShowDelivery(true);
             } finally {
                 setLoading(false);
             }

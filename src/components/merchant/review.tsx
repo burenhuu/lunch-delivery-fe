@@ -95,7 +95,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                                                 className="w-[60px] h-[60px] rounded-md"
                                             />
                                             <div className="font-light text-xs my-col-5 h-[60px]">
-                                                <div>{review.comment}</div>
+                                                <div>{review.additional}</div>
                                                 <div className="text-smaller text-gray">
                                                     {review.date}
                                                 </div>
@@ -104,7 +104,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                                     ) : (
                                         <>
                                             <div className="text-xs font-light my-col-5">
-                                                <div>{review.comment}</div>
+                                                <div>{review.additional}</div>
                                                 <div className="text-smaller text-gray">
                                                     {review.date}
                                                 </div>

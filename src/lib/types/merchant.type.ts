@@ -54,6 +54,7 @@ export interface Reviews {
     id:         string;
     liked:      number;
     comment:    string;
+    additional: string;
     createdAt:  string;
     removeable: boolean;
     date?: string;

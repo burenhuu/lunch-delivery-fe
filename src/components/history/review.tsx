@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Drawer from "react-modern-drawer";
 import { useEffect, useState } from "react";
-import Camera, { FACING_MODES } from "react-html5-camera-photo";
+// import Camera, { FACING_MODES } from "react-html5-camera-photo";
 
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
@@ -26,7 +26,7 @@ export default function Review({
     const [images, setImages] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [errorComment, setErrorComment] = useState(false);
-    const [showCamera, setShowCamera] = useState(false);
+    // const [showCamera, setShowCamera] = useState(false);
 
     async function handleReview() {
         if (comment.length > 0) {
@@ -39,7 +39,7 @@ export default function Review({
                     liked: liked,
                     comment: comment,
                     additional: additional,
-                    pictures: images,
+                    pictures: images.map((image: any) => image.name),
                 });
 
                 toggleDrawer();
@@ -55,12 +55,12 @@ export default function Review({
         }
     }
 
-    function handleTakePhoto(dataUri: any) {
-        if (dataUri) {
-            setImages([...images, dataUri]);
-            setShowCamera(false);
-        }
-    }
+    // function handleTakePhoto(dataUri: any) {
+    //     if (dataUri) {
+    //         setImages([...images, dataUri]);
+    //         setShowCamera(false);
+    //     }
+    // }
 
     useEffect(() => {
         if (comment.length > 0) {
@@ -80,9 +80,43 @@ export default function Review({
         setShowDrawer((prevState: any) => !prevState);
     };
 
-    function handleImage() {
-        setShowCamera((prevState) => !prevState);
-    }
+    // function handleImage() {
+    //     setShowCamera((prevState) => !prevState);
+    // }
+
+    const handleFile = async (e: any) => {
+        const imgName = e.target.files[0].name;
+        const imgSrc = await toBase64(e.target.files[0]);
+
+        if (fileHandler(e.target.files[0]))
+            setImages([
+                ...images,
+                {
+                    name: imgName,
+                    src: imgSrc,
+                },
+            ]);
+    };
+
+    const fileHandler = (file: any) => {
+        if (!file) {
+            return false;
+        }
+
+        if (!/(\.jpg|\.jpeg|\.png|\.gif)$/i.exec(file.name)) {
+            return false;
+        }
+
+        return true;
+    };
+
+    const toBase64 = (file: any) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
 
     return (
         <Drawer
@@ -199,7 +233,7 @@ export default function Review({
                                     return (
                                         <div key={index} className="relative">
                                             <img
-                                                src={image}
+                                                src={image.src}
                                                 className="w-[60px] h-[60px] rounded-[10px]"
                                             />
                                             <div
@@ -219,14 +253,21 @@ export default function Review({
                                     );
                                 })}
 
-                                <img
-                                    onClick={handleImage}
-                                    src="/images/add-photos.png"
-                                    className="w-[60px] h-[60px]"
-                                />
+                                <label>
+                                    <img
+                                        src="/images/add-photos.png"
+                                        className="w-[60px] h-[60px]"
+                                    />
+                                    <input
+                                        accept="image/png, image/gif, image/jpeg"
+                                        type="file"
+                                        onChange={handleFile}
+                                        className="hidden"
+                                    />
+                                </label>
                             </div>
 
-                            <div
+                            {/* <div
                                 className={`absolute transform translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 w-full z-max ${
                                     showCamera ? "block" : "hidden"
                                 }`}
@@ -237,23 +278,7 @@ export default function Review({
                                     }}
                                     idealFacingMode={FACING_MODES.ENVIRONMENT}
                                 />
-                            </div>
-
-                            {showCamera && (
-                                <label
-                                    onClick={handleImage}
-                                    className="rounded-t-[20px]"
-                                    style={{
-                                        backgroundColor: "rgb(30, 35, 53)",
-                                        opacity: "0.5",
-                                        height: "100vh",
-                                        left: 0,
-                                        position: "fixed",
-                                        top: 0,
-                                        width: "100%",
-                                    }}
-                                ></label>
-                            )}
+                            </div> */}
                         </div>
 
                         <div className="flex justify-center w-full">

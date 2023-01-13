@@ -199,7 +199,6 @@ export default function Review({
                                     return (
                                         <div key={index} className="relative">
                                             <img
-                                                onClick={handleImage}
                                                 src={image}
                                                 className="w-[60px] h-[60px] rounded-[10px]"
                                             />

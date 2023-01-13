@@ -18,30 +18,6 @@ export default function MerchantReview(props: { merchantId: string }) {
         getReviews();
     },[])
 
-    useEffect(() => {
-        // Formatting comment created date
-
-        merchantReview?.reviews?.map(async (review) => {
-            const duration = intervalToDuration({
-                start: new Date(review?.createdAt),
-                end: new Date(),
-            });
-            if (duration.years) {
-                review.date = `${duration.years} жилийн өмнө`;
-            } else if (duration.months) {
-                review.date = `${duration.years} сарын өмнө`;
-            } else if (duration.days) {
-                review.date = `${duration.days} өдрийн өмнө`;
-            } else if (duration.hours) {
-                review.date = `${duration.hours} цагийн өмнө`;
-            } else if (duration.minutes) {
-                review.date = `${duration.minutes} минутын өмнө`;
-            } else if (duration.seconds) {
-                review.date = `${duration.seconds} секундын өмнө`;
-            }
-        });
-    }, [merchantReview]);
-
     const deleteReview = async (id: string) => {
         TokiAPI.deleteReview(id).then((r)=>{
             getReviews()
@@ -65,7 +41,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                             return (
                                 <div key={type.type} className="flex gap-x-2.5">
                                     <div>{type.type}</div>
-                                    <div> 👍{type.percentage} %</div>
+                                    <div> 👍{type?.percentage.toString().slice(0, 4)} %</div>
                                 </div>
                             );
                         })}
@@ -74,6 +50,23 @@ export default function MerchantReview(props: { merchantId: string }) {
                 {/* All reviews */}
                 <div className="flex flex-col gap-y-[1px]">
                     {merchantReview?.reviews?.map((review) => {
+                        const duration = intervalToDuration({
+                            start: new Date(review?.createdAt),
+                            end: new Date(),
+                        });
+                        if (duration.years) {
+                            review.date = `${duration.years} жилийн өмнө`;
+                        } else if (duration.months) {
+                            review.date = `${duration.years} сарын өмнө`;
+                        } else if (duration.days) {
+                            review.date = `${duration.days} өдрийн өмнө`;
+                        } else if (duration.hours) {
+                            review.date = `${duration.hours} цагийн өмнө`;
+                        } else if (duration.minutes) {
+                            review.date = `${duration.minutes} минутын өмнө`;
+                        } else if (duration.seconds) {
+                            review.date = `${duration.seconds} секундын өмнө`;
+                        }
                         return (
                             <div
                                 key={review.id}

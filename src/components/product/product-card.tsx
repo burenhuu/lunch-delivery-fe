@@ -371,7 +371,7 @@ export default function ProductCard({
                             {product.active && placeState === "OPEN" && (
                                 <>
                                     <div className="my-col-5">
-                                        <div>Порц</div>
+                                        <div>Порц:</div>
                                         <div className="flex gap-x-1.25">
                                             {variants.map(
                                                 (variant: Variant) => {
@@ -401,7 +401,7 @@ export default function ProductCard({
                                     {applicableOptionsTypeV.length > 0 && (
                                         <>
                                             <div className="my-col-5">
-                                                <div>Хачир</div>
+                                                <div>Хачир:</div>
                                                 <div className="flex gap-x-1.25">
                                                     {applicableOptionsTypeV?.map(
                                                         (option: Option) => {
@@ -416,7 +416,7 @@ export default function ProductCard({
                                                                         option.id
                                                                     }
                                                                     className={
-                                                                        "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                        "py-2.5 px-1 rounded-md w-[75px] text-center relative " +
                                                                         (selectedOptions.find(
                                                                             (
                                                                                 item

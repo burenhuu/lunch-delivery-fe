@@ -18,6 +18,9 @@ import {
 } from "react-accessible-accordion";
 import { FatalError } from "next/dist/lib/fatal-error";
 import { useRouter } from "next/router";
+import {cartAnimation} from "../../lib/utils/cart-animation";
+
+let addToCartEvent: any;
 
 function findVariant(options: any, product: any) {
     let optionDict: any = {};
@@ -131,7 +134,7 @@ export default function ProductCard({
         }
     };
 
-    const onAddClick = async () => {
+    const onAddClick = async (e: any) => {
         const productData: CartData = {
             type: "Delivery",
             merchant: merchantId,
@@ -143,6 +146,7 @@ export default function ProductCard({
         };
         try {
             const { data } = await TokiAPI.addCart(productData);
+            cartAnimation(e)
             console.log(data);
             dispatch({
                 type: "cartCount",
@@ -253,7 +257,7 @@ export default function ProductCard({
     return (
         data && (
             <AccordionItem
-                className="overflow-hidden bg-white rounded-2xl shadow-delivery"
+                className="overflow-hidden bg-white rounded-2xl shadow-delivery product-cart"
                 uuid={product.variants[0]?.id}
             >
                 <AccordionItemHeading>
@@ -272,7 +276,7 @@ export default function ProductCard({
                                         onClick={onImageClick}
                                         src={image}
                                         className={
-                                            "w-full h-[120px] rounded-2xl"
+                                            "w-full h-[120px] rounded-2xl product-image"
                                         }
                                         alt={place}
                                     />
@@ -518,7 +522,7 @@ export default function ProductCard({
                                         onClick={onAddClick}
                                         className="pt-2.5"
                                     >
-                                        <ButtonComponent text="Сагсанд нэмэх" />
+                                        <ButtonComponent text="Сагсанд нэмэх" onClick={(e: any) => (addToCartEvent = e)}/>
                                     </div>
                                 </>
                             )}

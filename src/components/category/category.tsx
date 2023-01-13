@@ -21,7 +21,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     const [activeTab, setActiveTab] = useState<string>(categoryId as string);
     const [childrenCategories, setChildrenCategories] = useState<
         CategoryType[]
-    >(categories[0].chidren || []);
+    >(categories[0]?.chidren || []);
     const [selectedChildren, setSelectedChildren] = useState<string>(
         childrenCategories ? childrenCategories[0]?.id : ""
     );
@@ -114,7 +114,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
         } else{
             console.log("123---------------456")
             setSwiperLength(Math.ceil(childrenCategories?.length / 10));
-            setSelectedChildren(childrenCategories[0]?.id);
+            setSelectedChildren(childrenCategories ? childrenCategories[0]?.id : "");
         }
     }, [childrenCategories]);
 

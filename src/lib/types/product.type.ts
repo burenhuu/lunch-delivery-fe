@@ -32,6 +32,7 @@ export interface RecommendedType extends Variant {
     placeId: string;
     categoryMain?: string;
     rating: number;
+    productName: string;
 }
 
 export interface CardDataType {

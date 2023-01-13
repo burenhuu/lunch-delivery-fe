@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useAppState } from "../../lib/context/app";
 
 export default function Recommended({ data }: { data: any }) {
-    const { image, name, rating, price, salePrice, place } = data;
+    const { image, name, rating, price, salePrice, place, productName } = data;
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
 
@@ -30,7 +30,7 @@ export default function Recommended({ data }: { data: any }) {
             <img src={image} alt={name} className="w-[150px] h-[100px] rounded-[15px]" />
             <div className="p-2.5 my-col-10">
                 <div className="my-col-5">
-                    <div className="text-xs truncate text-ellipsis">{name}</div>
+                    <div className="text-xs truncate text-ellipsis">{productName}</div>
                     {
                         formatPrice(price) === formatPrice(salePrice) ?
                             <div className="font-light flex justify-start gap-x-0.5 items-center">

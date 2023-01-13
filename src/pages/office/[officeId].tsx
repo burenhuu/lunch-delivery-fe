@@ -127,7 +127,8 @@ export default function Office() {
                                 placeId: item.id,
                                 image: item.product.image,
                                 rating: item.rating,
-                                categoryMain: item.product.category
+                                categoryMain: item.product.category,
+                                productName: item.product.name
                             });
                         }
 

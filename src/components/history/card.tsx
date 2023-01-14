@@ -90,7 +90,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         )}
                         <div>{item.merchant.name}</div>
                         <div>
-                            {item.status === Status.PENDING
+                            {/* {item.status === Status.PENDING
                                 ? item.deliveryTime
                                     ? item.deliveryTime
                                     : "00:00"
@@ -112,7 +112,25 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                           }
                                           renderer={renderer}
                                       />
-                                  )}
+                                  )} */}
+                            {item.state === Status.DELIVERED ||
+                            item.state === Status.COMPLETED ? (
+                                calcTimeDiff(
+                                    item.deliveringAt,
+                                    item.deliveredAt
+                                )
+                            ) : (
+                                <Countdown
+                                    daysInHours={true}
+                                    overtime={true}
+                                    date={
+                                        new Date(
+                                            item.deliveringAt.replace(/ /g, "T")
+                                        )
+                                    }
+                                    renderer={renderer}
+                                />
+                            )}
                         </div>
                         {item.reviews.length > 0 &&
                             item.reviews.map((element: any) => {

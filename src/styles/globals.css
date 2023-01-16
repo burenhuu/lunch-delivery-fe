@@ -214,10 +214,3 @@ input[type="radio"]:checked ~ .checkmark {
 input {
     @apply focus:outline-none caret-gradient-end;
 }
-
-.EZDrawer {
-    position: fixed;
-    z-index: 999999999 !important;
-    left: 0;
-    bottom: 0;
-}

@@ -32,7 +32,7 @@ export function DeliveryTime({
                       setSelectedTime(
                           `${data.data.times[0][0]} - ${data.data.times[0][1]}`
                       ),
-                  data.data.times[0] && setValue("time", data.data.times[0]),
+                  data.data.times[0] && setValue("time", data.data.times[0][1]),
                   data.data.times[0] && setValue("type", "Delivery"),
                   data.data.times[0] && setisDeliveryClosed(false),
                   setDeliveryType("Delivery"))

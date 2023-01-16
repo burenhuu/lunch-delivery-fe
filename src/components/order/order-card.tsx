@@ -25,12 +25,14 @@ const OrderCard: React.FC<OrderCardProps> = ({ item }) => (
                     )}
                     <div className="text-sm">{formatPrice(item.price)} ₮</div>
                 </div>
-                <div className="text-xs font-light text-gray flex gap-x-0.5">
+                <div className="text-xs font-light text-gray flex gap-x-0.5 truncate">
                     {item.options &&
                         item.options.map((option: any, index: number) => (
                             <div key={index}>{option.value}</div>
                         ))}
-                    {item.comment && ` (${item.comment})`}
+                    <span className="">
+                        {item.comment && ` (${item.comment})`}
+                    </span>
                 </div>
             </div>
         </div>

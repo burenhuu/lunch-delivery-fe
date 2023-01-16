@@ -119,7 +119,14 @@ export default function Review({
         });
 
     return (
-        <div className="fixed z-max">
+        <div
+            style={{
+                position: "absolute",
+                zIndex: "999999999 !important",
+                left: "0",
+                bottom: "0",
+            }}
+        >
             <Drawer
                 open={showDrawer}
                 onClose={toggleDrawer}

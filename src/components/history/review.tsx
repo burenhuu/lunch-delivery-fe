@@ -119,7 +119,7 @@ export default function Review({
         });
 
     return (
-        <div className="absolute z-max">
+        <div className="fixed z-max">
             <Drawer
                 open={showDrawer}
                 onClose={toggleDrawer}

@@ -11,7 +11,7 @@ const OrderStatus: React.FC<OrderStatusProps> = ({ status, alignRight }) => (
     >
         {status === Status.PENDING
             ? "Төлбөр хүлээгдэж буй"
-            : Status.NEW
+            : status === Status.NEW
             ? "Захиалга хийгдсэн"
             : status === Status.ACCEPTED
             ? "Захиалга хүлээн авсан"

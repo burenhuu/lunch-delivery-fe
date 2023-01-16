@@ -6,7 +6,7 @@ import CenteredSpin from "components/common/centered-spin";
 import Card from "components/history/card";
 import { Status } from "lib/types/order.type";
 
-const finishedStatuses = [Status.COMPLETED, Status.CANCELLED];
+const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
 const statusTabs = ["Идэвхтэй", "Дууссан"];
 const apiUrl = `/v1/orders`;
 

@@ -13,7 +13,9 @@ const WithAuth = ({ children }: any) => {
     useEffect(() => {
         if (router.isReady) {
             const getUser = async () => {
-                const token = router.query.tokenid?.toString();
+                // const token = router.query.tokenid?.toString();
+                const token =
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmQ2Y2VlNDY5OWM2M2VmNDBkZjA1OCIsInRva2VuVHlwZSI6Ik1JTklQUk9HUkFNX1RPS0VOIiwibWluaVByb2dyYW1JZCI6IjYyZTkwMmEwMzkwNTVlOTA0MGFlODM0NiIsInRpbWVzdGFtcCI6MTY3Mzg0MTU5MjY2NSwiaWF0IjoxNjczODQxNTkyLCJleHAiOjE2NzM5Mjc5OTJ9.ELBxRtMUunTGt8oyOshvl9TT7f0umlUu4ystxAVJwDE";
                 localStorage.clear();
 
                 try {

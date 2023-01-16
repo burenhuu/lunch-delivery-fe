@@ -41,6 +41,8 @@ interface CardProps {
     item: any;
 }
 
+const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
+
 const Card: React.FC<CardProps> = ({ item }) => {
     const router = useRouter();
     const [showDrawer, setShowDrawer] = useState(false);
@@ -56,7 +58,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
             <div
                 className="z-10 px-5 py-[15px] bg-white rounded-2xl shadow-delivery my-col-15"
                 onClick={() => {
-                    item.state === Status.COMPLETED &&
+                    finishedStatuses.includes(item.state) &&
                         router.push(`/order-detail/${item.id}`);
                 }}
             >
@@ -66,20 +68,22 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             Захиалга #
                             {item.number.substring(item.number.length - 4)}
                         </div>
-                        <div>Зоогийн газар {showDelivery ? 1 : 2}</div>
-                        <div>
-                            {item.state === Status.COMPLETED
-                                ? "Хүргэгдсэн хугацаа"
-                                : item.state === Status.CANCELLED
-                                ? "Цуцлагдсан"
-                                : "Хүргэгдэх хугацаа"}
-                        </div>
+                        <div>Зоогийн газар</div>
+                        {item.state !== Status.CANCELLED && (
+                            <div>
+                                {item.state === Status.COMPLETED ||
+                                item.state === Status.DELIVERED
+                                    ? "Хүргэгдсэн хугацаа"
+                                    : "Хүргэгдэх хугацаа"}
+                            </div>
+                        )}
                         {item.reviews.length > 0 && <div>Миний үнэлгээ</div>}
                     </div>
                     <div className="items-end text-xs font-light my-col-5 text-gray">
-                        {item.completedAt ? (
+                        {item.state === Status.COMPLETED ||
+                        item.state === Status.DELIVERED ? (
                             format(
-                                new Date(item.completedAt),
+                                new Date(item.deliveredAt),
                                 "yyyy.MM.dd HH:mm"
                             )
                         ) : (
@@ -89,67 +93,55 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             />
                         )}
                         <div>{item.merchant.name}</div>
-                        <div>
-                            {/* {item.status === Status.PENDING
-                                ? item.deliveryTime
-                                    ? item.deliveryTime
-                                    : "00:00"
-                                : item.state === Status.COMPLETED &&
-                                  item.orderedAt &&
-                                  item.completedAt
-                                ? calcTimeDiff(item.orderedAt, item.completedAt)
-                                : item.deliveredAt && (
-                                      <Countdown
-                                          daysInHours={true}
-                                          overtime={true}
-                                          date={
-                                              new Date(
-                                                  item.deliveredAt.replace(
-                                                      / /g,
-                                                      "T"
-                                                  )
-                                              )
-                                          }
-                                          renderer={renderer}
-                                      />
-                                  )} */}
-                            {item.state === Status.DELIVERED ||
-                            item.state === Status.COMPLETED ? (
-                                calcTimeDiff(
-                                    item.deliveringAt,
-                                    item.deliveredAt
-                                )
-                            ) : (
-                                <Countdown
-                                    daysInHours={true}
-                                    overtime={true}
-                                    date={
-                                        new Date(
-                                            item.deliveredAt.replace(/ /g, "T")
-                                        )
-                                    }
-                                    renderer={renderer}
-                                />
-                            )}
-                        </div>
+                        {item.state !== Status.CANCELLED && (
+                            <div>
+                                {item.state === Status.COMPLETED ||
+                                item.state === Status.DELIVERED ? (
+                                    calcTimeDiff(
+                                        item.deliveringAt,
+                                        item.deliveredAt
+                                    )
+                                ) : (
+                                    <Countdown
+                                        daysInHours={true}
+                                        overtime={true}
+                                        date={
+                                            new Date(
+                                                item.deliveredAt.replace(
+                                                    / /g,
+                                                    "T"
+                                                )
+                                            )
+                                        }
+                                        renderer={renderer}
+                                    />
+                                )}
+                            </div>
+                        )}
                         {item.reviews.length > 0 &&
-                            item.reviews.map((element: any) => {
-                                return `${element.liked ? "👍 " : "👎 "} ${
-                                    element.type === "S"
-                                        ? "(Амт, чанар) "
-                                        : "(Хүргэлт) "
-                                }`;
-                            })}
+                            item.reviews
+                                .sort((a: any, b: any) =>
+                                    a.type < b.type ? 1 : -1
+                                )
+                                .map((element: any) => {
+                                    return `${element.liked ? "👍 " : "👎 "} ${
+                                        element.type === "S"
+                                            ? "(Амт, чанар) "
+                                            : "(Хүргэлт) "
+                                    }`;
+                                })}
                     </div>
                 </div>
 
                 {item.state === Status.PENDING ? (
                     <div className="w-full h-[40px]"></div>
-                ) : item.state === Status.COMPLETED &&
+                ) : (item.state === Status.COMPLETED ||
+                      item.state === Status.DELIVERED) &&
                   item.reviews.length < 2 ? (
                     <div className="w-full h-[40px]"></div>
                 ) : (
-                    item.state !== Status.COMPLETED && (
+                    item.state !== Status.COMPLETED &&
+                    item.state !== Status.DELIVERED && (
                         <div className="w-full h-[40px]"></div>
                     )
                 )}
@@ -164,7 +156,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             </a>
                         </Link>
                     </div>
-                ) : item.state === Status.COMPLETED &&
+                ) : (item.state === Status.COMPLETED ||
+                      item.state === Status.DELIVERED) &&
                   item.reviews.length < 2 ? (
                     <div
                         className="w-[150px] self-center z-30"
@@ -173,7 +166,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         <ButtonComponent text="Үнэлгээ өгөх" />
                     </div>
                 ) : (
-                    item.state !== Status.COMPLETED && (
+                    item.state !== Status.COMPLETED &&
+                    item.state !== Status.DELIVERED && (
                         <div className="self-center flex items-center gap-x-1.25 justify-center">
                             <Link href={`/order-detail/${item.id}`}>
                                 <a>

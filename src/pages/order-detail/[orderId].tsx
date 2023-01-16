@@ -42,7 +42,7 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
 
 const apiUrl = `/v1/orders`;
 let step: any;
-let bars: any;
+let bars: any = [];
 
 const OrderDetail: NextPage = () => {
     const router = useRouter();
@@ -193,27 +193,25 @@ const OrderDetail: NextPage = () => {
                     </div>
                     {/* Status bar */}
                     <div className="text-sm my-col-20">
-                        <div
-                            className={`grid grid-cols-${
-                                data.data.type.toLowerCase() === "takeaway"
-                                    ? "5"
-                                    : "6"
-                            } gap-x-1.25`}
-                        >
-                            {bars &&
-                                bars.map((status: any, index: any) => {
-                                    return (
-                                        <div
-                                            key={status.state}
-                                            className={`rounded-[2.5px] h-[5px] w-full ${
-                                                step > index
-                                                    ? "bg-gradient-end"
-                                                    : "bg-[#D9D9D9]"
-                                            }`}
-                                        ></div>
-                                    );
-                                })}
-                        </div>
+                        {bars && bars.length > 0 && (
+                            <div
+                                className={`grid grid-cols-${bars.length} gap-x-1.25`}
+                            >
+                                {bars &&
+                                    bars.map((status: any, index: any) => {
+                                        return (
+                                            <div
+                                                key={status.state}
+                                                className={`rounded-[2.5px] h-[5px] w-full ${
+                                                    step > index
+                                                        ? "bg-gradient-end"
+                                                        : "bg-[#D9D9D9]"
+                                                }`}
+                                            ></div>
+                                        );
+                                    })}
+                            </div>
+                        )}
                         <div className="font-light text-gray">{statusText}</div>
                     </div>
                 </div>

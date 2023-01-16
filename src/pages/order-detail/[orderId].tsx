@@ -91,6 +91,11 @@ const OrderDetail: NextPage = () => {
             step: 5,
         },
         {
+            state: Status.DELIVERED,
+            text: "Захиалга хүргэгдсэн",
+            step: 6,
+        },
+        {
             state: Status.COMPLETED,
             text: "Захиалга дууссан",
             step: 6,
@@ -254,14 +259,16 @@ const OrderDetail: NextPage = () => {
                                     )?.step;
 
                                     return (
-                                        <div
-                                            key={status.state}
-                                            className={`rounded-[2.5px] h-[5px] w-full ${
-                                                step > index
-                                                    ? "bg-gradient-end"
-                                                    : "bg-[#D9D9D9]"
-                                            }`}
-                                        ></div>
+                                        statusBar.length > index + 1 && (
+                                            <div
+                                                key={status.state}
+                                                className={`rounded-[2.5px] h-[5px] w-full ${
+                                                    step > index
+                                                        ? "bg-gradient-end"
+                                                        : "bg-[#D9D9D9]"
+                                                }`}
+                                            ></div>
+                                        )
                                     );
                                 })}
                             </div>

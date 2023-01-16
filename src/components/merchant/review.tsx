@@ -1,6 +1,6 @@
 import { Review } from "lib/types/merchant.type";
 import { intervalToDuration } from "date-fns";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { DeleteIcon } from "components/icons";
 import TokiAPI from "../../lib/api/toki";
 
@@ -14,12 +14,12 @@ export default function MerchantReview(props: { merchantId: string }) {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getReviews();
-    },[])
+    }, [])
 
     const deleteReview = async (id: string) => {
-        TokiAPI.deleteReview(id).then((r)=>{
+        TokiAPI.deleteReview(id).then((r) => {
             getReviews()
         })
     };
@@ -40,7 +40,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                         {merchantReview?.types.map((type) => {
                             return (
                                 <div key={type.type} className="flex gap-x-2.5">
-                                    <div>{type.type}</div>
+                                    <div>{type.type === 'D' ? "Хүргэлт" : "Амт чанар"}</div>
                                     <div> 👍{type?.percentage.toString().slice(0, 4)} %</div>
                                 </div>
                             );

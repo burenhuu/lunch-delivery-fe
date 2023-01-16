@@ -77,17 +77,11 @@ export default function GreadientMerchantCard({
             setShow(true);
             setContent(
                 <PermissionBox
-                    text={
-                        <>
-                            <div className="my-col-20">
-                                <div>
-                                    Зоогийн газар дотоод ажилтай байгаа тул
-                                    захиалга авахгүй
-                                </div>
-                                <div>Нээх цаг: 10/21, 12:00</div>
-                            </div>
-                        </>
-                    }
+                    text={` Зоогийн газар дотоод ажилтай байгаа тул <br>
+                    захиалга авахгүй <br>
+                    <b>
+                        Нээх цаг: ${merchant.reason}
+                    </b>`}
                 />
             );
         } else {
@@ -101,7 +95,7 @@ export default function GreadientMerchantCard({
                 className="rounded-2xl min-h-[160px] overflow-hidden shadow-delivery relative"
             >
                 {merchant.state === "CLOSED" ||
-                merchant.state === "TEMPORARY_CLOSED" ? (
+                    merchant.state === "TEMPORARY_CLOSED" ? (
                     <div className="h-[22px] absolute z-20 right-0 top-3 my-col-5 items-start bg-gray/50 rounded-l-[11px]  text-white">
                         <div className="text-[10px] font-normal flex justify-start gap-x-1.25 items-center py-[5px] px-[10px] leading-[11.85px]">
                             {merchant.state === "CLOSED" ? (

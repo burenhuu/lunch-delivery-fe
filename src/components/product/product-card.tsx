@@ -18,7 +18,7 @@ import {
 } from "react-accessible-accordion";
 import { FatalError } from "next/dist/lib/fatal-error";
 import { useRouter } from "next/router";
-import {cartAnimation} from "../../lib/utils/cart-animation";
+import { cartAnimation } from "../../lib/utils/cart-animation";
 
 let addToCartEvent: any;
 
@@ -374,34 +374,40 @@ export default function ProductCard({
                         <>
                             {product.active && placeState === "OPEN" && (
                                 <>
-                                    <div className="my-col-5">
-                                        <div>Порц:</div>
-                                        <div className="flex gap-x-1.25">
-                                            {variants.map(
-                                                (variant: Variant) => {
-                                                    return (
-                                                        <div
-                                                            onClick={() =>
-                                                                onSelectVariant(
-                                                                    variant
-                                                                )
-                                                            }
-                                                            key={variant.id}
-                                                            className={
-                                                                "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                                (selectedVariant ===
-                                                                variant
-                                                                    ? "gradient-border text-main"
-                                                                    : "border border-gray text-gray")
-                                                            }
-                                                        >
-                                                            {variant.name}
-                                                        </div>
-                                                    );
-                                                }
-                                            )}
-                                        </div>
-                                    </div>
+                                    {
+                                        variants.length === 1 ?
+                                            <></>
+                                            :
+                                            <div className="my-col-5">
+                                                <div>Порц:</div>
+                                                <div className="flex gap-x-1.25">
+                                                    {variants.map(
+                                                        (variant: Variant) => {
+                                                            return (
+                                                                <div
+                                                                    onClick={() =>
+                                                                        onSelectVariant(
+                                                                            variant
+                                                                        )
+                                                                    }
+                                                                    key={variant.id}
+                                                                    className={
+                                                                        "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                        (selectedVariant ===
+                                                                            variant
+                                                                            ? "gradient-border text-main"
+                                                                            : "border border-gray text-gray")
+                                                                    }
+                                                                >
+                                                                    {variant.name}
+                                                                </div>
+                                                            );
+                                                        }
+                                                    )}
+                                                </div>
+                                            </div>
+                                    }
+
                                     {applicableOptionsTypeV.length > 0 && (
                                         <>
                                             <div className="my-col-5">
@@ -477,9 +483,9 @@ export default function ProductCard({
                                                                                         item
                                                                                     ) =>
                                                                                         item?.id ===
-                                                                                            option.id &&
+                                                                                        option.id &&
                                                                                         item?.value ===
-                                                                                            value
+                                                                                        value
                                                                                 )
                                                                                     ? "gradient-border text-main"
                                                                                     : "border border-gray text-gray")
@@ -522,7 +528,7 @@ export default function ProductCard({
                                         onClick={onAddClick}
                                         className="pt-2.5"
                                     >
-                                        <ButtonComponent text="Сагсанд нэмэх" onClick={(e: any) => (addToCartEvent = e)}/>
+                                        <ButtonComponent text="Сагсанд нэмэх" onClick={(e: any) => (addToCartEvent = e)} />
                                     </div>
                                 </>
                             )}

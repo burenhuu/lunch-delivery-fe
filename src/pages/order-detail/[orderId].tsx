@@ -54,7 +54,10 @@ const OrderDetail: NextPage = () => {
 
     useEffect(() => {
         if (data && !initOpen) {
-            if (data.data.state === Status.DELIVERED) {
+            if (
+                data.data.type.toLowerCase() !== "takeaway" &&
+                data.data.state === Status.DELIVERED
+            ) {
                 setInitOpen(true);
                 setShowDrawer(true);
             }
@@ -116,7 +119,7 @@ const OrderDetail: NextPage = () => {
             step: 4,
         },
         {
-            state: Status.COMPLETED,
+            state: Status.DELIVERED,
             text: "Захиалга дууссан",
             step: 5,
         },

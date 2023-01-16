@@ -177,14 +177,16 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                 </a>
                             </Link>
                             {item.merchant?.phone && (
-                                <div className="z-max">
-                                    <a
-                                        href={`tel://${item.merchant?.phone}`}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <CallIcon />
-                                    </a>
+                                <div
+                                    className="z-max"
+                                    onClick={() =>
+                                        window.open(
+                                            `tel://${item.merchant?.phone}`,
+                                            "_self"
+                                        )
+                                    }
+                                >
+                                    <CallIcon />
                                 </div>
                             )}
                         </div>

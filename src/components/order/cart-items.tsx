@@ -38,11 +38,9 @@ export function CartItems({
             const { data } = await TokiAPI.updateCard(productData);
 
             setData(data);
-            data.totalAmount
-                ? setTotalAmount(data.totalAmount)
-                : setTotalAmount(0);
-            data.taxAmount ? setTaxAmount(data.taxAmount) : setTaxAmount(0);
-            data.grandTotal ? setGrandTotal(data.grandTotal) : setGrandTotal(0);
+            data.totalAmount && setTotalAmount(data.totalAmount);
+            data.taxAmount && setTaxAmount(data.taxAmount);
+            data.grandTotal && setGrandTotal(data.grandTotal);
             data.discountAmount
                 ? setDiscountAmount(data.discountAmount)
                 : setDiscountAmount(0);

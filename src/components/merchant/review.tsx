@@ -40,7 +40,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                         {merchantReview?.types.map((type) => {
                             return (
                                 <div key={type.type} className="flex gap-x-2.5">
-                                    <div>{type.type === 'D' ? "Хүргэлт" : "Амт чанар"}</div>
+                                    <div>{type.type === 'D' ? "Хүргэлт" : "Амт,чанар"}</div>
                                     <div> 👍{type?.percentage.toString().slice(0, 4)} %</div>
                                 </div>
                             );

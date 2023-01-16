@@ -101,7 +101,7 @@ export default function GreadientMerchantCard({
                             {merchant.state === "CLOSED" ? (
                                 <>Хаалттай</>
                             ) : (
-                                <>{merchant.reason}</>
+                                <>Дотоод ажилтай тул {merchant.reason}-с нээнэ</>
                             )}
                         </div>
                     </div>

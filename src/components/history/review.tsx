@@ -121,7 +121,7 @@ export default function Review({
     return (
         <div
             style={{
-                position: "absolute",
+                position: "fixed",
                 zIndex: "999999999 !important",
                 left: "0",
                 bottom: "0",

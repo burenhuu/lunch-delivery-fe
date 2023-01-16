@@ -10,7 +10,7 @@ const Footer = ({ routerPathName }: any) => {
     const { merchantId } = router.query;
 
     return (
-        <footer className="fixed bottom-0 w-full items-center grid grid-cols-2 gap-4 py-2.5 px-5 bg-white rounded-t-[20px] shadow-2xl shadow-black">
+        <footer className="fixed z-30 bottom-0 w-full items-center grid grid-cols-2 gap-4 py-2.5 px-5 bg-white rounded-t-[20px] shadow-2xl shadow-black">
             {
                 <>
                     <Link href={`/office/${state.officeId}`}>

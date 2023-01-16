@@ -125,7 +125,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                     overtime={true}
                                     date={
                                         new Date(
-                                            item.deliveringAt.replace(/ /g, "T")
+                                            item.deliveredAt.replace(/ /g, "T")
                                         )
                                     }
                                     renderer={renderer}
@@ -185,7 +185,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             {item.merchant?.phone && (
                                 <div className="z-max">
                                     <a
-                                        href={`tel://${item.merchant?.contact_number}`}
+                                        href={`tel://${item.merchant?.phone}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >

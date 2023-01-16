@@ -39,7 +39,7 @@ export default function Review({
                     liked: liked,
                     comment: comment,
                     additional: additional,
-                    pictures: images.map((image: any) => image.name),
+                    uploads: images.map((image: any) => image.name),
                 });
 
                 toggleDrawer();

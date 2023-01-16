@@ -24,7 +24,8 @@ export interface Merchant {
     distance: number;
     delivery: string[];
     products: Product[]
-    timetable: Timetable[]
+    timetable: Timetable[];
+    timetableDelivery: Timetable[]
 }
 
 

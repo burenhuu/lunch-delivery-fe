@@ -44,10 +44,10 @@ export default function Office() {
 
 
     const filterNames = [
-        // {
-        //     'sort': '',
-        //     'name': "Үнэлгээгээр",
-        // },
+        {
+            'sort': 'rating',
+            'name': "Үнэлгээгээр",
+        },
         {
             'sort': 'price',
             'name': "Үнээр",

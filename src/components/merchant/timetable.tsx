@@ -4,13 +4,74 @@ import min from "date-fns/min";
 
 export default function MerchantTimetable({
     timetable,
+    timeTableDelivery,
 }: {
     timetable: Timetable[];
+    timeTableDelivery: Timetable[];
 }) {
-    const [weekday, setWeekday] = useState<string>("");
-    const [saturday, setSaturday] = useState<string>("Амарна");
-    const [sunday, setSunday] = useState<string>("Амарна");
     const [week, setWeek] = useState<[]>([]);
+    const [deliveryWeek, setDeliveryWeek] = useState<[]>([]);
+
+    useEffect(() => {
+        let week: any = []
+        timeTableDelivery.map((day) => {
+            if (day.day === 0) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Даваа',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            } else if (day.day === 1) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Мягмар',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            } else if (day.day === 2) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Лхагва',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 3) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Пүрэв',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 4) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Баасан',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 5) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Бямба',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+            else if (day.day === 6) {
+                week.push({
+                    'day': day.day,
+                    'name': 'Ням',
+                    'active': day.active,
+                    'time': `${day.open} - ${day.close}`
+                })
+            }
+        });
+        setDeliveryWeek(week)
+    }, [])
 
     console.log(timetable)
 
@@ -74,6 +135,7 @@ export default function MerchantTimetable({
         });
         setWeek(week)
     }, []);
+
     return (
         <div className="my-col-15">
             <div className="font-medium">Цагийн хуваарь</div>
@@ -97,10 +159,17 @@ export default function MerchantTimetable({
                 {/* Хүргэлт */}
                 <div className="p-2.5 border-r border-gray/10 my-col-10">
                     {
-                        week.map((val: any) => {
-                            return (
-                                <div key={val.day}>{val.time}</div>
-                            )
+                        deliveryWeek.map((val: any) => {
+                            if (val.active) {
+                                return (
+                                    <div key={val.day}>{val.time}</div>
+                                )
+                            } else {
+                                return (
+                                    <div key={val.day}>Амарна</div>
+                                )
+                            }
+
                         })
                     }
 
@@ -109,9 +178,16 @@ export default function MerchantTimetable({
                 <div className="p-2.5 my-col-10">
                     {
                         week.map((val: any) => {
-                            return (
-                                <div key={val.day}>{val.time}</div>
-                            )
+                            if (val.active) {
+                                return (
+                                    <div key={val.day}>{val.time}</div>
+                                )
+                            } else {
+                                return (
+                                    <div key={val.day}>Амарна</div>
+                                )
+                            }
+
                         })
                     }
                 </div>

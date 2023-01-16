@@ -77,7 +77,7 @@ export default function MerchantDetailPage() {
                 <div className="p-5 my-col-20">
                     <MerchantIntroduction merchant={merchant} />
                     {merchant?.timetable && (
-                        <MerchantTimetable timetable={merchant.timetable} />
+                        <MerchantTimetable timetable={merchant.timetable} timeTableDelivery={merchant.timetableDelivery} />
                     )}
                     {merchantReview && <MerchantReview merchantId={merchantId} />}
                 </div>

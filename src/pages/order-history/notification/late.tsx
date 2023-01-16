@@ -61,7 +61,7 @@ const Review: NextPage = () => {
                     setContent(
                         <PermissionBox
                             text={`Уучлаарай, таны захиалга хоцорч танд <b>${formatPrice(
-                                item.loyaltyAmount
+                                item.penaltyAmount
                             )} U-Point</b> оноо олголоо.
                         Та захиалгаа <b>${
                             timesResponse.data.times[0]

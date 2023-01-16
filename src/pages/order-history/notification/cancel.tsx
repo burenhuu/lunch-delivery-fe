@@ -56,7 +56,7 @@ const Cancel: NextPage = () => {
                     setContent(
                         <PermissionBox
                             text={`Уучлаарай таны захиалсан хоол гарах боломжгүй болсон тул цуцлагдаж <b>${formatPrice(
-                                item.loyaltyAmount
+                                item.penaltyAmount
                             )} U-Point</b> оноо олгож байна. <b>${formatPrice(
                                 item.grandTotal
                             )}₮</b>-н төлбөр Toki хэтэвчинд буцаан олгогдлоо.`}

@@ -71,10 +71,19 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         <div>Зоогийн газар</div>
                         {item.state !== Status.CANCELLED && (
                             <div>
-                                {item.state === Status.COMPLETED ||
-                                item.state === Status.DELIVERED
+                                {(item.state === Status.COMPLETED ||
+                                    item.state === Status.DELIVERED) &&
+                                item.type.toLowerCase() === "delivery"
                                     ? "Хүргэгдсэн хугацаа"
-                                    : "Хүргэгдэх хугацаа"}
+                                    : (item.state === Status.COMPLETED ||
+                                          item.state === Status.DELIVERED) &&
+                                      item.type.toLowerCase() === "takeaway"
+                                    ? "Дууссан хугацаа"
+                                    : item.type.toLowerCase() === "delivery"
+                                    ? "Хүргэгдэх хугацаа"
+                                    : item.type.toLowerCase() === "takeaway"
+                                    ? "Бэлтгэгдэх хугацаа"
+                                    : ""}
                             </div>
                         )}
                         {item.reviews.length > 0 && <div>Миний үнэлгээ</div>}

@@ -155,42 +155,66 @@ const OrderDetail: NextPage = () => {
                 <div className="my-col-10">
                     <div className="flex items-center justify-between text-sm">
                         <div>
-                            {data.data.state === Status.COMPLETED
-                                ? "Хүргэгдсэн хугацаа"
-                                : data.data.state === Status.CANCELLED
-                                ? "Цуцлагдсан"
-                                : "Хүргэгдэх хугацаа"}
+                            {data.data.state !== Status.CANCELLED && (
+                                <div>
+                                    {(data.data.state === Status.COMPLETED ||
+                                        data.data.state === Status.DELIVERED) &&
+                                    data.data.type.toLowerCase() === "delivery"
+                                        ? "Хүргэгдсэн хугацаа"
+                                        : (data.data.state ===
+                                              Status.COMPLETED ||
+                                              data.data.state ===
+                                                  Status.DELIVERED) &&
+                                          data.data.type.toLowerCase() ===
+                                              "takeaway"
+                                        ? "Дууссан хугацаа"
+                                        : data.data.type.toLowerCase() ===
+                                          "delivery"
+                                        ? "Хүргэгдэх хугацаа"
+                                        : data.data.type.toLowerCase() ===
+                                          "takeaway"
+                                        ? "Бэлтгэгдэх хугацаа"
+                                        : ""}
+                                </div>
+                            )}
                         </div>
                         <div className="font-medium">
-                            {data.data.state === Status.COMPLETED &&
-                            data.data.orderedAt &&
-                            data.data.completedAt
-                                ? calcTimeDiff(
-                                      data.data.orderedAt,
-                                      data.data.completedAt
-                                  )
-                                : data.data.deliveredAt && (
-                                      <Countdown
-                                          daysInHours={true}
-                                          overtime={true}
-                                          date={
-                                              new Date(
-                                                  data.data.deliveredAt.replace(
-                                                      / /g,
-                                                      "T"
-                                                  )
-                                              )
-                                          }
-                                          renderer={renderer}
-                                      />
-                                  )}
+                            {data.data.state !== Status.CANCELLED && (
+                                <div>
+                                    {data.data.state === Status.COMPLETED ||
+                                    data.data.state === Status.DELIVERED ? (
+                                        calcTimeDiff(
+                                            data.data.deliveringAt,
+                                            data.data.deliveredAt
+                                        )
+                                    ) : (
+                                        <Countdown
+                                            daysInHours={true}
+                                            overtime={true}
+                                            date={
+                                                new Date(
+                                                    data.data.deliveredAt.replace(
+                                                        / /g,
+                                                        "T"
+                                                    )
+                                                )
+                                            }
+                                            renderer={renderer}
+                                        />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                     {/* Status bar */}
                     <div className="text-sm my-col-20">
                         {data.data.type.toLowerCase() === "takeaway" ? (
                             <div
-                                className={`grid grid-cols-${statusBarTakeaway.length} gap-x-1.25`}
+                                className={`grid gap-x-1.25`}
+                                style={{
+                                    gridTemplateColumns:
+                                        "repeat(5, minmax(0, 1fr))",
+                                }}
                             >
                                 {statusBarTakeaway.map(
                                     (status: any, index: any) => {
@@ -216,7 +240,11 @@ const OrderDetail: NextPage = () => {
                             </div>
                         ) : (
                             <div
-                                className={`grid grid-cols-${statusBar.length} gap-x-1.25`}
+                                className={`grid gap-x-1.25`}
+                                style={{
+                                    gridTemplateColumns:
+                                        "repeat(6, minmax(0, 1fr))",
+                                }}
                             >
                                 {statusBar.map((status: any, index: any) => {
                                     const step: any = statusBar.find(
@@ -273,7 +301,7 @@ const OrderDetail: NextPage = () => {
                     </div>
                     <div className="flex items-center justify-between">
                         <div>Нийт дүн:</div>
-                        <div>{formatPrice(data.data.totalAmount)} ₮</div>
+                        <div>{formatPrice(data.data.grandTotal)} ₮</div>
                     </div>
                 </div>
                 <div className="border-t border-dashed border-gray"></div>

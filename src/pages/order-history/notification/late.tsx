@@ -64,9 +64,9 @@ const Review: NextPage = () => {
                                 item.penaltyAmount
                             )} U-Point</b> оноо олголоо.
                         Та захиалгаа <b>${
-                            timesResponse.data.times[0]
+                            timesResponse.data.times[0][1]
                         }</b>-д авах эсвэл цуцлах боломжтой.`}
-                            button2={`${timesResponse.data.times[0]}-д авах`}
+                            button2={`${timesResponse.data.times[0][1]}-д авах`}
                             button3="Цуцлах"
                             onClick={async () => {
                                 if (!myLoading) {

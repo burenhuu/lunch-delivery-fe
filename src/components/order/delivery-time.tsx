@@ -28,7 +28,10 @@ export function DeliveryTime({
     useEffect(() => {
         if (data && data.data && data.data.times) {
             data.data.times.length > 0
-                ? (data.data.times[0] && setSelectedTime(data.data.times[0]),
+                ? (data.data.times[0] &&
+                      setSelectedTime(
+                          `${data.data.times[0][0]} - ${data.data.times[0][1]}`
+                      ),
                   data.data.times[0] && setValue("time", data.data.times[0]),
                   data.data.times[0] && setValue("type", "Delivery"),
                   data.data.times[0] && setisDeliveryClosed(false),
@@ -45,6 +48,7 @@ export function DeliveryTime({
             setShow(false);
         }, 400);
     };
+
     const onSelectTime = () => {
         setShow(true);
         setContent(
@@ -58,13 +62,17 @@ export function DeliveryTime({
                                     <div
                                         key={time}
                                         onClick={() => {
-                                            setSelectedTime(time);
-                                            setValue("time", time);
+                                            setSelectedTime(
+                                                `${time[0]} - ${time[1]}`
+                                            );
+                                            setValue("time", time[1]);
                                             onClose();
                                         }}
                                         className="pb-2.5 border-b border-[#647382] last:border-none last:pb-0"
                                     >
-                                        {time}
+                                        {`${time[0] && time[0]}${
+                                            time[1] && ` - ${time[1]}`
+                                        }`}
                                     </div>
                                 );
                             })}
@@ -79,6 +87,7 @@ export function DeliveryTime({
             </div>
         );
     };
+
     return (
         <div
             onClick={onSelectTime}
@@ -86,7 +95,10 @@ export function DeliveryTime({
         >
             <div className="font-light">
                 {!data && !error && <Spin />}
-                {data && data.data && selectedTime === data.data.times[0]
+                {data &&
+                data.data &&
+                selectedTime ===
+                    `${data.data.times[0][0]} - ${data.data.times[0][1]}`
                     ? `${selectedTime} (Аль болох эрт)`
                     : selectedTime}
             </div>

@@ -41,8 +41,6 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
 };
 
 const apiUrl = `/v1/orders`;
-let step: any;
-let bars: any = [];
 
 const OrderDetail: NextPage = () => {
     const router = useRouter();
@@ -52,21 +50,15 @@ const OrderDetail: NextPage = () => {
     });
     const [loading, setLoading] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
+    const [initOpen, setInitOpen] = useState(false);
 
     useEffect(() => {
-        if (data) {
-            bars =
-                data.data.type.toLowerCase() === "takeaway"
-                    ? statusBarTakeaway
-                    : statusBar;
-
-            step = bars.find((x: any) => {
-                return x.state === data.data.state;
-            })?.step;
-
-            data.data.state === Status.DELIVERED && setShowDrawer(true);
+        if (data && !initOpen) {
+            if (data.data.state === Status.DELIVERED) {
+                setInitOpen(true);
+                setShowDrawer(true);
+            }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
     const statusBar = [
@@ -193,12 +185,19 @@ const OrderDetail: NextPage = () => {
                     </div>
                     {/* Status bar */}
                     <div className="text-sm my-col-20">
-                        {bars && bars.length > 0 && (
+                        {data.data.type.toLowerCase() === "takeaway" ? (
                             <div
-                                className={`grid grid-cols-${bars.length} gap-x-1.25`}
+                                className={`grid grid-cols-${statusBarTakeaway.length} gap-x-1.25`}
                             >
-                                {bars &&
-                                    bars.map((status: any, index: any) => {
+                                {statusBarTakeaway.map(
+                                    (status: any, index: any) => {
+                                        const step: any =
+                                            statusBarTakeaway.find((x: any) => {
+                                                return (
+                                                    x.state === data.data.state
+                                                );
+                                            })?.step;
+
                                         return (
                                             <div
                                                 key={status.state}
@@ -209,9 +208,34 @@ const OrderDetail: NextPage = () => {
                                                 }`}
                                             ></div>
                                         );
-                                    })}
+                                    }
+                                )}
+                            </div>
+                        ) : (
+                            <div
+                                className={`grid grid-cols-${statusBar.length} gap-x-1.25`}
+                            >
+                                {statusBar.map((status: any, index: any) => {
+                                    const step: any = statusBar.find(
+                                        (x: any) => {
+                                            return x.state === data.data.state;
+                                        }
+                                    )?.step;
+
+                                    return (
+                                        <div
+                                            key={status.state}
+                                            className={`rounded-[2.5px] h-[5px] w-full ${
+                                                step > index
+                                                    ? "bg-gradient-end"
+                                                    : "bg-[#D9D9D9]"
+                                            }`}
+                                        ></div>
+                                    );
+                                })}
                             </div>
                         )}
+
                         <div className="font-light text-gray">{statusText}</div>
                     </div>
                 </div>

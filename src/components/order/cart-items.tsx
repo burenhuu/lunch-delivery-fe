@@ -41,7 +41,9 @@ export function CartItems({
             data.totalAmount && setTotalAmount(data.totalAmount);
             data.taxAmount && setTaxAmount(data.taxAmount);
             data.grandTotal && setGrandTotal(data.grandTotal);
-            data.discountAmount && setDiscountAmount(data.discountAmount);
+            data.discountAmount
+                ? setDiscountAmount(data.discountAmount)
+                : setDiscountAmount(0);
             data.totalItems &&
                 dispatch({ type: "cartCount", cartCount: data.totalItems });
         } finally {
@@ -184,7 +186,7 @@ export function CartItems({
                             {deliveryType == "Delivery" ? (
                                 <div>Хүргэлтийн төлбөр:</div>
                             ) : null}
-                            <div>Урамшуулал:</div>
+                            {discountAmount ? <div>Урамшуулал:</div> : null}
                             <div className="font-medium">Нийт төлөх:</div>
                         </div>
 
@@ -193,7 +195,9 @@ export function CartItems({
                             {deliveryType == "Delivery" ? (
                                 <div>{formatPrice(taxAmount)} ₮</div>
                             ) : null}
-                            <div>-{formatPrice(discountAmount)} ₮</div>
+                            {discountAmount ? (
+                                <div>-{formatPrice(discountAmount)} ₮</div>
+                            ) : null}
                             {deliveryType == "Delivery" ? (
                                 <div className="font-medium">
                                     {formatPrice(grandTotal)} ₮

@@ -16,8 +16,8 @@ export default function GreadientMerchantCard({
     const router = useRouter();
     const [show, setShow, content, setContent] = useModal();
     const [state, dispatch]: any = useAppState();
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    // const [startDate, setStartDate] = useState("");
+    // const [endDate, setEndDate] = useState("");
 
     // useEffect(() => {
     //     merchant.timetable.map((timetable: Timetable, index: number) =>
@@ -28,7 +28,90 @@ export default function GreadientMerchantCard({
     //     );
     // }, [merchant]);
 
+    // useEffect(() => {
+    //     const d = new Date();
+    //     let day = d.getDay();
+    //     let currentTime = d.getHours() * 60 + d.getMinutes()
+    //     let openTime: any;
+    //     let closeTime: any;
+    //     let openTimeDelivery: any;
+    //     let closeTimeDelivery: any;
+    //     if (merchant.timetable) {
+    //         merchant.timetable?.map((schedule) => {
+    //             if (schedule.day === day && schedule.active) {
+    //                 openTime = schedule.open.split(":").map(Number);
+    //                 closeTime = schedule.close.split(":").map(Number);
+    //             }
+    //         });
+    //     }
+    //     if (merchant.timetableDelivery) {
+    //         merchant.timetableDelivery?.map((schedule) => {
+    //             if (schedule.day === day && schedule.active) {
+    //                 openTimeDelivery = schedule.open !== null ? schedule.open.split(":").map(Number) : undefined;
+    //                 closeTimeDelivery = schedule.close !== null ? schedule.close.split(":").map(Number) : undefined;
+    //             }
+    //         });
+    //     }
+
+    //     if (openTime && closeTime && openTimeDelivery && closeTimeDelivery) {
+    //         let openSchedule = openTime[0] * 60 + openTime[1]
+    //         let closeSchedule = closeTime[0] * 60 + closeTime[1]
+    //         let openScheduleDelivery = openTimeDelivery[0] * 60 + openTimeDelivery[1]
+    //         let closeScheduleDelivery = closeTimeDelivery[0] * 60 + closeTimeDelivery[1]
+    //         let open: any
+    //         let close: any
+    //         if (openSchedule < openScheduleDelivery) {
+    //             open = openSchedule
+    //             setStartDate(`${openTime[0]}:${openTime[1]}`);
+    //         } else if (openSchedule > openScheduleDelivery) {
+    //             open = openScheduleDelivery
+    //             setStartDate(`${openTimeDelivery[0]}:${openTimeDelivery[1]}`);
+    //         } else {
+    //             open = openScheduleDelivery
+    //             setStartDate(`${openTimeDelivery[0]}:${openTimeDelivery[1]}`);
+    //         }
+    //         if (closeSchedule < closeScheduleDelivery) {
+    //             close = closeSchedule
+    //             setEndDate(`${closeTime[0]}:${closeTime[1]}`);
+    //         } else if (closeSchedule > closeScheduleDelivery) {
+    //             close = closeScheduleDelivery
+    //             setEndDate(`${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`);
+    //         } else {
+    //             close = closeScheduleDelivery
+    //             setEndDate(`${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`);
+    //         }
+    //         if (currentTime < open) {
+    //             merchant.state = "preDelivery"
+    //         } else if (currentTime > close) {
+    //             merchant.state = "CLOSED"
+    //         }
+    //     }
+    //     else if (openTimeDelivery && closeTimeDelivery) {
+    //         let openScheduleDelivery = openTimeDelivery[0] * 60 + openTimeDelivery[1]
+    //         let closeScheduleDelivery = closeTimeDelivery[0] * 60 + closeTimeDelivery[1]
+    //         setStartDate(`${openTimeDelivery[0]}:${openTimeDelivery[1]}`);
+    //         setEndDate(`${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`);
+    //         if (currentTime < openScheduleDelivery) {
+    //             merchant.state = "preDelivery"
+    //         } else if (currentTime > closeScheduleDelivery) {
+    //             merchant.state = "CLOSED"
+    //         }
+    //     }
+    //     else if (openTime && closeTime) {
+    //         let openSchedule = openTime[0] * 60 + openTime[1]
+    //         let closeSchedule = closeTime[0] * 60 + closeTime[1]
+    //         setStartDate(`${openTime[0]}:${openTime[1]}`);
+    //         setEndDate(`${closeTime[0]}:${closeTime[1]}`);
+    //         if (currentTime < openSchedule) {
+    //             merchant.state = "preDelivery"
+    //         } else if (currentTime > closeSchedule) {
+    //             merchant.state = "CLOSED"
+    //         }
+    //     }
+    // }, [])
+
     const onContinueClick = () => {
+        console.log("test")
         dispatch({
             type: "merchantId",
             merchantId: merchant.id,
@@ -46,25 +129,16 @@ export default function GreadientMerchantCard({
     };
 
     const onMerchantClick = () => {
+        console.log(merchant.state, page)
         if (merchant.state === "CLOSED") {
             setShow(true);
-            const d = new Date();
-            let day = d.getDay();
-            let startDate = "";
-            let endDate = "";
-            merchant.timetable?.map((schedule) => {
-                if (schedule.day === day) {
-                    startDate = schedule.open;
-                    endDate = schedule.close;
-                }
-            });
             setContent(
                 <PermissionBox
                     text={` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
-                              ${startDate} - ${endDate}
+                              ${merchant.startDate} - ${merchant.endDate}
                             </b>`}
                     button2={<>Үргэлжлүүлэх</>}
                     onClick={() => {
@@ -82,6 +156,13 @@ export default function GreadientMerchantCard({
                     <b>
                         Нээх цаг: ${merchant.reason}
                     </b>`}
+                />
+            );
+        } else if (merchant.state === "preDelivery") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
                 />
             );
         } else {
@@ -133,7 +214,7 @@ export default function GreadientMerchantCard({
                 <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-main/0 to-main "></div>
 
                 {page && (
-                    <div className="absolute right-3.75 bottom-3.75 flex gap-x-2.5 justify-end items-center">
+                    <div className="absolute right-3.75 bottom-3.75 flex gap-x-2.5 justify-end items-center" onClick={onContinueClick}>
                         <div className="text-xs font-light text-white">
                             Дэлгэрэнгүй
                         </div>

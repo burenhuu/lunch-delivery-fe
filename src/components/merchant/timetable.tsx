@@ -14,7 +14,7 @@ export default function MerchantTimetable({
 
     useEffect(() => {
         let week: any = []
-        timeTableDelivery.map((day) => {
+        timeTableDelivery?.map((day) => {
             if (day.day === 0) {
                 week.push({
                     'day': day.day,

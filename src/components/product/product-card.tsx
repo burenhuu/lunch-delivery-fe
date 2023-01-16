@@ -372,7 +372,7 @@ export default function ProductCard({
                             </div>
                         </div>
                         <>
-                            {product.active && placeState === "OPEN" && (
+                            {product.active && (placeState === "OPEN" || placeState === "preDelivery") && (
                                 <>
                                     {
                                         variants.length === 1 ?

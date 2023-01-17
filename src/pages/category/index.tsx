@@ -85,7 +85,7 @@ export default function Category() {
                             key={accordionKey}
                             allowZeroExpanded
                             className="my-col-10 px-5"
-                            preExpanded={[cardData[0]?.product.variants[0].id]}
+                            preExpanded={[cardData[0]?.product.variants[0]?.id]}
                         >
                             {cardData?.map((item: CardDataType) => {
                                 return (

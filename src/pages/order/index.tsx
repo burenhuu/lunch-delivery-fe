@@ -42,16 +42,10 @@ const Cart: NextPage = () => {
 
     useEffect(() => {
         if (response.data && response.data.data && response.data.data.times) {
-            response.data.data.times.length > 0
-                ? (response.data.data.times[0] &&
-                setSelectedTime(
-                    `${response.data.data.times[0][0]} - ${response.data.data.times[0][1]}`
-                ),
-                response.data.data.times[0] && setValue("time", response.data.data.times[0][1]),
-                response.data.data.times[0] && setValue("type", "Delivery"),
-                response.data.data.times[0] && setisDeliveryClosed(false),
-                    setDeliveryType("Delivery"))
-                : (setisDeliveryClosed(true), setDeliveryType("TakeAway"));
+            if (response.data.data.times.length <= 0 ){
+                setisDeliveryClosed(true)
+                setDeliveryType("TakeAway");
+            }
         } else {
             setisDeliveryClosed(true)
             setDeliveryType("TakeAway");
@@ -171,7 +165,6 @@ const Cart: NextPage = () => {
         resolver: yupResolver(validationSchema),
     });
 
-    console.log(isDeliveryClosed)
 
     const modalText =
         deliveryType === "Delivery" ? (
@@ -268,6 +261,7 @@ const Cart: NextPage = () => {
             />
         );
     };
+
     return (
         <div className="p-5 my-col-20">
             <div className="my-col-15">
@@ -357,27 +351,22 @@ const Cart: NextPage = () => {
                     </div>
                 )}
 
-                {
-                    !isDeliveryClosed &&
-                    <div className="mb-5 my-col-15">
-                        <div className="font-medium">Захиалга авах хугацаа</div>
+                <div className="mb-5 my-col-15">
+                    <div className="font-medium">Захиалга авах хугацаа</div>
 
-                        <DeliveryTime
-                            selectedTime={selectedTime}
-                            setSelectedTime={setSelectedTime}
-                            setValue={setValue}
-                            setisDeliveryClosed={setisDeliveryClosed}
-                            setDeliveryType={setDeliveryType}
-                        />
-                        {errors.time && (
-                            <p className="mt-1 text-xs italic text-left text-red-500 ">
-                                {errors.time?.message}
-                            </p>
-                        )}
-                    </div>
-                }
-
-
+                    <DeliveryTime
+                        selectedTime={selectedTime}
+                        setSelectedTime={setSelectedTime}
+                        setValue={setValue}
+                        setisDeliveryClosed={setisDeliveryClosed}
+                        setDeliveryType={setDeliveryType}
+                    />
+                    {errors.time && (
+                        <p className="mt-1 text-xs italic text-left text-red-500 ">
+                            {errors.time?.message}
+                        </p>
+                    )}
+                </div>
 
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">Нэмэлт мэдээлэл</div>

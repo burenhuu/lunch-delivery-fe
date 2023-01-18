@@ -50,10 +50,12 @@ const Card: React.FC<CardProps> = ({ item }) => {
     const [showDrawer, setShowDrawer] = useState(false);
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
     const [showDelivery, setShowDelivery] = useState(false);
+    const [firstClick, setFirstClick] = useState(false)
 
-    const toggleDrawer = () => {
-        setShowDrawer((prevState) => !prevState);
-        dispatch({ type: "footerShow", footerShow: !showDrawer });
+    const toggleDrawer = async () => {
+        let footerCheck = showDrawer
+        setShowDrawer((prevState => !prevState));
+        await dispatch({ type: "footerShow", footerShow: false });
     };
 
     return (
@@ -213,6 +215,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                     setShowDrawer={setShowDrawer}
                     type={item.reviews.length === 0 ? "S" : "D"}
                     setShowDelivery={setShowDelivery}
+                    firstClick = {firstClick}
                 />
             )}
 
@@ -222,6 +225,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                     showDrawer={showDeliveryDrawer}
                     setShowDrawer={setShowDeliveryDrawer}
                     type="D"
+                    firstClick = {firstClick}
                 />
             )}
         </div>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
 import { Remove } from "components/icons";
+import {useAppState} from "../../lib/context/app";
 
 const emojis = ["👎", "👍"];
 
@@ -15,6 +16,7 @@ export default function Review({
     setShowDrawer,
     type,
     setShowDelivery,
+    firstClick,
 }: any) {
     const commentChoices =
         type === "S"
@@ -26,6 +28,8 @@ export default function Review({
     const [images, setImages] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [errorComment, setErrorComment] = useState(false);
+    const [state, dispatch]: any = useAppState();
+
     // const [showCamera, setShowCamera] = useState(false);
 
     async function handleReview() {
@@ -72,12 +76,13 @@ export default function Review({
         setAdditional(event.target.value);
     }
 
-    const toggleDrawer = () => {
+    const toggleDrawer = async () => {
         setLiked("");
         setComment([]);
         setAdditional("");
         setLoading(false);
         setShowDrawer((prevState: any) => !prevState);
+        await dispatch({ type: "footerShow", footerShow: true });
     };
 
     // function handleImage() {

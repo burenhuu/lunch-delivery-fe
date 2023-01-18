@@ -50,6 +50,7 @@ const Index: NextPage = () => {
                         ? res.data.orders[0].office.name
                         : 0,
             });
+            dispatch({ type: "footerShow", toastCheck: true });
         });
     }, []);
 

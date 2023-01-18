@@ -18,6 +18,7 @@ import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
 import Toki from "lib/utils/toki-payment";
 import CenteredSpin from "components/common/centered-spin";
+import useSWR from "swr";
 
 const Cart: NextPage = () => {
     const router = useRouter();
@@ -35,6 +36,27 @@ const Cart: NextPage = () => {
     const [discountAmount, setDiscountAmount] = useState<any>(0);
     const [data, setData] = useState<any>(null);
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
+    const apiUrl = `/v1/cart/times`;
+    const response = useSWR(`${apiUrl}`);
+
+
+    useEffect(() => {
+        if (response.data && response.data.data && response.data.data.times) {
+            response.data.data.times.length > 0
+                ? (response.data.data.times[0] &&
+                setSelectedTime(
+                    `${response.data.data.times[0][0]} - ${response.data.data.times[0][1]}`
+                ),
+                response.data.data.times[0] && setValue("time", response.data.data.times[0][1]),
+                response.data.data.times[0] && setValue("type", "Delivery"),
+                response.data.data.times[0] && setisDeliveryClosed(false),
+                    setDeliveryType("Delivery"))
+                : (setisDeliveryClosed(true), setDeliveryType("TakeAway"));
+        } else {
+            setisDeliveryClosed(true)
+            setDeliveryType("TakeAway");
+        }
+    }, [response]);
 
     useEffect(() => {
         if (state.officeId) {
@@ -60,11 +82,17 @@ const Cart: NextPage = () => {
                     const { data } = await TokiAPI.lastCompletedOrderWithOffice(
                         state.officeId
                     );
-
                     if (data && data[0]) {
-                        data[0].type &&
+                        if (isDeliveryClosed){
+                            data[0].type &&
+                            (setDeliveryType("TakeAway"),
+                                setValue("type", "TakeAway"));
+                        } else {
+                            data[0].type &&
                             (setDeliveryType(data[0].type),
-                            setValue("type", data[0].type));
+                                setValue("type", data[0].type));
+                        }
+
                         data[0].floor &&
                             (setValue("floor", data[0].floor),
                             setSelectedFloor(data[0].floor));
@@ -142,6 +170,8 @@ const Cart: NextPage = () => {
                   },
         resolver: yupResolver(validationSchema),
     });
+
+    console.log(isDeliveryClosed)
 
     const modalText =
         deliveryType === "Delivery" ? (
@@ -263,20 +293,42 @@ const Cart: NextPage = () => {
             <form onSubmit={handleSubmit(onSubmitHandler)} className="w-full">
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">Захиалгын хэлбэр</div>
+                    {
+                        !isDeliveryClosed ?
+                        <>
+                            <DeliveryType
+                                setDeliveryType={setDeliveryType}
+                                setValue={setValue}
+                                isDeliveryClosed={isDeliveryClosed}
+                            />
+                            {errors.type && (
+                                <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                    {errors.type?.message}
+                                </p>
+                            )}
+                        </>
+                            :
+                            <>
+                                <label
+                                    className="flex items-center gap-x-2.5 relative"
+                                    htmlFor="TakeAway"
+                                >
+                                    <input
+                                        defaultChecked={isDeliveryClosed}
+                                        type="radio"
+                                        name="typeofdelivery"
+                                        id="TakeAway"
+                                        value="TakeAway"
+                                    />
+                                    <div className="checkmark"></div>
+                                    <div>Очиж авах</div>
+                                </label>
+                            </>
+                    }
 
-                    <DeliveryType
-                        setDeliveryType={setDeliveryType}
-                        setValue={setValue}
-                        isDeliveryClosed={isDeliveryClosed}
-                    />
-                    {errors.type && (
-                        <p className="mt-1 text-xs italic text-left text-red-500 ">
-                            {errors.type?.message}
-                        </p>
-                    )}
                 </div>
 
-                {deliveryType === "Delivery" && isDeliveryClosed == false && (
+                {deliveryType === "Delivery" && !isDeliveryClosed && (
                     <div className="mb-5 my-col-15">
                         <div className="font-medium">Хүргэлтийн хаяг</div>
 
@@ -305,22 +357,27 @@ const Cart: NextPage = () => {
                     </div>
                 )}
 
-                <div className="mb-5 my-col-15">
-                    <div className="font-medium">Захиалга авах хугацаа</div>
+                {
+                    !isDeliveryClosed &&
+                    <div className="mb-5 my-col-15">
+                        <div className="font-medium">Захиалга авах хугацаа</div>
 
-                    <DeliveryTime
-                        selectedTime={selectedTime}
-                        setSelectedTime={setSelectedTime}
-                        setValue={setValue}
-                        setisDeliveryClosed={setisDeliveryClosed}
-                        setDeliveryType={setDeliveryType}
-                    />
-                    {errors.time && (
-                        <p className="mt-1 text-xs italic text-left text-red-500 ">
-                            {errors.time?.message}
-                        </p>
-                    )}
-                </div>
+                        <DeliveryTime
+                            selectedTime={selectedTime}
+                            setSelectedTime={setSelectedTime}
+                            setValue={setValue}
+                            setisDeliveryClosed={setisDeliveryClosed}
+                            setDeliveryType={setDeliveryType}
+                        />
+                        {errors.time && (
+                            <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                {errors.time?.message}
+                            </p>
+                        )}
+                    </div>
+                }
+
+
 
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">Нэмэлт мэдээлэл</div>

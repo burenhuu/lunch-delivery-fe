@@ -20,6 +20,8 @@ export function CartItems({
 }: any) {
     const [state, dispatch]: any = useAppState();
 
+    console.log(deliveryType)
+
     const itemIncDecHandler = async (
         orderId: any,
         id: any,

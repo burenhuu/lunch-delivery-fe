@@ -38,7 +38,8 @@ export function DeliveryTime({
                   setDeliveryType("Delivery"))
                 : (setisDeliveryClosed(true), setDeliveryType("TakeAway"));
         } else {
-            setisDeliveryClosed(true), setDeliveryType("TakeAway");
+            setisDeliveryClosed(true)
+            setDeliveryType("TakeAway");
         }
     }, [data]);
 
@@ -98,7 +99,7 @@ export function DeliveryTime({
                 {data &&
                 data.data &&
                 selectedTime ===
-                    `${data.data.times[0][0]} - ${data.data.times[0][1]}`
+                    `${data.data.times[0] ? data.data.times[0][0] : ''} - ${data.data.times[0] ? data.data.times[0][1] : ''}`
                     ? `${selectedTime} (Аль болох эрт)`
                     : selectedTime}
             </div>

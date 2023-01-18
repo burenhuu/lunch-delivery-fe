@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 export default function DeliveryType({
     setDeliveryType,
@@ -10,6 +11,17 @@ export default function DeliveryType({
     isDeliveryClosed: any;
 }) {
     const [isDeliveryShow, setIsDeliveryShow] = useState(true);
+    const apiUrl = `/v1/cart/times`;
+    const response = useSWR(`${apiUrl}`);
+
+    useEffect(()=>{
+        if (response.data?.times?.length === 0){
+            setValue("floor", 1)
+            setValue("address", "")
+            setValue("type", "TakeAway")
+            setDeliveryType("TakeAway")
+        }
+    },[])
 
     useEffect(() => {
         if (isDeliveryClosed) {

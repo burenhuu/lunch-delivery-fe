@@ -17,13 +17,6 @@ const Page = ({ router, children }: any) => {
     }, [state]);
 
 
-    useEffect(() => {
-        console.log("test-312", state.footerShow, prevAppState?.footerShow)
-        if (state.footerShow !== prevAppState?.footerShow) {
-            console.log("test-312-test", state.footerShow)
-        }
-    }, [state.footerShow]);
-
     return (
         <div className="flex flex-col h-screen bg-[#f5f5fa]">
             <Header routerPathName={router.pathname} />
@@ -39,7 +32,10 @@ const Page = ({ router, children }: any) => {
             >
                 {children}
             </main>
-            {footerPage && state.footerShow && <Footer routerPathName={router.pathname} />}
+            {footerPage && state.footerShow ? <Footer routerPathName={router.pathname} />
+                :
+                <div className="bottom-0 w-full items-center grid grid-cols-2 gap-4 py-2.5 px-5 bg-white rounded-t-[20px] shadow-2xl shadow-black" />
+            }
         </div>
     );
 };

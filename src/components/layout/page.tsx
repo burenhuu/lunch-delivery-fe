@@ -2,10 +2,12 @@ import { withRouter } from "next/router";
 
 import Header from "./header";
 import Footer from "./footer";
+import {useAppState} from "../../lib/context/app";
 
 const CartFooterRoutes = ["/office/[officeId]", "/order-history"];
 
 const Page = ({ router, children }: any) => {
+    const [state]: any = useAppState();
     const footerPage = CartFooterRoutes.includes(router.pathname);
 
     return (
@@ -24,7 +26,7 @@ const Page = ({ router, children }: any) => {
                 {children}
             </main>
 
-            {footerPage && <Footer routerPathName={router.pathname} />}
+            {footerPage && state.footerShow && <Footer routerPathName={router.pathname} />}
         </div>
     );
 };

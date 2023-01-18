@@ -78,6 +78,7 @@ export function CartItems({
                                                 <div className="overflow-hidden grow-1 my-col-5">
                                                     <div className="truncate ">
                                                         {product.name}
+                                                        {product.variantName !== product.name && <> - {product.variantName}</>}
                                                     </div>
 
                                                     {product.options &&

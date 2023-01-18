@@ -145,7 +145,7 @@ export default function Review({
                     alt={item.merchant.name}
                 />
                 <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                    <div className="text-sm">{`${item.merchant.name} ( ${item.merchant.distance} км )`}</div>
+                    <div className="text-sm">{`${item.merchant.name}`}</div>
                 </div>
             </div>
 

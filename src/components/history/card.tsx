@@ -191,17 +191,18 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                 </a>
                             </Link>
                             {item.merchant?.phone && (
-                                <div
+                                <a
                                     className="z-max"
-                                    onClick={() =>
-                                        window.open(
-                                            `tel://${item.merchant?.phone}`,
-                                            "_self"
-                                        )
-                                    }
+                                    href={`tel://${item.merchant?.phone}`}
+                                    // onClick={() =>
+                                    //     window.open(
+                                    //         `tel://${item.merchant?.phone}`,
+                                    //         "_self"
+                                    //     )
+                                    // }
                                 >
                                     <CallIcon />
-                                </div>
+                                </a>
                             )}
                         </div>
                     )

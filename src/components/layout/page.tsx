@@ -27,7 +27,7 @@ const Page = ({ router, children }: any) => {
             </main>
             {footerPage && state.footerShow ? <Footer routerPathName={router.pathname} />
                 :
-                <div className="bg-white" />
+                <footer className="bg-white" />
             }
         </div>
     );

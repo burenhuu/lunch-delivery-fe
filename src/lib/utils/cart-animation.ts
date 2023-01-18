@@ -18,7 +18,6 @@ export const cartAnimation = (event: any) => {
     let cartLeft = viewCart.getBoundingClientRect().left;
     let cartTop = viewCart.getBoundingClientRect().top;
     let image = imgToDragImage.cloneNode(true);
-
     image.style =
         "z-index: 11111; width: 120px; opacity:1; position:fixed; top:" +
         disTop +

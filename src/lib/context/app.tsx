@@ -197,6 +197,11 @@ const reducer = (state: any, action: any) => {
             saveToLocal(newState);
             return newState;
         }
+        case "footerShow": {
+            const newState = { ...state, footerShow: action.footerShow };
+            saveToLocal(newState);
+            return newState;
+        }
         default:
             return state;
     }

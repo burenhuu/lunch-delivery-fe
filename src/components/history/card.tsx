@@ -11,6 +11,7 @@ import { calcTimeDiff } from "lib/utils/helpers";
 import { useState } from "react";
 import Review from "./review";
 import { useRouter } from "next/router";
+import {useAppState} from "../../lib/context/app";
 
 const renderer = ({ hours, minutes, seconds, completed }: any) => {
     if (completed) {
@@ -44,6 +45,7 @@ interface CardProps {
 const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
 
 const Card: React.FC<CardProps> = ({ item }) => {
+    const [state, dispatch]: any = useAppState();
     const router = useRouter();
     const [showDrawer, setShowDrawer] = useState(false);
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
@@ -51,6 +53,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
 
     const toggleDrawer = () => {
         setShowDrawer((prevState) => !prevState);
+        dispatch({ type: "footerShow", footerShow: !showDrawer });
     };
 
     return (

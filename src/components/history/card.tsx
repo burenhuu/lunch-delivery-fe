@@ -198,8 +198,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                             `tel://${item.merchant?.phone}`,
                                             "_self"
                                         )
-                                        let isAndroid = /Android/.test(navigator.userAgent);
-                                        if (isAndroid){
+                                        let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                                        if (!isIOS){
                                             setTimeout(function () {
                                                 window.history.back();
                                             }, 1000);

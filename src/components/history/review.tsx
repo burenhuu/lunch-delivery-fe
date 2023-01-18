@@ -131,7 +131,7 @@ export default function Review({
             enableOverlay={true}
             style={{
                 background: "#FFFFFF",
-                height: liked === "" ? "379px" : "687px",
+                height: liked === "" ? "379px" : "720px",
             }}
             overlayOpacity={0.5}
             overlayColor="#1e2335"

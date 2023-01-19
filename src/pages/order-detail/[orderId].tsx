@@ -82,7 +82,7 @@ const OrderDetail: NextPage = () => {
         },
         {
             state: Status.PREPARED,
-            text: "Таны захиалга хүргэлтэнд бэлэн болсон байна",
+            text: "Таны захиалга хүргэлтэнд гарахад бэлэн болсон байна",
             step: 4,
         },
         {

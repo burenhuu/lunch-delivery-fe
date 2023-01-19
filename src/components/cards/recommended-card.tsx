@@ -2,11 +2,60 @@ import { LocationIcon } from "components/icons";
 import { formatPrice } from "lib/utils/helpers";
 import { useRouter } from "next/router";
 import { useAppState } from "../../lib/context/app";
+import {PermissionBox} from "../common/permission-box";
+import {useModal} from "../../lib/context/modal";
 
 export default function Recommended({ data }: { data: any }) {
-    const { image, name, rating, price, salePrice, place, productName } = data;
+    const { image, name, rating, price, salePrice, place, productName, placeState, placeStartDate, placeEndDate, placeReason } = data;
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
+    const [show, setShow, content, setContent] = useModal();
+
+    const onMerchantClick = () => {
+        if (placeState === "CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              ${placeStartDate} - ${placeEndDate}
+                            </b>`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
+                />
+            );
+        } else if (placeState === "TEMPORARY_CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={` Зоогийн газар дотоод ажилтай байгаа тул <br>
+                    захиалга авахгүй <br>
+                    <b>
+                        Нээх цаг: ${placeReason}
+                    </b>`}
+                />
+            );
+        } else if (placeState === "preDelivery") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
+                />
+            );
+        } else {
+            onContinueClick();
+        }
+    };
 
     const onContinueClick = () => {
         dispatch({
@@ -26,7 +75,7 @@ export default function Recommended({ data }: { data: any }) {
     };
 
     return (
-        <div className="rounded-2xl overflow-hidden h-full min-w-[150px] max-w-[150px] bg-white" onClick={onContinueClick}>
+        <div className="rounded-2xl overflow-hidden h-full min-w-[150px] max-w-[150px] bg-white" onClick={onMerchantClick}>
             <img src={image} alt={name} className="w-[150px] h-[100px] rounded-[15px]" />
             <div className="p-2.5 my-col-10">
                 <div className="my-col-5">

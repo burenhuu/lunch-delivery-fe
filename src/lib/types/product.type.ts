@@ -29,7 +29,11 @@ export interface Option {
 export interface RecommendedType extends Variant {
     image: string;
     place: string;
+    placeState?: string;
     placeId: string;
+    placeReason: string;
+    placeStartDate: string;
+    placeEndDate: string;
     categoryMain?: string;
     rating: number;
     productName: string;
@@ -38,6 +42,9 @@ export interface RecommendedType extends Variant {
 export interface CardDataType {
     place: string;
     placeState?: string;
+    placeReason: string;
+    placeStartDate: string;
+    placeEndDate: string;
     rating?: number;
     product: Product;
     merchantId: string;

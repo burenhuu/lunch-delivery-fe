@@ -19,6 +19,7 @@ import {
 import { FatalError } from "next/dist/lib/fatal-error";
 import { useRouter } from "next/router";
 import { cartAnimation } from "../../lib/utils/cart-animation";
+import {PermissionBox} from "../common/permission-box";
 
 let addToCartEvent: any;
 
@@ -63,7 +64,7 @@ export default function ProductCard({
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { rating, place, product, merchantId, placeState } = data;
+    const { rating, place, product, merchantId, placeState, placeReason, placeStartDate, placeEndDate } = data;
     const { description, image, name, variants } = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
@@ -116,6 +117,52 @@ export default function ProductCard({
     }, [product]);
 
     const [show, setShow, content, setContent] = useModal();
+
+    const onMerchantClick = () => {
+        if (placeState === "CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              ${placeStartDate} - ${placeEndDate}
+                            </b>`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
+                />
+            );
+        } else if (placeState === "TEMPORARY_CLOSED") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={` Зоогийн газар дотоод ажилтай байгаа тул <br>
+                    захиалга авахгүй <br>
+                    <b>
+                        Нээх цаг: ${placeReason}
+                    </b>`}
+                />
+            );
+        } else if (placeState === "preDelivery") {
+            setShow(true);
+            setContent(
+                <PermissionBox
+                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
+                />
+            );
+        } else {
+            onContinueClick();
+        }
+    };
 
     const onContinueClick = () => {
         dispatch({
@@ -253,7 +300,6 @@ export default function ProductCard({
         setApplicableOptions(variant.options);
         setSelectedOptions([]);
     };
-    console.log(product.variants[0]?.id)
     return (
         data && (
             <AccordionItem
@@ -320,7 +366,7 @@ export default function ProductCard({
                                     {!page && (
                                         <div
                                             className="font-medium"
-                                            onClick={onContinueClick}
+                                            onClick={onMerchantClick}
                                         >
                                             {place}
                                         </div>

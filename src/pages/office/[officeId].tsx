@@ -88,19 +88,16 @@ export default function Office() {
             dispatch({ type: "toastCheck", toastCheck: true });
         }
     }, []);
-
+    const d = new Date();
+    let day = d.getDay();
+    let currentTime = d.getHours() * 60 + d.getMinutes()
     const getMerchants = async () => {
         try {
             const res = await TokiAPI.getMerchantsByOffice(
                 officeId?.toString()!, filterParameter
             );
             if (res?.data) {
-                const d = new Date();
-                let day = d.getDay();
-                let currentTime = d.getHours() * 60 + d.getMinutes()
                 res.data.map((merchant: Merchant) => {
-                    const d = new Date();
-
                     let openTime: any;
                     let closeTime: any;
                     let openTimeDelivery: any;
@@ -204,13 +201,96 @@ export default function Office() {
                 if (data) {
                     const products: RecommendedType[] = [];
                     await data.map(async (item: any) => {
+                        let openTime: any;
+                        let closeTime: any;
+                        let openTimeDelivery: any;
+                        let closeTimeDelivery: any;
+                        if (item.timetable) {
+                            item.timetable?.map((schedule: any) => {
+                                if (schedule.day === day && schedule.active) {
+                                    openTime = schedule.open.split(":");
+                                    closeTime = schedule.close.split(":");
+                                }
+                            });
+                        }
+                        if (item.timetableDelivery) {
+                            item.timetableDelivery?.map((schedule: any) => {
+                                if (schedule.day === day && schedule.active) {
+                                    openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
+                                    closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
+                                }
+                            });
+                        }
 
+                        if (openTime && closeTime && openTimeDelivery && closeTimeDelivery) {
+                            let openSchedule = parseInt(openTime[0]) * 60 + parseInt(openTime[1])
+                            let closeSchedule = parseInt(closeTime[0]) * 60 + parseInt(closeTime[1])
+                            let openScheduleDelivery = parseInt(openTimeDelivery[0]) * 60 + parseInt(openTimeDelivery[1])
+                            let closeScheduleDelivery = parseInt(closeTimeDelivery[0]) * 60 + parseInt(closeTimeDelivery[1])
+                            let open: any
+                            let close: any
+                            if (openSchedule < openScheduleDelivery) {
+                                open = openSchedule
+                                item.startDate = `${openTime[0]}:${openTime[1]}`;
+
+                            } else if (openSchedule > openScheduleDelivery) {
+                                open = openScheduleDelivery
+                                item.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
+
+                            } else {
+                                open = openScheduleDelivery
+                                item.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
+
+                            }
+                            if (closeSchedule < closeScheduleDelivery) {
+                                close = closeSchedule
+                                item.endDate = `${closeTime[0]}:${closeTime[1]}`;
+                            } else if (closeSchedule > closeScheduleDelivery) {
+                                close = closeScheduleDelivery
+                                item.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
+                            } else {
+                                close = closeScheduleDelivery
+                                item.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
+                            }
+                            if (currentTime < open) {
+                                item.state = "preDelivery"
+                            } else if (currentTime > close) {
+                                item.state = "CLOSED"
+                            }
+                        }
+                        else if (openTimeDelivery && closeTimeDelivery) {
+                            let openScheduleDelivery = parseInt(openTimeDelivery[0]) * 60 + parseInt(openTimeDelivery[1])
+                            let closeScheduleDelivery = parseInt(closeTimeDelivery[0]) * 60 + parseInt(closeTimeDelivery[1])
+                            item.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
+                            item.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
+                            if (currentTime < openScheduleDelivery) {
+                                item.state = "preDelivery"
+                            } else if (currentTime > closeScheduleDelivery) {
+                                item.state = "CLOSED"
+                            }
+                        }
+                        else if (openTime && closeTime) {
+                            let openSchedule = parseInt(openTime[0]) * 60 + parseInt(openTime[1])
+                            let closeSchedule = parseInt(closeTime[0]) * 60 + parseInt(closeTime[1])
+                            item.startDate = `${openTime[0]}:${openTime[1]}`;
+                            item.endDate = `${closeTime[0]}:${closeTime[1]}`;
+                            if (currentTime < openSchedule) {
+                                item.state = "preDelivery"
+                            } else if (currentTime > closeSchedule) {
+                                item.state = "CLOSED"
+                            }
+                        }
+                        console.log(openTime, closeTime)
                         const chosenVariant = item.product?.variants[0];
                         if (chosenVariant) {
                             products.push({
                                 ...chosenVariant,
                                 place: item.name,
                                 placeId: item.id,
+                                placeState: item.state,
+                                placeReason: item.reason,
+                                placeStartDate: item.startDate,
+                                placeEndDate: item.endDate,
                                 image: item.product.image,
                                 rating: item.rating,
                                 categoryMain: item.product.category,

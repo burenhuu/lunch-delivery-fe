@@ -1,26 +1,26 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Link from "next/link";
-import Countdown, {zeroPad} from "react-countdown";
-import {format} from "date-fns";
+import Countdown, { zeroPad } from "react-countdown";
+import { format } from "date-fns";
 import OrderStatus from "components/order/order-status";
 import ButtonComponent from "components/common/button";
-import {CallIcon} from "components/icons";
-import {Status} from "lib/types/order.type";
-import {calcTimeDiff} from "lib/utils/helpers";
-import {useState} from "react";
+import { CallIcon } from "components/icons";
+import { Status } from "lib/types/order.type";
+import { calcTimeDiff } from "lib/utils/helpers";
+import { useState } from "react";
 import Review from "./review";
-import {useRouter} from "next/router";
-import {useAppState} from "../../lib/context/app";
+import { useRouter } from "next/router";
+import { useAppState } from "../../lib/context/app";
 
-const renderer = ({hours, minutes, seconds, completed}: any) => {
+const renderer = ({ hours, minutes, seconds, completed }: any) => {
     if (completed) {
         return (
             <span className="text-red-500">
                 -
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                        seconds
-                    )}`
+                          seconds
+                      )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -29,8 +29,8 @@ const renderer = ({hours, minutes, seconds, completed}: any) => {
             <span>
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                        seconds
-                    )}`
+                          seconds
+                      )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -43,18 +43,18 @@ interface CardProps {
 
 const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
 
-const Card: React.FC<CardProps> = ({item}) => {
+const Card: React.FC<CardProps> = ({ item }) => {
     const [state, dispatch]: any = useAppState();
     const router = useRouter();
     const [showDrawer, setShowDrawer] = useState(false);
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
     const [showDelivery, setShowDelivery] = useState(false);
-    const [firstClick, setFirstClick] = useState(false)
+    const [firstClick, setFirstClick] = useState(false);
 
     const toggleDrawer = async () => {
-        let footerCheck = showDrawer
-        setShowDrawer((prevState => !prevState));
-        await dispatch({type: "footerShow", footerShow: false});
+        let footerCheck = showDrawer;
+        setShowDrawer((prevState) => !prevState);
+        await dispatch({ type: "footerShow", footerShow: false });
     };
 
     return (
@@ -63,7 +63,7 @@ const Card: React.FC<CardProps> = ({item}) => {
                 className="z-10 px-5 py-[15px] bg-white rounded-2xl shadow-delivery my-col-15"
                 onClick={() => {
                     finishedStatuses.includes(item.state) &&
-                    router.push(`/order-detail/${item.id}`);
+                        router.push(`/order-detail/${item.id}`);
                 }}
             >
                 <div className="flex items-stretch justify-between">
@@ -80,14 +80,14 @@ const Card: React.FC<CardProps> = ({item}) => {
                                 item.type.toLowerCase() === "delivery"
                                     ? "Хүргэгдсэн хугацаа"
                                     : (item.state === Status.COMPLETED ||
-                                        item.state === Status.DELIVERED) &&
-                                    item.type.toLowerCase() === "takeaway"
-                                        ? "Дууссан хугацаа"
-                                        : item.type.toLowerCase() === "delivery"
-                                            ? "Хүргэгдэх хугацаа"
-                                            : item.type.toLowerCase() === "takeaway"
-                                                ? "Бэлтгэгдэх хугацаа"
-                                                : ""}
+                                          item.state === Status.DELIVERED) &&
+                                      item.type.toLowerCase() === "takeaway"
+                                    ? "Дууссан хугацаа"
+                                    : item.type.toLowerCase() === "delivery"
+                                    ? "Хүргэгдэх хугацаа"
+                                    : item.type.toLowerCase() === "takeaway"
+                                    ? "Бэлтгэгдэх хугацаа"
+                                    : ""}
                             </div>
                         )}
                         {item.reviews.length > 0 && <div>Миний үнэлгээ</div>}
@@ -149,8 +149,8 @@ const Card: React.FC<CardProps> = ({item}) => {
                 {item.state === Status.PENDING ? (
                     <div className="w-full h-[40px]"></div>
                 ) : (item.state === Status.COMPLETED ||
-                    item.state === Status.DELIVERED) &&
-                item.reviews.length < 2 ? (
+                      item.state === Status.DELIVERED) &&
+                  item.reviews.length < 2 ? (
                     <div className="w-full h-[40px]"></div>
                 ) : (
                     item.state !== Status.COMPLETED &&
@@ -165,18 +165,18 @@ const Card: React.FC<CardProps> = ({item}) => {
                     <div className="w-[150px] self-center z-30">
                         <Link href={`/order`}>
                             <a>
-                                <ButtonComponent text="Төлбөр төлөх"/>
+                                <ButtonComponent text="Төлбөр төлөх" />
                             </a>
                         </Link>
                     </div>
                 ) : (item.state === Status.COMPLETED ||
-                    item.state === Status.DELIVERED) &&
-                item.reviews.length < 2 ? (
+                      item.state === Status.DELIVERED) &&
+                  item.reviews.length < 2 ? (
                     <div
                         className="w-[150px] self-center z-30"
                         onClick={toggleDrawer}
                     >
-                        <ButtonComponent text="Үнэлгээ өгөх"/>
+                        <ButtonComponent text="Үнэлгээ өгөх" />
                     </div>
                 ) : (
                     item.state !== Status.COMPLETED &&
@@ -193,8 +193,8 @@ const Card: React.FC<CardProps> = ({item}) => {
                                 <a
                                     className="z-max"
                                     href={`tel://${item.merchant?.phone}`}
-                                    target={"_blank"}
-                                    rel={"noreferrer"}
+                                    target="_blank"
+                                    rel="noreferrer"
                                     // onClick={() => {
                                     //
                                     //     let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -212,7 +212,7 @@ const Card: React.FC<CardProps> = ({item}) => {
                                     // }
                                     // }
                                 >
-                                    <CallIcon/>
+                                    <CallIcon />
                                 </a>
                             )}
                         </div>

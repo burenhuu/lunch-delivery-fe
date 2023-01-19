@@ -62,7 +62,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
             <div
                 className="z-10 px-5 py-[15px] bg-white rounded-2xl shadow-delivery my-col-15"
                 onClick={() => {
-                    // finishedStatuses.includes(item.state) &&
+                    finishedStatuses.includes(item.state) &&
                         router.push(`/order-detail/${item.id}`);
                 }}
             >

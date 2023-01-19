@@ -163,6 +163,11 @@ export default function GreadientMerchantCard({
             setContent(
                 <PermissionBox
                     text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
                 />
             );
         } else {

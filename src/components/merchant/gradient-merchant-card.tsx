@@ -156,6 +156,11 @@ export default function GreadientMerchantCard({
                     <b>
                         Нээх цаг: ${merchant.reason}
                     </b>`}
+                    button2={<>Үргэлжлүүлэх</>}
+                    onClick={() => {
+                        setShow(false);
+                        onContinueClick();
+                    }}
                 />
             );
         } else if (merchant.state === "preDelivery") {

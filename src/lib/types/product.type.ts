@@ -42,9 +42,9 @@ export interface RecommendedType extends Variant {
 export interface CardDataType {
     place: string;
     placeState?: string;
-    placeReason: string;
-    placeStartDate: string;
-    placeEndDate: string;
+    placeReason?: string;
+    placeStartDate?: string;
+    placeEndDate?: string;
     rating?: number;
     product: Product;
     merchantId: string;

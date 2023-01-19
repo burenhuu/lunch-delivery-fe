@@ -317,21 +317,30 @@ const OrderDetail: NextPage = () => {
                         <div>Төлсөн дүн:</div>
                         <div>{formatPrice(data.data.grandTotal)} ₮</div>
                     </div>
-                    {data.data.penalty > 0 && (
+                    {data.data.penaltyAmount > 0 && (
                         <div className="flex items-center justify-between">
                             <div>Нөхөн төлбөр:</div>
                             <div className="flex justify-start items-center gap-x-1.25 text-[#78C81E]">
-                                <div>+{data.data.penalty}</div>
+                                <div>+{data.data.penaltyAmount}</div>
                                 <UpointGreen />
                             </div>
                         </div>
                     )}
-                    {data.data.upoint_response?.point_balance && (
+                    {data.data.loyaltyAmount > 0 && (
+                        <div className="flex items-center justify-between">
+                            <div>Цуглуулсан U-POINT оноо:</div>
+                            <div className="flex justify-start items-center gap-x-1.25 text-[#78C81E]">
+                                <div>+{data.data.penaltyAmount}</div>
+                                <UpointGreen />
+                            </div>
+                        </div>
+                    )}
+                    {data.data.loyaltyBalance > 0 && (
                         <div className="flex items-center justify-between">
                             <div>Нийт U-Point:</div>
                             <div className="flex justify-start items-center gap-x-1.25 text-[#78C81E]">
                                 <div>
-                                    {data.data.upoint_response.point_balance}
+                                    {data.data.loyaltyBalance}
                                 </div>
                                 <Upoint />
                             </div>

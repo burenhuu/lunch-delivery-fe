@@ -27,7 +27,8 @@ export interface Merchant {
     timetable: Timetable[];
     timetableDelivery: Timetable[];
     startDate: string;
-    endDate: string
+    endDate: string;
+    dayIsActive?: boolean
 }
 
 

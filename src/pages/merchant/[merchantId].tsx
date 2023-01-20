@@ -58,7 +58,7 @@ export default function MerchantProductPage() {
                             place: merchant?.name!,
                             merchantId,
                             product: product,
-                            placeState: merchant?.state
+                            placeState: merchant?.state,
                         });
                     }
                 });

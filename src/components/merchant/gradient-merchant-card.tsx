@@ -130,53 +130,79 @@ export default function GreadientMerchantCard({
 
     const onMerchantClick = () => {
         console.log(merchant.state, page)
-        if (merchant.state === "CLOSED") {
-            setShow(true);
-            setContent(
-                <PermissionBox
-                    text={` Зоогийн газар хаалттай байна. <br>
+        if(page){
+            onContinueClick()
+        } else {
+            if (merchant.state === "CLOSED") {
+                let text: string;
+                setShow(true);
+                if (merchant.dayIsActive){
+                    text = ` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${merchant.startDate} - ${merchant.endDate}
-                            </b>`}
-                    button2={<>Үргэлжлүүлэх</>}
-                    onClick={() => {
-                        setShow(false);
-                        onContinueClick();
-                    }}
-                />
-            );
-        } else if (merchant.state === "TEMPORARY_CLOSED") {
-            setShow(true);
-            setContent(
-                <PermissionBox
-                    text={` Зоогийн газар дотоод ажилтай байгаа тул <br>
+                            </b>`
+                } else {
+                    text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+                }
+                setContent(
+                    <PermissionBox
+                        text={text}
+                        button2={<>Үргэлжлүүлэх</>}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueClick();
+                        }}
+                    />
+                );
+            } else if (merchant.state === "TEMPORARY_CLOSED") {
+                setShow(true);
+                setContent(
+                    <PermissionBox
+                        text={` Зоогийн газар дотоод ажилтай байгаа тул <br>
                     захиалга авахгүй <br>
                     <b>
                         Нээх цаг: ${merchant.reason}
                     </b>`}
-                    button2={<>Үргэлжлүүлэх</>}
-                    onClick={() => {
-                        setShow(false);
-                        onContinueClick();
-                    }}
-                />
-            );
-        } else if (merchant.state === "preDelivery") {
-            setShow(true);
-            setContent(
-                <PermissionBox
-                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
-                    button2={<>Үргэлжлүүлэх</>}
-                    onClick={() => {
-                        setShow(false);
-                        onContinueClick();
-                    }}
-                />
-            );
-        } else {
-            onContinueClick();
+                        button2={<>Үргэлжлүүлэх</>}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueClick();
+                        }}
+                    />
+                );
+            } else if (merchant.state === "preDelivery") {
+                let text: string;
+                setShow(true);
+                if (merchant.dayIsActive){
+                    text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
+                } else {
+                    text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+                }
+                setContent(
+                    <PermissionBox
+                        text={text}
+                        button2={<>Үргэлжлүүлэх</>}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueClick();
+                        }}
+                    />
+                );
+            } else {
+                onContinueClick();
+            }
         }
     };
     return (

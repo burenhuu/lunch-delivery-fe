@@ -107,6 +107,9 @@ export default function Office() {
                             if (schedule.day === day && schedule.active) {
                                 openTime = schedule.open.split(":");
                                 closeTime = schedule.close.split(":");
+                                merchant.dayIsActive = true
+                            } else {
+                                merchant.dayIsActive = false
                             }
                         });
                     }
@@ -115,6 +118,9 @@ export default function Office() {
                             if (schedule.day === day && schedule.active) {
                                 openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                 closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
+                                merchant.dayIsActive = true
+                            } else {
+                                merchant.dayIsActive = false
                             }
                         });
                     }
@@ -210,6 +216,9 @@ export default function Office() {
                                 if (schedule.day === day && schedule.active) {
                                     openTime = schedule.open.split(":");
                                     closeTime = schedule.close.split(":");
+                                    item.dayIsActive = true
+                                } else {
+                                    item.dayIsActive = false
                                 }
                             });
                         }
@@ -218,6 +227,9 @@ export default function Office() {
                                 if (schedule.day === day && schedule.active) {
                                     openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                     closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
+                                    item.dayIsActive = true
+                                } else {
+                                    item.dayIsActive = false
                                 }
                             });
                         }
@@ -294,7 +306,8 @@ export default function Office() {
                                 image: item.product.image,
                                 rating: item.rating,
                                 categoryMain: item.product.category,
-                                productName: item.product.name
+                                productName: item.product.name,
+                                dayIsActive: item.dayIsActive
                             });
                         }
 

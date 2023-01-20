@@ -6,22 +6,33 @@ import {PermissionBox} from "../common/permission-box";
 import {useModal} from "../../lib/context/modal";
 
 export default function Recommended({ data }: { data: any }) {
-    const { image, name, rating, price, salePrice, place, productName, placeState, placeStartDate, placeEndDate, placeReason } = data;
+    const { image, name, rating, price, salePrice, place, productName, placeState, placeStartDate, placeEndDate, placeReason, placeDayIsActive } = data;
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
     const [show, setShow, content, setContent] = useModal();
 
     const onMerchantClick = () => {
         if (placeState === "CLOSED") {
+            let text: string
             setShow(true);
-            setContent(
-                <PermissionBox
-                    text={` Зоогийн газар хаалттай байна. <br>
+            if (placeDayIsActive){
+                text = ` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${placeStartDate} - ${placeEndDate}
-                            </b>`}
+                            </b>`
+            } else {
+                text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+            }
+            setContent(
+                <PermissionBox
+                    text={text}
                     button2={<>Үргэлжлүүлэх</>}
                     onClick={() => {
                         setShow(false);
@@ -42,9 +53,20 @@ export default function Recommended({ data }: { data: any }) {
             );
         } else if (placeState === "preDelivery") {
             setShow(true);
+            let text: string
+            if (placeDayIsActive){
+                text = ` Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
+            } else {
+                text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+            }
             setContent(
                 <PermissionBox
-                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
+                    text={text}
                     button2={<>Үргэлжлүүлэх</>}
                     onClick={() => {
                         setShow(false);

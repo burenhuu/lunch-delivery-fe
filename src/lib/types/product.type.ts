@@ -37,6 +37,7 @@ export interface RecommendedType extends Variant {
     categoryMain?: string;
     rating: number;
     productName: string;
+    dayIsActive: boolean
 }
 
 export interface CardDataType {
@@ -49,4 +50,5 @@ export interface CardDataType {
     product: Product;
     merchantId: string;
     categoryId?: string;
+    dayIsActive?: boolean
 }

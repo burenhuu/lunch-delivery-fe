@@ -61,6 +61,8 @@ export default function Category() {
                         if (schedule.day === day && schedule.active) {
                             openTime = schedule.open.split(":");
                             closeTime = schedule.close.split(":");
+                        } else {
+                            merchant.dayIsActive = false
                         }
                     });
                 }
@@ -69,6 +71,8 @@ export default function Category() {
                         if (schedule.day === day && schedule.active) {
                             openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                             closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
+                        } else {
+                            merchant.dayIsActive = false
                         }
                     });
                 }
@@ -141,6 +145,7 @@ export default function Category() {
                         placeReason: merchant.reason,
                         placeStartDate: merchant.startDate,
                         placeEndDate: merchant.endDate,
+                        dayIsActive: merchant.dayIsActive
                     })
                 )
         });

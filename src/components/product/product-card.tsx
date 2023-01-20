@@ -64,7 +64,7 @@ export default function ProductCard({
     const [state, dispatch]: any = useAppState();
     const { officeId, cartCount } = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { rating, place, product, merchantId, placeState, placeReason, placeStartDate, placeEndDate } = data;
+    const { rating, place, product, merchantId, placeState, placeReason, placeStartDate, placeEndDate, dayIsActive } = data;
     const { description, image, name, variants } = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
@@ -120,15 +120,26 @@ export default function ProductCard({
 
     const onMerchantClick = () => {
         if (placeState === "CLOSED") {
+            let text: string
             setShow(true);
-            setContent(
-                <PermissionBox
-                    text={` Зоогийн газар хаалттай байна. <br>
+            if (dayIsActive){
+                text = ` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${placeStartDate} - ${placeEndDate}
-                            </b>`}
+                            </b>`
+            } else {
+                text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+            }
+            setContent(
+                <PermissionBox
+                    text={text}
                     button2={<>Үргэлжлүүлэх</>}
                     onClick={() => {
                         setShow(false);
@@ -148,10 +159,21 @@ export default function ProductCard({
                 />
             );
         } else if (placeState === "preDelivery") {
+            let text: string
             setShow(true);
+            if (dayIsActive){
+                text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
+            } else {
+                text = ` Зоогийн газар хаалттай байна. <br>
+                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                            Ажиллах цагийн хуваарь: <br>
+                            <b>
+                              Амарна
+                            </b>`
+            }
             setContent(
                 <PermissionBox
-                    text={`Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`}
+                    text={text}
                     button2={<>Үргэлжлүүлэх</>}
                     onClick={() => {
                         setShow(false);

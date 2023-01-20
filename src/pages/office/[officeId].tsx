@@ -89,8 +89,11 @@ export default function Office() {
         }
     }, []);
     const d = new Date();
-    let day = d.getDay();
+    let day = d.getDay() + 1;
     let currentTime = d.getHours() * 60 + d.getMinutes()
+    if (day === 7){
+        day = 0
+    }
     const getMerchants = async () => {
         try {
             const res = await TokiAPI.getMerchantsByOffice(
@@ -115,7 +118,7 @@ export default function Office() {
                     }
                     if (merchant.timetableDelivery) {
                         merchant.timetableDelivery?.map((schedule) => {
-                            if (schedule.day === day && schedule.active) {
+                            if (schedule.day === day+1 && schedule.active) {
                                 openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                 closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
                                 merchant.dayIsActive = true
@@ -292,7 +295,7 @@ export default function Office() {
                                 item.state = "CLOSED"
                             }
                         }
-                        console.log(openTime, closeTime)
+                        console.log(day, item.name, item.startDate, item.endDate, item.state, "item.endDate")
                         const chosenVariant = item.product?.variants[0];
                         if (chosenVariant) {
                             products.push({

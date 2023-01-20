@@ -16,7 +16,7 @@ export default function MerchantProductPage() {
     const router = useRouter();
     const [state]: any = useAppState();
     const { merchants } = state;
-    const merchantId = state.merchantId || router.query.merchantId;
+    const merchantId = typeof router.query.merchantId === "string" ? router.query.merchantId : "";
     const [loading, setLoading] = useState<boolean>(false);
     const [merchantProductCategory, setMerchantProductCategory] = useState<
         CategoryType[]
@@ -84,6 +84,7 @@ export default function MerchantProductPage() {
     };
 
     useEffect(() => {
+        console.log(merchantId)
         const getMerchantMenu = async () => {
             setLoading(true);
             const tempMerch = merchants?.find(

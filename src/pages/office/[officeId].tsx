@@ -344,15 +344,21 @@ export default function Office() {
                     "keyword",
                     debouncedValue
                 );
-                merchants?.map((merchant: Merchant) => {
-                    if (
-                        merchant.name
-                            .toLowerCase()
-                            .includes(debouncedValue.toLowerCase())
-                    ) {
-                        temp.push({ type: "merchant", ...merchant });
-                    }
-                });
+                const res = await TokiAPI.getMerchantsByOffice(
+                    officeId?.toString()!, filterParameter
+                );
+                if (res?.data) {
+                    res?.data?.map((merchant: Merchant) => {
+                        if (
+                            merchant.name
+                                .toLowerCase()
+                                .includes(debouncedValue.toLowerCase())
+                        ) {
+                            temp.push({ type: "merchant", ...merchant });
+                        }
+                    });
+                }
+
                 if (data) {
                     await data.map((merchant: Merchant) => {
                         merchant?.products?.map((product: Product) => {
@@ -374,6 +380,7 @@ export default function Office() {
 
     const onSearchClick = (result: any) => {
         if (result?.type === "merchant") {
+            console.log(result)
             router.push(`/merchant/${result.id}`);
         } else {
             router.push(`/category?productCategory=${result?.category}`);

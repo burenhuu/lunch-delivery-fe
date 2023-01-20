@@ -14,7 +14,9 @@ const OrderCard: React.FC<OrderCardProps> = ({ item }) => (
             />
             <div className="my-col-5 py-3.75 pr-5 w-full">
                 <div className="flex items-center justify-between font-medium">
-                    <div>{item.name}</div>
+                    <div className="w-[155px] line-clamp-2">
+                        {item.name}
+                    </div>
                     <div>x{item.quantity}</div>
                 </div>
                 <div className="flex items-center justify-start gap-x-1">
@@ -25,8 +27,8 @@ const OrderCard: React.FC<OrderCardProps> = ({ item }) => (
                     )}
                     <div className="text-sm">{formatPrice(item.price)} ₮</div>
                 </div>
-                <div className="text-xs font-light text-gray flex gap-x-0.5 truncate">
-                    {item.name !== item.variantName && <div>item.variantName</div>}
+                <div className="flex flex-col text-xs font-light text-gray gap-x-0.5">
+                    {item.name !== item.variantName && <div>{item.variantName}</div>}
                     {item.options &&
                         item.options.map((option: any, index: number) => {
                             if (option.value === null) {

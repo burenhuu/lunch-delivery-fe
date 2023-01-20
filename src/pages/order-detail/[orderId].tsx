@@ -282,7 +282,6 @@ const OrderDetail: NextPage = () => {
                     <div className="font-medium">Захиалгын мэдээлэл</div>
                     <div className="my-col-10">
                         {data.data.items.map((item: any, index: number) => {
-                            console.log(item)
                             return <OrderCard key={index} item={item} />;
                         })}
                     </div>

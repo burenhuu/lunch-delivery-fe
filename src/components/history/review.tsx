@@ -46,6 +46,15 @@ export default function Review({
                     uploads: images.map((image: any) => image.name),
                 });
 
+                if (response && response.data){
+                    if (response.data.uploads.length > 0){
+                        response.data.uploads.map((url: string, index: any)=>{
+                            const options = { method: 'PUT', headers: { 'Content-Type': images[index].file.type },body: images[index].file }
+                            const res = fetch(url, options);
+                        })
+                    }
+                }
+
                 toggleDrawer();
 
                 response.data.type === "S" &&
@@ -92,13 +101,13 @@ export default function Review({
     const handleFile = async (e: any) => {
         const imgName = e.target.files[0].name;
         const imgSrc = await toBase64(e.target.files[0]);
-
         if (fileHandler(e.target.files[0]))
             setImages([
                 ...images,
                 {
                     name: imgName,
                     src: imgSrc,
+                    file: e.target.files[0]
                 },
             ]);
     };

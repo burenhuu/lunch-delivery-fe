@@ -3,6 +3,8 @@ import { intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
 import { DeleteIcon } from "components/icons";
 import TokiAPI from "../../lib/api/toki";
+import {ImageModal} from "../common/image-modal";
+import {useModal} from "../../lib/context/modal";
 
 export default function MerchantReview(props: { merchantId: string }) {
     const [merchantReview, setMerchantReview] = useState<Review>();
@@ -22,6 +24,11 @@ export default function MerchantReview(props: { merchantId: string }) {
         TokiAPI.deleteReview(id).then((r) => {
             getReviews()
         })
+    };
+    const [show, setShow, content, setContent] = useModal();
+    const onImageClick = (image: string) => {
+        setShow(true);
+        setContent(<ImageModal images={[image]} />);
     };
 
     return (
@@ -87,10 +94,11 @@ export default function MerchantReview(props: { merchantId: string }) {
                                     )}
                                 </div>
                                 <div className="flex items-center gap-x-5">
-                                    {review?.picture ? (
+                                    {review?.pictures && review?.pictures?.length > 0 ? (
                                         <>
                                             <img
-                                                src={`https://staging-app.toki.mn/upload/profile/${review.picture}`}
+                                                onClick={()=>{onImageClick(review?.pictures ? review?.pictures[0] : "")}}
+                                                src={`${review.pictures[0]}`}
                                                 alt={review.id}
                                                 className="w-[60px] h-[60px] rounded-md"
                                             />

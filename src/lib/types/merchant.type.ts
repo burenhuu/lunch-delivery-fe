@@ -63,6 +63,7 @@ export interface Reviews {
     removeable: boolean;
     date?: string;
     picture? :string;
+    pictures? :[string];
     name: string;
 }
 

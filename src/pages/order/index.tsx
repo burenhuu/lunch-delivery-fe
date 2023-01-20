@@ -123,7 +123,6 @@ const Cart: NextPage = () => {
             is: (type: string) => type === "Delivery",
             then: yup
                 .number()
-                .test('floorSelect', 'Хүргүүлэх давхараа сонгоно уу', value => !value || value < 0)
                 .min(1, "Хүргүүлэх давхараа сонгоно уу")
                 .required("Хүргүүлэх давхараа сонгоно уу"),
         }),
@@ -150,7 +149,7 @@ const Cart: NextPage = () => {
                 ? {
                       type: "Delivery",
                       address: "",
-                      floor: 1,
+                      floor: 0,
                       comment: "",
                       vat: 1,
                       register: "",

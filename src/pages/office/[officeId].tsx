@@ -88,12 +88,7 @@ export default function Office() {
             dispatch({ type: "toastCheck", toastCheck: true });
         }
     }, []);
-    const d = new Date();
-    let day = d.getDay() + 1;
-    let currentTime = d.getHours() * 60 + d.getMinutes()
-    if (day === 7){
-        day = 0
-    }
+
     const getMerchants = async () => {
         try {
             const res = await TokiAPI.getMerchantsByOffice(
@@ -101,6 +96,14 @@ export default function Office() {
             );
             if (res?.data) {
                 res.data.map((merchant: Merchant) => {
+                    const d = new Date();
+                    let day = d.getDay();
+                    if (day === 0){
+                        day = 6
+                    } else{
+                        day = day - 1
+                    }
+                    let currentTime = d.getHours() * 60 + d.getMinutes()
                     let openTime: any;
                     let closeTime: any;
                     let openTimeDelivery: any;
@@ -207,6 +210,14 @@ export default function Office() {
                 if (data) {
                     const products: RecommendedType[] = [];
                     await data.map(async (item: any) => {
+                        const d = new Date();
+                        let day = d.getDay();
+                        if (day === 0){
+                            day = 6
+                        } else{
+                            day = day - 1
+                        }
+                        let currentTime = d.getHours() * 60 + d.getMinutes()
                         let openTime: any;
                         let closeTime: any;
                         let openTimeDelivery: any;
@@ -230,7 +241,9 @@ export default function Office() {
                                 }
                             });
                         }
-
+                        console.log(openTime, closeTime, openTimeDelivery, closeTimeDelivery)
+                        console.log(item.timetable, item.timetableDelivery)
+                        console.log(day)
                         if (openTime && closeTime && openTimeDelivery && closeTimeDelivery) {
                             let openSchedule = parseInt(openTime[0]) * 60 + parseInt(openTime[1])
                             let closeSchedule = parseInt(closeTime[0]) * 60 + parseInt(closeTime[1])
@@ -251,10 +264,10 @@ export default function Office() {
                                 item.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
 
                             }
-                            if (closeSchedule < closeScheduleDelivery) {
+                            if (closeSchedule > closeScheduleDelivery) {
                                 close = closeSchedule
                                 item.endDate = `${closeTime[0]}:${closeTime[1]}`;
-                            } else if (closeSchedule > closeScheduleDelivery) {
+                            } else if (closeSchedule < closeScheduleDelivery) {
                                 close = closeScheduleDelivery
                                 item.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
                             } else {

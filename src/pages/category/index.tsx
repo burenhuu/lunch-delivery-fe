@@ -50,9 +50,11 @@ export default function Category() {
             setLoading(true);
             await products?.map((merchant: Merchant) =>{
                 const d = new Date();
-                let day = d.getDay() + 1;
-                if (day === 7){
-                    day = 0
+                let day = d.getDay();
+                if (day === 0){
+                    day = 6
+                } else{
+                    day = day - 1
                 }
                 let currentTime = d.getHours() * 60 + d.getMinutes()
                 let openTime: any;

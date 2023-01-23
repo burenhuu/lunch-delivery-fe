@@ -105,14 +105,13 @@ export default function Office() {
                     let closeTime: any;
                     let openTimeDelivery: any;
                     let closeTimeDelivery: any;
+                    merchant.dayIsActive = false
                     if (merchant.timetable) {
                         merchant.timetable?.map((schedule) => {
                             if (schedule.day === day && schedule.active) {
                                 openTime = schedule.open.split(":");
                                 closeTime = schedule.close.split(":");
                                 merchant.dayIsActive = true
-                            } else {
-                                merchant.dayIsActive = false
                             }
                         });
                     }
@@ -122,8 +121,6 @@ export default function Office() {
                                 openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                 closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
                                 merchant.dayIsActive = true
-                            } else {
-                                merchant.dayIsActive = false
                             }
                         });
                     }
@@ -214,14 +211,13 @@ export default function Office() {
                         let closeTime: any;
                         let openTimeDelivery: any;
                         let closeTimeDelivery: any;
+                        item.dayIsActive = false
                         if (item.timetable) {
                             item.timetable?.map((schedule: any) => {
                                 if (schedule.day === day && schedule.active) {
                                     openTime = schedule.open.split(":");
                                     closeTime = schedule.close.split(":");
                                     item.dayIsActive = true
-                                } else {
-                                    item.dayIsActive = false
                                 }
                             });
                         }
@@ -231,8 +227,6 @@ export default function Office() {
                                     openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                     closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
                                     item.dayIsActive = true
-                                } else {
-                                    item.dayIsActive = false
                                 }
                             });
                         }

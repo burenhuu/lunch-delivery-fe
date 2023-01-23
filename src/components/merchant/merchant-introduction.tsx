@@ -20,7 +20,7 @@ export default function MerchantIntroduction({
             <div className="font-medium">Танилцуулга</div>
             <div
                 onClick={onImageClick}
-                className="flex gap-x-[1px] overflow-x-scroll scrollbar-hide -mx-5 px-5"
+                className="grid grid-cols-4 divide-x"
             >
                 {images?.map((image) => {
                     return (
@@ -28,7 +28,7 @@ export default function MerchantIntroduction({
                             key={image}
                             src={image}
                             alt={merchant.name}
-                            className="w-[83px] h-[83px] rounded-md"
+                            className="rounded-md"
                         />
                     );
                 })}

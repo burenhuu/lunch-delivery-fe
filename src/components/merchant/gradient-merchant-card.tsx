@@ -179,6 +179,7 @@ export default function GreadientMerchantCard({
                 );
             } else if (merchant.state === "preDelivery") {
                 let text: string;
+                console.log(merchant.dayIsActive)
                 setShow(true);
                 if (merchant.dayIsActive){
                     text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`

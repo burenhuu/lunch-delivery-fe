@@ -89,7 +89,8 @@ export default function Category() {
                     let closeScheduleDelivery = parseInt(closeTimeDelivery[0]) * 60 + parseInt(closeTimeDelivery[1])
                     let open: any
                     let close: any
-                    if (openSchedule < openScheduleDelivery) {
+                    if (openSchedule < currentTime && currentTime < openScheduleDelivery) {
+                        merchant.state = "preDelivery"
                         open = openSchedule
                         merchant.startDate = `${openTime[0]}:${openTime[1]}`;
 
@@ -102,19 +103,17 @@ export default function Category() {
                         merchant.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
 
                     }
-                    if (closeSchedule < closeScheduleDelivery) {
+                    if (closeSchedule > closeScheduleDelivery) {
                         close = closeSchedule
                         merchant.endDate = `${closeTime[0]}:${closeTime[1]}`;
-                    } else if (closeSchedule > closeScheduleDelivery) {
+                    } else if (closeSchedule < closeScheduleDelivery) {
                         close = closeScheduleDelivery
                         merchant.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
                     } else {
                         close = closeScheduleDelivery
                         merchant.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
                     }
-                    if (currentTime < open) {
-                        merchant.state = "preDelivery"
-                    } else if (currentTime > close) {
+                    if (currentTime < open || currentTime > close) {
                         merchant.state = "CLOSED"
                     }
                 }
@@ -124,7 +123,7 @@ export default function Category() {
                     merchant.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
                     merchant.endDate = `${closeTimeDelivery[0]}:${closeTimeDelivery[1]}`;
                     if (currentTime < openScheduleDelivery) {
-                        merchant.state = "preDelivery"
+                        merchant.state = "CLOSED"
                     } else if (currentTime > closeScheduleDelivery) {
                         merchant.state = "CLOSED"
                     }
@@ -135,7 +134,7 @@ export default function Category() {
                     merchant.startDate = `${openTime[0]}:${openTime[1]}`;
                     merchant.endDate = `${closeTime[0]}:${closeTime[1]}`;
                     if (currentTime < openSchedule) {
-                        merchant.state = "preDelivery"
+                        merchant.state = "CLOSED"
                     } else if (currentTime > closeSchedule) {
                         merchant.state = "CLOSED"
                     }

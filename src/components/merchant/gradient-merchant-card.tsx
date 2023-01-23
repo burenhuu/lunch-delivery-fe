@@ -129,7 +129,6 @@ export default function GreadientMerchantCard({
     };
 
     const onMerchantClick = () => {
-        console.log(merchant.state, page)
         if(page){
             onContinueClick()
         } else {

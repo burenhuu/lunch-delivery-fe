@@ -120,7 +120,7 @@ export default function Office() {
                     }
                     if (merchant.timetableDelivery) {
                         merchant.timetableDelivery?.map((schedule) => {
-                            if (schedule.day === day+1 && schedule.active) {
+                            if (schedule.day === day && schedule.active) {
                                 openTimeDelivery = schedule.open !== null ? schedule.open.split(":") : undefined;
                                 closeTimeDelivery = schedule.close !== null ? schedule.close.split(":") : undefined;
                                 merchant.dayIsActive = true
@@ -241,9 +241,6 @@ export default function Office() {
                                 }
                             });
                         }
-                        console.log(openTime, closeTime, openTimeDelivery, closeTimeDelivery)
-                        console.log(item.timetable, item.timetableDelivery)
-                        console.log(day)
                         if (openTime && closeTime && openTimeDelivery && closeTimeDelivery) {
                             let openSchedule = parseInt(openTime[0]) * 60 + parseInt(openTime[1])
                             let closeSchedule = parseInt(closeTime[0]) * 60 + parseInt(closeTime[1])
@@ -302,7 +299,6 @@ export default function Office() {
                                 item.state = "CLOSED"
                             }
                         }
-                        console.log(day, item.name, item.startDate, item.endDate, item.state, "item.endDate")
                         const chosenVariant = item.product?.variants[0];
                         if (chosenVariant) {
                             products.push({

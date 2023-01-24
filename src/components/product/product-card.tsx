@@ -20,6 +20,7 @@ import { FatalError } from "next/dist/lib/fatal-error";
 import { useRouter } from "next/router";
 import { cartAnimation } from "../../lib/utils/cart-animation";
 import {PermissionBox} from "../common/permission-box";
+import {Merchant} from "../../lib/types/merchant.type";
 
 let addToCartEvent: any;
 
@@ -53,10 +54,12 @@ function findVariant(options: any, product: any) {
     return null;
 }
 export default function ProductCard({
+    merchantData,
     data,
     page = false,
     checkActiveProduct,
 }: {
+    merchantData: Merchant;
     data: CardDataType;
     page?: boolean;
     checkActiveProduct?: any;
@@ -205,7 +208,7 @@ export default function ProductCard({
 
     const onAddClick = async (e: any) => {
         const productData: CartData = {
-            type: "Delivery",
+            type: merchantData.cartState ? merchantData.cartState : "Delivery",
             merchant: merchantId,
             office: officeId,
             variantId: selectedVariant.id,
@@ -216,7 +219,6 @@ export default function ProductCard({
         try {
             const { data } = await TokiAPI.addCart(productData);
             cartAnimation(e)
-            console.log(data);
             dispatch({
                 type: "cartCount",
                 cartCount: data.totalItems,

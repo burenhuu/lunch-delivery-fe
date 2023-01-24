@@ -36,21 +36,8 @@ const Cart: NextPage = () => {
     const [discountAmount, setDiscountAmount] = useState<any>(0);
     const [data, setData] = useState<any>(null);
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
-    const apiUrl = `/v1/cart/times`;
-    const response = useSWR(`${apiUrl}`);
 
 
-    useEffect(() => {
-        if (response.data && response.data.data && response.data.data.times) {
-            if (response.data.data.times.length <= 0 ){
-                setisDeliveryClosed(true)
-                setDeliveryType("TakeAway");
-            }
-        } else {
-            setisDeliveryClosed(true)
-            setDeliveryType("TakeAway");
-        }
-    }, [response]);
 
     useEffect(() => {
         if (state.officeId) {
@@ -59,13 +46,15 @@ const Cart: NextPage = () => {
             const fetchDatas = async () => {
                 try {
                     const { data } = await TokiAPI.getCart();
-
                     setData(data);
                     data.totalAmount && setTotalAmount(data.totalAmount);
                     data.taxAmount && setTaxAmount(data.taxAmount);
                     data.grandTotal && setGrandTotal(data.grandTotal);
-                    data.discountAmount &&
-                        setDiscountAmount(data.discountAmount);
+                    data.discountAmount && setDiscountAmount(data.discountAmount);
+                    if (data.orders[0]?.type){
+                        setDeliveryType(data.orders[0].type)
+                        data.orders[0].type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway")): setisDeliveryClosed(false)
+                    }
                 } finally {
                     setLoading(false);
                 }
@@ -105,13 +94,6 @@ const Cart: NextPage = () => {
             fetchLastOrder();
         }
     }, [state.officeId]);
-
-    useEffect(() => {
-        if (isDeliveryClosed) {
-            setDeliveryType("TakeAway");
-            setValue("type", "TakeAway");
-        }
-    }, [isDeliveryClosed]);
 
     const validationSchema = yup.object().shape({
         type: yup.string().required("Захиалгын хэлбэр сонгоно уу"),
@@ -356,9 +338,9 @@ const Cart: NextPage = () => {
 
                     <DeliveryTime
                         selectedTime={selectedTime}
+                        deliveryType={deliveryType}
                         setSelectedTime={setSelectedTime}
                         setValue={setValue}
-                        setisDeliveryClosed={setisDeliveryClosed}
                         setDeliveryType={setDeliveryType}
                     />
                     {errors.time && (

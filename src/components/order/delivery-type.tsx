@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import TokiAPI from "../../lib/api/toki";
 
 export default function DeliveryType({
     setDeliveryType,
@@ -11,11 +12,26 @@ export default function DeliveryType({
     isDeliveryClosed: any;
 }) {
     const [isDeliveryShow, setIsDeliveryShow] = useState(true);
-    const apiUrl = `/v1/cart/times`;
-    const response = useSWR(`${apiUrl}`);
+    const [response, setResponse] = useState<any>({})
+
+    const fetchTimes = async () => {
+        if (!isDeliveryClosed) {
+            await TokiAPI.getCartTimes("TakeAway").then((res) => {
+                setResponse(res)
+            })
+        } else {
+            await TokiAPI.getCartTimes("Delivery").then((res) => {
+                setResponse(res)
+            })
+        }
+    }
 
     useEffect(()=>{
-        if (response.data?.times?.length === 0){
+        fetchTimes()
+    },[isDeliveryClosed])
+
+    useEffect(()=>{
+        if (response.times?.length === 0){
             setValue("floor", 1)
             setValue("address", "")
             setValue("type", "TakeAway")

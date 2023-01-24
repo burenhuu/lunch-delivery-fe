@@ -149,7 +149,8 @@ export default function Category() {
                         placeReason: merchant.reason,
                         placeStartDate: merchant.startDate,
                         placeEndDate: merchant.endDate,
-                        dayIsActive: merchant.dayIsActive
+                        dayIsActive: merchant.dayIsActive,
+                        merchant: merchant
                     })
                 )
         });
@@ -183,7 +184,7 @@ export default function Category() {
                         >
                             {cardData?.map((item: CardDataType) => {
                                 return (
-                                    <ProductCard key={item.product.variants[0]?.id} data={item} />
+                                    <ProductCard key={item.product.variants[0]?.id} data={item} merchantData={item.merchant} />
                                 );
                             })}
                         </Accordion>

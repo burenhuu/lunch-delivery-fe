@@ -29,6 +29,7 @@ export interface Merchant {
     startDate: string;
     endDate: string;
     dayIsActive?: boolean
+    cartState?: string
 }
 
 

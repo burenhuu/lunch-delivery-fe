@@ -139,15 +139,12 @@ export default function Office() {
                             merchant.state = "preDelivery"
                             open = openSchedule
                             merchant.startDate = `${openTime[0]}:${openTime[1]}`;
-
                         } else if (openSchedule > openScheduleDelivery) {
                             open = openScheduleDelivery
                             merchant.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
-
                         } else {
                             open = openScheduleDelivery
                             merchant.startDate = `${openTimeDelivery[0]}:${openTimeDelivery[1]}`;
-
                         }
                         if (closeSchedule > closeScheduleDelivery) {
                             close = closeSchedule
@@ -161,6 +158,11 @@ export default function Office() {
                         }
                         if (currentTime < open || currentTime > close) {
                             merchant.state = "CLOSED"
+                        }
+                        if (openScheduleDelivery < currentTime && currentTime < closeScheduleDelivery){
+                            merchant.cartState = "Delivery"
+                        } else{
+                            merchant.cartState = "TakeAway"
                         }
                     }
                     else if (openTimeDelivery && closeTimeDelivery) {

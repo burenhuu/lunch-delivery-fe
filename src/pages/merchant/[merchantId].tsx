@@ -152,6 +152,7 @@ export default function MerchantProductPage() {
                             {cardData?.map((item: CardDataType) => {
                                 return (
                                     <ProductCard
+                                        merchantData={merchant}
                                         data={item}
                                         key={item.product.name}
                                         page={true}

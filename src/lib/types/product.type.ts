@@ -1,3 +1,5 @@
+import {Merchant} from "./merchant.type";
+
 export interface Product {
     name: string;
     description: string;
@@ -46,9 +48,11 @@ export interface CardDataType {
     placeReason?: string;
     placeStartDate?: string;
     placeEndDate?: string;
+    placeCartType?: string
     rating?: number;
     product: Product;
     merchantId: string;
     categoryId?: string;
-    dayIsActive?: boolean
+    dayIsActive?: boolean;
+    merchant: Merchant
 }

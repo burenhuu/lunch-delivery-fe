@@ -106,6 +106,11 @@ const TokiAPI = {
 
     delay: (orderId: string, data: any) =>
         axios.post(`${urlPrefix}/orders/${orderId}/delay`, data),
+
+    getCartTimes: (type: string) =>
+        axios.get(
+            `${urlPrefix}/cart/times?type=${type}`
+        ),
 };
 
 export default TokiAPI;

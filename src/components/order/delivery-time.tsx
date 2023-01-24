@@ -1,47 +1,45 @@
 import useSWR from "swr";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 
 import { ArrowDown } from "components/icons";
 import { useModal } from "lib/context/modal";
 import { useAppState } from "lib/context/app";
 import Spin from "components/common/spin";
+import TokiAPI from "../../lib/api/toki";
 
 export function DeliveryTime({
     selectedTime,
     setSelectedTime,
     setValue,
-    setisDeliveryClosed,
     setDeliveryType,
+    deliveryType
 }: {
     selectedTime: string;
     setSelectedTime: any;
     setValue: any;
-    setisDeliveryClosed: any;
     setDeliveryType: any;
+    deliveryType: any
 }) {
     const [state]: any = useAppState();
 
     const [show, setShow, content, setContent] = useModal();
-    const apiUrl = `/v1/cart/times`;
-    const { data, error } = useSWR(`${apiUrl}`);
+    const [data, setData] = useState<any>({})
 
-    useEffect(() => {
-        if (data && data.data && data.data.times) {
-            data.data.times.length > 0
-                ? (data.data.times[0] &&
-                      setSelectedTime(
-                          `${data.data.times[0][0]} - ${data.data.times[0][1]}`
-                      ),
-                  data.data.times[0] && setValue("time", data.data.times[0][1]),
-                  data.data.times[0] && setValue("type", "Delivery"),
-                  data.data.times[0] && setisDeliveryClosed(false),
-                  setDeliveryType("Delivery"))
-                : (setisDeliveryClosed(true), setDeliveryType("TakeAway"));
+    const fetchTimes = async () => {
+        if (deliveryType === "TakeAway") {
+            await TokiAPI.getCartTimes("TakeAway").then((res) => {
+                setData(res.data)
+            })
         } else {
-            setisDeliveryClosed(true)
-            setDeliveryType("TakeAway");
+            await TokiAPI.getCartTimes("Delivery").then((res) => {
+                setData(res.data)
+            })
         }
-    }, [data]);
+    }
+
+    useEffect(()=>{
+        fetchTimes()
+    },[deliveryType])
 
     const onClose = () => {
         document.getElementById("effect")?.classList.remove("aos-animate");
@@ -57,8 +55,7 @@ export function DeliveryTime({
                 <div id="effect" data-aos="fade-up" className="my-col-10">
                     <div className="p-5 bg-white shadow-delivery rounded-2xl my-col-10">
                         {data &&
-                            data.data &&
-                            data.data.times?.map((time: any) => {
+                            data.times?.map((time: any) => {
                                 return (
                                     <div
                                         key={time}
@@ -95,11 +92,11 @@ export function DeliveryTime({
             className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm h-[35px]"
         >
             <div className="font-light">
-                {!data && !error && <Spin />}
+                {!data && <Spin />}
                 {data &&
-                data.data &&
+                data.times &&
                 selectedTime ===
-                    `${data.data.times[0] ? data.data.times[0][0] : ''} - ${data.data.times[0] ? data.data.times[0][1] : ''}`
+                    `${data.times[0] ? data.times[0][0] : ''} - ${data.times[0] ? data.times[0][1] : ''}`
                     ? `${selectedTime} (Аль болох эрт)`
                     : selectedTime}
             </div>

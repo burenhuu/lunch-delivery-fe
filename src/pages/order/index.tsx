@@ -37,63 +37,68 @@ const Cart: NextPage = () => {
     const [data, setData] = useState<any>(null);
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
 
+    console.log(deliveryType)
 
+    const fetchDatas = async () => {
+        setLoading(true);
+        try {
+            const { data } = await TokiAPI.getCart();
+            setData(data);
+            data.totalAmount && setTotalAmount(data.totalAmount);
+            data.taxAmount && setTaxAmount(data.taxAmount);
+            data.grandTotal && setGrandTotal(data.grandTotal);
+            data.discountAmount && setDiscountAmount(data.discountAmount);
+            if (data.orders[0]?.type){
+                setDeliveryType(data.orders[0].type)
+                data.orders[0].type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway")): setisDeliveryClosed(false)
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchLastOrder = async () => {
+        setLoading(true);
+        try {
+            const { data } = await TokiAPI.lastCompletedOrderWithOffice(
+                state.officeId
+            );
+            if (data && data[0]) {
+                if (isDeliveryClosed){
+                    data[0].type &&
+                    (setDeliveryType("TakeAway"),
+                        setValue("type", "TakeAway"));
+                } else {
+                    data[0].type &&
+                    (setDeliveryType(data[0].type),
+                        setValue("type", data[0].type));
+                }
+
+                data[0].floor &&
+                (setValue("floor", data[0].floor),
+                    setSelectedFloor(data[0].floor));
+                data[0].address && setValue("address", data[0].address);
+                data[0].comment && setValue("comment", data[0].comment);
+                data[0].vat &&
+                (setValue("vat", data[0].vat), setVat(data[0].vat));
+                data[0].register &&
+                setValue("register", data[0].register);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         if (state.officeId) {
-            setLoading(true);
-
-            const fetchDatas = async () => {
-                try {
-                    const { data } = await TokiAPI.getCart();
-                    setData(data);
-                    data.totalAmount && setTotalAmount(data.totalAmount);
-                    data.taxAmount && setTaxAmount(data.taxAmount);
-                    data.grandTotal && setGrandTotal(data.grandTotal);
-                    data.discountAmount && setDiscountAmount(data.discountAmount);
-                    if (data.orders[0]?.type){
-                        setDeliveryType(data.orders[0].type)
-                        data.orders[0].type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway")): setisDeliveryClosed(false)
-                    }
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const fetchLastOrder = async () => {
-                try {
-                    const { data } = await TokiAPI.lastCompletedOrderWithOffice(
-                        state.officeId
-                    );
-                    if (data && data[0]) {
-                        if (isDeliveryClosed){
-                            data[0].type &&
-                            (setDeliveryType("TakeAway"),
-                                setValue("type", "TakeAway"));
-                        } else {
-                            data[0].type &&
-                            (setDeliveryType(data[0].type),
-                                setValue("type", data[0].type));
-                        }
-
-                        data[0].floor &&
-                            (setValue("floor", data[0].floor),
-                            setSelectedFloor(data[0].floor));
-                        data[0].address && setValue("address", data[0].address);
-                        data[0].comment && setValue("comment", data[0].comment);
-                        data[0].vat &&
-                            (setValue("vat", data[0].vat), setVat(data[0].vat));
-                        data[0].register &&
-                            setValue("register", data[0].register);
-                    }
-                } finally {
-                }
-            };
-
             fetchDatas();
             fetchLastOrder();
         }
     }, [state.officeId]);
+
+    useEffect(()=>{
+        fetchLastOrder();
+    }, [isDeliveryClosed])
 
     const validationSchema = yup.object().shape({
         type: yup.string().required("Захиалгын хэлбэр сонгоно уу"),
@@ -243,6 +248,8 @@ const Cart: NextPage = () => {
             />
         );
     };
+
+    if (loading) return <CenteredSpin />;
 
     return (
         <div className="p-5 my-col-20">

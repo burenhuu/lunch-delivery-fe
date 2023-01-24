@@ -12,32 +12,32 @@ export default function DeliveryType({
     isDeliveryClosed: any;
 }) {
     const [isDeliveryShow, setIsDeliveryShow] = useState(true);
-    const [response, setResponse] = useState<any>({})
-
-    const fetchTimes = async () => {
-        if (!isDeliveryClosed) {
-            await TokiAPI.getCartTimes("TakeAway").then((res) => {
-                setResponse(res)
-            })
-        } else {
-            await TokiAPI.getCartTimes("Delivery").then((res) => {
-                setResponse(res)
-            })
-        }
-    }
-
-    useEffect(()=>{
-        fetchTimes()
-    },[isDeliveryClosed])
-
-    useEffect(()=>{
-        if (response.times?.length === 0){
-            setValue("floor", 1)
-            setValue("address", "")
-            setValue("type", "TakeAway")
-            setDeliveryType("TakeAway")
-        }
-    },[])
+    // const [response, setResponse] = useState<any>({})
+    //
+    // const fetchTimes = async () => {
+    //     if (!isDeliveryClosed) {
+    //         await TokiAPI.getCartTimes("TakeAway").then((res) => {
+    //             setResponse(res)
+    //         })
+    //     } else {
+    //         await TokiAPI.getCartTimes("Delivery").then((res) => {
+    //             setResponse(res)
+    //         })
+    //     }
+    // }
+    //
+    // useEffect(()=>{
+    //     fetchTimes()
+    // },[isDeliveryClosed])
+    //
+    // useEffect(()=>{
+    //     if (response.times?.length === 0){
+    //         setValue("floor", 1)
+    //         setValue("address", "")
+    //         setValue("type", "TakeAway")
+    //         setDeliveryType("TakeAway")
+    //     }
+    // },[])
 
     useEffect(() => {
         if (isDeliveryClosed) {

@@ -33,13 +33,39 @@ export function DeliveryTime({
         } else {
             await TokiAPI.getCartTimes("Delivery").then((res) => {
                 setData(res.data)
+
             })
         }
     }
 
     useEffect(()=>{
+        if (data && data.times) {
+            setValue("time", data.times[0][1])
+            setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
+        }
+    }, [data])
+
+    console.log(deliveryType, selectedTime)
+
+    useEffect(()=>{
         fetchTimes()
     },[deliveryType])
+
+    // useEffect(() => {
+    //     if (data && data && data.times) {
+    //         data.times.length > 0
+    //             ? (data.times[0] &&
+    //                   setSelectedTime(
+    //                       `${data.times[0][0]} - ${data.times[0][1]}`
+    //                   ),
+    //               data.times[0] && setValue("time", data.times[0][1]),
+    //               data.times[0] && setValue("type", "Delivery"),
+    //               setDeliveryType("Delivery"))
+    //             : (setDeliveryType("TakeAway"));
+    //     } else {
+    //         setDeliveryType("TakeAway");
+    //     }
+    // }, [data]);
 
     const onClose = () => {
         document.getElementById("effect")?.classList.remove("aos-animate");

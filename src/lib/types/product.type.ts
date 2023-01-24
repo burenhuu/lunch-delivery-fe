@@ -54,5 +54,5 @@ export interface CardDataType {
     merchantId: string;
     categoryId?: string;
     dayIsActive?: boolean;
-    merchant: Merchant
+    merchant?: Merchant
 }

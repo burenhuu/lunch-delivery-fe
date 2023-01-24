@@ -51,7 +51,8 @@ export default function MerchantProductPage() {
                             place: merchant?.name!,
                             merchantId,
                             product: product,
-                            placeState: merchant?.state
+                            placeState: merchant?.state,
+                            merchant: merchant
                         }, ... temp]
                     } else{
                         temp.push({
@@ -59,6 +60,7 @@ export default function MerchantProductPage() {
                             merchantId,
                             product: product,
                             placeState: merchant?.state,
+                            merchant: merchant
                         });
                     }
                 });
@@ -72,7 +74,8 @@ export default function MerchantProductPage() {
                                 place: merchant?.name!,
                                 product: product,
                                 merchantId,
-                                placeState: merchant?.state
+                                placeState: merchant?.state,
+                                merchant: merchant
                             });
                         });
                     }

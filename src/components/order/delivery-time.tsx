@@ -39,7 +39,7 @@ export function DeliveryTime({
     }
 
     useEffect(()=>{
-        if (data && data.times) {
+        if (data && data.times && data.times[0]) {
             setValue("time", data.times[0][1])
             setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
         }

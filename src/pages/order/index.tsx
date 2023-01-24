@@ -201,7 +201,7 @@ const Cart: NextPage = () => {
                                 "63b9142a94bc82df38700f31",
                                 placeOrderResponse.data.grandTotal,
                                 placeOrderResponse.data.orderId,
-                                `Lunch_zahialah | ${localStorage.getItem(
+                                `Hool_zahialah | ${localStorage.getItem(
                                     "phoneNumber"
                                 )}`,
                                 async (

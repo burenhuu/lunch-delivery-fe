@@ -59,7 +59,7 @@ export default function ProductCard({
     page = false,
     checkActiveProduct,
 }: {
-    merchantData: Merchant;
+    merchantData?: Merchant;
     data: CardDataType;
     page?: boolean;
     checkActiveProduct?: any;
@@ -208,7 +208,7 @@ export default function ProductCard({
 
     const onAddClick = async (e: any) => {
         const productData: CartData = {
-            type: merchantData.cartState ? merchantData.cartState : "Delivery",
+            type: merchantData?.cartState ? merchantData.cartState : "Delivery",
             merchant: merchantId,
             office: officeId,
             variantId: selectedVariant.id,

@@ -37,8 +37,6 @@ const Cart: NextPage = () => {
     const [data, setData] = useState<any>(null);
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
 
-    console.log(deliveryType)
-
     const fetchDatas = async () => {
         setLoading(true);
         try {
@@ -249,7 +247,7 @@ const Cart: NextPage = () => {
         );
     };
 
-    if (loading) return <CenteredSpin />;
+    // if (loading) return <CenteredSpin />;
 
     return (
         <div className="p-5 my-col-20">

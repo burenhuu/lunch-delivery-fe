@@ -154,7 +154,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                     <div className="w-full h-[40px]"></div>
                 ) : (
                     item.state !== Status.COMPLETED &&
-                    item.state !== Status.DELIVERED && (
+                    item.state !== Status.DELIVERED &&
+                    item.state !== Status.CANCELLED &&(
                         <div className="w-full h-[40px]"></div>
                     )
                 )}
@@ -180,7 +181,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                     </div>
                 ) : (
                     item.state !== Status.COMPLETED &&
-                    item.state !== Status.DELIVERED && (
+                    item.state !== Status.DELIVERED &&
+                    item.state !== Status.CANCELLED && (
                         <div className="self-center flex items-center gap-x-1.25 justify-center">
                             <Link href={`/order-detail/${item.id}`}>
                                 <a>

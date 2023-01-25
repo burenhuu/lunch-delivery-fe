@@ -129,23 +129,27 @@ export function DeliveryTime({
         );
     };
 
-    if (loading) return <></>;
-
     return (
-        <div
-            onClick={onSelectTime}
-            className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm h-[35px]"
-        >
-            <div className="font-light">
-                {!data && <Spin />}
-                {data &&
-                data.times &&
-                selectedTime ===
-                    `${data.times[0] ? data.times[0][0] : ''} - ${data.times[0] ? data.times[0][1] : ''}`
-                    ? `${selectedTime} (Аль болох эрт)`
-                    : selectedTime}
-            </div>
-            <ArrowDown />
-        </div>
+        <>
+            {
+                loading ? <></>:
+                    <div
+                        onClick={onSelectTime}
+                        className="bg-white rounded-md px-5 py-[9px] flex justify-between items-center text-sm h-[35px]"
+                    >
+                        <div className="font-light">
+                            {!data && <Spin />}
+                            {data &&
+                            data.times &&
+                            selectedTime ===
+                            `${data.times[0] ? data.times[0][0] : ''} - ${data.times[0] ? data.times[0][1] : ''}`
+                                ? `${selectedTime} (Аль болох эрт)`
+                                : selectedTime}
+                        </div>
+                        <ArrowDown />
+                    </div>
+            }
+        </>
+
     );
 }

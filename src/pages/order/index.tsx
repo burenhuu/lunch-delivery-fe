@@ -67,15 +67,15 @@ const Cart: NextPage = () => {
                 state.officeId
             );
             if (data && data[0]) {
-                if (isDeliveryClosed){
-                    data[0].type &&
-                    (setDeliveryType("TakeAway"),
-                        setValue("type", "TakeAway"));
-                } else {
-                    data[0].type &&
-                    (setDeliveryType(data[0].type),
-                        setValue("type", data[0].type));
-                }
+                // if (isDeliveryClosed){
+                //     data[0].type &&
+                //     (setDeliveryType("TakeAway"),
+                //         setValue("type", "TakeAway"));
+                // } else {
+                //     data[0].type &&
+                //     (setDeliveryType(data[0].type),
+                //         setValue("type", data[0].type));
+                // }
 
                 data[0].floor &&
                 (setValue("floor", data[0].floor),

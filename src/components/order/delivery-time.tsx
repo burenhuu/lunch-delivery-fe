@@ -21,18 +21,22 @@ export function DeliveryTime({
     deliveryType: any
 }) {
     const [state]: any = useAppState();
-
+    const [loading, setLoading] = useState(false)
     const [show, setShow, content, setContent] = useModal();
     const [data, setData] = useState<any>({})
 
     const fetchTimes = async () => {
         if (deliveryType === "TakeAway") {
+            setLoading(true)
             await TokiAPI.getCartTimes("TakeAway").then((res) => {
                 setData(res.data)
+                setLoading(false)
             })
         } else {
+            setLoading(true)
             await TokiAPI.getCartTimes("Delivery").then((res) => {
                 setData(res.data)
+                setLoading(false)
             })
         }
     }
@@ -70,6 +74,8 @@ export function DeliveryTime({
             setShow(false);
         }, 400);
     };
+
+    if (loading) return <></>;
 
     const onSelectTime = () => {
         setShow(true);

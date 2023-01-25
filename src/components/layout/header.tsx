@@ -14,7 +14,12 @@ const Header = ({routerPathName}: any) => {
     const {officeId, officeName} = state;
 
     const onBackButtonClick = () => {
-        router.back();
+        if (router.query.tokenid !== undefined){
+            router.push('/')
+        } else{
+            router.back();
+
+        }
     };
 
     function getTextWidth(text: string) {

@@ -24,7 +24,7 @@ const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
     const { officeName } = state;
-    const [deliveryType, setDeliveryType] = useState<string>("Delivery");
+    const [deliveryType, setDeliveryType] = useState<string>("");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
     const [selectedTime, setSelectedTime] = useState<string>("");

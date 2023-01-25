@@ -26,32 +26,35 @@ export function DeliveryTime({
     const [data, setData] = useState<any>({})
 
     const fetchTimes = () => {
-        if (deliveryType === "TakeAway") {
-            setLoading(true)
-            TokiAPI.getCartTimes("TakeAway").then((res) => {
-                setData(res.data)
-                if (res.data && res.data.times && res.data.times[0]) {
-                    setValue("time", res.data.times[0][1])
-                    setSelectedTime(`${res.data.times[0][0]} - ${res.data.times[0][1]}`)
-                }
-                setLoading(false)
-            })
-        } else {
-            setLoading(true)
-            TokiAPI.getCartTimes("Delivery").then((res) => {
-                setData(res.data)
-                if (res.data && res.data.times && res.data.times[0]) {
-                    setValue("time", res.data.times[0][1])
-                    setSelectedTime(`${res.data.times[0][0]} - ${res.data.times[0][1]}`)
-                }
-                setLoading(false)
-            })
+        setLoading(true)
+
+        try{
+            if (deliveryType === "TakeAway") {
+                TokiAPI.getCartTimes("TakeAway").then((res) => {
+                    setData(res.data)
+                })
+            } else {
+                TokiAPI.getCartTimes("Delivery").then((res) => {
+                    setData(res.data)
+                })
+            }
+        } catch (e) {
+        } finally {
+            setLoading(false)
         }
+
     }
 
     useEffect(()=>{
         fetchTimes()
     },[deliveryType])
+
+    useEffect(()=>{
+        if (data && data.times && data.times[0]) {
+            setValue("time", data.times[0][1])
+            setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
+        }
+    }, [data])
 
     // useEffect(() => {
     //     if (data && data && data.times) {
@@ -76,7 +79,6 @@ export function DeliveryTime({
         }, 400);
     };
 
-    if (loading) return <></>;
 
     const onSelectTime = () => {
         setShow(true);
@@ -115,6 +117,8 @@ export function DeliveryTime({
             </div>
         );
     };
+
+    if (loading) return <></>;
 
     return (
         <div

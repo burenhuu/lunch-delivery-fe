@@ -12,13 +12,15 @@ export function DeliveryTime({
     setSelectedTime,
     setValue,
     setDeliveryType,
-    deliveryType
+    deliveryType,
+                                 isDeliveryClosed
 }: {
     selectedTime: string;
     setSelectedTime: any;
     setValue: any;
     setDeliveryType: any;
-    deliveryType: any
+    deliveryType: any;
+    isDeliveryClosed: any
 }) {
     const [state]: any = useAppState();
     const [loading, setLoading] = useState(false)
@@ -28,7 +30,7 @@ export function DeliveryTime({
     const fetchTimes = () => {
         setLoading(true)
         try{
-            if (deliveryType === "TakeAway") {
+            if (isDeliveryClosed){
                 TokiAPI.getCartTimes("TakeAway").then((res) => {
                     setData(res.data)
                     let data = res.data
@@ -37,16 +39,28 @@ export function DeliveryTime({
                         setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
                     }
                 })
-            } else if (deliveryType === "Delivery") {
-                TokiAPI.getCartTimes("Delivery").then((res) => {
-                    setData(res.data)
-                    let data = res.data
-                    if (data && data.times && data.times[0]) {
-                        setValue("time", data.times[0][1])
-                        setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
-                    }
-                })
+            } else {
+                if (deliveryType === "TakeAway") {
+                    TokiAPI.getCartTimes("TakeAway").then((res) => {
+                        setData(res.data)
+                        let data = res.data
+                        if (data && data.times && data.times[0]) {
+                            setValue("time", data.times[0][1])
+                            setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
+                        }
+                    })
+                } else if (deliveryType === "Delivery") {
+                    TokiAPI.getCartTimes("Delivery").then((res) => {
+                        setData(res.data)
+                        let data = res.data
+                        if (data && data.times && data.times[0]) {
+                            setValue("time", data.times[0][1])
+                            setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
+                        }
+                    })
+                }
             }
+
         } catch (e) {
         } finally {
             setLoading(false)

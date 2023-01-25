@@ -5,6 +5,7 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 import CenteredSpin from "components/common/centered-spin";
 import Card from "components/history/card";
 import { Status } from "lib/types/order.type";
+import ProcessingSpin from "../common/processing-spin";
 
 const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
 const statusTabs = ["Идэвхтэй", "Дууссан"];
@@ -25,6 +26,7 @@ const Render = ({ officeId }: any) => {
             className="w-full h-full"
             onRefresh={handleRefresh}
             pullingContent=" "
+            refreshingContent={(<ProcessingSpin />)}
         >
             <div className="p-5 my-col-20">
                 <div className="grid items-center grid-cols-2 text-center bg-white rounded-md">

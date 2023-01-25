@@ -48,7 +48,7 @@ const Cart: NextPage = () => {
             data.discountAmount && setDiscountAmount(data.discountAmount);
             let orderType = "Delivery"
             let check = false
-            data.orders.forEach((order: any)=>{
+            await data.orders.forEach((order: any)=>{
                 if (order.type === "TakeAway"){
                     setisDeliveryClosed(true)
                     setValue("type", "TakeAway")

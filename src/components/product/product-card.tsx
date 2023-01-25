@@ -239,12 +239,26 @@ export default function ProductCard({
             options: [...selectedOptions],
         };
         try {
-            const { data } = await TokiAPI.addCart(productData);
-            cartAnimation(e)
-            dispatch({
-                type: "cartCount",
-                cartCount: data.totalItems,
-            });
+            if ((merchantData?.cartState ? merchantData.cartState : "Delivery") === "TakeAway"){
+                setShow(true);
+                setContent(
+                    <PermissionBox
+                        text={`<b>Хүргүүлэх</b> захиалга дүүрсэн тул та зөвхөн <b>Очиж авах</b> захиалга өгөх боломжтой. `}
+                        button2={<>Үргэлжлүүлэх</>}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueTakeAwayClick(e);
+                        }}
+                    />
+                );
+            } else {
+                const { data } = await TokiAPI.addCart(productData);
+                cartAnimation(e)
+                dispatch({
+                    type: "cartCount",
+                    cartCount: data.totalItems,
+                });
+            }
         } catch (err: any) {
             if (err.message === "Захиалгын лимит дууссан байна"){
                 setShow(true);

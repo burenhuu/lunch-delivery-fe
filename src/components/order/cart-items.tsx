@@ -50,8 +50,10 @@ export function CartItems({
             data.totalItems &&
                 dispatch({ type: "cartCount", cartCount: data.totalItems });
             let orderType = "Delivery"
+            let check = false
             data.orders.forEach((order: any)=>{
                 if (order.type === "TakeAway"){
+                    check = true
                     setisDeliveryClosed(true)
                     setValue("type", "TakeAway")
                     setValue("floor", 1)
@@ -59,6 +61,9 @@ export function CartItems({
                     return
                 }
             })
+            if (!check){
+                setisDeliveryClosed(false)
+            }
             setDeliveryType(orderType)
         } finally {
             setLoading(false);

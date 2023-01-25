@@ -17,6 +17,9 @@ export function CartItems({
     loading,
     setLoading,
     deliveryType,
+    setisDeliveryClosed,
+    setValue,
+    setDeliveryType,
 }: any) {
     const [state, dispatch]: any = useAppState();
 
@@ -46,6 +49,11 @@ export function CartItems({
                 : setDiscountAmount(0);
             data.totalItems &&
                 dispatch({ type: "cartCount", cartCount: data.totalItems });
+            let orderType = "Delivery"
+            data.orders.map((order: any)=>{
+                order.type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway"), orderType = "TakeAway"): setisDeliveryClosed(false)
+            })
+            setDeliveryType(orderType)
         } finally {
             setLoading(false);
         }

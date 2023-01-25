@@ -87,7 +87,6 @@ export default function MerchantProductPage() {
     };
 
     useEffect(() => {
-        console.log(merchantId)
         const getMerchantMenu = async () => {
             setLoading(true);
             const tempMerch = merchants?.find(

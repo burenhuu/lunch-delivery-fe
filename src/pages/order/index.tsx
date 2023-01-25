@@ -46,10 +46,11 @@ const Cart: NextPage = () => {
             data.taxAmount && setTaxAmount(data.taxAmount);
             data.grandTotal && setGrandTotal(data.grandTotal);
             data.discountAmount && setDiscountAmount(data.discountAmount);
-            if (data.orders[0]?.type){
-                setDeliveryType(data.orders[0].type)
-                data.orders[0].type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway")): setisDeliveryClosed(false)
-            }
+            let orderType = "Delivery"
+            data.orders.map((order: any)=>{
+                order.type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway"), orderType = "TakeAway"): setisDeliveryClosed(false)
+            })
+            setDeliveryType(orderType)
         } finally {
             setLoading(false);
         }
@@ -268,6 +269,9 @@ const Cart: NextPage = () => {
                     loading={loading}
                     setLoading={setLoading}
                     deliveryType={deliveryType}
+                    setisDeliveryClosed={setisDeliveryClosed}
+                    setValue={setValue}
+                    setDeliveryType={setDeliveryType}
                 />
             </div>
 

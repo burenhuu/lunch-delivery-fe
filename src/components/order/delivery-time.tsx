@@ -38,17 +38,15 @@ export function DeliveryTime({
     }
 
     useEffect(()=>{
+        fetchTimes()
+    },[deliveryType])
+
+    useEffect(()=>{
         if (data && data.times && data.times[0]) {
             setValue("time", data.times[0][1])
             setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
         }
     }, [data])
-
-    console.log(deliveryType, selectedTime)
-
-    useEffect(()=>{
-        fetchTimes()
-    },[deliveryType])
 
     // useEffect(() => {
     //     if (data && data && data.times) {

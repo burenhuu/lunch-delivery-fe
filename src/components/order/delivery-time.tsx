@@ -25,16 +25,16 @@ export function DeliveryTime({
     const [show, setShow, content, setContent] = useModal();
     const [data, setData] = useState<any>({})
 
-    const fetchTimes = async () => {
+    const fetchTimes = () => {
         if (deliveryType === "TakeAway") {
             setLoading(true)
-            await TokiAPI.getCartTimes("TakeAway").then((res) => {
+            TokiAPI.getCartTimes("TakeAway").then((res) => {
                 setData(res.data)
                 setLoading(false)
             })
         } else {
             setLoading(true)
-            await TokiAPI.getCartTimes("Delivery").then((res) => {
+            TokiAPI.getCartTimes("Delivery").then((res) => {
                 setData(res.data)
                 setLoading(false)
             })

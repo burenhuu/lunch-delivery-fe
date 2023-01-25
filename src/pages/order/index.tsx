@@ -355,14 +355,18 @@ const Cart: NextPage = () => {
 
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">Захиалга авах хугацаа</div>
+                    {
+                        loading ? <></>:
+                            <DeliveryTime
+                                selectedTime={selectedTime}
+                                deliveryType={deliveryType}
+                                setSelectedTime={setSelectedTime}
+                                setValue={setValue}
+                                setDeliveryType={setDeliveryType}
+                            />
 
-                    <DeliveryTime
-                        selectedTime={selectedTime}
-                        deliveryType={deliveryType}
-                        setSelectedTime={setSelectedTime}
-                        setValue={setValue}
-                        setDeliveryType={setDeliveryType}
-                    />
+                    }
+
                     {errors.time && (
                         <p className="mt-1 text-xs italic text-left text-red-500 ">
                             {errors.time?.message}

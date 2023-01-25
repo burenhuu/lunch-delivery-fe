@@ -30,12 +30,20 @@ export function DeliveryTime({
             setLoading(true)
             TokiAPI.getCartTimes("TakeAway").then((res) => {
                 setData(res.data)
+                if (res.data && res.data.times && res.data.times[0]) {
+                    setValue("time", res.data.times[0][1])
+                    setSelectedTime(`${res.data.times[0][0]} - ${res.data.times[0][1]}`)
+                }
                 setLoading(false)
             })
         } else {
             setLoading(true)
             TokiAPI.getCartTimes("Delivery").then((res) => {
                 setData(res.data)
+                if (res.data && res.data.times && res.data.times[0]) {
+                    setValue("time", res.data.times[0][1])
+                    setSelectedTime(`${res.data.times[0][0]} - ${res.data.times[0][1]}`)
+                }
                 setLoading(false)
             })
         }
@@ -44,13 +52,6 @@ export function DeliveryTime({
     useEffect(()=>{
         fetchTimes()
     },[deliveryType])
-
-    useEffect(()=>{
-        if (data && data.times && data.times[0]) {
-            setValue("time", data.times[0][1])
-            setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
-        }
-    }, [data])
 
     // useEffect(() => {
     //     if (data && data && data.times) {

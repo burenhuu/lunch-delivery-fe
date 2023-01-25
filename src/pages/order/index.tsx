@@ -24,7 +24,7 @@ const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
     const { officeName } = state;
-    const [deliveryType, setDeliveryType] = useState<string>("");
+    const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
     const [selectedTime, setSelectedTime] = useState<string>("");
@@ -46,22 +46,15 @@ const Cart: NextPage = () => {
             data.taxAmount && setTaxAmount(data.taxAmount);
             data.grandTotal && setGrandTotal(data.grandTotal);
             data.discountAmount && setDiscountAmount(data.discountAmount);
-            let orderType = "Delivery"
-            let check = false
             await data.orders.forEach((order: any)=>{
                 if (order.type === "TakeAway"){
                     setisDeliveryClosed(true)
                     setValue("type", "TakeAway")
                     setValue("floor", 1)
-                    orderType = "TakeAway"
-                    check = true
+                    setDeliveryType("TakeAway")
                     return
                 }
             })
-            if (!check){
-                setisDeliveryClosed(false)
-            }
-            setDeliveryType(orderType)
         } finally {
             setLoading(false);
         }

@@ -206,6 +206,28 @@ export default function ProductCard({
         }
     };
 
+    const onContinueTakeAwayClick = async (e: any) => {
+        const productData: CartData = {
+            type: "TakeAway",
+            merchant: merchantId,
+            office: officeId,
+            variantId: selectedVariant.id,
+            quantity: 1,
+            comment: comment,
+            options: [...selectedOptions],
+        };
+        try {
+            const { data } = await TokiAPI.addCart(productData);
+            cartAnimation(e)
+            dispatch({
+                type: "cartCount",
+                cartCount: data.totalItems,
+            });
+        } catch (err: any) {
+        } finally {
+        }
+    };
+
     const onAddClick = async (e: any) => {
         const productData: CartData = {
             type: merchantData?.cartState ? merchantData.cartState : "Delivery",
@@ -223,7 +245,20 @@ export default function ProductCard({
                 type: "cartCount",
                 cartCount: data.totalItems,
             });
-        } catch (err) {
+        } catch (err: any) {
+            if (err.message === "Захиалгын лимит дууссан байна"){
+                setShow(true);
+                setContent(
+                    <PermissionBox
+                        text={`<b>Хүргүүлэх</b> захиалга дүүрсэн тул та зөвхөн <b>Очиж авах</b> захиалга өгөх боломжтой. `}
+                        button2={<>Үргэлжлүүлэх</>}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueTakeAwayClick(e);
+                        }}
+                    />
+                );
+            }
         } finally {
         }
     };

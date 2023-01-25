@@ -50,8 +50,14 @@ export function CartItems({
             data.totalItems &&
                 dispatch({ type: "cartCount", cartCount: data.totalItems });
             let orderType = "Delivery"
-            data.orders.map((order: any)=>{
-                order.type === "TakeAway" ? (setisDeliveryClosed(true), setValue("type", "TakeAway"), orderType = "TakeAway"): setisDeliveryClosed(false)
+            data.orders.forEach((order: any)=>{
+                if (order.type === "TakeAway"){
+                    setisDeliveryClosed(true)
+                    setValue("type", "TakeAway")
+                    setValue("floor", 1)
+                    orderType = "TakeAway"
+                    return
+                }
             })
             setDeliveryType(orderType)
         } finally {

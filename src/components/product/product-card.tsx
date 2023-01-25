@@ -260,7 +260,7 @@ export default function ProductCard({
                 });
             }
         } catch (err: any) {
-            if (err.message === "Захиалгын лимит дууссан байна"){
+            if (err.message === "Хүргүүлэх захиалга дүүрсэн тул Та зөвхөн очиж авах захиалга өгөх боломжтой"){
                 setShow(true);
                 setContent(
                     <PermissionBox

@@ -51,8 +51,10 @@ export function DeliveryTime({
 
     useEffect(()=>{
         if (data && data.times && data.times[0]) {
+            setLoading(true)
             setValue("time", data.times[0][1])
             setSelectedTime(`${data.times[0][0]} - ${data.times[0][1]}`)
+            setLoading(false)
         }
     }, [data])
 

@@ -33,7 +33,6 @@ export function DeliveryTime({
         } else {
             await TokiAPI.getCartTimes("Delivery").then((res) => {
                 setData(res.data)
-
             })
         }
     }

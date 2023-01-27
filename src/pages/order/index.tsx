@@ -206,7 +206,7 @@ const Cart: NextPage = () => {
                         );
                         if (placeOrderResponse?.status == 200) {
                             Toki.buy(
-                                "63b9142a94bc82df38700f31",
+                                "6077c7514a70c11568436528",
                                 placeOrderResponse.data.grandTotal,
                                 placeOrderResponse.data.orderId,
                                 `Hool_zahialah | ${localStorage.getItem(

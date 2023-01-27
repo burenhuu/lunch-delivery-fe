@@ -7,7 +7,7 @@ const urlPrefix = "/v1";
 const TokiAPI = {
     getUser: (token: string) =>
         axios.post(
-            `${urlPrefix}/token?grant_type=client_credentials&client_id=toki&client_secret=toki&code=${token}`
+            `${urlPrefix}/token?grant_type=client_credentials&client_id=Ma95V2Cd3fjAWA4r&client_secret=CxjMCBpPMJZKqsTHL3qKA9MKZ&code=${token}`
         ),
 
     getAllOffices: () => axios.get(`${urlPrefix}/offices`),

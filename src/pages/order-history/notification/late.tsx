@@ -75,7 +75,7 @@ const Review: NextPage = () => {
 
                                     try {
                                         await TokiAPI.delay(item.id, {
-                                            time: timesResponse.data.times[0],
+                                            time: timesResponse.data.times[0][1],
                                         });
 
                                         setShow(false);

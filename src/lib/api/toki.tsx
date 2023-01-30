@@ -111,6 +111,11 @@ const TokiAPI = {
         axios.get(
             `${urlPrefix}/cart/times?type=${type}`
         ),
+
+    getLateTimes: (merchantId: string, type: string) =>
+        axios.get(
+            `${urlPrefix}/merchant/${merchantId}/times?type=${type}`
+        ),
 };
 
 export default TokiAPI;

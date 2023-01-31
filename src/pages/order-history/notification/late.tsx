@@ -58,51 +58,65 @@ const Review: NextPage = () => {
 
                     let myLoading = false;
 
-                    setContent(
-                        <PermissionBox
-                            text={`Уучлаарай, таны захиалга хоцорч танд <b>${formatPrice(
-                                item.penaltyAmount
-                            )} U-Point</b> оноо олголоо.
+                    if (timesResponse.data.times.length > 0){
+                        setContent(
+                            <PermissionBox
+                                text={`Уучлаарай, таны захиалга хоцорч танд <b>${formatPrice(
+                                    item.penaltyAmount
+                                )} U-Point</b> оноо олголоо.
                         Та захиалгаа <b>${
-                            timesResponse.data.times[0][1]
-                        }</b>-д авах эсвэл цуцлах боломжтой.`}
-                            button2={`${timesResponse.data.times[0][1]}-д авах`}
-                            button3="Цуцлах"
-                            onClick={async () => {
-                                if (!myLoading) {
-                                    myLoading = true;
-                                    setLoading2(myLoading);
-
-                                    try {
-                                        await TokiAPI.delay(item.id, {
-                                            time: timesResponse.data.times[0][1],
-                                        });
-
-                                        setShow(false);
-                                    } finally {
-                                        myLoading = false;
+                                    timesResponse.data.times[0][1]
+                                }</b>-д авах эсвэл цуцлах боломжтой.`}
+                                button2={`${timesResponse.data.times[0][1]}-д авах`}
+                                button3="Цуцлах"
+                                onClick={async () => {
+                                    if (!myLoading) {
+                                        myLoading = true;
                                         setLoading2(myLoading);
+
+                                        try {
+                                            await TokiAPI.delay(item.id, {
+                                                time: timesResponse.data.times[0][1],
+                                            });
+
+                                            setShow(false);
+                                        } finally {
+                                            myLoading = false;
+                                            setLoading2(myLoading);
+                                        }
                                     }
-                                }
-                            }}
-                            onClick2={async () => {
-                                if (!myLoading) {
-                                    myLoading = true;
-                                    setLoading2(myLoading);
-
-                                    try {
-                                        await TokiAPI.cancel(item.id);
-
-                                        setShow(false);
-                                    } finally {
-                                        myLoading = false;
+                                }}
+                                onClick2={async () => {
+                                    if (!myLoading) {
+                                        myLoading = true;
                                         setLoading2(myLoading);
+
+                                        try {
+                                            await TokiAPI.cancel(item.id);
+
+                                            setShow(false);
+                                        } finally {
+                                            myLoading = false;
+                                            setLoading2(myLoading);
+                                        }
                                     }
-                                }
-                            }}
-                            loading={loading2}
-                        />
-                    );
+                                }}
+                                loading={loading2}
+                            />
+                        );
+                    } else {
+                        try {
+                            await TokiAPI.cancel(item.id);
+                        } finally {
+                            setContent(
+                                <PermissionBox
+                                    text={`Уучлаарай, таны захиалгыг хүргэх боломжгүй болсон тул цуцалж танд нөхөн төлбөр <b>${formatPrice(
+                                        item.penaltyAmount
+                                    )} U-Point</b> оноо олголоо.`}
+                                />
+                            );
+                        }
+                    }
                 } else {
                     toast("Хоцорсон захиалга байхгүй байна.");
                 }

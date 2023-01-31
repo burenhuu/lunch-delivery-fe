@@ -1,19 +1,19 @@
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import type {NextPage} from "next";
+import {useEffect, useState} from "react";
 import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/router";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {useRouter} from "next/router";
 
-import { useAppState } from "lib/context/app";
-import { toast } from "react-toastify";
-import { CartItems } from "components/order/cart-items";
+import {useAppState} from "lib/context/app";
+import {toast} from "react-toastify";
+import {CartItems} from "components/order/cart-items";
 import DeliveryType from "components/order/delivery-type";
 import DeliveryAddress from "components/order/delivery-address";
-import { DeliveryTime } from "components/order/delivery-time";
-import { Vat } from "components/order/vat";
-import { useModal } from "lib/context/modal";
-import { PermissionBox } from "components/common/permission-box";
+import {DeliveryTime} from "components/order/delivery-time";
+import {Vat} from "components/order/vat";
+import {useModal} from "lib/context/modal";
+import {PermissionBox} from "components/common/permission-box";
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
 import Toki from "lib/utils/toki-payment";
@@ -23,7 +23,7 @@ import useSWR from "swr";
 const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
-    const { officeName } = state;
+    const {officeName} = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
@@ -40,14 +40,14 @@ const Cart: NextPage = () => {
     const fetchDatas = async () => {
         setLoading(true);
         try {
-            const { data } = await TokiAPI.getCart();
+            const {data} = await TokiAPI.getCart();
             setData(data);
             data.totalAmount && setTotalAmount(data.totalAmount);
             data.taxAmount && setTaxAmount(data.taxAmount);
             data.grandTotal && setGrandTotal(data.grandTotal);
             data.discountAmount && setDiscountAmount(data.discountAmount);
-            await data.orders.forEach((order: any)=>{
-                if (order.type === "TakeAway"){
+            await data.orders.forEach((order: any) => {
+                if (order.type === "TakeAway") {
                     setisDeliveryClosed(true)
                     setValue("type", "TakeAway")
                     setValue("floor", 1)
@@ -63,11 +63,11 @@ const Cart: NextPage = () => {
     const fetchLastOrder = async () => {
         setLoading(true);
         try {
-            const { data } = await TokiAPI.lastCompletedOrderWithOffice(
+            const {data} = await TokiAPI.lastCompletedOrderWithOffice(
                 state.officeId
             );
             if (data && data[0]) {
-                if (isDeliveryClosed){
+                if (isDeliveryClosed) {
                     data[0].type &&
                     (setDeliveryType("TakeAway"),
                         setValue("type", "TakeAway"));
@@ -99,7 +99,7 @@ const Cart: NextPage = () => {
         }
     }, [state.officeId]);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchLastOrder();
     }, [isDeliveryClosed])
 
@@ -129,7 +129,7 @@ const Cart: NextPage = () => {
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        formState: {errors},
         reset,
         setValue,
         getValues,
@@ -137,21 +137,21 @@ const Cart: NextPage = () => {
         defaultValues:
             deliveryType === "Delivery"
                 ? {
-                      type: "Delivery",
-                      address: "",
-                      floor: 0,
-                      comment: "",
-                      vat: 1,
-                      register: "",
-                      time: "",
-                  }
+                    type: "Delivery",
+                    address: "",
+                    floor: 0,
+                    comment: "",
+                    vat: 1,
+                    register: "",
+                    time: "",
+                }
                 : {
-                      type: "Delivery",
-                      comment: "",
-                      vat: 1,
-                      register: "",
-                      time: "",
-                  },
+                    type: "Delivery",
+                    comment: "",
+                    vat: 1,
+                    register: "",
+                    time: "",
+                },
         resolver: yupResolver(validationSchema),
     });
 
@@ -159,7 +159,7 @@ const Cart: NextPage = () => {
     const modalText =
         deliveryType === "Delivery" ? (
             <>
-                {loading && <CenteredSpin />}
+                {loading && <CenteredSpin/>}
                 Та <span className="font-medium break-words">{officeName}</span>
                 -н{" "}
                 {getValues("address") ? (
@@ -181,7 +181,7 @@ const Cart: NextPage = () => {
             </>
         ) : (
             <>
-                {loading && <CenteredSpin />}
+                {loading && <CenteredSpin/>}
                 Та <span className="font-medium break-words">{officeName}</span>
                 -с <span className="font-medium">{selectedTime}</span> цагт очиж
                 авахаар захиалга өгөх гэж байна. Төлбөр төлсний дараа захиалгыг
@@ -253,7 +253,7 @@ const Cart: NextPage = () => {
     };
 
     // if (loading) return <CenteredSpin />;
-
+    console.log(deliveryType, isDeliveryClosed, loading)
     return (
         <div className="p-5 my-col-20">
             <div className="my-col-15">
@@ -280,24 +280,57 @@ const Cart: NextPage = () => {
             </div>
 
             <form onSubmit={handleSubmit(onSubmitHandler)} className="w-full">
-                <div className="mb-5 my-col-15">
-                    <div className="font-medium">Захиалгын хэлбэр</div>
-                    {
-                        !isDeliveryClosed ?
+                {
+                    !isDeliveryClosed ?
                         <>
-                            <DeliveryType
-                                setDeliveryType={setDeliveryType}
-                                setValue={setValue}
-                                isDeliveryClosed={isDeliveryClosed}
-                            />
-                            {errors.type && (
-                                <p className="mt-1 text-xs italic text-left text-red-500 ">
-                                    {errors.type?.message}
-                                </p>
-                            )}
+                            <div className="mb-5 my-col-15">
+                                <div className="font-medium">Захиалгын хэлбэр</div>
+
+                                <DeliveryType
+                                    setDeliveryType={setDeliveryType}
+                                    setValue={setValue}
+                                    isDeliveryClosed={isDeliveryClosed}
+                                />
+                                {errors.type && (
+                                    <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                        {errors.type?.message}
+                                    </p>
+                                )}
+
+                            </div>
+                            {deliveryType === "Delivery" &&
+                                <div className="mb-5 my-col-15">
+                                    <div className="font-medium">Хүргэлтийн хаяг</div>
+
+                                    <div className="grid grid-cols-3 gap-x-2.5 text-sm">
+                                        <DeliveryAddress
+                                            selectedFloor={selectedFloor}
+                                            setSelectedFloor={setSelectedFloor}
+                                            errors={errors}
+                                            setValue={setValue}
+                                        />
+
+                                        <div className="col-span-2">
+                                            <input
+                                                type="text"
+                                                className=" w-full rounded-md bg-white px-5 py-[9px] font-light"
+                                                placeholder="Тоот / Байгууллагын нэр"
+                                                {...register("address")}
+                                            />
+                                            {errors.address && (
+                                                <p className="mt-1 text-xs italic text-left text-red-500 ">
+                                                    {errors.address?.message}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </>
-                            :
-                            <>
+                        :
+                        <>
+                            <div className="mb-5 my-col-15">
+                                <div className="font-medium">Захиалгын хэлбэр</div>
                                 <label
                                     className="flex items-center gap-x-2.5 relative"
                                     htmlFor="TakeAway"
@@ -312,44 +345,14 @@ const Cart: NextPage = () => {
                                     <div className="checkmark"></div>
                                     <div>Очиж авах</div>
                                 </label>
-                            </>
-                    }
-
-                </div>
-
-                {deliveryType === "Delivery" && !isDeliveryClosed && (
-                    <div className="mb-5 my-col-15">
-                        <div className="font-medium">Хүргэлтийн хаяг</div>
-
-                        <div className="grid grid-cols-3 gap-x-2.5 text-sm">
-                            <DeliveryAddress
-                                selectedFloor={selectedFloor}
-                                setSelectedFloor={setSelectedFloor}
-                                errors={errors}
-                                setValue={setValue}
-                            />
-
-                            <div className="col-span-2">
-                                <input
-                                    type="text"
-                                    className=" w-full rounded-md bg-white px-5 py-[9px] font-light"
-                                    placeholder="Тоот / Байгууллагын нэр"
-                                    {...register("address")}
-                                />
-                                {errors.address && (
-                                    <p className="mt-1 text-xs italic text-left text-red-500 ">
-                                        {errors.address?.message}
-                                    </p>
-                                )}
                             </div>
-                        </div>
-                    </div>
-                )}
+                        </>
+                }
 
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">Захиалга авах хугацаа</div>
                     {
-                        loading ? <></>:
+                        loading ? <></> :
                             <DeliveryTime
                                 selectedTime={selectedTime}
                                 deliveryType={deliveryType}
@@ -387,7 +390,7 @@ const Cart: NextPage = () => {
                 <div className="mb-5 my-col-15">
                     <div className="font-medium">eBarimt</div>
 
-                    <Vat setVat={setVat} setValue={setValue} />
+                    <Vat setVat={setVat} setValue={setValue}/>
                     {errors.vat && (
                         <p className="mt-1 text-xs italic text-left text-red-500 ">
                             {errors.vat?.message}

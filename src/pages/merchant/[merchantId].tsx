@@ -11,6 +11,7 @@ import TokiAPI from "lib/api/toki";
 import { Merchant, MerchantMenu } from "lib/types/merchant.type";
 import { CardDataType, Product } from "lib/types/product.type";
 import { CategoryType } from "lib/types/category.type";
+var axios = require('axios');
 
 export default function MerchantProductPage() {
     const router = useRouter();
@@ -28,10 +29,6 @@ export default function MerchantProductPage() {
     const [cardData, setCardData] = useState<CardDataType[]>([]);
     const [merchant, setMerchant] = useState<Merchant>();
     const [accordionKey, setAccordionKey] = useState<any>(123);
-
-    useEffect(()=>{
-        TokiAPI.getLateTimes(merchantId, "Delivery")
-    },[])
 
     useEffect(() => {
         let number = Math.random()

@@ -114,7 +114,7 @@ const TokiAPI = {
 
     getLateTimes: (merchantId: string, type: string) =>
         axios.get(
-            `${urlPrefix}/merchant/${merchantId}/times?type=${type}`
+            `${urlPrefix}/merchants/${merchantId}/times?type=${type}`
         ),
 };
 

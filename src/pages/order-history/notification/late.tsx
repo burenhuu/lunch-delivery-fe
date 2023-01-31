@@ -52,7 +52,7 @@ const Review: NextPage = () => {
                         notThroughLink: true,
                     });
 
-                    const timesResponse = await TokiAPI.getLateTimes(item.merchant.id, item.type);
+                    let timesResponse = await TokiAPI.getLateTimes(item.merchant.id, item.type);
 
                     setShow(true);
 

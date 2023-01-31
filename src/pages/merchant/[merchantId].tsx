@@ -29,6 +29,10 @@ export default function MerchantProductPage() {
     const [merchant, setMerchant] = useState<Merchant>();
     const [accordionKey, setAccordionKey] = useState<any>(123);
 
+    useEffect(()=>{
+        TokiAPI.getLateTimes(merchantId, "Delivery")
+    },[])
+
     useEffect(() => {
         let number = Math.random()
         setAccordionKey(number)

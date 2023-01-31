@@ -118,6 +118,8 @@ export default function Category() {
                         }
                         if (openScheduleDelivery < currentTime && currentTime < closeScheduleDelivery){
                             merchant.cartState = "Delivery"
+                        } else if (openSchedule < currentTime && currentTime < openScheduleDelivery){
+                            merchant.cartState = "Delivery"
                         } else{
                             merchant.cartState = "TakeAway"
                         }

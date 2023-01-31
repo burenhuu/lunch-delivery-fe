@@ -130,12 +130,14 @@ export default function Office() {
                         }
 
                         if (openTime && closeTime && openTimeDelivery && closeTimeDelivery) {
+                            console.log("TEST",merchant.name, openTime , closeTime , openTimeDelivery , closeTimeDelivery)
                             let openSchedule = parseInt(openTime[0]) * 60 + parseInt(openTime[1])
                             let closeSchedule = parseInt(closeTime[0]) * 60 + parseInt(closeTime[1])
                             let openScheduleDelivery = parseInt(openTimeDelivery[0]) * 60 + parseInt(openTimeDelivery[1])
                             let closeScheduleDelivery = parseInt(closeTimeDelivery[0]) * 60 + parseInt(closeTimeDelivery[1])
                             let open: any
                             let close: any
+                            console.log("TEST",merchant.name, currentTime, openSchedule, openScheduleDelivery,closeSchedule, closeScheduleDelivery)
                             if (openSchedule < currentTime && currentTime < openScheduleDelivery) {
                                 merchant.state = "preDelivery"
                                 open = openSchedule

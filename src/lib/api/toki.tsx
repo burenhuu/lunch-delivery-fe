@@ -107,6 +107,9 @@ const TokiAPI = {
     delivered: (orderId: string) =>
         axios.post(`${urlPrefix}/orders/${orderId}/delivered`),
 
+    completed: (orderId: string) =>
+        axios.post(`${urlPrefix}/orders/${orderId}/completed`),
+
     delay: (orderId: string, data: any) =>
         axios.post(`${urlPrefix}/orders/${orderId}/delay`, data),
 

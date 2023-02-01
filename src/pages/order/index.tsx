@@ -30,6 +30,7 @@ const Cart: NextPage = () => {
     const [selectedTime, setSelectedTime] = useState<string>("");
     const [show, setShow, content, setContent] = useModal();
     const [loading, setLoading] = useState(false);
+    const [paymentLoader, setPaymentLoader] = useState(false);
     const [totalAmount, setTotalAmount] = useState<any>(0);
     const [taxAmount, setTaxAmount] = useState<any>(0);
     const [grandTotal, setGrandTotal] = useState<any>(0);
@@ -197,9 +198,10 @@ const Cart: NextPage = () => {
                 text={modalText}
                 button2="Төлөх"
                 onClick={async () => {
+                    setShow(false);
+                    setPaymentLoader(true);
                     setLoading(true);
                     values["office"] = state.officeId;
-
                     try {
                         const placeOrderResponse = await TokiAPI.checkout(
                             values
@@ -243,7 +245,7 @@ const Cart: NextPage = () => {
                         }
                     } finally {
                         setLoading(false);
-                        setShow(false);
+                        setPaymentLoader(false);
                     }
                 }}
                 loading={loading}
@@ -252,7 +254,7 @@ const Cart: NextPage = () => {
         );
     };
 
-    // if (loading) return <CenteredSpin />;
+    if (paymentLoader) return <CenteredSpin />;
     console.log(deliveryType, isDeliveryClosed, loading)
     return (
         <div className="p-5 my-col-20">

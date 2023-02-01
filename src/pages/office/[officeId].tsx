@@ -320,7 +320,7 @@ export default function Office() {
                                     rating: item.rating,
                                     categoryMain: item.product.category,
                                     productName: item.product.name,
-                                    dayIsActive: item.dayIsActive
+                                    dayIsActive: item.dayIsActive,
                                 });
                             }
                         }

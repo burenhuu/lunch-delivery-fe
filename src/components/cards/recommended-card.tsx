@@ -6,7 +6,7 @@ import {PermissionBox} from "../common/permission-box";
 import {useModal} from "../../lib/context/modal";
 
 export default function Recommended({ data }: { data: any }) {
-    const { image, name, rating, price, salePrice, place, productName, placeState, placeStartDate, placeEndDate, placeReason, placeDayIsActive } = data;
+    const { image, name, rating, price, salePrice, place, productName, placeState, placeStartDate, placeEndDate, placeReason, dayIsActive } = data;
     const router = useRouter();
     const [state, dispatch]: any = useAppState();
     const [show, setShow, content, setContent] = useModal();
@@ -15,7 +15,7 @@ export default function Recommended({ data }: { data: any }) {
         if (placeState === "CLOSED") {
             let text: string
             setShow(true);
-            if (placeDayIsActive){
+            if (dayIsActive){
                 text = ` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
@@ -54,7 +54,7 @@ export default function Recommended({ data }: { data: any }) {
         } else if (placeState === "preDelivery") {
             setShow(true);
             let text: string
-            if (placeDayIsActive){
+            if (dayIsActive){
                 text = ` Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
             } else {
                 text = ` Зоогийн газар хаалттай байна. <br>

@@ -71,7 +71,6 @@ const Review: NextPage = () => {
                 setLoading(false);
             }
         };
-
         fetchDatas();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

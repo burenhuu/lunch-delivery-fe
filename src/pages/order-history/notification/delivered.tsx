@@ -10,7 +10,7 @@ import ReviewComponent from "components/history/review";
 import {useRouter} from "next/router";
 import {Status} from "../../../lib/types/order.type";
 
-const finishedStatuses = [Status.COMPLETED, Status.CANCELLED, Status.DELIVERED];
+const finishedStatuses = [Status.DELIVERED];
 
 const Review: NextPage = () => {
     const [item, setItem] = useState<any>(null);

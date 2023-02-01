@@ -30,7 +30,7 @@ const Review: NextPage = () => {
             setLoading(true);
 
             try {
-                const response = await TokiAPI.lastCompletedOrder();
+                const response = await TokiAPI.lastDeliveredOrder();
 
                 if (response.data.length > 0) {
                     const item = response.data[0];

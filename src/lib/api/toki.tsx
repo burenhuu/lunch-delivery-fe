@@ -90,6 +90,9 @@ const TokiAPI = {
     lastLateOrder: () =>
         axios.get(`${urlPrefix}/orders?state=DELAYED&from=0&size=1`),
 
+    lastDeliveredOrder: () =>
+        axios.get(`${urlPrefix}/orders?state=DELIVERED&from=0&size=1`),
+
     lastCompletedOrder: () =>
         axios.get(`${urlPrefix}/orders?state=COMPLETED&from=0&size=1`),
 

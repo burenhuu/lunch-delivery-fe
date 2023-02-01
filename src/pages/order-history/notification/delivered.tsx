@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import type {NextPage} from "next";
+import {useState, useEffect} from "react";
 
-import { useAppState } from "lib/context/app";
+import {useAppState} from "lib/context/app";
 import TokiAPI from "lib/api/toki";
 import CenteredSpin from "components/common/centered-spin";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import Render from "components/history/render";
 import ReviewComponent from "components/history/review";
 import {useRouter} from "next/router";
@@ -56,13 +56,14 @@ const Review: NextPage = () => {
                         type: "numberOfStorey",
                         numberOfStorey: item.office?.floor,
                     });
-                    dispatch({ type: "toastCheck", toastCheck: false });
+                    dispatch({type: "toastCheck", toastCheck: false});
                     dispatch({
                         type: "notThroughLink",
                         notThroughLink: true,
                     });
-                    finishedStatuses.includes(item.state) &&
-                    await router.push(`/order-detail/${item.id}`);
+                    finishedStatuses.includes(item.state) ?
+                        await router.push(`/order-detail/${item.id}`) :
+                        toast("Хүргэгдсэн захиалга байхгүй байна.");
                 } else {
                     toast("Хүргэгдсэн захиалга байхгүй байна.");
                 }
@@ -75,10 +76,10 @@ const Review: NextPage = () => {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return loading ? (
-        <CenteredSpin />
+        <CenteredSpin/>
     ) : (
         <>
-            <Render officeId={state.officeId} />
+            <Render officeId={state.officeId}/>
 
             {item && (
                 <ReviewComponent

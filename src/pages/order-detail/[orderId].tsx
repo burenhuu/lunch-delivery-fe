@@ -22,8 +22,8 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
                 -
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                          seconds
-                      )}`
+                        seconds
+                    )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -32,8 +32,8 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
             <span>
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                          seconds
-                      )}`
+                        seconds
+                    )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -134,7 +134,8 @@ const OrderDetail: NextPage = () => {
         setLoading(true);
 
         try {
-            await TokiAPI.delivered(orderId);
+            // await TokiAPI.delivered(orderId);
+            await TokiAPI.completed(orderId);
 
             toggleDrawer();
         } finally {
@@ -164,22 +165,22 @@ const OrderDetail: NextPage = () => {
                                 <div>
                                     {(data.data.state === Status.COMPLETED ||
                                         data.data.state === Status.DELIVERED) &&
-                                    data.data.type.toLowerCase() === "delivery"
+                                        data.data.type.toLowerCase() === "delivery"
                                         ? "Хүргэгдсэн хугацаа"
                                         : (data.data.state ===
-                                              Status.COMPLETED ||
-                                              data.data.state ===
-                                                  Status.DELIVERED) &&
-                                          data.data.type.toLowerCase() ===
-                                              "takeaway"
-                                        ? "Дууссан хугацаа"
-                                        : data.data.type.toLowerCase() ===
-                                          "delivery"
-                                        ? "Хүргэгдэх хугацаа"
-                                        : data.data.type.toLowerCase() ===
-                                          "takeaway"
-                                        ? "Бэлтгэгдэх хугацаа"
-                                        : ""}
+                                            Status.COMPLETED ||
+                                            data.data.state ===
+                                            Status.DELIVERED) &&
+                                            data.data.type.toLowerCase() ===
+                                            "takeaway"
+                                            ? "Дууссан хугацаа"
+                                            : data.data.type.toLowerCase() ===
+                                                "delivery"
+                                                ? "Хүргэгдэх хугацаа"
+                                                : data.data.type.toLowerCase() ===
+                                                    "takeaway"
+                                                    ? "Бэлтгэгдэх хугацаа"
+                                                    : ""}
                                 </div>
                             )}
                         </div>
@@ -187,7 +188,7 @@ const OrderDetail: NextPage = () => {
                             {data.data.state !== Status.CANCELLED && (
                                 <div>
                                     {data.data.state === Status.COMPLETED ||
-                                    data.data.state === Status.DELIVERED ? (
+                                        data.data.state === Status.DELIVERED ? (
                                         calcTimeDiff(
                                             data.data.deliveringAt,
                                             data.data.deliveredAt
@@ -233,11 +234,10 @@ const OrderDetail: NextPage = () => {
                                         return (
                                             <div
                                                 key={status.state}
-                                                className={`rounded-[2.5px] h-[5px] w-full ${
-                                                    step > index
+                                                className={`rounded-[2.5px] h-[5px] w-full ${step > index
                                                         ? "bg-gradient-end"
                                                         : "bg-[#D9D9D9]"
-                                                }`}
+                                                    }`}
                                             ></div>
                                         );
                                     }
@@ -262,11 +262,10 @@ const OrderDetail: NextPage = () => {
                                         statusBar.length > index + 1 && (
                                             <div
                                                 key={status.state}
-                                                className={`rounded-[2.5px] h-[5px] w-full ${
-                                                    step > index
+                                                className={`rounded-[2.5px] h-[5px] w-full ${step > index
                                                         ? "bg-gradient-end"
                                                         : "bg-[#D9D9D9]"
-                                                }`}
+                                                    }`}
                                             ></div>
                                         )
                                     );

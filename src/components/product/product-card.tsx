@@ -1,14 +1,14 @@
 import ButtonComponent from "components/common/button";
-import { ImageModal } from "components/common/image-modal";
-import { ArrowDown, EditIcon } from "components/icons";
+import {ImageModal} from "components/common/image-modal";
+import {ArrowDown, EditIcon} from "components/icons";
 import TokiAPI from "lib/api/toki";
-import { useAppState } from "lib/context/app";
-import { useModal } from "lib/context/modal";
-import { CartData } from "lib/types/cart.type";
-import { CardDataType, Option, Variant } from "lib/types/product.type";
+import {useAppState} from "lib/context/app";
+import {useModal} from "lib/context/modal";
+import {CartData} from "lib/types/cart.type";
+import {CardDataType, Option, Variant} from "lib/types/product.type";
 
-import { formatPrice } from "lib/utils/helpers";
-import { useContext, useEffect, useRef, useState } from "react";
+import {formatPrice} from "lib/utils/helpers";
+import {useContext, useEffect, useRef, useState} from "react";
 import {
     AccordionItem,
     AccordionItemHeading,
@@ -16,18 +16,18 @@ import {
     AccordionItemPanel,
     AccordionItemState,
 } from "react-accessible-accordion";
-import { FatalError } from "next/dist/lib/fatal-error";
-import { useRouter } from "next/router";
-import { cartAnimation } from "../../lib/utils/cart-animation";
+import {FatalError} from "next/dist/lib/fatal-error";
+import {useRouter} from "next/router";
+import {cartAnimation} from "../../lib/utils/cart-animation";
 import {PermissionBox} from "../common/permission-box";
 import {Merchant} from "../../lib/types/merchant.type";
 import Drawer from "react-modern-drawer";
 import RiveComponent from "@rive-app/react-canvas";
 
-function ProcessingSpin(){
-    return(
+function ProcessingSpin() {
+    return (
         <div className={"w-auto flex justify-center items-center"} style={{height: '-webkit-fill-available'}}>
-            <RiveComponent src="/images/processing.riv" className={`w-8 h-8`} />
+            <RiveComponent src="/images/processing.riv" className={`w-8 h-8`}/>
         </div>
     )
 }
@@ -63,32 +63,39 @@ function findVariant(options: any, product: any) {
 
     return null;
 }
+
 export default function ProductCard({
-    merchantData,
-    data,
-    page = false,
-    checkActiveProduct,
-}: {
+                                        merchantData,
+                                        data,
+                                        page = false,
+                                        checkActiveProduct,
+                                    }: {
     merchantData?: Merchant;
     data: CardDataType;
     page?: boolean;
     checkActiveProduct?: any;
 }) {
     const [state, dispatch]: any = useAppState();
-    const { officeId, cartCount } = state;
+    const {officeId, cartCount} = state;
     const [isOpen, setOpen] = useState<boolean>(false);
-    const { rating, place, product, merchantId, placeState, placeReason, placeStartDate, placeEndDate, dayIsActive } = data;
-    const { description, image, name, variants } = product;
+    const {
+        rating,
+        place,
+        product,
+        merchantId,
+        placeState,
+        placeReason,
+        placeStartDate,
+        placeEndDate,
+        dayIsActive
+    } = data;
+    const {description, image, name, variants} = product;
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
     );
     const [paymentLoader, setPaymentLoader] = useState(false);
-    const [applicableOptionsTypeV, setApplicableOptionsTypeV] = useState<
-        Option[]
-    >(variants[0] ? variants[0].options : []);
-    const [selectedOptions, setSelectedOptions] = useState<
-        { id: string; value: string }[]
-    >([]);
+    const [applicableOptionsTypeV, setApplicableOptionsTypeV] = useState<Option[]>(variants[0] ? variants[0].options : []);
+    const [selectedOptions, setSelectedOptions] = useState<{ id: string; value: string }[]>([]);
     const [selectedVariant, setSelectedVariant] = useState<Variant>(
         variants[0]
     );
@@ -136,7 +143,7 @@ export default function ProductCard({
         if (placeState === "CLOSED") {
             let text: string
             setShow(true);
-            if (dayIsActive){
+            if (dayIsActive) {
                 text = ` Зоогийн газар хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
@@ -175,7 +182,7 @@ export default function ProductCard({
         } else if (placeState === "preDelivery") {
             let text: string
             setShow(true);
-            if (dayIsActive){
+            if (dayIsActive) {
                 text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
             } else {
                 text = ` Зоогийн газар хаалттай байна. <br>
@@ -228,7 +235,7 @@ export default function ProductCard({
             options: [...selectedOptions],
         };
         try {
-            const { data } = await TokiAPI.addCart(productData);
+            const {data} = await TokiAPI.addCart(productData);
             cartAnimation(e)
             dispatch({
                 type: "cartCount",
@@ -251,7 +258,7 @@ export default function ProductCard({
         };
         try {
             setPaymentLoader(true)
-            if ((merchantData?.cartState ? merchantData.cartState : "Delivery") === "TakeAway"){
+            if ((merchantData?.cartState ? merchantData.cartState : "Delivery") === "TakeAway") {
                 setShow(true);
                 setContent(
                     <PermissionBox
@@ -264,7 +271,7 @@ export default function ProductCard({
                     />
                 );
             } else {
-                const { data } = await TokiAPI.addCart(productData);
+                const {data} = await TokiAPI.addCart(productData);
                 cartAnimation(e)
                 dispatch({
                     type: "cartCount",
@@ -272,7 +279,7 @@ export default function ProductCard({
                 });
             }
         } catch (err: any) {
-            if (err.message === "Хүргүүлэх захиалга дүүрсэн тул Та зөвхөн очиж авах захиалга өгөх боломжтой"){
+            if (err.message === "Хүргүүлэх захиалга дүүрсэн тул Та зөвхөн очиж авах захиалга өгөх боломжтой") {
                 setShow(true);
                 setContent(
                     <PermissionBox
@@ -292,7 +299,7 @@ export default function ProductCard({
 
     const onImageClick = () => {
         setShow(true);
-        setContent(<ImageModal images={[image]} />);
+        setContent(<ImageModal images={[image]}/>);
     };
 
     // useEffect(() => {
@@ -390,268 +397,219 @@ export default function ProductCard({
     console.log(formatPrice(price), formatPrice(presalePrice))
     return (
         <>
-            {
-                paymentLoader && (
-                    <>
-                        <Drawer
-                            open={true}
-                            onClose={()=>console.log("test")}
-                            direction="bottom"
-                            enableOverlay={true}
-                            style={{
-                                background: 'rgba(0,0,0,0.3)',
-                                height: "100%",
-                            }}
-                            overlayOpacity={0.3}
-                            overlayColor="#FFFFFF"
-                            className={`p-5 relative`}
+            <>
+                {
+                    paymentLoader && (
+                        <>
+                            <Drawer
+                                open={true}
+                                onClose={() => console.log("test")}
+                                direction="bottom"
+                                enableOverlay={true}
+                                style={{
+                                    background: 'rgba(0,0,0,0.3)',
+                                    height: "100%",
+                                }}
+                                overlayOpacity={0.3}
+                                overlayColor="#FFFFFF"
+                                className={`p-5 relative`}
+                            >
+                                <ProcessingSpin/>
+                            </Drawer>
+                        </>
+                    )
+                }
+            </>
+            <>
+                {
+                    data && (
+                        <AccordionItem
+                            className="overflow-hidden bg-white rounded-2xl shadow-delivery product-cart"
+                            uuid={product.variants[0]?.id}
                         >
-                            <ProcessingSpin />
-                        </Drawer>
-                    </>
-                )
-            }
-            {data && (
-                <AccordionItem
-                    className="overflow-hidden bg-white rounded-2xl shadow-delivery product-cart"
-                    uuid={product.variants[0]?.id}
-                >
-                    <AccordionItemHeading>
-                        <AccordionItemState>
-                            {({expanded}) => {
-                                setOpen(expanded!);
-                                return null;
-                            }}
-                        </AccordionItemState>
+                            <AccordionItemHeading>
+                                <AccordionItemState>
+                                    {({expanded}) => {
+                                        setOpen(expanded!);
+                                        return null;
+                                    }}
+                                </AccordionItemState>
 
-                        <AccordionItemButton className="flex justify-start gap-x-3.75 ">
-                            <div className="relative min-w-[120px] max-w-[120px] min-h-[120px]">
-                                {product.active ? (
-                                    <>
-                                        <img
-                                            onClick={onImageClick}
-                                            src={image}
-                                            className={
-                                                "w-full h-[120px] rounded-2xl product-image"
-                                            }
-                                            alt={place}
-                                        />
-                                        {!page && (
-                                            <div
-                                                className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
-                                                👍 {rating}%
-                                            </div>
-                                        )}
-                                    </>
-                                ) : (
-                                    <>
-                                        <img
-                                            onClick={onImageClick}
-                                            src={image}
-                                            className={
-                                                "w-full h-full rounded-2xl opacity-50"
-                                            }
-                                            alt={place}
-                                        />
-                                        {!page && (
-                                            <div
-                                                className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
-                                                👍 {rating}%
-                                            </div>
-                                        )}
-                                        <div
-                                            className="absolute text-base font-medium text-white -translate-x-1/2 -translate-y-1/2 text-shadow top-1/2 left-1/2">
-                                            Дууссан
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                            <div className="py-3.75 pr-5 flex justify-between w-full">
-                                <div
-                                    className={
-                                        "flex flex-col items-start " +
-                                        (page
-                                            ? "justify-center gap-y-1.25"
-                                            : "justify-between")
-                                    }
-                                >
-                                    <div className="flex flex-col gap-y-1.5">
-                                        {!page && (
-                                            <div
-                                                className="font-medium"
-                                                onClick={onMerchantClick}
-                                            >
-                                                {place}
-                                            </div>
-                                        )}
-                                        <div
-                                            className={
-                                                page
-                                                    ? "font-medium text-sm"
-                                                    : "text-xs "
-                                            }
-                                        >
-                                            {name}
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-x-1">
-                                        {formatPrice(price) !== formatPrice(presalePrice) ? (
+                                <AccordionItemButton className="flex justify-start gap-x-3.75 ">
+                                    <div className="relative min-w-[120px] max-w-[120px] min-h-[120px]">
+                                        {product.active ? (
                                             <>
-                                                <div className="text-xs font-light line-through text-gray">
-                                                    {formatPrice(presalePrice)}₮
-                                                </div>
-                                                <div className="text-sm">
-                                                    {formatPrice(price)}₮
-                                                </div>
+                                                <img
+                                                    onClick={onImageClick}
+                                                    src={image}
+                                                    className={
+                                                        "w-full h-[120px] rounded-2xl product-image"
+                                                    }
+                                                    alt={place}
+                                                />
+                                                {!page && (
+                                                    <div
+                                                        className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                                        👍 {rating}%
+                                                    </div>
+                                                )}
                                             </>
                                         ) : (
-                                            <div className="text-sm">
-                                                {formatPrice(price)}₮
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div
-                                    className={
-                                        "self-center transition ease-in-out duration-300 " +
-                                        (isOpen && "rotate-180")
-                                    }
-                                >
-                                    <ArrowDown/>
-                                </div>
-                            </div>
-                        </AccordionItemButton>
-                    </AccordionItemHeading>
-                    <AccordionItemPanel>
-                        <div className="pt-2.5 px-5 pb-5 my-col-10 text-sm">
-                            <div className="my-col-5">
-                                <div>Орц:</div>
-                                <div className="text-xs font-light text-gray">
-                                    {description}
-                                </div>
-                            </div>
-                            <>
-                                {product.active && (placeState === "OPEN" || placeState === "preDelivery") && (
-                                    <>
-                                        {
-                                            variants.length === 1 ?
-                                                <></>
-                                                :
-                                                <div className="my-col-5">
-                                                    <div>Порц:</div>
-                                                    <div className="flex gap-x-1.25">
-                                                        {variants.map(
-                                                            (variant: Variant) => {
-                                                                return (
-                                                                    <div
-                                                                        onClick={() =>
-                                                                            onSelectVariant(
-                                                                                variant
-                                                                            )
-                                                                        }
-                                                                        key={variant.id}
-                                                                        className={
-                                                                            "py-2.5 rounded-md w-[75px] text-center relative " +
-                                                                            (selectedVariant ===
-                                                                            variant
-                                                                                ? "gradient-border text-main"
-                                                                                : "border border-gray text-gray")
-                                                                        }
-                                                                    >
-                                                                        {variant.name}
-                                                                    </div>
-                                                                );
-                                                            }
-                                                        )}
-                                                    </div>
-                                                </div>
-                                        }
-
-                                        {applicableOptionsTypeV.length > 0 && (
                                             <>
-                                                <div className="my-col-5">
-                                                    <div>Хачир:</div>
-                                                    <div className="flex gap-x-1.25">
-                                                        {applicableOptionsTypeV?.map(
-                                                            (option: Option) => {
-                                                                return (
-                                                                    <div
-                                                                        onClick={() =>
-                                                                            onSelectOptionTypeV(
-                                                                                option
-                                                                            )
-                                                                        }
-                                                                        key={
-                                                                            option.id
-                                                                        }
-                                                                        className={
-                                                                            "py-2.5 px-1 rounded-md w-[75px] text-center relative " +
-                                                                            (selectedOptions.find(
-                                                                                (
-                                                                                    item
-                                                                                ) =>
-                                                                                    item?.id ===
-                                                                                    option.id
-                                                                            )
-                                                                                ? "gradient-border text-main"
-                                                                                : "border border-gray text-gray")
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            option.name
-                                                                        }
-                                                                    </div>
-                                                                );
-                                                            }
-                                                        )}
+                                                <img
+                                                    onClick={onImageClick}
+                                                    src={image}
+                                                    className={
+                                                        "w-full h-full rounded-2xl opacity-50"
+                                                    }
+                                                    alt={place}
+                                                />
+                                                {!page && (
+                                                    <div
+                                                        className="absolute top-0 left-0 w-full h-9 bg-gradient-to-b from-main/75 text-xs text-white to-main/0 rounded-t-2xl p-2.5">
+                                                        👍 {rating}%
                                                     </div>
+                                                )}
+                                                <div
+                                                    className="absolute text-base font-medium text-white -translate-x-1/2 -translate-y-1/2 text-shadow top-1/2 left-1/2">
+                                                    Дууссан
                                                 </div>
                                             </>
                                         )}
-                                        {applicableOptions.map((option: Option) => {
-                                            const {id, name, values} = option;
-
-                                            return (
-                                                <>
-                                                    {values?.length > 0 && (
-                                                        <div
-                                                            key={id}
-                                                            className="my-col-5"
-                                                        >
-                                                            <div>{name}</div>
+                                    </div>
+                                    <div className="py-3.75 pr-5 flex justify-between w-full">
+                                        <div
+                                            className={
+                                                "flex flex-col items-start " +
+                                                (page
+                                                    ? "justify-center gap-y-1.25"
+                                                    : "justify-between")
+                                            }
+                                        >
+                                            <div className="flex flex-col gap-y-1.5">
+                                                {!page && (
+                                                    <div
+                                                        className="font-medium"
+                                                        onClick={onMerchantClick}
+                                                    >
+                                                        {place}
+                                                    </div>
+                                                )}
+                                                <div
+                                                    className={
+                                                        page
+                                                            ? "font-medium text-sm"
+                                                            : "text-xs "
+                                                    }
+                                                >
+                                                    {name}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center gap-x-1">
+                                                {formatPrice(price) !== formatPrice(presalePrice) ? (
+                                                    <>
+                                                        <div className="text-xs font-light line-through text-gray">
+                                                            {formatPrice(presalePrice)}₮
+                                                        </div>
+                                                        <div className="text-sm">
+                                                            {formatPrice(price)}₮
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <div className="text-sm">
+                                                        {formatPrice(price)}₮
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={
+                                                "self-center transition ease-in-out duration-300 " +
+                                                (isOpen && "rotate-180")
+                                            }
+                                        >
+                                            <ArrowDown/>
+                                        </div>
+                                    </div>
+                                </AccordionItemButton>
+                            </AccordionItemHeading>
+                            <AccordionItemPanel>
+                                <div className="pt-2.5 px-5 pb-5 my-col-10 text-sm">
+                                    <div className="my-col-5">
+                                        <div>Орц:</div>
+                                        <div className="text-xs font-light text-gray">
+                                            {description}
+                                        </div>
+                                    </div>
+                                    <>
+                                        {product.active && (placeState === "OPEN" || placeState === "preDelivery") && (
+                                            <>
+                                                {
+                                                    variants.length === 1 ?
+                                                        <></>
+                                                        :
+                                                        <div className="my-col-5">
+                                                            <div>Порц:</div>
                                                             <div className="flex gap-x-1.25">
-                                                                {values?.map(
-                                                                    (
-                                                                        value: string
-                                                                    ) => {
+                                                                {variants.map(
+                                                                    (variant: Variant) => {
                                                                         return (
                                                                             <div
                                                                                 onClick={() =>
-                                                                                    onSelectOption(
-                                                                                        option,
-                                                                                        value
+                                                                                    onSelectVariant(
+                                                                                        variant
+                                                                                    )
+                                                                                }
+                                                                                key={variant.id}
+                                                                                className={
+                                                                                    "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                                    (selectedVariant ===
+                                                                                    variant
+                                                                                        ? "gradient-border text-main"
+                                                                                        : "border border-gray text-gray")
+                                                                                }
+                                                                            >
+                                                                                {variant.name}
+                                                                            </div>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                }
+
+                                                {applicableOptionsTypeV.length > 0 && (
+                                                    <>
+                                                        <div className="my-col-5">
+                                                            <div>Хачир:</div>
+                                                            <div className="flex gap-x-1.25">
+                                                                {applicableOptionsTypeV?.map(
+                                                                    (option: Option) => {
+                                                                        return (
+                                                                            <div
+                                                                                onClick={() =>
+                                                                                    onSelectOptionTypeV(
+                                                                                        option
                                                                                     )
                                                                                 }
                                                                                 key={
-                                                                                    value
+                                                                                    option.id
                                                                                 }
                                                                                 className={
-                                                                                    "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                                    "py-2.5 px-1 rounded-md w-[75px] text-center relative " +
                                                                                     (selectedOptions.find(
                                                                                         (
                                                                                             item
                                                                                         ) =>
                                                                                             item?.id ===
-                                                                                            option.id &&
-                                                                                            item?.value ===
-                                                                                            value
+                                                                                            option.id
                                                                                     )
                                                                                         ? "gradient-border text-main"
                                                                                         : "border border-gray text-gray")
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    value
+                                                                                    option.name
                                                                                 }
                                                                             </div>
                                                                         );
@@ -659,45 +617,98 @@ export default function ProductCard({
                                                                 )}
                                                             </div>
                                                         </div>
-                                                    )}
-                                                </>
-                                            );
-                                        })}
-                                        {product.withNote && (
-                                            <div className="my-col-5">
-                                                <div>Нэмэлт тайлбар:</div>
-                                                <div className="relative">
-                                                    <input
-                                                        onChange={(e) => {
-                                                            setComment(
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                        type="text"
-                                                        placeholder="Нэмэлт тайлбар оруулах"
-                                                        className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
-                                                    />
-                                                    <div className="absolute left-2.5 top-1.5">
-                                                        <EditIcon/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                        <div
-                                            onClick={onAddClick}
-                                            className="pt-2.5"
-                                        >
-                                            <ButtonComponent text="Сагсанд нэмэх"
-                                                             onClick={(e: any) => (addToCartEvent = e)}/>
-                                        </div>
-                                    </>
-                                )}
-                            </>
-                        </div>
-                    </AccordionItemPanel>
-                </AccordionItem>
-            )}
-        </>
+                                                    </>
+                                                )}
+                                                {applicableOptions.map((option: Option) => {
+                                                    const {id, name, values} = option;
 
+                                                    return (
+                                                        <>
+                                                            {values?.length > 0 && (
+                                                                <div
+                                                                    key={id}
+                                                                    className="my-col-5"
+                                                                >
+                                                                    <div>{name}</div>
+                                                                    <div className="flex gap-x-1.25">
+                                                                        {values?.map(
+                                                                            (
+                                                                                value: string
+                                                                            ) => {
+                                                                                return (
+                                                                                    <div
+                                                                                        onClick={() =>
+                                                                                            onSelectOption(
+                                                                                                option,
+                                                                                                value
+                                                                                            )
+                                                                                        }
+                                                                                        key={
+                                                                                            value
+                                                                                        }
+                                                                                        className={
+                                                                                            "py-2.5 rounded-md w-[75px] text-center relative " +
+                                                                                            (selectedOptions.find(
+                                                                                                (
+                                                                                                    item
+                                                                                                ) =>
+                                                                                                    item?.id ===
+                                                                                                    option.id &&
+                                                                                                    item?.value ===
+                                                                                                    value
+                                                                                            )
+                                                                                                ? "gradient-border text-main"
+                                                                                                : "border border-gray text-gray")
+                                                                                        }
+                                                                                    >
+                                                                                        {
+                                                                                            value
+                                                                                        }
+                                                                                    </div>
+                                                                                );
+                                                                            }
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    );
+                                                })}
+                                                {product.withNote && (
+                                                    <div className="my-col-5">
+                                                        <div>Нэмэлт тайлбар:</div>
+                                                        <div className="relative">
+                                                            <input
+                                                                onChange={(e) => {
+                                                                    setComment(
+                                                                        e.target.value
+                                                                    );
+                                                                }}
+                                                                type="text"
+                                                                placeholder="Нэмэлт тайлбар оруулах"
+                                                                className="bg-[#F5F5FA] rounded-md w-full  py-[7px] pl-10 pr-5 placeholder:text-gray placeholder:font-light"
+                                                            />
+                                                            <div className="absolute left-2.5 top-1.5">
+                                                                <EditIcon/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                <div
+                                                    onClick={onAddClick}
+                                                    className="pt-2.5"
+                                                >
+                                                    <ButtonComponent text="Сагсанд нэмэх"
+                                                                     onClick={(e: any) => (addToCartEvent = e)}/>
+                                                </div>
+                                            </>
+                                        )}
+                                    </>
+                                </div>
+                            </AccordionItemPanel>
+                        </AccordionItem>
+                    )}
+            </>
+        </>
     );
 }

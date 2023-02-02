@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 import { cartAnimation } from "../../lib/utils/cart-animation";
 import {PermissionBox} from "../common/permission-box";
 import {Merchant} from "../../lib/types/merchant.type";
+import Drawer from "react-modern-drawer";
+import ProcessingSpin from "../common/processing-spin";
 
 let addToCartEvent: any;
 
@@ -72,6 +74,7 @@ export default function ProductCard({
     const [applicableOptions, setApplicableOptions] = useState<Option[]>(
         variants[0] ? variants[0].options : []
     );
+    const [paymentLoader, setPaymentLoader] = useState(false);
     const [applicableOptionsTypeV, setApplicableOptionsTypeV] = useState<
         Option[]
     >(variants[0] ? variants[0].options : []);
@@ -239,6 +242,7 @@ export default function ProductCard({
             options: [...selectedOptions],
         };
         try {
+            setPaymentLoader(true)
             if ((merchantData?.cartState ? merchantData.cartState : "Delivery") === "TakeAway"){
                 setShow(true);
                 setContent(
@@ -274,6 +278,7 @@ export default function ProductCard({
                 );
             }
         } finally {
+            setPaymentLoader(false);
         }
     };
 
@@ -374,7 +379,30 @@ export default function ProductCard({
         setSelectedOptions([]);
     };
     return (
-        data && (
+        <>
+            {
+                paymentLoader && (
+                    <>
+
+                        <Drawer
+                            open={true}
+                            onClose={()=>console.log("test")}
+                            direction="bottom"
+                            enableOverlay={true}
+                            style={{
+                                background: 'rgba(0,0,0,0.3)',
+                                height: "100%",
+                            }}
+                            overlayOpacity={0.3}
+                            overlayColor="#FFFFFF"
+                            className={`p-5 relative`}
+                        >
+                            <ProcessingSpin />
+                        </Drawer>
+                    </>
+                )
+            }
+            data && (
             <AccordionItem
                 className="overflow-hidden bg-white rounded-2xl shadow-delivery product-cart"
                 uuid={product.variants[0]?.id}
@@ -513,7 +541,7 @@ export default function ProductCard({
                                                                     className={
                                                                         "py-2.5 rounded-md w-[75px] text-center relative " +
                                                                         (selectedVariant ===
-                                                                            variant
+                                                                        variant
                                                                             ? "gradient-border text-main"
                                                                             : "border border-gray text-gray")
                                                                     }
@@ -655,6 +683,8 @@ export default function ProductCard({
                     </div>
                 </AccordionItemPanel>
             </AccordionItem>
-        )
+            )
+        </>
+
     );
 }

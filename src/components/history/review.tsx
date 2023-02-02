@@ -49,8 +49,7 @@ export default function Review({
                 if (response && response.data){
                     if (response.data.uploads.length > 0){
                         response.data.uploads.map((url: string, index: any)=>{
-                            const options = { method: 'PUT', headers: { 'Content-Type': images[index].file.type },body: images[index].file }
-                            const res = fetch(url, options);
+                            const res = TokiAPI.uploadReviewPhoto(url, images[index].file, images[index].file.type);
                         })
                     }
                 }

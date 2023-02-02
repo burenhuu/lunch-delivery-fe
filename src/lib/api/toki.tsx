@@ -122,6 +122,9 @@ const TokiAPI = {
         axios.get(
             `${urlPrefix}/merchants/${merchantId}/times?type=${type}`
         ),
+
+    uploadReviewPhoto: (url: string, body: any, type: string) =>
+        axios.put(url, body, { headers: { 'Content-Type':type} })
 };
 
 export default TokiAPI;

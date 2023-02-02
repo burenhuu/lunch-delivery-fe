@@ -113,7 +113,7 @@ export default function ProductCard({
         );
         setPrice(
             product.variants && product.variants[0]
-                ? product.variants[0].price
+                ? product.variants[0].salePrice
                 : 0
         );
         let optionTypeA: Option[] = [];
@@ -386,6 +386,8 @@ export default function ProductCard({
         setApplicableOptions(variant.options);
         setSelectedOptions([]);
     };
+
+    console.log(formatPrice(price), formatPrice(presalePrice))
     return (
         <>
             {

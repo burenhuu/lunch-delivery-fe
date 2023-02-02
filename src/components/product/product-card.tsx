@@ -22,7 +22,15 @@ import { cartAnimation } from "../../lib/utils/cart-animation";
 import {PermissionBox} from "../common/permission-box";
 import {Merchant} from "../../lib/types/merchant.type";
 import Drawer from "react-modern-drawer";
-import ProcessingSpin from "../common/processing-spin";
+import RiveComponent from "@rive-app/react-canvas";
+
+function ProcessingSpin(){
+    return(
+        <div className={"w-auto flex justify-center items-center"} style={{height: '-webkit-fill-available'}}>
+            <RiveComponent src="/images/processing.riv" className={`w-8 h-8`} />
+        </div>
+    )
+}
 
 let addToCartEvent: any;
 
@@ -383,7 +391,6 @@ export default function ProductCard({
             {
                 paymentLoader && (
                     <>
-
                         <Drawer
                             open={true}
                             onClose={()=>console.log("test")}

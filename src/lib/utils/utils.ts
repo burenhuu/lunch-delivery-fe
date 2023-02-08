@@ -1,8 +1,8 @@
 export function utilsReduce(inputArray: any){
-    const perChunk = 12 // items per chunk    
+    const perChunk = 8 // items per chunk
 
 
-    return inputArray.reduce((resultArray: any, item: any, index: any) => { 
+    return inputArray.reduce((resultArray: any, item: any, index: any) => {
     const chunkIndex = Math.floor(index/perChunk)
 
     if(!resultArray[chunkIndex]) {
@@ -29,9 +29,9 @@ export function utilsCalcCrow(lat1:any, lon1:any, lat2:any, lon2:any) {
       var lat2:any = toRad(lat2);
 
       var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
       var d = R * c;
       return d;
-    
+
 }

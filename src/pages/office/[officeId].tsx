@@ -451,7 +451,7 @@ export default function Office() {
                 ) : (
                     <>
                         {categories?.length > 0 && (
-                            <div className="h-[346px]">
+                            <div className="h-[228px]">
                                 <Carousel showArrows={false} showStatus={false} showIndicators={false}>
                                     {
                                         viewCategories.map((viewCategory: any, index: any) => (

@@ -74,54 +74,58 @@ export default function MerchantReview(props: { merchantId: string }) {
                         } else if (duration.seconds) {
                             review.date = `${duration.seconds} секундын өмнө`;
                         }
-                        return (
-                            <div
-                                key={review.id}
-                                className="py-2.5 border-t my-col-10 border-gray/10 px-5 h-[110px]"
-                            >
-                                <div className="flex items-center justify-between">
-                                    <div className="font-medium">
-                                        {review.name}
-                                    </div>
-                                    {review.removeable && (
-                                        <div
-                                            onClick={() =>
-                                                deleteReview(review.id)
-                                            }
-                                        >
-                                            <DeleteIcon />
+
+                        if (review.additional !== "" || (review.pictures && review?.pictures?.length > 0)){
+                            return (
+                                <div
+                                    key={review.id}
+                                    className="py-2.5 border-t my-col-10 border-gray/10 px-5 h-[110px]"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="font-medium">
+                                            {review.name}
                                         </div>
-                                    )}
-                                </div>
-                                <div className="flex items-center gap-x-5">
-                                    {review?.pictures && review?.pictures?.length > 0 ? (
-                                        <>
-                                            <img
-                                                onClick={()=>{onImageClick(review?.pictures ? review?.pictures[0] : "")}}
-                                                src={`${review.pictures[0]}`}
-                                                alt={review.id}
-                                                className="w-[60px] h-[60px] rounded-md"
-                                            />
-                                            <div className="font-light text-xs my-col-5 h-[60px]">
-                                                <div>{review.additional}</div>
-                                                <div className="text-smaller text-gray">
-                                                    {review.date}
-                                                </div>
+                                        {review.removeable && (
+                                            <div
+                                                onClick={() =>
+                                                    deleteReview(review.id)
+                                                }
+                                            >
+                                                <DeleteIcon />
                                             </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="text-xs font-light my-col-5">
-                                                <div>{review.additional}</div>
-                                                <div className="text-smaller text-gray">
-                                                    {review.date}
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-x-5">
+                                        {review?.pictures && review?.pictures?.length > 0 ? (
+                                            <>
+                                                <img
+                                                    onClick={()=>{onImageClick(review?.pictures ? review?.pictures[0] : "")}}
+                                                    src={`${review.pictures[0]}`}
+                                                    alt={review.id}
+                                                    className="w-[60px] h-[60px] rounded-md"
+                                                />
+                                                <div className="font-light text-xs my-col-5 h-[60px]">
+                                                    <div>{review.additional}</div>
+                                                    <div className="text-smaller text-gray">
+                                                        {review.date}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </>
-                                    )}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div className="text-xs font-light my-col-5">
+                                                    <div>{review.additional}</div>
+                                                    <div className="text-smaller text-gray">
+                                                        {review.date}
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        );
+                            );
+                        }
+
                     })}
                 </div>
             </div>

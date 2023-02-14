@@ -203,7 +203,7 @@ export default function Office() {
 
     useEffect(() => {
         const getCategories = async () => {
-            const { data } = await TokiAPI.getCategories();
+            const { data } = await TokiAPI.getCategories(typeof officeId === "string" ? officeId : '');
             if (data) {
                 await dispatch({ type: "categories", categories: data });
             }

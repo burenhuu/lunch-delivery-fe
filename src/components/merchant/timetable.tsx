@@ -139,14 +139,14 @@ export default function MerchantTimetable({
     return (
         <div className="my-col-15">
             <div className="font-medium">Цагийн хуваарь</div>
-            <div className="bg-white rounded-2xl text-center grid grid-cols-3 text-sm gap-[1px]">
+            <div className="bg-white rounded-2xl text-center grid grid-cols-2 text-sm gap-[1px]">
                 <div className="p-2.5 border-b border-r border-gray/10">
                     Гараг
                 </div>
                 <div className="p-2.5 border-b border-r border-gray/10">
                     Хүргэлт
                 </div>
-                <div className="p-2.5 border-b border-gray/10">Очиж авах</div>
+                {/*<div className="p-2.5 border-b border-gray/10">Очиж авах</div>*/}
                 <div className="p-2.5 border-r border-gray/10 my-col-10">
                     {
                         week.map((val: any) => {

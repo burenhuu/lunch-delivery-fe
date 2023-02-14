@@ -37,10 +37,10 @@ export default function MerchantIntroduction({
                 <div>{description}</div>
                 <div>
                     {phone && <div>Утас: {phone}</div>}
-                    {email && <div>Имэйл: {email}</div>}
-                    {facebook && <div>Facebook: {facebook}</div>}
-                    {instagram && <div>Instagram: {instagram}</div>}
-                    {website && <div>Веб хуудас: {website}</div>}
+                    {email && <div>Имэйл: <a href={email ? email : ''}>{email}</a></div>}
+                    {facebook && <div>Facebook: <a href={facebook ? facebook : ''}>{facebook}</a></div>}
+                    {instagram && <div>Instagram: <a href={instagram ? instagram : ''}>{instagram}</a></div>}
+                    {website && <div>Веб хуудас: <a href={website ? website : ''}>{website}</a></div>}
                 </div>
             </div>
         </div>

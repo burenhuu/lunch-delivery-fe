@@ -25,7 +25,7 @@ const TokiAPI = {
     getOfficesByName: (name: string) =>
         axios.get(`${urlPrefix}/offices?keyword=${name}&from=0&size=10`),
 
-    getCategories: () => axios.get(`${urlPrefix}/categories`),
+    getCategories: (officeId: string) => axios.get(`${urlPrefix}/offices/${officeId}/categories`),
 
     getMerchantsByOffice: (officeId: string, params: any) =>
         axios.get(`${urlPrefix}/offices/${officeId}/merchants`, {

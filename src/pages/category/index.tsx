@@ -169,8 +169,6 @@ export default function Category() {
         renderCard();
     }, [products]);
 
-    console.log(cardData[0]?.product?.variants[0]?.id)
-
     return !products && loading ? (
         <CenteredSpin />
     ) : (

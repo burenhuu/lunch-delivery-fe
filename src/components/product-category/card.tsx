@@ -58,7 +58,7 @@ export default function CategoryCard({
                 )}
             </div>
             <div
-                className={(small && active ? "w-[55px] h-[28px] text-main" : "w-[72.5px] h-[28px] text-gray")}
+                className={(small && active ? `w-[72.5px] h-[28px] text-main` : `w-[72.5px] h-[28px] text-gray`)}
             >
                 {
                     name.split(" ").map((text:string, index: number)=> {

@@ -23,8 +23,41 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
         CategoryType[]
     >(categories[0]?.chidren || []);
     const [selectedChildren, setSelectedChildren] = useState<string>(
-        childrenCategories ? childrenCategories[0]?.id : ""
+
     );
+
+    const filterByCategories = async (selectedId: string) => {
+        setLoading(true);
+        try {
+            const { data } = await TokiAPI.getProductsByOffice(
+                officeId,
+                "category",
+                selectedId,
+                props.productTab.sort
+            );
+            if (data) {
+                dispatch({ type: "products", products: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const getAllProducts = async () => {
+        setLoading(true);
+        try {
+            const { data } = await TokiAPI.getProductsByOffice(
+                officeId,
+            );
+            if (data) {
+                dispatch({ type: "products", products: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    console.log("selectedChildren", selectedChildren)
 
     const onProductClick = (id: string) => {
         setSelectedChildren(id);
@@ -43,48 +76,10 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     },[])
 
     useEffect(() => {
-        const filterByCategories = async () => {
-            setLoading(true);
-            try {
-                const { data } = await TokiAPI.getProductsByOffice(
-                    officeId,
-                    "category",
-                    selectedChildren,
-                    props.productTab.sort
-                );
-                if (data) {
-                    dispatch({ type: "products", products: data });
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
         if (selectedChildren) {
-            filterByCategories();
+            filterByCategories(selectedChildren);
         }
-    }, [selectedChildren]);
-
-    useEffect(() => {
-        const filterByCategories = async () => {
-            setLoading(true);
-            try {
-                const { data } = await TokiAPI.getProductsByOffice(
-                    officeId,
-                    "category",
-                    selectedChildren,
-                    props.productTab.sort
-                );
-                if (data) {
-                    dispatch({ type: "products", products: data });
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        if (selectedChildren) {
-            filterByCategories();
-        }
-    }, [props.productTab]);
+    }, [selectedChildren, props.productTab]);
 
     useEffect(() => {
         if (activeTab === "Бүгд") {
@@ -97,24 +92,23 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                     });
                 }
             });
+            getAllProducts()
             setChildrenCategories(temp);
         } else {
             const found = categories.find(
                 (category: CategoryType) => category.id === activeTab
             );
+            filterByCategories(activeTab);
             setChildrenCategories(found?.children);
         }
+        setSelectedChildren('')
     }, [activeTab]);
 
     useEffect(() => {
         if (childrenCategories && checkActiveCategory && onFirstLoad) {
-            console.log("123---------------")
             setSwiperLength(Math.ceil(childrenCategories?.length / 10));
-            setSelectedChildren(typeof checkActiveCategory === 'string' ? checkActiveCategory : "")
         } else{
-            console.log("123---------------456")
             setSwiperLength(Math.ceil(childrenCategories?.length / 10));
-            setSelectedChildren(childrenCategories ? childrenCategories[0]?.id : "");
         }
     }, [childrenCategories]);
 

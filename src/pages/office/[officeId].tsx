@@ -473,7 +473,7 @@ export default function Office() {
                         )}
                         <div>
                             <div className="flex justify-between pb-[15px] items-center">
-                                <div className="font-medium">Бүгд</div>
+                                <div className="font-medium">Бүх хоолны газрууд</div>
                                 <div
                                     onClick={() => setShowFilters(!showFilters)}
                                     className="flex gap-x-2.5 items-center relative"

@@ -174,23 +174,23 @@ export default function MerchantTimetable({
                     }
 
                 </div>
-                {/* Очиж авах */}
-                <div className="p-2.5 my-col-10">
-                    {
-                        week.map((val: any) => {
-                            if (val.active) {
-                                return (
-                                    <div key={val.day}>{val.time}</div>
-                                )
-                            } else {
-                                return (
-                                    <div key={val.day}>Амарна</div>
-                                )
-                            }
+                {/*/!* Очиж авах *!/*/}
+                {/*<div className="p-2.5 my-col-10">*/}
+                {/*    {*/}
+                {/*        week.map((val: any) => {*/}
+                {/*            if (val.active) {*/}
+                {/*                return (*/}
+                {/*                    <div key={val.day}>{val.time}</div>*/}
+                {/*                )*/}
+                {/*            } else {*/}
+                {/*                return (*/}
+                {/*                    <div key={val.day}>Амарна</div>*/}
+                {/*                )*/}
+                {/*            }*/}
 
-                        })
-                    }
-                </div>
+                {/*        })*/}
+                {/*    }*/}
+                {/*</div>*/}
             </div>
         </div>
     );

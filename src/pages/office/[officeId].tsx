@@ -472,7 +472,26 @@ export default function Office() {
 
                         )}
                         <div>
+                            <div className={"mb-5"}>
+                                <div className="font-medium">Онцлох хоол</div>
+                                {recommended?.length > 0 && (
+                                    <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
+                                        {recommended?.map(
+                                            (product: RecommendedType) => {
+                                                return (
+                                                    <Recommended
+                                                        key={product.id}
+                                                        data={product}
+                                                    />
+                                                );
+                                            }
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                             <div className="flex justify-between pb-[15px] items-center">
+
+
                                 <div className="font-medium">Бүх хоолны газрууд</div>
                                 <div
                                     onClick={() => setShowFilters(!showFilters)}
@@ -520,20 +539,6 @@ export default function Office() {
                                                 />
                                             );
                                         })}
-                                    {recommended?.length > 0 && (
-                                        <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
-                                            {recommended?.map(
-                                                (product: RecommendedType) => {
-                                                    return (
-                                                        <Recommended
-                                                            key={product.id}
-                                                            data={product}
-                                                        />
-                                                    );
-                                                }
-                                            )}
-                                        </div>
-                                    )}
                                     {merchants
                                         ?.slice(2)
                                         .map((merchant: Merchant) => {

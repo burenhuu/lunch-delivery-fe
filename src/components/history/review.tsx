@@ -54,12 +54,11 @@ export default function Review({
                     }
                 }
 
-                toggleDrawer();
-
                 response.data.type === "S" &&
                     setShowDelivery &&
                     setShowDelivery(true);
             } finally {
+                await toggleDrawer();
                 setLoading(false);
             }
         } else {
@@ -89,8 +88,8 @@ export default function Review({
         setComment([]);
         setAdditional("");
         setLoading(false);
-        setShowDrawer((prevState: any) => !prevState);
         await dispatch({ type: "footerShow", footerShow: true });
+        setShowDrawer((prevState: any) => !prevState);
     };
 
     // function handleImage() {
@@ -130,7 +129,7 @@ export default function Review({
             reader.onload = () => resolve(reader.result);
             reader.onerror = (error) => reject(error);
         });
-
+    console.log(showDrawer, 'showDrawer')
     return (
         <Drawer
             open={showDrawer}

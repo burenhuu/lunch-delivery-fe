@@ -14,7 +14,7 @@ if (API_ENTRYPOINT === "https://api.qrms.mn"){
 const TokiAPI = {
     getUser: (token: string) =>
         axios.post(
-            `${urlPrefix}/token?${params}=${token}`
+            `${urlPrefix}/token${params}=${token}`
         ),
 
     getAllOffices: () => axios.get(`${urlPrefix}/offices`),

@@ -473,7 +473,7 @@ export default function Office() {
                         )}
                         <div>
                             <div className={"mb-5"}>
-                                <div className="font-medium">Онцлох хоол</div>
+                                <div className="font-medium mb-[15px]">Онцлох хоол</div>
                                 {recommended?.length > 0 && (
                                     <div className="overflow-x-scroll scrollbar-hide -mx-5 px-5 flex items-start gap-x-2.5">
                                         {recommended?.map(

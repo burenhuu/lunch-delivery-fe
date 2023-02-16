@@ -231,7 +231,11 @@ export function CartItems({
                             {deliveryType == "Delivery" ? (
                                 <>
                                     <div>Хүргэлтийн төлбөр:</div>
-                                    <div>Савны мөнгө:</div>
+                                    {
+                                        packageAmount && (
+                                            <div>Савны мөнгө:</div>
+                                        )
+                                    }
                                 </>
                             ) : null}
                             {discountAmount ? <div>Урамшуулал:</div> : null}
@@ -243,7 +247,11 @@ export function CartItems({
                             {deliveryType == "Delivery" ? (
                                 <>
                                     <div>{formatPrice(taxAmount)} ₮</div>
-                                    <div>{formatPrice(packageAmount)} ₮</div>
+                                    {
+                                        packageAmount && (
+                                            <div>{formatPrice(packageAmount)} ₮</div>
+                                        )
+                                    }
                                 </>
                             ) : null}
                             {discountAmount ? (

@@ -28,7 +28,7 @@ export default function Document() {
                     rel="stylesheet"
                 />
                 {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-                <script type="text/javascript" src='/js/newrelic.js'/>
+                {/*<script type="text/javascript" src='/js/newrelic.js'/>*/}
             </Head>
             <body>
                 <Main />

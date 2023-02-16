@@ -20,6 +20,7 @@ export function CartItems({
     setisDeliveryClosed,
     setValue,
     setDeliveryType,
+    packageAmount
 }: any) {
     const [state, dispatch]: any = useAppState();
 
@@ -228,7 +229,10 @@ export function CartItems({
                         <div className="my-col-10">
                             <div>Захиалгын дүн:</div>
                             {deliveryType == "Delivery" ? (
-                                <div>Сав, хүргэлтийн төлбөр:</div>
+                                <>
+                                    <div>Хүргэлтийн төлбөр:</div>
+                                    <div>Савны мөнгө:</div>
+                                </>
                             ) : null}
                             {discountAmount ? <div>Урамшуулал:</div> : null}
                             <div className="font-medium">Нийт төлөх:</div>
@@ -237,7 +241,10 @@ export function CartItems({
                         <div className="flex flex-col items-end gap-y-2.5">
                             <div>{formatPrice(totalAmount)} ₮</div>
                             {deliveryType == "Delivery" ? (
-                                <div>{formatPrice(taxAmount)} ₮</div>
+                                <>
+                                    <div>{formatPrice(taxAmount)} ₮</div>
+                                    <div>{formatPrice(packageAmount)} ₮</div>
+                                </>
                             ) : null}
                             {discountAmount ? (
                                 <div>-{formatPrice(discountAmount)} ₮</div>

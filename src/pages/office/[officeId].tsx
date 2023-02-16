@@ -38,6 +38,14 @@ export default function Office() {
 
     useEffect(() => {
         if (categories?.length > 0) {
+            categories.unshift(
+                {
+                    name: 'Бүгд',
+                    photo: '/images/catAll.png',
+                    icon: "",
+                    id: 'Бүгд'
+                }
+            )
             setViewCategories(utilsReduce(categories))
         }
     }, [categories])

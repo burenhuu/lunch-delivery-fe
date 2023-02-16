@@ -20,25 +20,25 @@ export default function CategoryTab({
                 (merchant ? "px-5" : "px-[30px]")
             }
         >
-            {!merchant && (
-                <div
-                    onClick={() => setActiveTab("Бүгд")}
-                    className="flex flex-col gap-y-2 whitespace-nowrap"
-                >
-                    <div
-                        className={
-                            "Бүгд" === activeTab
-                                ? "text-main font-medium"
-                                : "text-gray"
-                        }
-                    >
-                        Бүгд
-                    </div>
-                    {"Бүгд" === activeTab && (
-                        <div className="h-0.5 bg-gradient-to-r from-gradient-start to-gradient-end rounded-sm"></div>
-                    )}
-                </div>
-            )}
+            {/*{!merchant && (*/}
+            {/*    <div*/}
+            {/*        onClick={() => setActiveTab("Бүгд")}*/}
+            {/*        className="flex flex-col gap-y-2 whitespace-nowrap"*/}
+            {/*    >*/}
+            {/*        <div*/}
+            {/*            className={*/}
+            {/*                "Бүгд" === activeTab*/}
+            {/*                    ? "text-main font-medium"*/}
+            {/*                    : "text-gray"*/}
+            {/*            }*/}
+            {/*        >*/}
+            {/*            Бүгд*/}
+            {/*        </div>*/}
+            {/*        {"Бүгд" === activeTab && (*/}
+            {/*            <div className="h-0.5 bg-gradient-to-r from-gradient-start to-gradient-end rounded-sm"></div>*/}
+            {/*        )}*/}
+            {/*    </div>*/}
+            {/*)}*/}
             {tabs?.map((category: CategoryType) => {
                 const { name, id } = category;
                 return (

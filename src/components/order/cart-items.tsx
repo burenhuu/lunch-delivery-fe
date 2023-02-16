@@ -198,6 +198,27 @@ export function CartItems({
                                             </div>
                                         );
                                     })}
+                                    {
+                                        place.charges.map((charge: any)=>{
+                                            return(
+                                                <div className="flex justify-between" key={charge.id}>
+                                                    <div className="overflow-hidden grow-1 my-col-5">
+                                                        <div className="truncate ">
+                                                            {charge.name}
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col grow-0 items-end gap-y-1.25">
+                                                        <div>
+                                                            {formatPrice(
+                                                                charge.amount
+                                                            )}{" "}
+                                                            ₮
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             );
                         })}
@@ -207,7 +228,7 @@ export function CartItems({
                         <div className="my-col-10">
                             <div>Захиалгын дүн:</div>
                             {deliveryType == "Delivery" ? (
-                                <div>Хүргэлтийн төлбөр:</div>
+                                <div>Сав, хүргэлтийн төлбөр:</div>
                             ) : null}
                             {discountAmount ? <div>Урамшуулал:</div> : null}
                             <div className="font-medium">Нийт төлөх:</div>

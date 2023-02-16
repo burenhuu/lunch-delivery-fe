@@ -5,7 +5,7 @@ import axios from "lib/utils/axios";
 const urlPrefix = "/v1";
 const API_ENTRYPOINT = process.env.NEXT_PUBLIC_ENTRYPOINT;
 let params: string;
-if (API_ENTRYPOINT === "https://api.qrms.mn"){
+if (API_ENTRYPOINT === "https://toki-api.qrms.mn"){
     params = "?grant_type=client_credentials&client_id=Ma95V2Cd3fjAWA4r&client_secret=CxjMCBpPMJZKqsTHL3qKA9MKZ&"
 } else {
     params = "?grant_type=client_credentials&client_id=toki&client_secret=toki&"

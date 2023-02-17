@@ -110,7 +110,7 @@ export default function MerchantProductPage() {
                 if (checkActiveCategory !== null) {
                     let categories = state.categories
                     categories.map((category: any) => {
-                        category.children.map((sub_category: any) => {
+                        category.children?.map((sub_category: any) => {
                             if (checkActiveCategory === sub_category.id) {
                                 console.log("TRUE EXISTS", category.id)
                                 setActiveCategory(category.id)

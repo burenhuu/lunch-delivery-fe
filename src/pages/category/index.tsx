@@ -39,6 +39,8 @@ export default function Category() {
     const [cardData, setCardData] = useState<CardDataType[]>([]);
     const [accordionKey, setAccordionKey] = useState<any>(123);
 
+    console.log(productTab, 'productTab')
+
     useEffect(() => {
         let number = Math.random()
         setAccordionKey(number)

@@ -36,7 +36,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 props.productTab.sort
             );
             if (data) {
-                dispatch({ type: "products", products: data });
+                await dispatch({ type: "products", products: data });
             }
         } finally {
             setLoading(false);
@@ -50,14 +50,30 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
                 officeId,
             );
             if (data) {
-                dispatch({ type: "products", products: data });
+                await dispatch({ type: "products", products: data });
             }
         } finally {
             setLoading(false);
         }
     };
 
-    console.log("selectedChildren", selectedChildren)
+    const getAllProductsWithFilter = async (sort: string) => {
+
+        setLoading(true);
+        try {
+            const { data } = await TokiAPI.getProductsByOffice(
+                officeId,
+                'sort',
+                sort
+            );
+            if (data) {
+                await dispatch({ type: "products", products: data });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const onProductClick = (id: string) => {
         setSelectedChildren(id);
@@ -78,6 +94,12 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     useEffect(() => {
         if (selectedChildren) {
             filterByCategories(selectedChildren);
+        } else {
+            if (activeTab === "Бүгд"){
+                getAllProductsWithFilter(props.productTab['sort'])
+            } else {
+                filterByCategories(activeTab);
+            }
         }
     }, [selectedChildren, props.productTab]);
 

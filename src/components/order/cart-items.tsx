@@ -232,7 +232,7 @@ export function CartItems({
                                 <>
                                     <div>Хүргэлтийн төлбөр:</div>
                                     {
-                                        packageAmount && packageAmount !== 0 && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>Савны мөнгө:</div>
                                         )
                                     }
@@ -248,7 +248,7 @@ export function CartItems({
                                 <>
                                     <div>{formatPrice(taxAmount)} ₮</div>
                                     {
-                                        packageAmount && packageAmount !== 0 && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>{formatPrice(packageAmount)} ₮</div>
                                         )
                                     }

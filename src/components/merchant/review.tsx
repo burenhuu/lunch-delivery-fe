@@ -79,7 +79,7 @@ export default function MerchantReview(props: { merchantId: string }) {
                             return (
                                 <div
                                     key={review.id}
-                                    className="py-2.5 border-t my-col-10 border-gray/10 px-5 h-[110px]"
+                                    className="py-2.5 border-t my-col-10 border-gray/10 px-5 min-h-[110px]"
                                 >
                                     <div className="flex items-center justify-between">
                                         <div className="font-medium">

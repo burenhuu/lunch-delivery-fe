@@ -52,8 +52,8 @@ export function CartItems({
                 dispatch({ type: "cartCount", cartCount: data.totalItems });
             let orderType = "Delivery"
             let check = false
-            data.orders.forEach((order: any)=>{
-                if (order.type === "TakeAway"){
+            data.orders.forEach((order: any) => {
+                if (order.type === "TakeAway") {
                     check = true
                     setisDeliveryClosed(true)
                     setValue("type", "TakeAway")
@@ -62,7 +62,7 @@ export function CartItems({
                     return
                 }
             })
-            if (!check){
+            if (!check) {
                 setisDeliveryClosed(false)
             }
             setDeliveryType(orderType)
@@ -105,8 +105,8 @@ export function CartItems({
                                                     </div>
 
                                                     {product.options &&
-                                                    Object.keys(product.options)
-                                                        .length > 0 ? (
+                                                        Object.keys(product.options)
+                                                            .length > 0 ? (
                                                         product.options.map(
                                                             (
                                                                 option: any,
@@ -124,14 +124,14 @@ export function CartItems({
                                                                         }
                                                                         {option.value &&
                                                                             " " +
-                                                                                option.value}
+                                                                            option.value}
                                                                         {index +
                                                                             1 ==
                                                                             Object.keys(
                                                                                 product.options
                                                                             )
                                                                                 .length &&
-                                                                        product.comment
+                                                                            product.comment
                                                                             ? ` (${product.comment})`
                                                                             : null}
                                                                     </div>
@@ -149,7 +149,7 @@ export function CartItems({
                                                     <div>
                                                         {formatPrice(
                                                             product.quantity *
-                                                                product.price
+                                                            product.price
                                                         )}{" "}
                                                         ₮
                                                     </div>
@@ -200,8 +200,8 @@ export function CartItems({
                                         );
                                     })}
                                     {
-                                        place.charges.map((charge: any)=>{
-                                            return(
+                                        place.charges.map((charge: any) => {
+                                            return (
                                                 <div className="flex justify-between" key={charge.id}>
                                                     <div className="overflow-hidden grow-1 my-col-5">
                                                         <div className="truncate ">
@@ -232,7 +232,7 @@ export function CartItems({
                                 <>
                                     <div>Хүргэлтийн төлбөр:</div>
                                     {
-                                        packageAmount && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>Савны мөнгө:</div>
                                         )
                                     }
@@ -248,7 +248,7 @@ export function CartItems({
                                 <>
                                     <div>{formatPrice(taxAmount)} ₮</div>
                                     {
-                                        packageAmount && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>{formatPrice(packageAmount)} ₮</div>
                                         )
                                     }

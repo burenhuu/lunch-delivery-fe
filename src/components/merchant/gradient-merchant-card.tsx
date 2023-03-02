@@ -136,15 +136,13 @@ export default function GreadientMerchantCard({
                 let text: string;
                 setShow(true);
                 if (merchant.dayIsActive){
-                    text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                    text = ` ${merchant.name} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${merchant.startDate} - ${merchant.endDate}
                             </b>`
                 } else {
-                    text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                    text = ` ${merchant.name} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               Амарна
@@ -183,8 +181,7 @@ export default function GreadientMerchantCard({
                 if (merchant.dayIsActive){
                     text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
                 } else {
-                    text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                    text = ` ${merchant.name} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               Амарна
@@ -241,7 +238,7 @@ export default function GreadientMerchantCard({
                     alt={merchant.name}
                 />
                 <div className="absolute z-20 left-3.75 bottom-3.75 text-white my-col-5 items-start">
-                    <div className="text-sm">{`${merchant.name} ( ${merchant.distance} км ) 👍 ${merchant.rating}%`}</div>
+                    <div className="text-sm">{`${merchant.name} ( ${Math.round(merchant.distance*100)/100} км ) 👍 ${merchant.rating}%`}</div>
                     <div className="text-xs font-light flex justify-start gap-x-1.25 items-center">
                         <ClockIcon />
                         {merchant.delivery[0]}-{merchant.delivery[1]} минут

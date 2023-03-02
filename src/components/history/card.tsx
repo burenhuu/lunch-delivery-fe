@@ -19,8 +19,8 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
                 -
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                          seconds
-                      )}`
+                            seconds
+                        )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -29,8 +29,8 @@ const renderer = ({ hours, minutes, seconds, completed }: any) => {
             <span>
                 {hours > 0
                     ? `${zeroPad(hours)}:${zeroPad(minutes)}:${zeroPad(
-                          seconds
-                      )}`
+                            seconds
+                        )}`
                     : `${zeroPad(minutes)}:${zeroPad(seconds)}`}
             </span>
         );
@@ -50,6 +50,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
     const [showDelivery, setShowDelivery] = useState(false);
     const [firstClick, setFirstClick] = useState(false);
+    const now = new Date();
 
     const toggleDrawer = async () => {
         let footerCheck = showDrawer;
@@ -80,11 +81,11 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                 item.type.toLowerCase() === "delivery"
                                     ? "Хүргэгдсэн хугацаа"
                                     : (item.state === Status.COMPLETED ||
-                                          item.state === Status.DELIVERED) &&
-                                      item.type.toLowerCase() === "takeaway"
+                                            item.state === Status.DELIVERED) &&
+                                        item.type.toLowerCase() === "takeaway"
                                     ? "Дууссан хугацаа"
                                     : item.type.toLowerCase() === "delivery"
-                                    ? "Хүргэгдэх хугацаа"
+                                    ? "Захиалга авах хугацаа"
                                     : item.type.toLowerCase() === "takeaway"
                                     ? "Бэлтгэгдэх хугацаа"
                                     : ""}
@@ -96,7 +97,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         {item.state === Status.COMPLETED ||
                         item.state === Status.DELIVERED ? (
                             format(
-                                new Date(item.deliveredAt),
+                                new Date(item.deliveredAt), 
                                 "yyyy.MM.dd HH:mm"
                             )
                         ) : (
@@ -115,19 +116,27 @@ const Card: React.FC<CardProps> = ({ item }) => {
                                         item.deliveredAt
                                     )
                                 ) : (
-                                    <Countdown
-                                        daysInHours={true}
-                                        overtime={true}
-                                        date={
-                                            new Date(
-                                                item.deliveredAt.replace(
-                                                    / /g,
-                                                    "T"
+                                    <>
+                                        {now > item.deliveredAt && ( <p className="text-red-600">
+                                            {calcTimeDiff(
+                                                item.deliveredAt,
+                                                item.now
+                                            )}
+                                        </p>)}
+                                        <Countdown
+                                            daysInHours={true}
+                                            overtime={true}
+                                            date={
+                                                new Date(
+                                                    item.deliveredAt.replace(
+                                                        / /g,
+                                                        "T"
+                                                    )
                                                 )
-                                            )
-                                        }
-                                        renderer={renderer}
-                                    />
+                                            }
+                                            renderer={renderer}
+                                        />
+                                    </>
                                 )}
                             </div>
                         )}
@@ -149,8 +158,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                 {item.state === Status.PENDING ? (
                     <div className="w-full h-[40px]"></div>
                 ) : (item.state === Status.COMPLETED ||
-                      item.state === Status.DELIVERED) &&
-                  item.reviews.length < 2 ? (
+                        item.state === Status.DELIVERED) &&
+                    item.reviews.length < 2 ? (
                     <div className="w-full h-[40px]"></div>
                 ) : (
                     item.state !== Status.COMPLETED &&
@@ -171,8 +180,8 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         </Link>
                     </div>
                 ) : (item.state === Status.COMPLETED ||
-                      item.state === Status.DELIVERED) &&
-                  item.reviews.length < 2 ? (
+                        item.state === Status.DELIVERED) &&
+                    item.reviews.length < 2 ? (
                     <div
                         className="w-[150px] self-center z-30"
                         onClick={toggleDrawer}

@@ -144,14 +144,13 @@ export default function ProductCard({
             let text: string
             setShow(true);
             if (dayIsActive) {
-                text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                text = ` ${place} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               ${placeStartDate} - ${placeEndDate}
                             </b>`
             } else {
-                text = ` Зоогийн газар хаалттай байна. <br>
+                text = ` ${place} хаалттай байна. <br>
                             Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
@@ -185,8 +184,7 @@ export default function ProductCard({
             if (dayIsActive) {
                 text = `Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
             } else {
-                text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                text = ` ${place} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
                               Амарна

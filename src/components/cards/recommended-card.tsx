@@ -16,18 +16,16 @@ export default function Recommended({ data }: { data: any }) {
             let text: string
             setShow(true);
             if (dayIsActive){
-                text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                text = ` ${place} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
-                              ${placeStartDate} - ${placeEndDate}
+                                ${placeStartDate} - ${placeEndDate}
                             </b>`
             } else {
-                text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                text = ` ${place} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
-                              Амарна
+                                Амарна
                             </b>`
             }
             setContent(
@@ -57,11 +55,10 @@ export default function Recommended({ data }: { data: any }) {
             if (dayIsActive){
                 text = ` Уг хоолны газрын нээх цаг болоогүй<br>байгаа тул та зөвхөн урьдчилсан<br>захиалга хийх боломжтой`
             } else {
-                text = ` Зоогийн газар хаалттай байна. <br>
-                            Та бусад зоогийн газраас сонголтоо хийнэ үү <br>
+                text = ` ${place} хаалттай байна. <br>
                             Ажиллах цагийн хуваарь: <br>
                             <b>
-                              Амарна
+                                Амарна
                             </b>`
             }
             setContent(

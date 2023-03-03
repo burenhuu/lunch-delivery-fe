@@ -212,13 +212,14 @@ const Cart: NextPage = () => {
                     setPaymentLoader(true);
                     setLoading(true);
                     values["office"] = state.officeId;
+                    const enviroment = process.env.NEXT_PUBLIC_ENVIROMENT;
                     try {
                         const placeOrderResponse = await TokiAPI.checkout(
                             values
                         );
                         if (placeOrderResponse?.status == 200) {
                             Toki.buy(
-                                "6077c7514a70c11568436528",
+                                enviroment==='development' ? "63b9142a94bc82df38700f31" : "6077c7514a70c11568436528",
                                 placeOrderResponse.data.grandTotal,
                                 placeOrderResponse.data.orderId,
                                 `Hool_zahialah | ${localStorage.getItem(

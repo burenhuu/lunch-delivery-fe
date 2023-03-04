@@ -58,6 +58,10 @@ const Card: React.FC<CardProps> = ({ item }) => {
         await dispatch({ type: "footerShow", footerShow: false });
     };
 
+    function onSelectedTime(): import("react").ReactNode {
+        throw new Error("Function not implemented.");
+    }
+
     return (
         <div className="relative">
             <div
@@ -111,10 +115,11 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             <div>
                                 {item.state === Status.COMPLETED ||
                                 item.state === Status.DELIVERED ? (
-                                    calcTimeDiff(
-                                        item.deliveringAt,
-                                        item.deliveredAt
-                                    )
+                                    onSelectedTime()
+                                    // calcTimeDiff(
+                                    //     item.deliveringAt,
+                                    //     item.deliveredAt
+                                    // )
                                 ) : (
                                     <>
                                         {now > item.deliveredAt && ( <p className="text-red-600">

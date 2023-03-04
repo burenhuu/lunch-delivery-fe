@@ -12,6 +12,7 @@ import Review from "./review";
 import { useRouter } from "next/router";
 import { useAppState } from "../../lib/context/app";
 
+
 const renderer = ({ hours, minutes, seconds, completed }: any) => {
     if (completed) {
         return (
@@ -61,7 +62,6 @@ const Card: React.FC<CardProps> = ({ item }) => {
     function onSelectedTime(): import("react").ReactNode {
         throw new Error("Function not implemented.");
     }
-
     return (
         <div className="relative">
             <div
@@ -114,13 +114,15 @@ const Card: React.FC<CardProps> = ({ item }) => {
                         {item.state !== Status.CANCELLED && (
                             <div>
                                 {item.state === Status.COMPLETED ||
-                                item.state === Status.DELIVERED ? (
-                                    onSelectedTime()
-                                    // calcTimeDiff(
-                                    //     item.deliveringAt,
-                                    //     item.deliveredAt
-                                    // )
-                                ) : (
+                                item.state === Status.DELIVERED ? 
+                                // (
+                                //     calcTimeDiff(
+                                //         item.deliveringAt,
+                                //         item.deliveredAt
+                                //     )
+                                // ) 
+                                item.selectedTime
+                                : (
                                     <>
                                         {now > item.deliveredAt && ( <p className="text-red-600">
                                             {calcTimeDiff(

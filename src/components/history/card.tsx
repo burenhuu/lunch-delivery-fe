@@ -7,7 +7,7 @@ import ButtonComponent from "components/common/button";
 import { CallIcon } from "components/icons";
 import { Status } from "lib/types/order.type";
 import { calcTimeDiff } from "lib/utils/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Review from "./review";
 import { useRouter } from "next/router";
 import { useAppState } from "../../lib/context/app";
@@ -51,7 +51,20 @@ const Card: React.FC<CardProps> = ({ item }) => {
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
     const [showDelivery, setShowDelivery] = useState(false);
     const [firstClick, setFirstClick] = useState(false);
-    const now = new Date();
+    const deliveredAt = new Date(item.deliveredAt);
+    const [countDown, setCountDown] = useState(new Date(
+        item.deliveredAt.replace(
+            / /g,
+            "T"
+        )
+    ))
+    const [countDownChecker, setCountDownChecker] = useState(false)
+
+    useEffect(()=>{
+        if(countDown > new Date()){
+            setCountDownChecker(true)
+        }
+    })
 
     const toggleDrawer = async () => {
         let footerCheck = showDrawer;
@@ -115,34 +128,35 @@ const Card: React.FC<CardProps> = ({ item }) => {
                             <div>
                                 {item.state === Status.COMPLETED ||
                                 item.state === Status.DELIVERED ? 
-                                // (
-                                //     calcTimeDiff(
-                                //         item.deliveringAt,
-                                //         item.deliveredAt
-                                //     )
-                                // ) 
-                                item.selectedTime
+                                ( 
+                                    calcTimeDiff(
+                                        item.deliveringAt,
+                                        item.deliveredAt
+                                    )
+                                ) 
                                 : (
                                     <>
-                                        {now > item.deliveredAt && ( <p className="text-red-600">
+                                        {/* {now > item.deliveredAt && ( 
+                                        <p className="text-red-500">
                                             {calcTimeDiff(
                                                 item.deliveredAt,
                                                 item.now
                                             )}
-                                        </p>)}
-                                        <Countdown
-                                            daysInHours={true}
-                                            overtime={true}
-                                            date={
-                                                new Date(
-                                                    item.deliveredAt.replace(
-                                                        / /g,
-                                                        "T"
-                                                    )
-                                                )
-                                            }
-                                            renderer={renderer}
-                                        />
+                                        </p>)} */}
+                                        {
+                                            countDownChecker ? 
+                                                <>
+                                                    {item.deliveryDate}
+                                                </> 
+                                                :
+                                                <Countdown
+                                                    daysInHours={true}
+                                                    overtime={true}
+                                                    date={countDown}
+                                                    renderer={renderer}
+                                                />
+                                        }
+                                        
                                     </>
                                 )}
                             </div>

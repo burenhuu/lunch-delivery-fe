@@ -14,6 +14,7 @@ import { Upoint, UpointGreen } from "components/icons";
 import { useEffect, useState } from "react";
 import ButtonComponent from "components/common/button";
 import TokiAPI from "lib/api/toki";
+import { useAppState } from "../../lib/context/app";
 
 const renderer = ({ hours, minutes, seconds, completed }: any) => {
     if (completed) {
@@ -51,6 +52,19 @@ const OrderDetail: NextPage = () => {
     const [loading, setLoading] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
     const [initOpen, setInitOpen] = useState(false);
+    const [countDown, setCountDown] = useState(new Date(
+        data.data.deliveredAt.replace(
+            / /g,
+            "T"
+        )
+    ))
+    const [countDownChecker, setCountDownChecker] = useState(false)
+
+    useEffect(()=>{
+        if(countDown > new Date()){
+            setCountDownChecker(true)
+        }
+    })
 
     useEffect(() => {
         if (data && !initOpen) {
@@ -176,7 +190,7 @@ const OrderDetail: NextPage = () => {
                                             ? "Дууссан хугацаа"
                                             : data.data.type.toLowerCase() ===
                                                 "delivery"
-                                                ? "Хүргэгдэх хугацаа"
+                                                ? "Захиалга авах хугацаа"
                                                 : data.data.type.toLowerCase() ===
                                                     "takeaway"
                                                     ? "Бэлтгэгдэх хугацаа"
@@ -194,19 +208,21 @@ const OrderDetail: NextPage = () => {
                                             data.data.deliveredAt
                                         )
                                     ) : (
-                                        <Countdown
-                                            daysInHours={true}
-                                            overtime={true}
-                                            date={
-                                                new Date(
-                                                    data.data.deliveredAt.replace(
-                                                        / /g,
-                                                        "T"
-                                                    )
-                                                )
-                                            }
-                                            renderer={renderer}
-                                        />
+                                        <>
+                                        {
+                                            countDownChecker ? 
+                                                <>
+                                                    {data.data.deliveryDate}
+                                                </> 
+                                                :
+                                                <Countdown
+                                                    daysInHours={true}
+                                                    overtime={true}
+                                                    date={countDown}
+                                                    renderer={renderer}
+                                                />
+                                        }
+                                    </>
                                     )}
                                 </div>
                             )}

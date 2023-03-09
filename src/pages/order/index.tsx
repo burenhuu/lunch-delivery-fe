@@ -254,7 +254,20 @@ const Cart: NextPage = () => {
                         } else {
                             toast("Уучлаарай, Таны захиалга амжилтгүй боллоо");
                         }
-                    } finally {
+                    } catch (e: any){
+                        let x = e.toString()
+                        let a = x.split(" ")
+                        setShow(true);
+                        setContent(<PermissionBox 
+                        text={`Уг ээлжийн захиалга дүүрэхэд ${a[5]} хоол дутуу байна. 
+                        Та дараагийн ээлжийг сонгож захиалгаа өгөх үү? `}
+                        onClick={() => {
+                            setShow(false);
+                            onContinueClick();
+                    }}
+                        />)
+                    }
+                    finally {
                         setLoading(false);
                         setPaymentLoader(false);
                     }
@@ -470,3 +483,7 @@ const Cart: NextPage = () => {
 };
 
 export default Cart;
+function onContinueClick() {
+    throw new Error("Function not implemented.");
+}
+

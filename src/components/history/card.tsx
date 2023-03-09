@@ -51,7 +51,6 @@ const Card: React.FC<CardProps> = ({ item }) => {
     const [showDeliveryDrawer, setShowDeliveryDrawer] = useState(true);
     const [showDelivery, setShowDelivery] = useState(false);
     const [firstClick, setFirstClick] = useState(false);
-    const deliveredAt = new Date(item.deliveredAt);
     const [countDown, setCountDown] = useState(new Date(
         item.deliveredAt.replace(
             / /g,

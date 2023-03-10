@@ -52,12 +52,16 @@ const OrderDetail: NextPage = () => {
     const [loading, setLoading] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
     const [initOpen, setInitOpen] = useState(false);
-    const [countDown, setCountDown] = useState(new Date(
-        data.data.deliveredAt.replace(
-            / /g,
-            "T"
-        )
-    ))
+    const [countDown, setCountDown] = useState<any>()
+
+    useEffect(()=>{
+        let timeData = new Date(
+            data?.data?.deliveredAt?.replace(
+                / /g,
+                "T"
+            ))
+        setCountDown(timeData)
+    },[data])
     const [countDownChecker, setCountDownChecker] = useState(false)
 
     useEffect(()=>{

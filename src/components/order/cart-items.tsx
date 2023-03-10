@@ -202,23 +202,31 @@ export function CartItems({
                                     {
                                         place.charges.map((charge: any) => {
                                             if(charge.amount > 0){
-                                                return (
-                                                    <div className="flex justify-between" key={charge.id}>
-                                                        <div className="overflow-hidden grow-1 my-col-5">
-                                                            <div className="truncate ">
-                                                                {charge.name}
+                                                if (charge.name === "Хүргэлт" && deliveryType !== "Delivery"){
+                                                    return (
+                                                        <>
+                                                        </>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <div className="flex justify-between" key={charge.id}>
+                                                            <div className="overflow-hidden grow-1 my-col-5">
+                                                                <div className="truncate ">
+                                                                    {charge.name}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex flex-col grow-0 items-end gap-y-1.25">
+                                                                <div>
+                                                                    {formatPrice(
+                                                                        charge.amount
+                                                                    )}{" "}
+                                                                    ₮
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-col grow-0 items-end gap-y-1.25">
-                                                            <div>
-                                                                {formatPrice(
-                                                                    charge.amount
-                                                                )}{" "}
-                                                                ₮
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )
+                                                    )
+                                                }
+
                                             }
                                         })
                                     }
@@ -232,9 +240,9 @@ export function CartItems({
                             <div>Захиалгын дүн:</div>
                             {deliveryType == "Delivery" ? (
                                 <>
-                                    <div>Хүргэлтийн төлбөр: </div>
+                                    <div>Хүргэлтийн төлбөр:</div>
                                     {
-                                        packageAmount !== 0 && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>Савны мөнгө:</div>
                                         )
                                     }
@@ -250,7 +258,7 @@ export function CartItems({
                                 <>
                                     <div>{formatPrice(taxAmount)} ₮</div>
                                     {
-                                        packageAmount !== 0 && (
+                                        (packageAmount && packageAmount) !== 0 && (
                                             <div>{formatPrice(packageAmount)} ₮</div>
                                         )
                                     }

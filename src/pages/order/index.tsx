@@ -255,18 +255,29 @@ const Cart: NextPage = () => {
                             toast("Уучлаарай, Таны захиалга амжилтгүй боллоо");
                         }
                     } catch (e: any){
-                        let x = e.toString()
-                        let a = x.split(" ")
-                        setShow(true);
-                        setContent(<PermissionBox 
-                        text={`Уг ээлжийн захиалга дүүрэхэд ${a[5]} хоол дутуу байна. 
-                        Та дараагийн ээлжийг сонгож захиалгаа өгөх үү? `}
-                        onClick={() => {
-                            setShow(false);
-                            onContinueClick();
+                        const aldaa = e.toString()
+                        if(aldaa.includes('дүүрэхэд')){
+                            let x = e.toString()
+                            let a = x.split(" ")
+                            setShow(true);
+                            setContent(<PermissionBox 
+                            text={`Уг ээлжийн захиалга дүүрэхэд ${a[5]} хоол дутуу байна. 
+                            Та дараагийн ээлжийг сонгож захиалгаа өгөх үү? `}
+                            onClick={() => {
+                                setShow(false);
+                                onContinueClick();
+                            } 
+                            } />)
+                        } else {
+                            setShow(true);
+                            setContent(<PermissionBox 
+                            text={`${aldaa.replace("Error: ","")}`}
+                            onClick={() => {
+                                setShow(false);
+                                onContinueClick();
                     }}
                         />)
-                    }
+                    }}
                     finally {
                         setLoading(false);
                         setPaymentLoader(false);

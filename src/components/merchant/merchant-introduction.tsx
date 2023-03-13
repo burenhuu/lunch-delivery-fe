@@ -28,7 +28,7 @@ export default function MerchantIntroduction({
                             key={image}
                             src={image}
                             alt={merchant.name}
-                            className="rounded-md"
+                            className="rounded-md h-[87.5px] w-[87.5px]"
                         />
                     );
                 })}

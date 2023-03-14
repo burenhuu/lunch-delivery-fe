@@ -1,5 +1,5 @@
-import {useRouter} from "next/router";
-import {useAppState} from "lib/context/app";
+import { useRouter } from "next/router";
+import { useAppState } from "lib/context/app";
 
 const NoBackButtonRoutes = [
     "/office/[officeId]",
@@ -7,18 +7,17 @@ const NoBackButtonRoutes = [
     "/order-history",
 ];
 
-const Header = ({routerPathName}: any) => {
+const Header = ({ routerPathName }: any) => {
     const router = useRouter();
     const [state]: any = useAppState();
     const isBackButton = !NoBackButtonRoutes.includes(routerPathName);
-    const {officeId, officeName} = state;
+    const { officeId, officeName } = state;
 
     const onBackButtonClick = () => {
-        if (router.query.tokenid !== undefined){
-            router.push('/')
-        } else{
+        if (router.query.tokenid !== undefined) {
+            router.push("/");
+        } else {
             router.back();
-
         }
     };
 
@@ -33,7 +32,9 @@ const Header = ({routerPathName}: any) => {
 
     return (
         <header
-            className={`w-full flex ${isBackButton ? 'h-[77px]' : 'h-[85px]'} text-center text-white bg-gradient-to-r from-gradient-start to-gradient-end overflow-hidden `}
+            className={`w-full flex ${
+                isBackButton ? "h-[77px]" : "h-[85px]"
+            } text-center text-white bg-gradient-to-r from-gradient-start to-gradient-end overflow-hidden `}
         >
             <div className="w-full h-[50px] px-5 py-2.5 flex justify-start items-center gap-x-2.5">
                 {
@@ -83,7 +84,9 @@ const Header = ({routerPathName}: any) => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                        ) : (<></>)}
+                        ) : (
+                            <></>
+                        )}
                         {routerPathName != "/" && officeId && officeName && (
                             <div className="flex">
                                 <button
@@ -117,43 +120,41 @@ const Header = ({routerPathName}: any) => {
                                         />
                                     </svg>
                                 </button>
-                                {
-                                    getTextWidth(officeName) > 140 ?
-                                        <button
-                                            type="button"
-                                            className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
-                                            onClick={() => {
-                                                router.push(`/`);
-                                                NoBackButtonRoutes.filter(
-                                                    (route) => route !== "/"
-                                                );
-                                            }}
-                                        >
-                                            <div className="w-[100px]">
-                                                <div className="bar_content font-light text-sm whitespace-nowrap">
-                                                    {officeName}
-                                                </div>
+                                {getTextWidth(officeName) > 130 ? (
+                                    <button
+                                        type="button"
+                                        className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start px-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
+                                        onClick={() => {
+                                            router.push(`/`);
+                                            NoBackButtonRoutes.filter(
+                                                (route) => route !== "/"
+                                            );
+                                        }}
+                                    >
+                                        <div className="w-[100px]">
+                                            <div className="bar_content font-light text-sm whitespace-nowrap">
+                                                {officeName}
                                             </div>
-                                        </button>
-                                        :
-                                        <button
-                                            type="button"
-                                            className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start pr-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
-                                            onClick={() => {
-                                                router.push(`/`);
-                                                NoBackButtonRoutes.filter(
-                                                    (route) => route !== "/"
-                                                );
-                                            }}
-                                        >
-                                            <div className="w-[100px]">
-                                                <div className="flex font-light text-sm whitespace-nowrap">
-                                                    {officeName}
-                                                </div>
+                                        </div>
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className={`flex w-[100px] overflow-auto scrollbar-hide items-center justify-start pr-2.5 py-[5px] gap-x-[5px] h-[30px] text-base text-white rounded-r-[10px] bg-main/20 border-y-[0.5px] border-r-[0.5px] border-main/20`}
+                                        onClick={() => {
+                                            router.push(`/`);
+                                            NoBackButtonRoutes.filter(
+                                                (route) => route !== "/"
+                                            );
+                                        }}
+                                    >
+                                        <div className="w-[100px]">
+                                            <div className="flex font-light text-sm whitespace-nowrap">
+                                                {officeName}
                                             </div>
-                                        </button>
-                                }
-
+                                        </div>
+                                    </button>
+                                )}
                             </div>
                         )}
                     </>

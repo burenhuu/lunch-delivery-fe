@@ -82,7 +82,7 @@ export function CategoryComponent(props: { setLoading: any, productTab: any }) {
     useEffect(()=>{
         if (checkActiveCategory){
             categories.map((category: any)=>{
-                category.children.map((sub_category:any)=>{
+                category.children?.map((sub_category:any)=>{
                     if(sub_category.id === checkActiveCategory){
                         setActiveTab(category.id)
                     }

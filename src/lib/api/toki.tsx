@@ -131,7 +131,7 @@ const TokiAPI = {
         ),
 
     uploadReviewPhoto: (url: string, body: any, type: string) =>
-        axios.put(url, body, { headers: { 'Content-Type':type} })
+        fetch(url, { method: 'PUT', headers: { 'Content-Type': type}, body: body})
 };
 
 export default TokiAPI;

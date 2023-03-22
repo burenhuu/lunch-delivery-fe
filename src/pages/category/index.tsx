@@ -158,12 +158,16 @@ export default function Category() {
                             placeStartDate: merchant.startDate,
                             placeEndDate: merchant.endDate,
                             dayIsActive: merchant.dayIsActive,
-                            merchant: merchant
+                            merchant: merchant,
+                            productSortPrice: product.variants && product.variants[0] ? product.variants[0].price : 0
                         })
                     )
                 }
 
         });
+            if(productTab.sort==="price"){
+                temp.sort((a:any, b:any)=> a.productSortPrice - b.productSortPrice)
+            }
             setCardData(temp);
             setLoading(false);
         };

@@ -327,7 +327,6 @@ export default function ProductCard({
         let check = false;
         let options: any = [];
         selectedOptions.map((selectedOption) => {
-            console.log(selectedOption);
             if (selectedOption?.id === option.id) {
                 selectedOption.value = value;
                 check = true;
@@ -392,7 +391,6 @@ export default function ProductCard({
         setSelectedOptions([]);
     };
 
-    console.log(formatPrice(price), formatPrice(presalePrice))
     return (
         <>
             <>

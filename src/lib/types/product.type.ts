@@ -55,5 +55,5 @@ export interface CardDataType {
     categoryId?: string;
     dayIsActive?: boolean;
     merchant?: Merchant;
-    productSortPrice: any;
+    productSortPrice?: any;
 }

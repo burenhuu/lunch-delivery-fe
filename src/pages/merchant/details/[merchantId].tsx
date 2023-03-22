@@ -53,17 +53,17 @@ export default function MerchantDetailPage() {
                 start: new Date(review?.createdAt),
                 end: new Date(),
             });
-            if (duration.years) {
+            if (duration.years !== 0) {
                 review.date = `${duration.years} жилийн өмнө`;
-            } else if (duration.months) {
+            } else if (duration.months !== 0) {
                 review.date = `${duration.years} сарын өмнө`;
-            } else if (duration.days) {
+            } else if (duration.days !== 0) {
                 review.date = `${duration.days} өдрийн өмнө`;
-            } else if (duration.hours) {
+            } else if (duration.hours !== 0) {
                 review.date = `${duration.hours} цагийн өмнө`;
-            } else if (duration.minutes) {
+            } else if (duration.minutes !== 0) {
                 review.date = `${duration.minutes} минутын өмнө`;
-            } else if (duration.seconds) {
+            } else if (duration.seconds !== 0) {
                 review.date = `${duration.seconds} секундын өмнө`;
             }
         });

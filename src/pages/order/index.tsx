@@ -77,7 +77,7 @@ const Cart: NextPage = () => {
             const {data} = await TokiAPI.lastCompletedOrderWithOffice(
                 state.officeId
             );
-            if (data && data[0]) {
+            if (data && data[0] && data[0].type === "Delivery") {
                 if (isDeliveryClosed) {
                     data[0].type &&
                     (setDeliveryType("TakeAway"),
@@ -260,17 +260,17 @@ const Cart: NextPage = () => {
                             let x = e.toString()
                             let a = x.split(" ")
                             setShow(true);
-                            setContent(<PermissionBox 
-                            text={`Уг ээлжийн захиалга дүүрэхэд ${a[5]} хоол дутуу байна. 
+                            setContent(<PermissionBox
+                            text={`Уг ээлжийн захиалга дүүрэхэд ${a[5]} хоол дутуу байна.
                             Та дараагийн ээлжийг сонгож захиалгаа өгөх үү? `}
                             onClick={() => {
                                 setShow(false);
                                 onContinueClick();
-                            } 
+                            }
                             } />)
                         } else {
                             setShow(true);
-                            setContent(<PermissionBox 
+                            setContent(<PermissionBox
                             text={`${aldaa.replace("Error: ","")}`}
                             onClick={() => {
                                 setShow(false);

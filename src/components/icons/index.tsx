@@ -489,8 +489,8 @@ export function HomeIcon() {
 export function Remove({ disabled }: any) {
     return (
         <svg
-            width="15"
-            height="15"
+            width="18"
+            height="18"
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -499,14 +499,14 @@ export function Remove({ disabled }: any) {
                 cx="7.5"
                 cy="7.5"
                 r="7.5"
-                fill={disabled ? "#FFBE78" : `#FF7A1F`}
+                fill={disabled ? "#FFBE78" : `#FFFFFF`}
             />
             <line
                 x1="10.75"
                 y1="7.5"
                 x2="4.25"
                 y2="7.5"
-                stroke="white"
+                stroke="#CDB085"
                 strokeWidth="1.5"
                 strokeLinecap="round"
             />
@@ -517,8 +517,8 @@ export function Remove({ disabled }: any) {
 export function Add({ disabled }: any) {
     return (
         <svg
-            width="15"
-            height="15"
+            width="18"
+            height="18"
             viewBox="0 0 15 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -527,14 +527,14 @@ export function Add({ disabled }: any) {
                 cx="7.5"
                 cy="7.5"
                 r="7.5"
-                fill={disabled ? "#FFBE78" : `#FF7A1F`}
+                fill={disabled ? "#FFBE78" : `#FFFFFF`}
             />
             <line
                 x1="10.75"
                 y1="7.5"
                 x2="4.25"
                 y2="7.5"
-                stroke="white"
+                stroke="#CDB085"
                 strokeWidth="1.5"
                 strokeLinecap="round"
             />
@@ -543,7 +543,7 @@ export function Add({ disabled }: any) {
                 y1="10.75"
                 x2="7.5"
                 y2="4.25"
-                stroke="white"
+                stroke="#CDB085"
                 strokeWidth="1.5"
                 strokeLinecap="round"
             />

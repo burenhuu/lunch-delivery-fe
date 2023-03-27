@@ -392,7 +392,7 @@ export function CartItems({
                                 <div>Захиалгын дүн:</div>
                                 {deliveryType == "Delivery" ? (
                                     <>
-                                        <div>Хүргэлтийн төлбөр:</div>
+                                        <div>Хүргэлт <span className="text-[#647382]">(2 хоол тутамд 1’000 ₮)</span></div>
                                         {
                                             (packageAmount && packageAmount) !== 0 && (
                                                 <div>Савны мөнгө:</div>

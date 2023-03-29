@@ -44,19 +44,24 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                                 </div>
 
                                                 <div className="font-light truncate text-gray text-[12px]">
-                                                    {place.charges.some((obj: any) => obj.name === "Савны мөнгө") &&
-                                                        <div className="flex justify-between">
-                                                            <div className="max-w-[132px]">
-                                                                Савны мөнгө
-                                                            </div>
-                                                            <div>
-                                                                {formatPrice(
-                                                                    product.quantity *
-                                                                    product.price
-                                                                )}{" "}
-                                                                ₮
-                                                            </div>
-                                                        </div>
+                                                    {
+                                                        place.charges.map((obj: any)=>{
+                                                            if (obj.name === "Савны мөнгө" && obj.amount > 0){
+                                                                return(
+                                                                    <div className="flex justify-between">
+                                                                        <div className="max-w-[132px]">
+                                                                            Савны мөнгө
+                                                                        </div>
+                                                                        <div>
+                                                                            {formatPrice(
+                                                                                obj.amount
+                                                                            )}{" "}
+                                                                            ₮
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        })
                                                     }
                                                 </div>
                                                 <div className="flex font-light truncate text-gray max-w-[197px] text-[12px]">

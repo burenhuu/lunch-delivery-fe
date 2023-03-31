@@ -12,58 +12,32 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                 return (
                     <div
                         key={place.merchant.id}
-                        className="pb-[15px] my-col-10"
+                        className="p-[15px] my-col-10 bg-white rounded-2xl"
                     >
                         <div className="flex items-center">
                             <div className="text-[#647382] text-sm truncate text-ellipsis">
                                 {place.merchant.name}
                             </div>
                         </div>
-                        {place.items.map((product: any) => {
+                        {place.items.map((product: any, index: any) => {
                             return (
                                 <div
                                     key={product.id}
-                                    className="flex justify-between bg-white rounded-2xl shadow-delivery"
+                                    className={`flex justify-between ${place.items.length === index+1 ? "" : "border-b border-dashed border-solid pb-5 border-[#B3BFC6]"}`}
                                 >
-                                    <div className="overflow-hidden grow-1 w-full">
+                                    <div className="overflow-hidden grow-1 w-full rounded-2xl">
                                         <div className="flex items-center justify-between">
                                             <img src={product.image}
-                                                 className={"w-[60px] h-[60px] object-cover rounded-[10px] mr-2 ml-[10px] my-[10px]"}/>
-                                            <div className="w-[217px] max-w-[217px] py-[10px]">
+                                                 className={"w-[56px] h-[56px] object-cover rounded-[10px] mr-2"}/>
+                                            <div className="w-[167px] max-w-[167px] py-[10px]">
                                                 <div className="flex justify-between">
                                                     <div className="truncate max-w-[132px] text-[14px] text-[#1E2335]">
                                                         {product.name}
                                                     </div>
-                                                    <div>
-                                                        {formatPrice(
-                                                            product.quantity *
-                                                            product.price
-                                                        )}{" "}
-                                                        ₮
-                                                    </div>
+
                                                 </div>
 
-                                                <div className="font-light truncate text-gray text-[12px]">
-                                                    {
-                                                        place.charges.map((obj: any)=>{
-                                                            if (obj.name === "Савны мөнгө" && obj.amount > 0){
-                                                                return(
-                                                                    <div className="flex justify-between">
-                                                                        <div className="max-w-[132px]">
-                                                                            Савны мөнгө
-                                                                        </div>
-                                                                        <div>
-                                                                            {formatPrice(
-                                                                                obj.amount
-                                                                            )}{" "}
-                                                                            ₮
-                                                                        </div>
-                                                                    </div>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                </div>
+
                                                 <div className="flex font-light truncate text-gray max-w-[197px] text-[12px]">
                                                     {product.variantName !== product.name && <>{product.variantName}, </>}
                                                     {product.options &&
@@ -99,28 +73,17 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                                     ) : null}
                                                 </div>
                                             </div>
-                                            <div
-                                                className="w-[48px] h-[80px] bg-gradient-to-r from-gradient-start to-gradient-end rounded-r-2xl text-white flex flex-col items-center justify-center">
-                                                <button
-                                                    className="cursor-pointer"
-                                                    onClick={() =>
-                                                        itemIncDecHandler(
-                                                            place.id,
-                                                            product.id,
-                                                            product.quantity,
-                                                            "increment"
-                                                        )
-                                                    }
-                                                    disabled={loading}
-                                                >
-                                                    <Add
-                                                        disabled={
-                                                            loading
-                                                        }
-                                                    />
-                                                </button>
-                                                {product.quantity}
-                                                <button
+                                            <div>
+                                                <div className={"text-right mb-[5px]"}>
+                                                    {formatPrice(
+                                                        product.quantity *
+                                                        product.price
+                                                    )}{" "}
+                                                    ₮
+                                                </div>
+                                                <div
+                                                    className="w-[77px] flex items-center justify-between">
+                                                    <button
                                                         className="cursor-pointer"
                                                         onClick={() =>
                                                             itemIncDecHandler(
@@ -138,6 +101,26 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                                             }
                                                         />
                                                     </button>
+                                                    {product.quantity}
+                                                    <button
+                                                        className="cursor-pointer"
+                                                        onClick={() =>
+                                                            itemIncDecHandler(
+                                                                place.id,
+                                                                product.id,
+                                                                product.quantity,
+                                                                "increment"
+                                                            )
+                                                        }
+                                                        disabled={loading}
+                                                    >
+                                                        <Add
+                                                            disabled={
+                                                                loading
+                                                            }
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -146,6 +129,27 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                 </div>
                             );
                         })}
+                        <div className="font-light truncate text-gray text-[12px]">
+                            {
+                                place.charges.map((obj: any)=>{
+                                    if (obj.name === "Савны мөнгө" && obj.amount > 0){
+                                        return(
+                                            <div className="flex justify-between">
+                                                <div>
+                                                    Хоолны савны хураамж
+                                                </div>
+                                                <div>
+                                                    {formatPrice(
+                                                        obj.amount
+                                                    )}{" "}
+                                                    ₮
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                })
+                            }
+                        </div>
                     </div>
                 );
             })}
@@ -392,7 +396,7 @@ export function CartItems({
                         {/*    })}*/}
                         {/*</div>*/}
 
-                        <div className="flex items-center justify-between border-b border-dashed border-solid pb-5 border-[#B3BFC6]">
+                        <div className="flex items-center justify-between">
                             <div className="my-col-10">
                                 <div>Захиалгын дүн:</div>
                                 {deliveryType == "Delivery" ? (

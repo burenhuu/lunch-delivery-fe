@@ -135,12 +135,12 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                     if (obj.name === "Савны мөнгө" && obj.amount > 0){
                                         return(
                                             <div className="flex justify-between">
-                                                <div>
+                                                <div  className={"text-[#647382] text-[12px]"}>
                                                     Хоолны савны хураамж
                                                 </div>
-                                                <div>
+                                                <div className={"text-[#37384A] text-[14px] font-normal"}>
                                                     {formatPrice(
-                                                        1000
+                                                        obj.amount
                                                     )}{" "}
                                                     ₮
                                                 </div>
@@ -149,17 +149,6 @@ const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading:
                                     }
                                 })
                             }
-                            <div className="flex justify-between">
-                                <div className={"text-[#647382] text-[12px]"}>
-                                    Хоолны савны хураамж
-                                </div>
-                                <div className={"text-[#37384A] text-[14px] font-normal"}>
-                                    {formatPrice(
-                                        1000
-                                    )}{" "}
-                                    ₮
-                                </div>
-                            </div>
                         </div>
                     </div>
                 );

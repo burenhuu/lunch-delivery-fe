@@ -404,7 +404,7 @@ export function CartItems({
                                         <div>Хүргэлт <span className="text-[#647382]">(2 хоол тутамд 1’000 ₮)</span></div>
                                         {
                                             (packageAmount && packageAmount) !== 0 && (
-                                                <div>Савны мөнгө:</div>
+                                                <div>Савны хураамж:</div>
                                             )
                                         }
                                     </>

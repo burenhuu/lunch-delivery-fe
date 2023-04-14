@@ -9,6 +9,7 @@ export interface Product {
     variants: Variant[];
     active: boolean;
     withNote: boolean;
+    state: string;
 }
 export interface Variant {
     id: string;

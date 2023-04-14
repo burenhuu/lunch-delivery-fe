@@ -433,7 +433,7 @@ export default function ProductCard({
 
                                 <AccordionItemButton className="flex justify-start gap-x-3.75 ">
                                     <div className="relative min-w-[120px] max-w-[120px] min-h-[120px]">
-                                        {product.active ? (
+                                        {product.state === "ACTIVE" ? (
                                             <>
                                                 <img
                                                     onClick={onImageClick}
@@ -538,7 +538,7 @@ export default function ProductCard({
                                         </div>
                                     </div>
                                     <>
-                                        {product.active && (placeState === "OPEN" || placeState === "preDelivery") && (
+                                        {product.state === "ACTIVE" && (placeState === "OPEN" || placeState === "preDelivery") && (
                                             <>
                                                 {
                                                     variants.length === 1 ?

@@ -110,7 +110,7 @@ export function calcTimeDiff(
         duration.hours && duration.hours > 0 ? duration.hours + " цаг " : ""
     }${duration && duration.minutes}${
         seconds && duration.seconds && duration.seconds > 0
-            ? `:${duration.seconds}`
+            ? `:${zeroPad(duration.seconds)}`
             : ""
     }`;
 }

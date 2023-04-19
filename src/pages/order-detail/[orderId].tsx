@@ -214,10 +214,10 @@ const OrderDetail: NextPage = () => {
                                     ) : (
                                         <>
                                         {
-                                            countDownChecker ? 
+                                            countDownChecker ?
                                                 <>
                                                     {data.data.deliveryDate}
-                                                </> 
+                                                </>
                                                 :
                                                 <Countdown
                                                     daysInHours={true}
@@ -301,7 +301,9 @@ const OrderDetail: NextPage = () => {
                     <div className="font-medium">Захиалгын мэдээлэл</div>
                     <div className="my-col-10">
                         {data.data.items.map((item: any, index: number) => {
-                            return <OrderCard key={index} item={item} />;
+                            if (item.state !== "RETURN"){
+                                return <OrderCard key={index} item={item} />;
+                            }
                         })}
                     </div>
                 </div>

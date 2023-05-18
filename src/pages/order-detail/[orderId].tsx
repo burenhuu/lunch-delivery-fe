@@ -45,6 +45,8 @@ const apiUrl = `/v1/orders`;
 
 const OrderDetail: NextPage = () => {
     const router = useRouter();
+    const [state]: any = useAppState();
+    const {officeName, promotionCode, usePromotion, promotionAmount, promotionCheck} = state;
     const { orderId }: any = router.query;
     const { data, error } = useSWR(orderId ? `${apiUrl}/${orderId}` : null, {
         refreshInterval: 1000,
@@ -53,6 +55,19 @@ const OrderDetail: NextPage = () => {
     const [showDrawer, setShowDrawer] = useState(false);
     const [initOpen, setInitOpen] = useState(false);
     const [countDown, setCountDown] = useState<any>()
+    const [promotion, setPromotion] = useState<number>(0)
+
+    useEffect(()=>{
+        if(data && data.data && data.data.transactions){
+            let totalAmount = 0;
+            for (const item of data.data.transactions) {
+                if (item.type === "TKP") {
+                    totalAmount += item.amount;
+                }
+            }
+            setPromotion(totalAmount)
+        }
+    },[])
 
     useEffect(()=>{
         let timeData = new Date(
@@ -331,12 +346,16 @@ const OrderDetail: NextPage = () => {
                         <div>Нийт дүн:</div>
                         <div>{formatPrice(data.data.grandTotal)} ₮</div>
                     </div>
+                    <div className="flex items-center justify-between">
+                        <div>Хөнгөлөлт:</div>
+                        <div>{formatPrice(promotion)} ₮</div>
+                    </div>
                 </div>
                 <div className="border-t border-dashed border-gray"></div>
                 <div className="items-stretch text-sm font-medium my-col-10">
                     <div className="flex items-center justify-between">
                         <div>Төлсөн дүн:</div>
-                        <div>{formatPrice(data.data.grandTotal)} ₮</div>
+                        <div>{promotion > 0 ? formatPrice(data.data.grandTotal - promotion) : formatPrice(data.data.grandTotal)} ₮</div>
                     </div>
                     {data.data.penaltyAmount > 0 && (
                         <div className="flex items-center justify-between">

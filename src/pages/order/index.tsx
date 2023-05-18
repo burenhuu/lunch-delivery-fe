@@ -33,7 +33,7 @@ function ProcessingSpin(){
 const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
-    const {officeName, promotionCode, usePromotion} = state;
+    const {officeName, promotionCode, usePromotion, promotionAmount, promotionCheck} = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
@@ -223,39 +223,58 @@ const Cart: NextPage = () => {
                             values
                         );
                         if (placeOrderResponse?.status == 200) {
-                            Toki.buy(
-                                enviroment==='development' ? "63b9142a94bc82df38700f31" : "6077c7514a70c11568436528",
-                                placeOrderResponse.data.grandTotal,
-                                placeOrderResponse.data.orderId,
-                                `Hool_zahialah | ${localStorage.getItem(
-                                    "phoneNumber"
-                                )}`,
-                                async (
-                                    transactionID: any,
-                                    orderID: any,
-                                    status: any,
-                                    statusCode: any,
-                                    transRequestId: any
-                                ) => {
-                                    if (typeof window !== "undefined") {
-                                        if (
-                                            values &&
-                                            values.delivery_instruction
-                                        ) {
-                                            delete values.delivery_instruction;
-                                        }
-
-                                        localStorage.setItem(
-                                            "deliveryOptions",
-                                            JSON.stringify(values)
-                                        );
+                            if (promotionCheck && promotionAmount > placeOrderResponse.data.grandTotal){
+                                if (typeof window !== "undefined") {
+                                    if (
+                                        values &&
+                                        values.delivery_instruction
+                                    ) {
+                                        delete values.delivery_instruction;
                                     }
-                                    router.push(
-                                        `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=200`
+
+                                    localStorage.setItem(
+                                        "deliveryOptions",
+                                        JSON.stringify(values)
                                     );
-                                },
-                                `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/cart/paid`
-                            );
+                                }
+                                router.push(
+                                    `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=200`
+                                );
+                            } else {
+                                Toki.buy(
+                                    enviroment==='development' ? "63b9142a94bc82df38700f31" : "6077c7514a70c11568436528",
+                                    promotionCheck ? placeOrderResponse.data.grandTotal - promotionAmount : placeOrderResponse.data.grandTotal,
+                                    placeOrderResponse.data.orderId,
+                                    `Hool_zahialah | ${localStorage.getItem(
+                                        "phoneNumber"
+                                    )}`,
+                                    async (
+                                        transactionID: any,
+                                        orderID: any,
+                                        status: any,
+                                        statusCode: any,
+                                        transRequestId: any
+                                    ) => {
+                                        if (typeof window !== "undefined") {
+                                            if (
+                                                values &&
+                                                values.delivery_instruction
+                                            ) {
+                                                delete values.delivery_instruction;
+                                            }
+
+                                            localStorage.setItem(
+                                                "deliveryOptions",
+                                                JSON.stringify(values)
+                                            );
+                                        }
+                                        router.push(
+                                            `/order-history?tokenid=${router.query.tokenid}&paymentStatusCode=200`
+                                        );
+                                    },
+                                    `${process.env.NEXT_PUBLIC_ENTRYPOINT}/v1/cart/paid`
+                                );
+                            }
                         } else {
                             toast("Уучлаарай, Таны захиалга амжилтгүй боллоо");
                         }

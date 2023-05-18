@@ -295,7 +295,6 @@ export function CartItems({
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex gap-x-2.5">
                                                         <a onClick={(e: any)=> {
-                                                            e.preventDefault()
                                                             setPromotion(!promotion)
                                                         }}>
                                                             <input

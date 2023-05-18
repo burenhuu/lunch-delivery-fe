@@ -181,6 +181,11 @@ export function CartItems({
                           }: any) {
     const [state, dispatch]: any = useAppState();
     const {promotionCheck, promotionAmount, promotionCode} = state;
+    const [promo, setPromo] = useState(promotion)
+
+    const handlePromoClick = () => {
+      setPromo(!promo)
+    }
 
     const itemIncDecHandler = async (
         orderId: any,
@@ -278,13 +283,14 @@ export function CartItems({
                                             </div>
                                             <div className="border-b border-dashed border-solid pb-5 border-[#B3BFC6]">
                                                 <div className="flex items-center justify-between">
-                                                    <div  className="flex gap-x-2.5">
+                                                    <div className="flex gap-x-2.5">
                                                         <a onClick={(e: any)=> {
                                                             e.preventDefault()
+                                                            handlePromoClick()
                                                             setPromotion(!promotion)
                                                         }}>
                                                             <input
-                                                                checked={promotion}
+                                                                checked={promo}
                                                                 type="radio"
                                                             />
                                                             <div className="checkmark" />

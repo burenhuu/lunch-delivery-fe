@@ -284,7 +284,7 @@ export function CartItems({
                                                             setPromotion(!promotion)
                                                         }}>
                                                             <input
-                                                                defaultChecked={promotion}
+                                                                checked={promotion}
                                                                 type="radio"
                                                             />
                                                             <div className="checkmark" />

@@ -49,9 +49,6 @@ const Cart: NextPage = () => {
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
     const [promotion, setPromotion] = useState(true)
 
-    useEffect(()=>{
-        console.log(promotion)
-    },[promotion])
     const fetchDatas = async () => {
         setLoading(true);
         try {

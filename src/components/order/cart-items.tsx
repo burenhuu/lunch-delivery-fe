@@ -2,7 +2,7 @@ import {useAppState} from "lib/context/app";
 import {Add, HomeIcon, Remove} from "components/icons";
 import {formatPrice} from "lib/utils/helpers";
 import TokiAPI from "lib/api/toki";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const CartItemComponent = (props: { items: any; itemIncDecHandler: any; loading: any; deliveryType: any }) => {
@@ -183,6 +183,10 @@ export function CartItems({
     const {promotionCheck, promotionAmount, promotionCode} = state;
     const [promo, setPromo] = useState(promotion)
 
+    useEffect(()=>{
+        setPromotion(!promotion)
+    },[promo])
+
     const handlePromoClick = () => {
       setPromo(!promo)
     }
@@ -287,7 +291,6 @@ export function CartItems({
                                                         <a onClick={(e: any)=> {
                                                             e.preventDefault()
                                                             handlePromoClick()
-                                                            setPromotion(!promotion)
                                                         }}>
                                                             <input
                                                                 checked={promo}

@@ -212,6 +212,11 @@ const reducer = (state: any, action: any) => {
             saveToLocal(newState);
             return newState;
         }
+        case "usePromotion": {
+            const newState = { ...state, usePromotion: action.usePromotion };
+            saveToLocal(newState);
+            return newState;
+        }
         default:
             return state;
     }

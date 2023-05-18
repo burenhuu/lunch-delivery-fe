@@ -176,11 +176,26 @@ export function CartItems({
                               setValue,
                               setDeliveryType,
                               packageAmount,
-                              promotion,
-                              setPromotion
                           }: any) {
     const [state, dispatch]: any = useAppState();
     const {promotionCheck, promotionAmount, promotionCode} = state;
+    const [promotion, setPromotion] = useState(true)
+
+    const handlePromotionClick = async () => {
+        await dispatch({
+            type: "usePromotion",
+            usePromotion: promotion,
+        });
+    }
+
+    useEffect(()=>{
+        handlePromotionClick()
+    },[promotion])
+
+    useEffect(()=>{
+        handlePromotionClick()
+    },[])
+
 
     const itemIncDecHandler = async (
         orderId: any,
@@ -286,6 +301,7 @@ export function CartItems({
                                                             <input
                                                                 checked={promotion}
                                                                 type="radio"
+                                                                value=""
                                                             />
                                                             <div className="checkmark" />
                                                         </a>

@@ -417,6 +417,7 @@ export default function Office() {
                     type: "promotionAmount",
                     promotionAmount: res.data.amount,
                 });
+                console.log(res.data.code)
                 dispatch({
                     type: "promotionCode",
                     promotionCode: res.data.code,
@@ -447,7 +448,7 @@ export default function Office() {
                 });
                 dispatch({
                     type: "promotionCode",
-                    promotionCheck: res.data.code,
+                    promotionCode: res.data.code,
                 });
             } else {
                 dispatch({

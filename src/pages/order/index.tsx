@@ -33,7 +33,7 @@ function ProcessingSpin(){
 const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
-    const {officeName, promotionCheck, promotionAmount, promotionCode, usePromotion} = state;
+    const {officeName, promotionCode, usePromotion} = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");

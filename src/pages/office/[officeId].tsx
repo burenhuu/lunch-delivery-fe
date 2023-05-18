@@ -428,7 +428,7 @@ export default function Office() {
                 setShow(true);
                 setContent(
                     <PermissionBox
-                        text={`Танд хоол захиалах ${res.data.amount}₮-н хөнгөлөлтийн эрх
+                        text={`Танд хоол захиалах ${formatPrice(res.data.amount)}₮-н хөнгөлөлтийн эрх
                                байна. Хөнгөлөлтөө ашиглан дуртай
                                хоолоо захиалаарай \uD83D\uDE0A`}
                         onClick={() => {

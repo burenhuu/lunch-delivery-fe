@@ -278,7 +278,7 @@ export function CartItems({
                                             </div>
                                             <div className="border-b border-dashed border-solid pb-5 border-[#B3BFC6]">
                                                 <div className="flex items-center justify-between">
-                                                    <label className="flex items-center gap-x-2.5 relative">
+                                                    <div  className="flex gap-x-2.5">
                                                         <a onClick={(e: any)=> {
                                                             e.preventDefault()
                                                             setPromotion(!promotion)
@@ -289,8 +289,11 @@ export function CartItems({
                                                             />
                                                             <div className="checkmark" />
                                                         </a>
+                                                        <label className="flex items-center  relative">
                                                             <div>Хөнгөлөлтийн эрх</div>
-                                                    </label>
+                                                        </label>
+                                                    </div>
+
                                                     <div>
                                                         {formatPrice(promotionAmount)} ₮
                                                     </div>

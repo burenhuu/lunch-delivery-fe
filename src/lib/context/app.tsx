@@ -167,11 +167,6 @@ const reducer = (state: any, action: any) => {
 
             return { ...state, ...initialState };
         }
-        case "categoryId": {
-            const newState = { ...state, categoryId: action.categoryId };
-            saveToLocal(newState);
-            return newState;
-        }
         case "userLat": {
             const newState = { ...state, userLat: action.userLat };
             saveToLocal(newState);
@@ -199,6 +194,21 @@ const reducer = (state: any, action: any) => {
         }
         case "footerShow": {
             const newState = { ...state, footerShow: action.footerShow };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "promotionCheck": {
+            const newState = { ...state, promotionCheck: action.promotionCheck };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "promotionCode": {
+            const newState = { ...state, promotionCode: action.promotionCode };
+            saveToLocal(newState);
+            return newState;
+        }
+        case "promotionAmount": {
+            const newState = { ...state, promotionAmount: action.promotionAmount };
             saveToLocal(newState);
             return newState;
         }

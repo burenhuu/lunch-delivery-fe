@@ -131,7 +131,12 @@ const TokiAPI = {
         ),
 
     uploadReviewPhoto: (url: string, body: any, type: string) =>
-        fetch(url, { method: 'PUT', headers: { 'Content-Type': type}, body: body})
+        fetch(url, { method: 'PUT', headers: { 'Content-Type': type}, body: body}),
+
+    getPromo: () =>
+        axios.get(
+            `${urlPrefix}/promo`
+        ),
 };
 
 export default TokiAPI;

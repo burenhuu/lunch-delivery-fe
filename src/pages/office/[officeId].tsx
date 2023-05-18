@@ -20,6 +20,9 @@ import { CategoryType } from "lib/types/category.type";
 import { utilsCalcCrow, utilsReduce } from "lib/utils/utils";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {useModal} from "../../lib/context/modal";
+import {PermissionBox} from "../../components/common/permission-box";
+import {formatPrice} from "../../lib/utils/helpers";
 
 export default function Office() {
     const [state, dispatch]: any = useAppState();
@@ -404,6 +407,57 @@ export default function Office() {
             router.push(`/category?productCategory=${result?.category}`);
         }
     };
+
+    const [show, setShow, content, setContent] = useModal();
+
+    useEffect(() => {
+        TokiAPI.getPromo().then((res)=>{
+            if (res.data.amount === '5000.00'){
+                dispatch({
+                    type: "promotionAmount",
+                    promotionAmount: res.data.amount,
+                });
+                dispatch({
+                    type: "promotionCode",
+                    promotionCode: res.data.code,
+                });
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: true,
+                });
+                setShow(true);
+                setContent(
+                    <PermissionBox
+                        text={`Танд хоол захиалах ${res.data.amount}₮-н хөнгөлөлтийн эрх
+                               байна. Хөнгөлөлтөө ашиглан дуртай
+                               хоолоо захиалаарай \uD83D\uDE0A`}
+                        onClick={() => {
+                            setShow(false);
+                        }}
+                    />
+                );
+            } else if (res.data.amount !== undefined){
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: true,
+                });
+                dispatch({
+                    type: "promotionAmount",
+                    promotionAmount: res.data.amount,
+                });
+                dispatch({
+                    type: "promotionCode",
+                    promotionCheck: res.data.code,
+                });
+            } else {
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: false,
+                });
+            }
+        })
+
+    }, []);
 
     return loading ? (
         <CenteredSpin />

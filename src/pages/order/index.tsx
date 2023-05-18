@@ -33,7 +33,7 @@ function ProcessingSpin(){
 const Cart: NextPage = () => {
     const router = useRouter();
     const [state]: any = useAppState();
-    const {officeName} = state;
+    const {officeName, promotionCheck, promotionAmount, promotionCode} = state;
     const [deliveryType, setDeliveryType] = useState<string>("Delivery");
     const [vat, setVat] = useState<any>(1);
     const [selectedFloor, setSelectedFloor] = useState<string>("Давхар");
@@ -47,7 +47,7 @@ const Cart: NextPage = () => {
     const [discountAmount, setDiscountAmount] = useState<any>(0);
     const [data, setData] = useState<any>(null);
     const [isDeliveryClosed, setisDeliveryClosed] = useState(false);
-
+    const [promotion, setPromotion] = useState(true)
     const fetchDatas = async () => {
         setLoading(true);
         try {
@@ -212,6 +212,10 @@ const Cart: NextPage = () => {
                     setPaymentLoader(true);
                     setLoading(true);
                     values["office"] = state.officeId;
+                    if(promotion){
+                        console.log(promotionCode, promotion)
+                        values["promo"] = promotionCode;
+                    }
                     const enviroment = process.env.NEXT_PUBLIC_ENVIROMENT;
                     try {
                         const placeOrderResponse = await TokiAPI.checkout(
@@ -336,6 +340,8 @@ const Cart: NextPage = () => {
                         setisDeliveryClosed={setisDeliveryClosed}
                         setValue={setValue}
                         setDeliveryType={setDeliveryType}
+                        promotion={promotion}
+                        setPromotion={setPromotion}
                     />
                 </div>
 

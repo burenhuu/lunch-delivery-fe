@@ -429,14 +429,21 @@ export default function Office() {
                 setShow(true);
                 setContent(
                     <PermissionBox
-                        text={`Танд хоол захиалах ${formatPrice(res.data.amount)}₮-н хөнгөлөлтийн эрх
-                               байна. Хөнгөлөлтөө ашиглан дуртай
-                               хоолоо захиалаарай \uD83D\uDE0A`}
+                        text={`<img
+                                    src="/images/promo_banner.jpg"
+                                    alt="/images/promo_banner.jpg"
+                                    className={\`w-[100%] ${"rounded-[15px]"}\`}
+                                />
+                                <div style="margin-top: 10px">
+                                    Танд хоол захиалах ${formatPrice(res.data.amount)}₮-н хөнгөлөлтийн эрх
+                                    байна. Хөнгөлөлтөө ашиглан дуртай
+                                    хоолоо захиалаарай \uD83D\uDE0A
+                               </div>`}
                         onClick={() => {
                             setShow(false);
                         }}
                     />
-                );
+                )
             } else if (res.data.amount !== undefined){
                 dispatch({
                     type: "promotionCheck",

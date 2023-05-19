@@ -25,7 +25,7 @@ const DeliveryAddress = forwardRef(
             setContent(
                 <div className="fixed z-50 w-full px-5 text-center center-modal">
                     <div id="effect" data-aos="fade-up">
-                        <div className=" shadow-delivery rounded-2xl">
+                        <div className="shadow-delivery rounded-2xl">
                             <div
                                 id="effect"
                                 data-aos="fade-up"

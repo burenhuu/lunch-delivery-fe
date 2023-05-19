@@ -67,8 +67,7 @@ const OrderDetail: NextPage = () => {
             }
             setPromotion(totalAmount)
         }
-    },[])
-
+    },[data])
     useEffect(()=>{
         let timeData = new Date(
             data?.data?.deliveredAt?.replace(

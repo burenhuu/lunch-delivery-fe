@@ -346,10 +346,13 @@ const OrderDetail: NextPage = () => {
                         <div>Нийт дүн:</div>
                         <div>{formatPrice(data.data.grandTotal)} ₮</div>
                     </div>
-                    <div className="flex items-center justify-between">
-                        <div>Хөнгөлөлт:</div>
-                        <div>{formatPrice(promotion)} ₮</div>
-                    </div>
+                    {
+                        promotion > 0 &&
+                        <div className="flex items-center justify-between">
+                            <div>Хөнгөлөлт:</div>
+                            <div>{formatPrice(promotion)} ₮</div>
+                        </div>
+                    }
                 </div>
                 <div className="border-t border-dashed border-gray"></div>
                 <div className="items-stretch text-sm font-medium my-col-10">

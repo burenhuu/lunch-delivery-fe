@@ -410,8 +410,8 @@ export default function Office() {
 
     const [show, setShow, content, setContent] = useModal();
 
-    useEffect(() => {
-        TokiAPI.getPromo().then((res)=>{
+    const getPromo = async () => {
+        await TokiAPI.getPromo().then((res)=>{
             if (res.data.amount === '5000.00'){
                 dispatch({
                     type: "promotionAmount",
@@ -464,7 +464,11 @@ export default function Office() {
                 });
             }
         })
+    }
 
+
+    useEffect(() => {
+        getPromo()
     }, []);
 
     return loading ? (

@@ -23,7 +23,7 @@ const DeliveryAddress = forwardRef(
         const onSelectFloor = () => {
             setShow(true);
             setContent(
-                <div className="fixed z-50 w-full px-5 text-center center-modal">
+                <div className="fixed z-50 w-full px-5 text-center center-modal-floor">
                     <div id="effect" data-aos="fade-up">
                         <div className="shadow-delivery rounded-2xl">
                             <div

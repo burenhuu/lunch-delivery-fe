@@ -42,7 +42,7 @@ export default function Office() {
 
     const getPromo = async () => {
         setLoading(true)
-        if (state.toastCheck !== true){
+        if (state.promotionViewed !== true){
             await TokiAPI.getPromo().then((res)=>{
                 setLoading(false)
                 if (res.data.amount === '5000.00'){
@@ -98,6 +98,7 @@ export default function Office() {
                 }
             })
         } else {
+            dispatch({ type: "promotionViewed", promotionViewed: true });
             setLoading(false)
         }
     }

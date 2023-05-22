@@ -217,6 +217,11 @@ const reducer = (state: any, action: any) => {
             saveToLocal(newState);
             return newState;
         }
+        case "promotionViewed": {
+            const newState = { ...state, promotionViewed: action.promotionViewed };
+            saveToLocal(newState);
+            return newState;
+        }
         default:
             return state;
     }

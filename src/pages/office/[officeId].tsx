@@ -43,6 +43,7 @@ export default function Office() {
     const getPromo = async () => {
         setLoading(true)
         await TokiAPI.getPromo().then((res)=>{
+            setLoading(false)
             if (res.data.amount === '5000.00'){
                 dispatch({
                     type: "promotionAmount",
@@ -57,7 +58,6 @@ export default function Office() {
                     type: "promotionCheck",
                     promotionCheck: true,
                 });
-                setLoading(false)
                 setShow(true);
                 setContent(
                     <PermissionBox

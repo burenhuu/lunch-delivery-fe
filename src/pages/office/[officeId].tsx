@@ -42,26 +42,27 @@ export default function Office() {
 
     const getPromo = async () => {
         setLoading(true)
-        await TokiAPI.getPromo().then((res)=>{
-            setLoading(false)
-            if (res.data.amount === '5000.00'){
-                dispatch({
-                    type: "promotionAmount",
-                    promotionAmount: res.data.amount,
-                });
-                console.log(res.data.code)
-                dispatch({
-                    type: "promotionCode",
-                    promotionCode: res.data.code,
-                });
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: true,
-                });
-                setShow(true);
-                setContent(
-                    <PermissionBox
-                        text={`<img
+        if (state.toastCheck !== true){
+            await TokiAPI.getPromo().then((res)=>{
+                setLoading(false)
+                if (res.data.amount === '5000.00'){
+                    dispatch({
+                        type: "promotionAmount",
+                        promotionAmount: res.data.amount,
+                    });
+                    console.log(res.data.code)
+                    dispatch({
+                        type: "promotionCode",
+                        promotionCode: res.data.code,
+                    });
+                    dispatch({
+                        type: "promotionCheck",
+                        promotionCheck: true,
+                    });
+                    setShow(true);
+                    setContent(
+                        <PermissionBox
+                            text={`<img
                                     src="/images/promo_banner.jpg"
                                     alt="/images/promo_banner.jpg"
                                     className={\`w-[100%] ${"rounded-[15px]"}\`}
@@ -71,31 +72,34 @@ export default function Office() {
                                     байна. Хөнгөлөлтөө ашиглан дуртай
                                     хоолоо захиалаарай \uD83D\uDE0A
                                </div>`}
-                        onClick={() => {
-                            setShow(false);
-                        }}
-                    />
-                )
-            } else if (res.data.amount !== undefined){
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: true,
-                });
-                dispatch({
-                    type: "promotionAmount",
-                    promotionAmount: res.data.amount,
-                });
-                dispatch({
-                    type: "promotionCode",
-                    promotionCode: res.data.code,
-                });
-            } else {
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: false,
-                });
-            }
-        })
+                            onClick={() => {
+                                setShow(false);
+                            }}
+                        />
+                    )
+                } else if (res.data.amount !== undefined){
+                    dispatch({
+                        type: "promotionCheck",
+                        promotionCheck: true,
+                    });
+                    dispatch({
+                        type: "promotionAmount",
+                        promotionAmount: res.data.amount,
+                    });
+                    dispatch({
+                        type: "promotionCode",
+                        promotionCode: res.data.code,
+                    });
+                } else {
+                    dispatch({
+                        type: "promotionCheck",
+                        promotionCheck: false,
+                    });
+                }
+            })
+        } else {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {

@@ -41,26 +41,27 @@ export default function Office() {
     const [show, setShow, content, setContent] = useModal();
 
     const getPromo = async () => {
+        console.log(state.promotionViewed)
         setLoading(true)
         if (state.promotionViewed !== true){
-            await TokiAPI.getPromo().then((res)=>{
+            await TokiAPI.getPromo().then(async (res)=>{
                 setLoading(false)
                 if (res.data.amount === '5000.00'){
-                    dispatch({
+                    await dispatch({
                         type: "promotionAmount",
                         promotionAmount: res.data.amount,
                     });
                     console.log(res.data.code)
-                    dispatch({
+                    await dispatch({
                         type: "promotionCode",
                         promotionCode: res.data.code,
                     });
-                    dispatch({
+                    await dispatch({
                         type: "promotionCheck",
                         promotionCheck: true,
                     });
-                    setShow(true);
-                    setContent(
+                    await setShow(true);
+                    await setContent(
                         <PermissionBox
                             text={`<img
                                     src="/images/promo_banner.jpg"
@@ -78,29 +79,29 @@ export default function Office() {
                         />
                     )
                 } else if (res.data.amount !== undefined){
-                    dispatch({
+                    await dispatch({
                         type: "promotionCheck",
                         promotionCheck: true,
                     });
-                    dispatch({
+                    await dispatch({
                         type: "promotionAmount",
                         promotionAmount: res.data.amount,
                     });
-                    dispatch({
+                    await dispatch({
                         type: "promotionCode",
                         promotionCode: res.data.code,
                     });
                 } else {
-                    dispatch({
+                    await dispatch({
                         type: "promotionCheck",
                         promotionCheck: false,
                     });
                 }
             })
         } else {
-            dispatch({ type: "promotionViewed", promotionViewed: true });
             setLoading(false)
         }
+        dispatch({ type: "promotionViewed", promotionViewed: true });
     }
 
     useEffect(() => {

@@ -103,10 +103,6 @@ export default function Office() {
     }
 
     useEffect(() => {
-        getPromo()
-    }, []);
-
-    useEffect(() => {
         if (categories?.length > 0) {
             categories.unshift(
                 {
@@ -156,6 +152,7 @@ export default function Office() {
         // console.log(state.userLat, state.userLng)
         // console.log(state.officeLat, state.officeLng)
         // console.log(state.officeLat, state.officeLng)
+        getPromo()
         if (utilsCalcCrow(state.userLat, state.userLng, state.officeLat, state.officeLng) > 0.1 && state.toastCheck !== true) {
             toast("Таны хаяг зөв эсэхийг шалгаарай", {
                 className: "location-toast",

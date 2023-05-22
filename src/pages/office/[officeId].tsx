@@ -38,6 +38,69 @@ export default function Office() {
     const [recommended, setRecommended] = useState<RecommendedType[]>([]);
     const { merchants, categories, products } = state;
     const [viewCategories, setViewCategories] = useState([])
+    const [show, setShow, content, setContent] = useModal();
+
+    const getPromo = async () => {
+        setLoading(true)
+        await TokiAPI.getPromo().then((res)=>{
+            if (res.data.amount === '5000.00'){
+                dispatch({
+                    type: "promotionAmount",
+                    promotionAmount: res.data.amount,
+                });
+                console.log(res.data.code)
+                dispatch({
+                    type: "promotionCode",
+                    promotionCode: res.data.code,
+                });
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: true,
+                });
+                setLoading(false)
+                setShow(true);
+                setContent(
+                    <PermissionBox
+                        text={`<img
+                                    src="/images/promo_banner.jpg"
+                                    alt="/images/promo_banner.jpg"
+                                    className={\`w-[100%] ${"rounded-[15px]"}\`}
+                                />
+                                <div style="margin-top: 10px">
+                                    Танд хоол захиалах ${formatPrice(res.data.amount)}₮-н хөнгөлөлтийн эрх
+                                    байна. Хөнгөлөлтөө ашиглан дуртай
+                                    хоолоо захиалаарай \uD83D\uDE0A
+                               </div>`}
+                        onClick={() => {
+                            setShow(false);
+                        }}
+                    />
+                )
+            } else if (res.data.amount !== undefined){
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: true,
+                });
+                dispatch({
+                    type: "promotionAmount",
+                    promotionAmount: res.data.amount,
+                });
+                dispatch({
+                    type: "promotionCode",
+                    promotionCode: res.data.code,
+                });
+            } else {
+                dispatch({
+                    type: "promotionCheck",
+                    promotionCheck: false,
+                });
+            }
+        })
+    }
+
+    useEffect(() => {
+        getPromo()
+    }, []);
 
     useEffect(() => {
         if (categories?.length > 0) {
@@ -408,68 +471,7 @@ export default function Office() {
         }
     };
 
-    const [show, setShow, content, setContent] = useModal();
 
-    const getPromo = async () => {
-        await TokiAPI.getPromo().then((res)=>{
-            if (res.data.amount === '5000.00'){
-                dispatch({
-                    type: "promotionAmount",
-                    promotionAmount: res.data.amount,
-                });
-                console.log(res.data.code)
-                dispatch({
-                    type: "promotionCode",
-                    promotionCode: res.data.code,
-                });
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: true,
-                });
-                setShow(true);
-                setContent(
-                    <PermissionBox
-                        text={`<img
-                                    src="/images/promo_banner.jpg"
-                                    alt="/images/promo_banner.jpg"
-                                    className={\`w-[100%] ${"rounded-[15px]"}\`}
-                                />
-                                <div style="margin-top: 10px">
-                                    Танд хоол захиалах ${formatPrice(res.data.amount)}₮-н хөнгөлөлтийн эрх
-                                    байна. Хөнгөлөлтөө ашиглан дуртай
-                                    хоолоо захиалаарай \uD83D\uDE0A
-                               </div>`}
-                        onClick={() => {
-                            setShow(false);
-                        }}
-                    />
-                )
-            } else if (res.data.amount !== undefined){
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: true,
-                });
-                dispatch({
-                    type: "promotionAmount",
-                    promotionAmount: res.data.amount,
-                });
-                dispatch({
-                    type: "promotionCode",
-                    promotionCode: res.data.code,
-                });
-            } else {
-                dispatch({
-                    type: "promotionCheck",
-                    promotionCheck: false,
-                });
-            }
-        })
-    }
-
-
-    useEffect(() => {
-        getPromo()
-    }, []);
 
     return loading ? (
         <CenteredSpin />

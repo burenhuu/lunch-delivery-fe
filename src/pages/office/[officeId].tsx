@@ -41,7 +41,6 @@ export default function Office() {
     const [show, setShow, content, setContent] = useModal();
 
     const getPromo = async () => {
-        console.log(state.promotionViewed)
         setLoading(true)
         if (state.promotionViewed !== true){
             await TokiAPI.getPromo().then(async (res)=>{
@@ -51,7 +50,6 @@ export default function Office() {
                         type: "promotionAmount",
                         promotionAmount: res.data.amount,
                     });
-                    console.log(res.data.code)
                     await dispatch({
                         type: "promotionCode",
                         promotionCode: res.data.code,

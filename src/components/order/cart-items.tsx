@@ -326,7 +326,7 @@ export function CartItems({
                                                                 </>
                                                                 :
                                                                 <>
-                                                                    {grandTotal - taxAmount - parseInt(promotionAmount) < 0 ? 0 : formatPrice(grandTotal - parseInt(promotionAmount))} ₮
+                                                                    {grandTotal - taxAmount - parseInt(promotionAmount) < 0 ? 0 : formatPrice(grandTotal - taxAmount - parseInt(promotionAmount))} ₮
                                                                 </>
                                                             }
                                                         </div>

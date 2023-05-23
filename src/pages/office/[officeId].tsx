@@ -45,7 +45,7 @@ export default function Office() {
         if (state.promotionViewed !== true){
             await TokiAPI.getPromo().then(async (res)=>{
                 setLoading(false)
-                if (res.data.amount === '5000.00'){
+                if (res.data.amount === '5000.00' || res.data.amount === 5000){
                     await dispatch({
                         type: "promotionAmount",
                         promotionAmount: res.data.amount,

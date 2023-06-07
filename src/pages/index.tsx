@@ -10,6 +10,7 @@ import OfficeList from "components/office/office-list";
 import TokiAPI from "lib/api/toki";
 import { Office } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
+import Draggable from 'react-draggable';
 let isMyOffice = false;
 
 const Index: NextPage = () => {
@@ -22,6 +23,39 @@ const Index: NextPage = () => {
     const { data, error } = useSWR("/v1/offices");
     const [allOffices, setAllOffices] = useState<Office[]>([]);
     const [state, dispatch]: any = useAppState();
+    const [deltaPosition, setDeltaPosition] = useState<any>({x: 0, y:350})
+    const [transition, setTransition] = useState<boolean>(false)
+
+    const handleDrag = (e: any, ui: any) => {
+        const {x, y} = deltaPosition;
+        setDeltaPosition({
+                x: 0,
+                y: y + ui.deltaY,
+
+        });
+    };
+
+    const handleStop = () => {
+        setTransition(true)
+        console.log("STOPEED -25 350 650", deltaPosition)
+        if(deltaPosition.y > 163){
+            setDeltaPosition({x: 0, y: 375})
+        }
+        if(500 > deltaPosition.y){
+            setDeltaPosition({x: 0, y: 375})
+        }
+        if(500 < deltaPosition.y){
+            setDeltaPosition({x: 0, y: 675})
+        }
+        if(163 > deltaPosition.y){
+            setDeltaPosition({x: 0, y: 0})
+        }
+    }
+
+    const handleStart = () => {
+        setTransition(false)
+    }
+
 
     useEffect(() => {
         TokiAPI.getAllOffices().then((res) => {
@@ -111,42 +145,39 @@ const Index: NextPage = () => {
                         </div>
                     )
                 ) : (
-                    // </Drawer>
-                    <Drawer
-                        open={(offices && offices.length > 0) || noResults}
-                        direction="bottom"
-                        enableOverlay={false}
-                        size={2}
-                        style={{
-                            height: height,
-                            maxHeight: maxHeight,
-                            background: "#F5F5FA",
-                        }}
-                        className={`p-5 rounded-t-[20px] relative`}
+                    <Draggable
+                        axis="y"
+                        bounds={{top: 0, bottom: 675}}
+                        position={deltaPosition}
+                        onDrag={handleDrag}
+                        onStop={handleStop}
+                        onStart={handleStart}
                     >
-                        {noResults ? (
-                            <OfficeList
-                                title="Хоол хүргүүлэх боломжтой оффисууд"
-                                offices={data ? data?.data : offices}
-                                // offices={offices}
-                                // offices={dummyOffices}
-                                loading={loading}
-                                height={height}
-                                setHeight={setHeight}
-                                setMaxHeight={setMaxHeight}
-                            />
-                        ) : (
-                            <OfficeList
-                                title="Хоол хүргүүлэх оффисоо сонгоно уу"
-                                offices={offices}
-                                // offices={dummyOffices}
-                                loading={loading}
-                                height={height}
-                                setHeight={setHeight}
-                                setMaxHeight={setMaxHeight}
-                            />
-                        )}
-                    </Drawer>
+                        <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
+                                {noResults ? (
+                                    <OfficeList
+                                        title="Хоол хүргүүлэх боломжтой оффисууд"
+                                        offices={data ? data?.data : offices}
+                                        // offices={offices}
+                                        // offices={dummyOffices}
+                                        loading={loading}
+                                        height={height}
+                                        setHeight={setHeight}
+                                        setMaxHeight={setMaxHeight}
+                                    />
+                                ) : (
+                                    <OfficeList
+                                        title="Хоол хүргүүлэх оффисоо сонгоно уу"
+                                        offices={offices}
+                                        // offices={dummyOffices}
+                                        loading={loading}
+                                        height={height}
+                                        setHeight={setHeight}
+                                        setMaxHeight={setMaxHeight}
+                                    />
+                                )}
+                        </div>
+                    </Draggable>
                 )}
             </div>
         </>

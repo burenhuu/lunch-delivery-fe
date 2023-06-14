@@ -23,7 +23,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         AOS.init({ disable: innerHeight < 400 });
-        setHeaderColor('#FF7A1FFF', false);
+        setHeaderColor('#FF7A1F', false);
     }, []);
     return (
         <>

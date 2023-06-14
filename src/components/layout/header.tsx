@@ -34,7 +34,7 @@ const Header = ({ routerPathName }: any) => {
         <header
             className={`w-full flex ${
                 isBackButton ? "h-[77px]" : "h-[85px]"
-            } text-center text-white bg-gradient-to-r from-gradient-start to-gradient-end overflow-hidden `}
+            } text-center text-white bg-[#FF7A1F] overflow-hidden `}
         >
             <div className="w-full h-[50px] px-5 py-2.5 flex justify-start items-center gap-x-2.5">
                 {

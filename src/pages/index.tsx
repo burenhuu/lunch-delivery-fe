@@ -176,7 +176,6 @@ const Index: NextPage = () => {
                             onDrag={handleDrag}
                             onStop={handleStop}
                             onStart={handleStart}
-                            allowAnyClick={false}
                             cancel=".btn"
                         >
                             <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>

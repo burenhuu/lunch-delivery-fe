@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "styles/scrollText.css";
+import {setHeaderColor} from "../lib/utils/utils";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -22,6 +23,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 const MyApp = ({ Component, pageProps }: AppProps) => {
     useEffect(() => {
         AOS.init({ disable: innerHeight < 400 });
+        setHeaderColor('#FF7A1FFF', true);
     }, []);
     return (
         <>

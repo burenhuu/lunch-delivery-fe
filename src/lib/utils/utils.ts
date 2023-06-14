@@ -35,3 +35,18 @@ export function utilsCalcCrow(lat1:any, lon1:any, lat2:any, lon2:any) {
       return d;
 
 }
+
+export function setHeaderColor(color: any, isStatusDark: boolean){
+    // @ts-ignore
+    if (window.JSReceiver) {
+        // @ts-ignore
+        window.JSReceiver.setColor(color, isStatusDark);
+    }
+    // @ts-ignore
+    if (window.webkit && window.webkit.messageHandlers) {
+        const message = JSON.stringify({ color, isStatusDark });
+        // @ts-ignore
+        window.webkit.messageHandlers.setColor.postMessage(message);
+    }
+
+}

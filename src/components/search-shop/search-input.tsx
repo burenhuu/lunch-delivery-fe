@@ -12,6 +12,7 @@ export default function SearchInput({
     bySearchBar,
     searchValue,
     offices,
+    setBySearchbar
 }: any) {
     const [state]: any = useAppState();
 
@@ -49,6 +50,7 @@ export default function SearchInput({
                     maxLength={50}
                     onChange={(e) => setDebouncedSearchValue(e.target.value)}
                     value={debouncedSearchValue}
+                    onClick={()=>{setBySearchbar(true)}}
                     enterKeyHint="search"
                 />
                 {loading && (

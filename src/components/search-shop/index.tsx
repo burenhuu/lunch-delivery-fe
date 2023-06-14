@@ -9,6 +9,7 @@ interface SearchShopProps {
     loading: boolean;
     bySearchBar: boolean;
     setBySearchbar(bySearchbar: boolean): void;
+    setNoResults: any
 }
 
 const SearchShop: React.FC<SearchShopProps> = ({
@@ -18,6 +19,7 @@ const SearchShop: React.FC<SearchShopProps> = ({
     loading,
     bySearchBar,
     setBySearchbar,
+    setNoResults
 }) => {
     const [searchValue, setSearchValue] = useState("");
     const [debouncedSearchValue, setDebouncedSearchValue] =
@@ -39,7 +41,7 @@ const SearchShop: React.FC<SearchShopProps> = ({
             setBySearchbar(true);
         } else {
             clearResults();
-            setBySearchbar(false);
+            setNoResults(true);
         }
     }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -58,6 +60,7 @@ const SearchShop: React.FC<SearchShopProps> = ({
             bySearchBar={bySearchBar}
             searchValue={searchValue}
             offices={offices}
+            setBySearchbar={setBySearchbar}
         />
     );
 };

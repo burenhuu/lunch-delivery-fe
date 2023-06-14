@@ -26,7 +26,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
             style={{ boxShadow: "0 -5px 10px 0 rgba(30, 35, 53, 0.05)" }}
         >
             <div
-                onClick={() => {
+                onClick={(e) => {
                     if (office.count === 0) {
                         setShow(true);
 
@@ -220,7 +220,7 @@ const OfficeCard: React.FC<OfficeCardProps> = ({ office }) => {
                         }
                     }
                 }}
-                className="flex items-center gap-x-[15px]"
+                className="btn flex items-center gap-x-[15px]"
             >
                 <div className="w-15 shrink-0">
                     <img

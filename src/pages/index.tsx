@@ -11,11 +11,12 @@ import TokiAPI from "lib/api/toki";
 import { Office } from "lib/types/office.type";
 import { useAppState } from "lib/context/app";
 import Draggable from 'react-draggable';
+import OptionCard from "../components/search-shop/option-card";
 let isMyOffice = false;
 
 const Index: NextPage = () => {
     const [offices, setOffices] = useState<Office[]>([]);
-    const [noResults, setNoResults] = useState(false);
+    const [noResults, setNoResults] = useState(true);
     const [loading, setLoading] = useState(false);
     const [bySearchbar, setBySearchbar] = useState(false);
     const [height, setHeight] = useState("340px");
@@ -25,6 +26,7 @@ const Index: NextPage = () => {
     const [state, dispatch]: any = useAppState();
     const [deltaPosition, setDeltaPosition] = useState<any>({x: 0, y:350})
     const [transition, setTransition] = useState<boolean>(false)
+    const [clear, setClear] = useState<boolean>(true)
 
     const handleDrag = (e: any, ui: any) => {
         const {x, y} = deltaPosition;
@@ -95,6 +97,7 @@ const Index: NextPage = () => {
                 searchValue.toLowerCase()
             );
             if (data) {
+                setClear(false)
                 setNoResults(data?.length === 0);
                 setOffices(data);
             }
@@ -115,7 +118,10 @@ const Index: NextPage = () => {
         }
     };
 
-    const clearResults = () => setOffices([]);
+    const clearResults = () => {
+        setOffices([])
+        setClear(true)
+    };
 
     if (error) return null;
 
@@ -129,12 +135,31 @@ const Index: NextPage = () => {
                     loading={loading}
                     bySearchBar={bySearchbar}
                     setBySearchbar={setBySearchbar}
+                    setNoResults={setNoResults}
                 />
 
                 <Map onSearchByMap={onSearchByMap} offices={allOffices} />
 
                 {bySearchbar ? (
-                    noResults && (
+                    noResults && clear && (
+                        <div
+                            className={`absolute mt-[55px] z-30 flex flex-col justify-center w-full mx-auto`}
+                        >
+                            <div className="relative grid grid-cols-1 mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] px-[15px] divide-[#B3BFC6]">
+                                {data && data.data.map((office: Office, index: number) => {
+                                        if (index < 4){
+                                            return(
+                                                <OptionCard key={index} office={office}/>
+                                            )
+                                        }
+                                    })}
+                            </div>
+                        </div>
+                    )
+                ) : (
+                    <>
+                    {noResults
+                        ?
                         <div className="absolute z-30 mt-16 text-sm text-gray-600 w-100">
                             <div className=" mx-5 bg-white divide-y-[0.5px] rounded-[10px]  px-[15px] py-[15px]">
                                 <p className="text-sm text-normal">
@@ -143,17 +168,18 @@ const Index: NextPage = () => {
                                 </p>
                             </div>
                         </div>
-                    )
-                ) : (
-                    <Draggable
-                        axis="y"
-                        bounds={{top: 0, bottom: 675}}
-                        position={deltaPosition}
-                        onDrag={handleDrag}
-                        onStop={handleStop}
-                        onStart={handleStart}
-                    >
-                        <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
+                        :
+                        <Draggable
+                            axis="y"
+                            bounds={{top: 0, bottom: 675}}
+                            position={deltaPosition}
+                            onDrag={handleDrag}
+                            onStop={handleStop}
+                            onStart={handleStart}
+                            allowAnyClick={false}
+                            cancel=".btn"
+                        >
+                            <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
                                 {noResults ? (
                                     <OfficeList
                                         title="Хоол хүргүүлэх боломжтой оффисууд"
@@ -176,8 +202,12 @@ const Index: NextPage = () => {
                                         setMaxHeight={setMaxHeight}
                                     />
                                 )}
-                        </div>
-                    </Draggable>
+                            </div>
+                        </Draggable>
+                    }
+
+                    </>
+
                 )}
             </div>
         </>

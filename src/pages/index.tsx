@@ -15,6 +15,9 @@ import OptionCard from "../components/search-shop/option-card";
 let isMyOffice = false;
 
 const Index: NextPage = () => {
+    const top = innerHeight > 700 ? 0 : 30;
+    const mid = innerHeight > 700 ? 375 : 240;
+    const bottom = innerHeight > 700 ? 675 : 520;
     const [offices, setOffices] = useState<Office[]>([]);
     const [noResults, setNoResults] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -24,10 +27,9 @@ const Index: NextPage = () => {
     const { data, error } = useSWR("/v1/offices");
     const [allOffices, setAllOffices] = useState<Office[]>([]);
     const [state, dispatch]: any = useAppState();
-    const [deltaPosition, setDeltaPosition] = useState<any>({x: 0, y:350})
+    const [deltaPosition, setDeltaPosition] = useState<any>({x: 0, y:mid})
     const [transition, setTransition] = useState<boolean>(false)
     const [clear, setClear] = useState<boolean>(true)
-
     const handleDrag = (e: any, ui: any) => {
         const {x, y} = deltaPosition;
         setDeltaPosition({
@@ -40,17 +42,14 @@ const Index: NextPage = () => {
     const handleStop = () => {
         setTransition(true)
         console.log("STOPEED -25 350 650", deltaPosition)
-        if(deltaPosition.y > 163){
-            setDeltaPosition({x: 0, y: 375})
-        }
-        if(500 > deltaPosition.y){
-            setDeltaPosition({x: 0, y: 375})
+        if(deltaPosition.y > 163 || 500 > deltaPosition.y){
+            setDeltaPosition({x: 0, y: mid})
         }
         if(500 < deltaPosition.y){
-            setDeltaPosition({x: 0, y: 675})
+            setDeltaPosition({x: 0, y: bottom})
         }
         if(163 > deltaPosition.y){
-            setDeltaPosition({x: 0, y: 0})
+            setDeltaPosition({x: 0, y: top})
         }
     }
 
@@ -171,14 +170,14 @@ const Index: NextPage = () => {
                         :
                         <Draggable
                             axis="y"
-                            bounds={{top: 0, bottom: 675}}
+                            bounds={{top: top, bottom: bottom}}
                             position={deltaPosition}
                             onDrag={handleDrag}
                             onStop={handleStop}
                             onStart={handleStart}
                             cancel=".btn"
                         >
-                            <div className="z-40 p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
+                            <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '86vh', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
                                 {noResults ? (
                                     <OfficeList
                                         title="Хоол хүргүүлэх боломжтой оффисууд"

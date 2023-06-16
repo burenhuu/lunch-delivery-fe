@@ -178,7 +178,7 @@ const Index: NextPage = () => {
                             onStart={handleStart}
                             cancel=".btn"
                         >
-                            <div className="p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
+                            <div className="z-40 p-5" style={{backgroundColor: 'rgb(245, 245, 250)', width: "100%", height: '725px', position: 'absolute', bottom: 0, transition: `${transition ? 'transform 0.3s' : 'transform 0s'}`}}>
                                 {noResults ? (
                                     <OfficeList
                                         title="Хоол хүргүүлэх боломжтой оффисууд"

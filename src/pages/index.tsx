@@ -151,7 +151,7 @@ const Index: NextPage = () => {
                         <div
                             className={`absolute mt-[55px] z-30 flex flex-col justify-center w-full mx-auto`}
                         >
-                            <div className="relative grid grid-cols-1 mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] px-[15px] divide-[#B3BFC6]">
+                            <div className="relative grid grid-cols-1 mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] px-[15px] divide-[#B3BFC6] overflow-y-auto h-[185px]">
                                 {data && data.data.map((office: Office, index: number) => {
                                     return(
                                         <OptionCard key={index} office={office}/>

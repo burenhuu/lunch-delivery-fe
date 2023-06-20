@@ -153,11 +153,9 @@ const Index: NextPage = () => {
                         >
                             <div className="relative grid grid-cols-1 mx-5 mt-2.5 text-sm text-gray-600 bg-white divide-y-[0.5px] rounded-[10px] px-[15px] divide-[#B3BFC6]">
                                 {data && data.data.map((office: Office, index: number) => {
-                                        if (index < 4){
-                                            return(
-                                                <OptionCard key={index} office={office}/>
-                                            )
-                                        }
+                                    return(
+                                        <OptionCard key={index} office={office}/>
+                                    )
                                     })}
                             </div>
                         </div>

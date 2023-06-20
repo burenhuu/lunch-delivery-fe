@@ -43,12 +43,14 @@ const SearchShop: React.FC<SearchShopProps> = ({
             clearResults();
             setNoResults(true);
         }
-    }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [searchValue]);
 
     useEffect(() => {
         if (!bySearchBar) {
             setSearchValue("");
             setDebouncedSearchValue("");
+        } else {
+            setNoResults(true)
         }
     }, [bySearchBar]);
 

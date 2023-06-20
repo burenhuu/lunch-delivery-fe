@@ -61,6 +61,13 @@ const Index: NextPage = () => {
     useEffect(() => {
         TokiAPI.getAllOffices().then((res) => {
             setAllOffices(res.data);
+            if(res.data.length > 0){
+                console.log(res.data[0] ? res.data[0].radius : 500)
+                dispatch({
+                    type: "locationRange",
+                    locationRange: res.data[0] ? res.data[0].radius : 500
+                });
+            }
         });
 
         TokiAPI.getCart().then((res) => {

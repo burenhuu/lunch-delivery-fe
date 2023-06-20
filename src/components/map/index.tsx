@@ -69,6 +69,7 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
     // const { handleModal }: any = useContext(ModalContext);
 
     React.useEffect(() => {
+        console.log(localStorage.getItem("locationRange"), "TEST")
         if (coords && map) {
             const lat = coords.latitude;
             const lng = coords.longitude;
@@ -133,7 +134,7 @@ const Map: React.FC<MapProps & GeolocatedProps> = ({
                 radius={parseFloat(
                     localStorage.getItem("locationRange")
                         ? localStorage.getItem("locationRange")?.toString()!
-                        : "500"
+                        : "800"
                 )}
                 options={options}
             />
